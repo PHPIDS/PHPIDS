@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
+		xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+		http://pear.php.net/dtd/tasks-1.0.xsd
+		http://pear.php.net/dtd/package-2.0
+		http://pear.php.net/dtd/package-2.0.xsd
+	">
+	<name>PHPIDS</name>
+	<channel>pear.php.net</channel>
+	<summary>Easy to use web application security layer</summary>
+	<description>
+		This package provides an easy to use intrusion detection systems (IDS) which 
+		is capable of detecting malicious user input and reaction on configurable ways 
+		to protect the security of the application the IDSD is used with.
+		
+		Most of the provided filter rules detect XSS attacks, directory traversals and 
+		basic SQL Injections. The filter rules can easily be extended. 
+	</description>
+	<lead>
+		<user>christ1an</user>
+		<name>Christian Matthies</name>
+		<email>ch0012@gmail.com</email>
+		<active>yes</active>
+	</lead>
+	<lead>
+		<user>.mario</user>
+		<name>Mario Heiderich</name>
+		<email>mario.heiderich@gmail.com</email>
+		<active>yes</active>
+	</lead>	
+	<date>2007-05-03</date>	
+	<version>
+		<release>1.0.0a1</release>
+		<api>1.0.0a1</api>
+	</version>
+	<stability>
+		<release>beta</release>
+		<api>beta</api>
+	</stability>
+	<license uri="http://www.php.net/license">PHP License</license>
+	<notes>
+		This is the first release.
+	</notes>
+	<contents>
+		<dir name="/" baseinstalldir="IDS">
+			<file role="php" name="ids.php" />
+			<file role="php" name="storage.php" />
+			<file role="data" name="default_filter.xml" />
+			<dir name="log">
+				<file role="php" name="log_composite.php" />
+				<file role="php" name="log_email.php" />
+				<file role="php" name="log_file.php" />			
+				<file role="php" name="log_interface.php" />
+			</dir>
+		</dir>
+		<dir name="docs">
+			<dir name="examples">
+				<file role="doc" name="example_cakephp_component.php" />			
+				<file role="doc" name="example.php" />
+			</dir>		
+		</dir>
+		<dir name="tests">
+			<file role="test" name="allTests.php" />			
+			<file role="test" name="idsTest.php" />		
+		</dir>	
+	</contents>
+</package>
