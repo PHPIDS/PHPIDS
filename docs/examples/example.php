@@ -20,15 +20,15 @@
 /**
  * 	1st: require the needed files
  */
-require_once '../../phpids/ids.php';
-require_once '../../phpids/storage.php';
+require_once 'IDS/Monitor.php';
+require_once 'IDS/Filter/Storage.php';
 
 try {
 	/**
 	 * 	2nd: instanciate the storage object and fetch the rules
 	 */
 	$storage = new IDS_Filter_Storage();
-	$storage->getFilterFromXML('../../phpids/default_filter.xml');
+	$storage->getFilterFromXML('../../lib/default_filter.xml');
 	
 	/**
 	 * 	3rd: instanciate the ids and start the detection
@@ -68,8 +68,8 @@ try {
 	* We store the data using IDS_Log_Composite and
 	* Log_File
 	*/
-	require_once('../../log/log_file.php');
-	require_once('../../log/log_composite.php');
+	require_once 'IDS/Log/File.php';
+	require_once 'IDS/Log/Composite.php';
 
 	$compositeLog = new IDS_Log_Composite();
 	$compositeLog->addLogger(
