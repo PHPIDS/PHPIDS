@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once('log_interface.php');
+require_once 'IDS/Log/Interface.php';
 
 /**
 * Email wrapper
