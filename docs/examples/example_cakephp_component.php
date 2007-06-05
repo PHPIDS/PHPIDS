@@ -55,15 +55,15 @@ class IdsComponent extends Object {
 		/**
 		 * 	require the needed files
 		 */		
-		vendor('phpids/ids');
-		vendor('phpids/storage');
+		vendor('IDS/Monitor');
+		vendor('IDS/Filter/Storage');
 		
 		
 		/**
 		 * 	instaciate the needed stuff
 		 */
 		$storage = new Filter_Storage();
-		$storage->getFilterFromXML(VENDORS.'phpids/default_filter.xml');
+		$storage->getFilterFromXML(VENDORS . 'lib/default_filter.xml');
 		$ids = new IDS_Monitor($_REQUEST, $storage);
 		$results = $ids->run();
 		
