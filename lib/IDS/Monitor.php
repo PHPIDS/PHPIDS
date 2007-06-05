@@ -71,7 +71,7 @@ class IDS_Monitor {
 			$this->tags	 	= $tags;
 		}
 		
-		require_once dirname(__FILE__) . '/report.php';
+		require_once 'IDS/Report.php';
 		$this->report = new IDS_Report;
 	}
 	
@@ -103,7 +103,7 @@ class IDS_Monitor {
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
 			if ($filter = $this->detect($key, $value)) {
-				require_once dirname(__FILE__) . '/event.php';
+				require_once 'IDS/Event.php';
 				$this->report->addEvent(
 					new IDS_Event(
 						$key,

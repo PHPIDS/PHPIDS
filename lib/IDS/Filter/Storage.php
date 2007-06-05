@@ -17,6 +17,8 @@
  * GNU General Public License for more details.
  */
 
+require_once 'IDS/Filter/Storage/Abstract.php';
+
 /**
 * Filter Storage Class
 * 
@@ -102,7 +104,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 					$tags	= array_values((array) $filter->tags);
 					$description = (string)$filter->description;
 
-					require_once dirname(__FILE__) . '/filter.php';
+					require_once 'IDS/Filter/Regexp.php';
 					$this->addFilter(
 						new IDS_Filter_Regexp(
 							$rule,
@@ -124,74 +126,3 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 	}
 
 }
-
-
-/**
-* Abstract Filter Storage
-* 
-* Class to assure the systems API
-*
-* @package		 profiles
-* @subpackage	 models
-* @author		 christ1an <ch0012@gmail.com>
-*/
-abstract class IDS_Filter_Storage_Abstract {
-
-	private $filterSet = array();
-
-	/**
-	* Constructor
-	*
-	* @access	public
-	* @param	array
-	* @return	void
-	*/
-	public final function __construct($filterSet = false) {
-		if ($filterSet) {
-			$this->filterSet = $filterSet;
-		}
-	}
-
-	/**
-	* Sets filter array manually
-	*
-	* @access	public
-	* @param	array
-	* @return	mixed	bool true or exception object
-	*/
-	public final function setFilterSet($filterSet) {
-		foreach ($filterSet as $filter) {
-			$this->addFilter($filter);
-		}
-		return $this;
-	}
-
-	/**
-	* Returns array containing all filters
-	*
-	* @access	public
-	* @return	void
-	*/
-	public final function getFilterSet() {
-		return $this->filterSet;
-	}
-
-	/**
-	* Adds one particular filter
-	*
-	* @access	public
-	* @param	array
-	* @return	mixed	true on success, otherwise exception object
-	*/
-	public final function addFilter(IDS_Filter_Abstract $filter) {
-		$this->filterSet[] = $filter;
-		return $this;
-	}
-}
-
-/*
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- */

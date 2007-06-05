@@ -18,8 +18,10 @@
  */
 
 require_once 'PHPUnit2/Framework/TestCase.php';
-require_once dirname(__FILE__) . '/../../../phpids/event.php';
-require_once dirname(__FILE__) . '/../../../phpids/filter.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
+require_once 'IDS/Event.php';
+require_once 'IDS/Filter/Regexp.php';
+
 class IDS_Event_TestCase extends PHPUnit_Framework_TestCase
 {
 	public function setUp()
