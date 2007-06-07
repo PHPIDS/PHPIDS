@@ -71,7 +71,7 @@ class IDS_Monitor {
 			$this->tags	 	= $tags;
 		}
 		
-		require_once 'IDS/Report.php';
+		require_once 'Report.php';
 		$this->report = new IDS_Report;
 	}
 	

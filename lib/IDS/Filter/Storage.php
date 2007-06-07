@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once 'IDS/Filter/Storage/Abstract.php';
+require_once 'Storage/Abstract.php';
 
 /**
 * Filter Storage Class
@@ -104,7 +104,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 					$tags	= array_values((array) $filter->tags);
 					$description = (string)$filter->description;
 
-					require_once 'IDS/Filter/Regexp.php';
+					require_once 'Regexp.php';
 					$this->addFilter(
 						new IDS_Filter_Regexp(
 							$rule,

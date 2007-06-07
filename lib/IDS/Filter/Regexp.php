@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once 'IDS/Filter/Abstract.php';
+require_once 'Abstract.php';
 
 /**
  * Regexp filter class
@@ -43,7 +43,7 @@ class IDS_Filter_Regexp extends IDS_Filter_Abstract {
 				Invalid argument. Exptected a string, got ' . gettype($string)
 			);
 		}
-		
+        
 		return (bool) preg_match('/' . $this->getRule() . '/', $string);
 	}
 }

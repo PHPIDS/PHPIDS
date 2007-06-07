@@ -20,32 +20,33 @@
 /**
  * 	1st: require the needed files
  */
-require_once 'IDS/Monitor.php';
-require_once 'IDS/Filter/Storage.php';
+require_once '../../lib/IDS/Monitor.php';
+require_once '../../lib/IDS/Filter/Storage.php';
 
 try {
 	/**
-	 * 	2nd: instanciate the storage object and fetch the rules
+	 * 2nd: instanciate the storage object and fetch the rules
 	 */
 	$storage = new IDS_Filter_Storage();
 	$storage->getFilterFromXML('../../lib/default_filter.xml');
 	
 	/**
-	 * 	3rd: instanciate the ids and start the detection
+	 * 3rd: instanciate the ids and start the detection
 	 * 
-	 * 	here we are using $_GET but you can pass any 
-	 * 	array you want like $_REQUEST, $_SESSION etc.
+	 * here we are using $_GET but you can pass any 
+	 * array you want like $_REQUEST, $_SESSION etc.
 	 */
 	$get = new IDS_Monitor($_GET, $storage);
 	$report = $get->run();
 
 	/**
-	 * 	in the report object you will find any suspicious 
-	 * 	fields of the passed array
+	 * in the report object you will find any suspicious 
+	 * fields of the passed object
 	 */
 
 	if (!$report->isEmpty()) {
-		/** Get the overall impact */
+        
+        /** Get the overall impact */
 		echo "Impact: {$report->getImpact()}\n";
 
 		/** Get array of every tag used */
@@ -65,11 +66,11 @@ try {
 	}
 
 	/**
-	* We store the data using IDS_Log_Composite and
+	* now store the data using IDS_Log_Composite and
 	* Log_File
 	*/
-	require_once 'IDS/Log/File.php';
-	require_once 'IDS/Log/Composite.php';
+	require_once '../../lib/IDS/Log/File.php';
+	require_once '../../lib/IDS/Log/Composite.php';
 
 	$compositeLog = new IDS_Log_Composite();
 	$compositeLog->addLogger(
@@ -82,8 +83,8 @@ try {
 
 } catch (Exception $e) {
 	/**
-	 * 	sth went terribly wrong - maybe the 
-	 * 	filter rules weren't found?
+	 * sth went terribly wrong - maybe the 
+	 * filter rules weren't found?
 	 */
 	printf(
 		'An error occured: %s',

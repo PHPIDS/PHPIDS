@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once 'IDS/Log/Interface.php';
+require_once 'Interface.php';
 
 /**
 * File wrapper
