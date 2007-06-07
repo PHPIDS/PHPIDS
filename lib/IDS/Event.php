@@ -89,11 +89,11 @@ class IDS_Event implements Countable, IteratorAggregate {
 
 		foreach ($filters as $filter) {
             
-            if (!$filter[0] instanceof IDS_Filter_Abstract) {
+            if (!$filter instanceof IDS_Filter_Abstract) {
 				throw new InvalidArgumentException(
 					'Filter must be derived from IDS_Filter_Abstract');
 			}
-			$this->_filters[] = $filter[0];
+			$this->_filters[] = $filter;
 		}
 	}
 

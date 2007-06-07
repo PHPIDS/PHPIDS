@@ -103,7 +103,7 @@ class IDS_Monitor {
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
 			if ($filter = $this->detect($key, $value)) {
-				require_once 'IDS/Event.php';
+				require_once 'Event.php';
 				$this->report->addEvent(
 					new IDS_Event(
 						$key,
@@ -147,7 +147,7 @@ class IDS_Monitor {
 				*/
 				if (is_array($this->tags)) {
 					if (array_intersect($this->tags, $filter->getTags())) {
-						$filters = $this->prepareMatching(
+						$filters[] = $this->prepareMatching(
 							$value,
 							$filter
 						);
@@ -156,7 +156,7 @@ class IDS_Monitor {
 				
 				// here we make use of all filters available
 				else {
-					$filters = $this->prepareMatching(
+					$filters[] = $this->prepareMatching(
 						$value,
 						$filter
 					);
@@ -199,7 +199,7 @@ class IDS_Monitor {
 				$filters[] = $filter;
 			}                        	
 		}
-		
+        
 		return $filters;	
 	}
 	
