@@ -240,7 +240,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/[\w\s]|(?:#|--|{)\B)]]></rule>
+		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/\B|(?:#|--|{)\B)]]></rule>
 		<description>detects common comment types</description>
 		<tags>
 			<tag>xss</tag>
@@ -358,7 +358,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[\B[admin\/\* ]+(?:"|'|`|´|‘|’)+\s?(?:--|#|\/\*|{)?|(?:union\s+select\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:[admin\/\* ]+(?:"|'|`|´|‘|’)+\s?(?:--|#|\/\*|//|{)?|(?:union\s+select\s+\d+\s?,))]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -368,7 +368,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?[\s"`´‘’'\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:['+; ]+\s?SELECT\s?[*\w]+\s?[\s"`´‘’'\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
