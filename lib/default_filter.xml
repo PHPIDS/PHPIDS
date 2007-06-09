@@ -240,7 +240,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/[\w\s]|(?:#|--|{)\B)]]></rule>
+		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/[\w\s]+$)|(?:(?:#|--|{)$)]]></rule>
 		<description>detects common comment types</description>
 		<tags>
 			<tag>xss</tag>
