@@ -32,7 +32,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 *
 	 * @var array
 	 */
-	protected $_events = array();
+	protected $events = array();
 
 	/**
 	 * List of tags
@@ -42,7 +42,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 *
 	 * @var	array
 	 */
-	protected $_tags = false;
+	protected $tags = false;
 
 	/**
 	 * Impact level
@@ -52,7 +52,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 *
 	 * @var	integer
 	 */
-	protected $_impact = false;
+	protected $impact = false;
 
 	/**
 	 * Constructor

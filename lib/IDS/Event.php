@@ -33,35 +33,35 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 *
 	 * @var scalar
 	 */
-	protected $_name	= null;
+	protected $name	= null;
 
 	/**
 	 * Value the filter has been applied
 	 *
 	 * @var scalar
 	 */
-	protected $_value   = null;
+	protected $value   = null;
 
 	/**
 	 * List of filters
 	 *
 	 * @var array
 	 */
-	protected $_filters = array();
+	protected $filters = array();
 
 	/**
 	 * Computed impact
 	 *
 	 * @var integer|bool
 	 */
-	protected $_impact  = false;
+	protected $impact  = false;
 
 	/**
 	 * Assembled tags
 	 *
 	 * @var array
 	 */
-	protected $_tags	= false;
+	protected $tags	= false;
 
 	/**
 	 * Generate a new IDS event
@@ -88,8 +88,8 @@ class IDS_Event implements Countable, IteratorAggregate {
 		$this->_value = $value;
 
 		foreach ($filters as $filter) {
-            
-            if (!$filter instanceof IDS_Filter_Abstract) {
+
+			if (!$filter instanceof IDS_Filter_Abstract) {
 				throw new InvalidArgumentException(
 					'Filter must be derived from IDS_Filter_Abstract');
 			}

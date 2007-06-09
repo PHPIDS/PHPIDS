@@ -31,21 +31,21 @@ abstract class IDS_Filter_Abstract {
 	 *
 	 * @var	mixed
 	 */
-	protected $_rule;
+	protected $rule;
 
 	/**
 	 * List of tags of the filter
 	 *
 	 * @var	array
 	 */
-	protected $_tags = array();
+	protected $tags = array();
 
 	/**
 	 * Filter impact level
 	 *
 	 * @var	integer
 	 */
-	protected $_impact = 0;
+	protected $impact = 0;
 
 	/**
 	 * Constructor
