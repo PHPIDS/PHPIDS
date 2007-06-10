@@ -71,7 +71,7 @@ class IDS_Monitor {
 			$this->tags	 	= $tags;
 		}
 		
-		require_once 'Report.php';
+		require_once 'IDS/Report.php';
 		$this->report = new IDS_Report;
 	}
 	
@@ -103,7 +103,7 @@ class IDS_Monitor {
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
 			if ($filter = $this->detect($key, $value)) {
-				require_once 'Event.php';
+				require_once 'IDS/Event.php';
 				$this->report->addEvent(
 					new IDS_Event(
 						$key,
@@ -147,23 +147,20 @@ class IDS_Monitor {
 				*/
 				if (is_array($this->tags)) {
 					if (array_intersect($this->tags, $filter->getTags())) {
-						$filters[] = $this->prepareMatching(
-							$value,
-							$filter
-						);
+						if ($this->prepareMatching($value, $filter)) {
+							$filters[] = $filter;
+						}
 					}
 				} 
 				
 				// here we make use of all filters available
 				else {
-					$filters[] = $this->prepareMatching(
-						$value,
-						$filter
-					);
+					if ($this->prepareMatching($value, $filter)) {
+						$filters[] = $filter;
+					}
 				}
 			}
-			
-			return $filters;
+			return empty($filters) ? false : $filters;
 		}
 	}
 	
@@ -175,32 +172,25 @@ class IDS_Monitor {
 	* @param	object
 	* @return	array
 	*/
-	private function prepareMatching($value, $filter) {
+	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
 
-		$filters = array();
-		
 		// use mb_convert_encoding if available
 		if (function_exists('mb_convert_encoding')) {
 			$value = @mb_convert_encoding($value, 'UTF-8', $this->charsets);  
-			if ($filter->match(urldecode($value))) {
-				$filters[] = $filter;
-			}
+			return $filter->match(urldecode($value));
 
 		// use iconv if available
 		} elseif (!function_exists('iconv')) {
 			foreach($this->charsets as $charset){
 				$value = iconv($this->charsets[0], 'UTF-8', $value);
 				if ($filter->match(urldecode($value))) {
-					$filters[] = $filter;
+					return true;
 				}                                
-			}        
+			}
 		} else {
-			if ($filter->match(urldecode($value))) {
-				$filters[] = $filter;
-			}                        	
+			return $filter->match(urldecode($value));
 		}
-        
-		return $filters;	
+    	return false;    
 	}
 	
 	/**
