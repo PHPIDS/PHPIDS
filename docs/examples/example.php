@@ -5,7 +5,7 @@
  * 
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
- * Copyright (c) 2007 PHPIDS (http://phpids.org)
+ * Copyright (c) 2007 PHPIDS (http://php-ids.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
