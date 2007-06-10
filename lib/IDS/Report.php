@@ -62,7 +62,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @param	array $events List of IDS_Event objects
 	 */
 	public function __construct(Array $events = NULL) {
-		if ($events !== null) {
+		if ($events !== NULL) {
 			foreach ($events as $event) {
 				$this->addEvent($event);
 			}
@@ -126,18 +126,19 @@ class IDS_Report implements Countable, IteratorAggregate {
 				array_unique($this->tags)
 			);
 		}
+		
 		return $this->tags;
 	}
 
-	 /**
-	 * Get impact level
-	 *
-	 * Return calculated impact level. Every IDS_Event sub object and
-	 * its IDS_Filter objects are used to calculate the overall impact
-	 * level.
-	 *
-	 * @return	integer
-	 */
+	/**
+	* Get impact level
+	*
+	* Return calculated impact level. Every IDS_Event sub object and
+	* its IDS_Filter objects are used to calculate the overall impact
+	* level.
+	*
+	* @return	integer
+	*/
 	public function getImpact() {
 		if (!$this->impact) {
 			$this->impact = 0;
@@ -189,7 +190,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 
 	 /**
-	 * Report is empty?
+	 * Checks whether or not report is filled
 	 *
 	 * @return	bool
 	 */

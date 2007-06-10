@@ -124,7 +124,7 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Checks whether given value matches any of the
+	* Checks whether given value matches any of the supplied
 	* filter patterns
 	*
 	* @access   private
@@ -173,7 +173,7 @@ class IDS_Monitor {
 	* @access	private
 	* @param	string
 	* @param	object
-	* @return	array
+	* @return	mixed	prepared value or boolean
 	*/
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
 
@@ -205,7 +205,7 @@ class IDS_Monitor {
 	* @param	array
 	* @return   void
 	*/
-	public function setExceptions(array $exceptions){
+	public function setExceptions(Array $exceptions){
 		return $this->exceptions = $exceptions;
 	}
 
@@ -241,12 +241,11 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Returns result array containing suspicious
-	* variables and additionally the filter that detected
-	* those
+	* Returns report object providing various functions to
+	* work with detected results
 	*
 	* @access   public
-	* @return   array
+	* @return   object
 	*/
 	public function getReport() {
 		return $this->report;
