@@ -20,8 +20,10 @@
 /**
  * 	1st: require the needed files
  */
-require_once '../../lib/IDS/Monitor.php';
-require_once '../../lib/IDS/Filter/Storage.php';
+set_include_path('../../lib/');
+
+require_once 'IDS/Monitor.php';
+require_once 'IDS/Filter/Storage.php';
 
 try {
 	/**
@@ -73,9 +75,11 @@ try {
 	require_once '../../lib/IDS/Log/Composite.php';
 
 	$compositeLog = new IDS_Log_Composite();
-	$compositeLog->addLogger(
-		IDS_Log_File::getInstance('log.txt')
+	/* uncomment if docs/example/log.txt is available and writeable
+    $compositeLog->addLogger(
+	   IDS_Log_File::getInstance('log.txt')
 	);
+    */
 	
 	if (!empty($report)) {
 		$compositeLog->execute($report);
