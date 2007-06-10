@@ -99,6 +99,16 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:(?:\/|\\|[%&#xu]+\w+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program))]]></rule>
+		<description>detects specific directory and path traversal</description>
+		<tags>
+			<tag>dt</tag>
+			<tag>id</tag>
+			<tag>lfi</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:\/|\\|[%&#xu]+\w+)?(?:\.|[%&#xu]+[0246ef]+)(?:\.|[%&#xu]+[0246ef]+)(?:\/|\\|[%&#xu]+\w+)]]></rule>
 		<description>detects obfuscated directory traversal</description>
 		<tags>
