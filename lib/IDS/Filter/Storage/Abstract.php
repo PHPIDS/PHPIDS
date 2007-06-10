@@ -23,6 +23,8 @@
 * Class to assure the systems API
 *
 * @author	christ1an <ch0012@gmail.com>
+* 
+* @version	$Id$
 */
 abstract class IDS_Filter_Storage_Abstract {
 

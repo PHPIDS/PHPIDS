@@ -25,6 +25,8 @@
  * implementations and is a assembled in IDS_Report.
  *
  * @author	Lars Strojny <lstrojny@neu.de>
+ *
+ * @version	$Id$
  */
 class IDS_Event implements Countable, IteratorAggregate {
 

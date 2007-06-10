@@ -26,6 +26,8 @@ require_once 'IDS/Log/Interface.php';
 * logging mechanism at once
 *
 * @author 	christ1an <ch0012@gmail.com>
+*
+* @version	$Id$
 */
 class IDS_Log_Composite implements IDS_Log_Interface {
 

@@ -26,6 +26,8 @@ require_once 'IDS/Filter/Abstract.php';
  * filter class used in PHP IDS.
  *
  * @author Lars Strojny <lstrojny@neu.de>
+ *
+ * @version	$Id$
  */
 class IDS_Filter_Regexp extends IDS_Filter_Abstract {
 

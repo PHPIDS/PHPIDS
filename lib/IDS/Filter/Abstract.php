@@ -23,6 +23,8 @@
  * A basic implementation of a filter object
  *
  * @author	Lars Strojny <lstrojny@neu.de>
+ *
+ * @version	$Id$
  */
 abstract class IDS_Filter_Abstract {
 

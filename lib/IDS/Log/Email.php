@@ -26,6 +26,8 @@ require_once 'IDS/Log/Interface.php';
 * via email and implements the singleton pattern
 *
 * @author	christ1an <ch0012@gmail.com>
+*
+* @version	$Id$
 */
 class IDS_Log_Email implements IDS_Log_Interface {
 

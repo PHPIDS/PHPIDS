@@ -30,6 +30,8 @@ require_once 'IDS/Filter/Storage/Abstract.php';
 * filter set array.
 *
 * @author	christ1an <ch0012@gmail.com>
+*
+* @version	$Id$
 */
 class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
