@@ -26,7 +26,7 @@
  *
  * @author		.mario <mario.heiderich@gmail.com>
  * @author		christ1an <ch0012@gmail.com>
- * @author		lars <lars@strojny.net>
+ * @author		Lars Strojny <lstrojny@neu.de>
  *
  * @version		$Id$
  */

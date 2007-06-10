@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once 'Abstract.php';
+require_once 'IDS/Filter/Abstract.php';
 
 /**
  * Regexp filter class

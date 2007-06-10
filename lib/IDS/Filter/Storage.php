@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-require_once 'Storage/Abstract.php';
+require_once 'IDS/Filter/Storage/Abstract.php';
 
 /**
 * Filter Storage Class
