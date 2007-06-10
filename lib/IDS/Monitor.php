@@ -199,7 +199,8 @@ class IDS_Monitor {
 	 * @param	array	$exceptions List of fields names that should be ignored
 	 * @return	void
 	 */
-	public function setExceptions(Array $exceptions) {
+	public function setExceptions(Array $exceptions)
+	{
 		$this->exceptions = $exceptions;
 	}
 
