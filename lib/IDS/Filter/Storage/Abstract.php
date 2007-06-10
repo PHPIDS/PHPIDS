@@ -22,7 +22,7 @@
 *
 * Class to assure the systems API
 *
-* @author		 christ1an <ch0012@gmail.com>
+* @author	christ1an <ch0012@gmail.com>
 */
 abstract class IDS_Filter_Storage_Abstract {
 
@@ -46,12 +46,13 @@ abstract class IDS_Filter_Storage_Abstract {
 	*
 	* @access	public
 	* @param	array
-	* @return	mixed	bool true or exception object
+	* @return	object
 	*/
 	public final function setFilterSet($filterSet) {
 		foreach ($filterSet as $filter) {
 			$this->addFilter($filter);
 		}
+		
 		return $this;
 	}
 
@@ -70,7 +71,7 @@ abstract class IDS_Filter_Storage_Abstract {
 	*
 	* @access	public
 	* @param	array
-	* @return	mixed	true on success, otherwise exception object
+	* @return	object
 	*/
 	public final function addFilter(IDS_Filter_Abstract $filter) {
 		$this->filterSet[] = $filter;
