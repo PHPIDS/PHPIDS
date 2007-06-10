@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  */
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 class allTests
