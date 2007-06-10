@@ -24,7 +24,7 @@
  * malicious script fragments and to return an array of possibly
  * intrusive parameters.
  *
- * @author		mario <mario.heiderich@gmail.com>
+ * @author		.mario <mario.heiderich@gmail.com>
  * @author		christ1an <ch0012@gmail.com>
  * @author		lars <lars@strojny.net>
  *
