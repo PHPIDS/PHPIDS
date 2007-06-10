@@ -24,7 +24,7 @@
  * filter results. It provides a convenient API to work with the results.
  *
  * @author	Lars Strojny <lstrojny@neu.de>
- *
+ * foo
  * @version	$Id$
  */
 class IDS_Report implements Countable, IteratorAggregate {
