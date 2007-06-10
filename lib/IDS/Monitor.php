@@ -39,9 +39,9 @@ class IDS_Monitor {
 	private $report;
 
 	/**
-	* This array is meant to define which variables need to be ignored
-	* by the php ids - default is the utmz google analytics parameter
-	*/
+	 * This array is meant to define which variables need to be ignored
+	 * by the php ids - default is the utmz google analytics parameter
+	 */
 	private $exceptions = array(
 		'_utmz'
 	);
@@ -57,14 +57,13 @@ class IDS_Monitor {
 	);
 
 	/**
-	* Constructor
-	*
-	* @access   public
-	* @param	array
-	* @param	object  IDS_Filter_Storage object
-	* @param	tags	optional
-	* @return   mixed
-	*/
+	 * Constructor
+	 *
+	 * @param	array	$reqeust			Request array
+	 * @param	object  IDS_Filter_Storage	Filter storage object
+	 * @param	tags	optional			List of tags where filters should be applied
+	 * @return   mixed
+	 */
 	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = null) {
 		if (!empty($request)) {
 			$this->storage  = $storage;
@@ -77,11 +76,10 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Runs the detection mechanism
-	*
-	* @access   public
-	* @return   IDS_Report
-	*/
+	 * Runs the detection mechanism
+	 *
+	 * @return   IDS_Report
+	 */
 	public function run() {
 		if(!empty($this->request)){
 			foreach ($this->request as $key => $value) {
@@ -93,14 +91,14 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Iterates through given array and tries to detect
-	* suspicious strings
-	*
-	* @access   private
-	* @param	mixed   key
-	* @param	mixed   value
-	* @return   void
-	*/
+	 * Iterates through given array and tries to detect
+	 * suspicious strings
+	 *
+	 * @access   private
+	 * @param	mixed   $key
+	 * @param	mixed   $value
+	 * @return   void
+	 */
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
 			if ($filter = $this->detect($key, $value)) {
@@ -123,14 +121,14 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Checks whether given value matches any of the supplied
-	* filter patterns
-	*
-	* @access   private
-	* @param	mixed
-	* @param	mixed
-	* @return   mixed   false or filter(s) that matched the value
-	*/
+	 * Checks whether given value matches any of the supplied
+	 * filter patterns
+	 *
+	 * @access   private
+	 * @param	mixed	$key
+	 * @param	mixed	$value
+	 * @return   mixed   false or array of filter(s) that matched the value
+	 */
 	private function detect($key, $value) {
 		if (!is_numeric($value) && !empty($value)) {
 
@@ -152,10 +150,9 @@ class IDS_Monitor {
 							$filters[] = $filter;
 						}
 					}
-				}
 
-				// here we make use of all filters available
-				else {
+				# We make use of all filters available
+				} else {
 					if ($this->prepareMatching($value, $filter)) {
 						$filters[] = $filter;
 					}
@@ -167,21 +164,20 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Prepares matching process
-	*
-	* @access	private
-	* @param	string
-	* @param	object
-	* @return	mixed	prepared value or boolean
-	*/
+	 * Prepares matching process
+	 *
+	 * @param	string				$value
+	 * @param	IDS_Filter_Abstract	$filter
+	 * @return	bool
+	 */
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
 
-		// use mb_convert_encoding if available
+		# Use mb_convert_encoding if available
 		if (function_exists('mb_convert_encoding')) {
 			$value = @mb_convert_encoding($value, 'UTF-8', $this->charsets);
 			return $filter->match(urldecode($value));
 
-		// use iconv if available
+		# Use iconv if available
 		} elseif (!function_exists('iconv')) {
 			foreach($this->charsets as $charset){
 				$value = iconv($this->charsets[0], 'UTF-8', $value);
@@ -198,33 +194,30 @@ class IDS_Monitor {
 	}
 
 	/**
-	* Sets exception array
-	*
-	* @access   public
-	* @param	array
-	* @return   void
-	*/
+	 * Sets exception array
+	 *
+	 * @param	array	$exceptions List of fields names that should be ignored
+	 * @return   void
+	 */
 	public function setExceptions(Array $exceptions){
 		return $this->exceptions = $exceptions;
 	}
 
 	/**
-	* Returns exception array
-	*
-	* @access   public
-	* @return   array
-	*/
+	 * Returns exception array
+	 *
+	 * @return   array
+	 */
 	public function getExceptions(){
 		return $this->exceptions;
 	}
 
 	/**
-	* Returns report object providing various functions to
-	* work with detected results
-	*
-	* @access   public
-	* @return   IDS_Report
-	*/
+	 * Returns report object providing various functions to
+	 * work with detected results
+	 *
+	 * @return   IDS_Report
+	 */
 	public function getReport() {
 		return $this->report;
 	}
