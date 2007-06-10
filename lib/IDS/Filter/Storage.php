@@ -102,7 +102,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 					$rule	= (string) $filter->rule;
 					$impact = (string) $filter->impact;
 					$tags	= array_values((array) $filter->tags);
-					$description = (string)$filter->description;
+					$description = (string) $filter->description;
 
 					require_once 'Regexp.php';
 					$this->addFilter(

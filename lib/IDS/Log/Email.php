@@ -130,7 +130,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		} else {
 			throw new Exception(
 				'Please make sure that data returned by
-				 Log_File::prepareData() is a string.'
+				 IDS_Log_File::prepareData() is a string.'
 			);
 		}
 
@@ -152,7 +152,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 			$this->subject,
 			$data,
 			$headers
-			);
+		);
 	}
 
 }

@@ -74,11 +74,11 @@ try {
 
 	$compositeLog = new IDS_Log_Composite();
 	$compositeLog->addLogger(
-		IDS_Log_File::getInstance('test.txt')
+		IDS_Log_File::getInstance('log.txt')
 	);
 	
-	if (!empty($result)) {
-		$compositeLog->execute($result);
+	if (!empty($report)) {
+		$compositeLog->execute($report);
 	}
 
 } catch (Exception $e) {

@@ -22,8 +22,6 @@
 *
 * Class to assure the systems API
 *
-* @package		 profiles
-* @subpackage	 models
 * @author		 christ1an <ch0012@gmail.com>
 */
 abstract class IDS_Filter_Storage_Abstract {

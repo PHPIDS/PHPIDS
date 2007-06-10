@@ -74,8 +74,8 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	$this
 	 */
 	public function addEvent(IDS_Event $event) {
-		$this->_clear();
-		$this->_events[$event->getName()] = $event;
+		$this->clear();
+		$this->events[$event->getName()] = $event;
 
 		return $this;
 	}
@@ -96,7 +96,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 		}
 
 		if ($this->hasEvent($name)) {
-			return $this->_events[$name];
+			return $this->events[$name];
 		}
 
 		return false;
@@ -110,21 +110,21 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	array
 	 */
 	public function getTags() {
-		if (!$this->_tags) {
-			$this->_tags = array();
+		if (!$this->tags) {
+			$this->tags = array();
 
-			foreach ($this->_events as $event) {
-				$this->_tags = array_merge(
-					$this->_tags,
+			foreach ($this->events as $event) {
+				$this->tags = array_merge(
+					$this->tags,
 					$event->getTags()
 				);
 			}
 
-			$this->_tags = array_values(
-				array_unique($this->_tags)
+			$this->tags = array_values(
+				array_unique($this->tags)
 			);
 		}
-		return $this->_tags;
+		return $this->tags;
 	}
 
 	 /**
@@ -137,14 +137,14 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	integer
 	 */
 	public function getImpact() {
-		if (!$this->_impact) {
-			$this->_impact = 0;
-			foreach ($this->_events as $event) {
-				$this->_impact += $event->getImpact();
+		if (!$this->impact) {
+			$this->impact = 0;
+			foreach ($this->events as $event) {
+				$this->impact += $event->getImpact();
 			}
 		}
 
-		return $this->_impact;
+		return $this->impact;
 	}
 
 	/**
@@ -157,7 +157,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 			throw new InvalidArgumentException('Invalid argument given');
 		}
 
-		return isset($this->_events[$name]);
+		return isset($this->events[$name]);
 	}
 
 	/**
@@ -169,7 +169,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	integer
 	 */
 	public function count() {
-		return count($this->_events);
+		return count($this->events);
 	}
 
 	 /**
@@ -183,7 +183,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	Iterator
 	 */
 	public function getIterator() {
-		return new ArrayObject($this->_events);
+		return new ArrayObject($this->events);
 	}
 
 	 /**
@@ -192,7 +192,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	bool
 	 */
 	public function isEmpty() {
-		return empty($this->_events);
+		return empty($this->events);
 	}
 
 	/**
@@ -201,8 +201,8 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 * @return	void
 	 */
 	protected function _clear() {
-		$this->_impact = false;
-		$this->_tags = false;
+		$this->impact = false;
+		$this->tags = false;
 	}
 }
 

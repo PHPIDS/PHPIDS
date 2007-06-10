@@ -79,13 +79,13 @@ class IDS_Event implements Countable, IteratorAggregate {
 			throw new InvalidArgumentException('Expected $name to be a scalar, '
 				. gettype($name) . ' given');
 		}
-		$this->_name = $name;
+		$this->name = $name;
 
 		if (!is_scalar($value)) {
 			throw new InvalidArgumentException('Expected $value to be a scalar, '
 				. gettype($value) . ' given');
 		}
-		$this->_value = $value;
+		$this->value = $value;
 
 		foreach ($filters as $filter) {
 
@@ -93,7 +93,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 				throw new InvalidArgumentException(
 					'Filter must be derived from IDS_Filter_Abstract');
 			}
-			$this->_filters[] = $filter;
+			$this->filters[] = $filter;
 		}
 	}
 
@@ -106,7 +106,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @return scalar
 	 */
 	public function getName() {
-		return $this->_name;
+		return $this->name;
 	}
 
 	/**
@@ -117,7 +117,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @return scalar
 	 */
 	public function getValue() {
-		return $this->_value;
+		return $this->value;
 	}
 
 	/**
@@ -130,14 +130,14 @@ class IDS_Event implements Countable, IteratorAggregate {
 	public function getImpact() {
 
 		// Impact is calculated?
-		if (!$this->_impact) {
-			$this->_impact = 0;
-			foreach ($this->_filters as $filter) {
-				$this->_impact += $filter->getImpact();
+		if (!$this->impact) {
+			$this->impact = 0;
+			foreach ($this->filters as $filter) {
+				$this->impact += $filter->getImpact();
 			}
 		}
 
-		return $this->_impact;
+		return $this->impact;
 	}
 
 	/**
@@ -148,21 +148,21 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @return array
 	 */
 	public function getTags() {
-		if (!$this->_tags) {
-			$this->_tags = array();
+		if (!$this->tags) {
+			$this->tags = array();
 			foreach ($this->getFilters() as $filter) {
-				$this->_tags = array_merge(
-					$this->_tags,
+				$this->tags = array_merge(
+					$this->tags,
 					$filter->getTags()
 				);
 			}
 
-			$this->_tags = array_values(
-				array_unique($this->_tags)
+			$this->tags = array_values(
+				array_unique($this->tags)
 			);
 		}
 
-		return $this->_tags;
+		return $this->tags;
 	}
 
 	/**
@@ -171,7 +171,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @return array
 	 */
 	public function getFilters() {
-		return $this->_filters;
+		return $this->filters;
 	}
 
 	/**

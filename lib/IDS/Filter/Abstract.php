@@ -46,6 +46,13 @@ abstract class IDS_Filter_Abstract {
 	 * @var	integer
 	 */
 	protected $impact = 0;
+	
+	/**
+	 * Filter description
+	 *
+	 * @var	string
+	 */
+	protected $description;
 
 	/**
 	 * Constructor
@@ -56,10 +63,10 @@ abstract class IDS_Filter_Abstract {
 	 * @param	integer $impact			Filter impact level
 	 */
 	public function __construct($rule, $description, Array $tags, $impact) {
-		$this->_description = $description;
-		$this->_rule = $rule;
-		$this->_tags = $tags;
-		$this->_impact = $impact;
+		$this->rule 	= $rule;
+		$this->tags 	= $tags;
+		$this->impact 	= $impact;		
+		$this->description = $description;
 	}
 
 	/**
@@ -78,7 +85,7 @@ abstract class IDS_Filter_Abstract {
 	 * @return	string	Filter description
 	 */
 	public function getDescription() {
-		return $this->_description;
+		return $this->description;
 	}
 
 	/**
@@ -87,7 +94,7 @@ abstract class IDS_Filter_Abstract {
 	 * @return	array	List of tags
 	 */
 	public function getTags() {
-		return $this->_tags;
+		return $this->tags;
 	}
 
 	/**
@@ -96,7 +103,7 @@ abstract class IDS_Filter_Abstract {
 	 * @return	mixed	Filter rule
 	 */
 	public function getRule() {
-		return $this->_rule;
+		return $this->rule;
 	}
 
 	/**
@@ -105,6 +112,16 @@ abstract class IDS_Filter_Abstract {
 	 * @return	integer	Impact level
 	 */
 	public function getImpact() {
-		return $this->_impact;
+		return $this->impact;
 	}
+	
+	/**
+	 * Get filter description
+	 *
+	 * @return	string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
+	
 }

@@ -160,6 +160,7 @@ class IDS_Monitor {
 					}
 				}
 			}
+			
 			return empty($filters) ? false : $filters;
 		}
 	}
@@ -187,6 +188,7 @@ class IDS_Monitor {
 					return true;
 				}
 			}
+			
 		} else {
 			return $filter->match(urldecode($value));
 		}
