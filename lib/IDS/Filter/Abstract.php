@@ -114,14 +114,4 @@ abstract class IDS_Filter_Abstract {
 	public function getImpact() {
 		return $this->impact;
 	}
-	
-	/**
-	 * Get filter description
-	 *
-	 * @return	string
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-	
 }

@@ -202,7 +202,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	 *
 	 * @return	void
 	 */
-	protected function _clear() {
+	protected function clear() {
 		$this->impact = false;
 		$this->tags = false;
 	}
