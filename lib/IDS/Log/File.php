@@ -29,7 +29,7 @@ require_once 'Interface.php';
 */
 class IDS_Log_File implements IDS_Log_Interface {
 
-	private $logfile = null;
+	private $logfile = NULL;
 	private static $instances = array();
 
 	/**
@@ -65,7 +65,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 	private function __clone() { }
 
 	/**
-	* Converts data that is passed to Log_File::execute()
+	* Converts data that is passed to IDS_Log_File::execute()
 	* into a format that can be stored in a file
 	*
 	* You might edit this method to your requirements

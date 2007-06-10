@@ -29,9 +29,9 @@ require_once 'IDS/Log/Interface.php';
 */
 class IDS_Log_Email implements IDS_Log_Interface {
 
-	private $address 			= null;
-	private $subject			= null;
-	private $additionalHeaders 	= null;
+	private $address 			= NULL;
+	private $subject			= NULL;
+	private $additionalHeaders 	= NULL;
 	private static $instances	= array();
 
 	/**
@@ -73,7 +73,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private function __clone() { }
 
 	/**
-	* Converts data that is passed to Log_File::execute()
+	* Converts data that is passed to IDS_Log_Mail::execute()
 	* into a format that can be stored in a file
 	*
 	* You might edit this method to your requirements
