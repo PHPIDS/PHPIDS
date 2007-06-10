@@ -23,7 +23,9 @@
  * The report objects collects a number of events in order to present the
  * filter results. It provides a convenient API to work with the results.
  *
- * @author Lars Strojny <lstrojny@neu.de>
+ * @author	Lars Strojny <lstrojny@neu.de>
+ *
+ * @version	$Id$
  */
 class IDS_Report implements Countable, IteratorAggregate {
 
