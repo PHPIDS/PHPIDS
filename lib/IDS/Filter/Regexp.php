@@ -46,7 +46,7 @@ class IDS_Filter_Regexp extends IDS_Filter_Abstract {
 			);
 		}
 
-		return (bool) preg_match('/' . $this->getRule() . '/', $string);
+		return (bool) preg_match('/' . $this->getRule() . '/iDs', $string);
 	}
 }
 

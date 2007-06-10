@@ -37,7 +37,6 @@ class IDS_Monitor {
 	private $storage = NULL;
 
 	private $report;
-	private $modifier = 'iDs';
 
 	/**
 	* This array is meant to define which variables need to be ignored
@@ -217,27 +216,6 @@ class IDS_Monitor {
 	*/
 	public function getExceptions(){
 		return $this->exceptions;
-	}
-
-	/**
-	* Sets pattern modifier
-	*
-	* @access   public
-	* @param	string
-	* @return   void
-	*/
-	public function setModifier($modifier) {
-		return $this->modifier = $modifier;
-	}
-
-	/**
-	* Returns pattern modifier
-	*
-	* @access   public
-	* @return   string
-	*/
-	public function getModifier() {
-		return $this->modifier;
 	}
 
 	/**
