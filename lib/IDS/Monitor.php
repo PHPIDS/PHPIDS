@@ -245,7 +245,7 @@ class IDS_Monitor {
 	* work with detected results
 	*
 	* @access   public
-	* @return   object
+	* @return   IDS_Report
 	*/
 	public function getReport() {
 		return $this->report;
