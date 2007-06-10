@@ -200,7 +200,7 @@ class IDS_Monitor {
 	 * @return   void
 	 */
 	public function setExceptions(Array $exceptions){
-		return $this->exceptions = $exceptions;
+		$this->exceptions = $exceptions;
 	}
 
 	/**
