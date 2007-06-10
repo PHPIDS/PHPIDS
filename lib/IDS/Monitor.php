@@ -176,7 +176,7 @@ class IDS_Monitor {
 
 		// use mb_convert_encoding if available
 		if (function_exists('mb_convert_encoding')) {
-			$value = @mb_convert_encoding($value, 'UTF-8', $this->charsets);  
+			$value = @mb_convert_encoding($value, 'UTF-8', $this->charsets);
 			return $filter->match(urldecode($value));
 
 		// use iconv if available
@@ -190,6 +190,7 @@ class IDS_Monitor {
 		} else {
 			return $filter->match(urldecode($value));
 		}
+
     	return false;    
 	}
 	
