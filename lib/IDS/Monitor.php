@@ -81,7 +81,7 @@ class IDS_Monitor {
 	* Runs the detection mechanism
 	*
 	* @access   public
-	* @return   array
+	* @return   IDS_Report
 	*/
 	public function run() {
 		if(!empty($this->request)){
