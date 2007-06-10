@@ -22,7 +22,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../
 require_once 'IDS/Event.php';
 require_once 'IDS/Filter/Regexp.php';
 
-class IDS_Event_TestCase extends PHPUnit_Framework_TestCase
+class IDS_Event_TestCase extends PHPUnit2_Framework_TestCase
 {
 	public function setUp()
 	{

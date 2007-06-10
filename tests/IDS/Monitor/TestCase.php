@@ -22,7 +22,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
-class IDS_Monitor_TestCase extends PHPUnit_Framework_TestCase {
+class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
 
 	public function setUp()
 	{

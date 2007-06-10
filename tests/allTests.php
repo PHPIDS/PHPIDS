@@ -29,7 +29,7 @@ class allTests
 
 	public static function suite()
 	{
-		$suite = new PHPUnit_Framework_TestSuite('PHP IDS');
+		$suite = new PHPUnit2_Framework_TestSuite('PHP IDS');
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__FILE__))) as $file) {
 			if (substr((string)$file, -4) === '.php') {
 				$classname = str_replace('/', '_', preg_replace('#^.*/(IDS/.*)\.php$#', '\1', $file));
