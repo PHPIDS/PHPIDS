@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -22,7 +22,7 @@ require_once 'IDS/Log/Interface.php';
 /**
 * Email wrapper
 *
-* This class is designed to send incoming data 
+* This class is designed to send incoming data
 * via email and implements the singleton pattern
 *
 * @author	christ1an <ch0012@gmail.com>
@@ -33,7 +33,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private $subject			= null;
 	private $additionalHeaders 	= null;
 	private static $instances	= array();
-	
+
 	/**
 	* Constructor
 	*
@@ -46,7 +46,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		$this->subject = $subject;
 		$this->additionalHeaders = $headers;
 	}
-	
+
 	/**
 	* Returns an instance of this class
 	*
@@ -57,21 +57,21 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	public static function getInstance($address, $subject, $headers = null) {
 		if (!isset(self::$instances[$address])) {
 			self::$instances[$address] = new IDS_Log_Email(
-				$address, 
-				$subject, 
+				$address,
+				$subject,
 				$headers
 			);
 		}
 
 		return self::$instances[$address];
 	}
-	
+
 	/**
 	* Just for the sake of completeness
 	* of a correct singleton pattern
 	*/
 	private function __clone() { }
-	
+
 	/**
 	* Converts data that is passed to Log_File::execute()
 	* into a format that can be stored in a file
@@ -85,7 +85,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	protected function prepareData($data) {
 		return serialize($data);
 	}
-	
+
 	/**
 	* Sends incoming data via email to given
 	* address
@@ -95,17 +95,17 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @return	mixed	bool or exception object on failure
 	*/
 	public function execute(IDS_Report $data) {
-		
+
 		/**
 		* In case the data has been modified before it might
 		* be necessary to convert it to string since it's pretty
 		* senseless to send array or object via e-mail
 		*/
 		$data = $this->prepareData($data);
-		
+
 		if (is_string($data)) {
 			$data = trim($data);
-			
+
 			// if headers are passed as array, we need to make
 			// a string of it
 			if (is_array($this->additionalHeaders)) {
@@ -116,35 +116,35 @@ class IDS_Log_Email implements IDS_Log_Interface {
 			} else {
 				$headers = $this->additionalHeaders;
 			}
-			
+
 			if(!empty($this->address)){
 				if(is_array($this->address)){
 					foreach($this->address as $address){
 						$this->send($address, $data, $headers);
 					}
 				} else {
-					$this->send($this->address, $data, $headers);						
+					$this->send($this->address, $data, $headers);
 				}
 			}
-			
+
 		} else {
 			throw new Exception(
-				'Please make sure that data returned by 
+				'Please make sure that data returned by
 				 Log_File::prepareData() is a string.'
 			);
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
-	 * This function sends out the reporting mail with the given 
+	 * This function sends out the reporting mail with the given
 	 * address, headers and body
-	 * 
+	 *
 	 * @param string recipient's address
 	 * @param string mailbody
 	 * @param string mailheader
-	 * @return boolean 
+	 * @return boolean
 	 */
 	protected function send($address, $data, $headers){
 		return mail(
@@ -154,7 +154,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 			$headers
 			);
 	}
-	
+
 }
 /*
  * Local variables:

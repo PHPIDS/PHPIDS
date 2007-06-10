@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -31,7 +31,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 
 	private $logfile = null;
 	private static $instances = array();
-	
+
 	/**
 	* Constructor
 	*
@@ -42,7 +42,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 	protected function __construct($logfile) {
 		$this->logfile = $logfile;
 	}
-	
+
 	/**
 	* Returns an instance of this class
 	*
@@ -57,13 +57,13 @@ class IDS_Log_File implements IDS_Log_Interface {
 
 		return self::$instances[$logfile];
 	}
-	
+
 	/**
 	* Just for the sake of completeness
 	* of a correct singleton pattern
 	*/
 	private function __clone() { }
-	
+
 	/**
 	* Converts data that is passed to Log_File::execute()
 	* into a format that can be stored in a file
@@ -77,7 +77,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 	protected function prepareData($data) {
 		return serialize($data);
 	}
-	
+
 	/**
 	* Stores incoming data record into a file
 	*
@@ -86,18 +86,18 @@ class IDS_Log_File implements IDS_Log_Interface {
 	* @return	mixed	bool or exception object on failure
 	*/
 	public function execute(IDS_Report $data) {
-		
+
 		/**
 		* In case the data has been modified before it might
 		* be necessary to convert it to string since we can't
 		* store array or object in a file
 		*/
 		$data = $this->prepareData($data);
-		
+
 		if (is_string($data)) {
 			if (file_exists($this->logfile)) {
 				$data = trim($data);
-				
+
 				if (!empty($data)) {
 					$handle = fopen($this->logfile, 'a');
 					fwrite($handle, $data . "\n");
@@ -110,14 +110,14 @@ class IDS_Log_File implements IDS_Log_Interface {
 			}
 		} else {
 			throw new Exception(
-				'Please make sure that data returned by 
+				'Please make sure that data returned by
 				 Log_File::prepareData() is a string.'
 			);
 		}
-		
+
 		return true;
 	}
-	
+
 }
 /*
  * Local variables:

@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,29 +29,29 @@
  * @author   lars <lars@strojny.net>
  */
 class IDS_Monitor {
-	
+
 	private $tags	 = NULL;
 	private $request = NULL;
 	private $storage = NULL;
-	
+
 	private $report;
 	private $modifier = 'iDs';
-	
+
 	/**
-	* This array is meant to define which variables need to be ignored 
+	* This array is meant to define which variables need to be ignored
 	* by the php ids - default is the utmz google analytics parameter
-	*/	  
+	*/
 	private $exceptions = array(
 		'_utmz'
 	);
 
 	/**
-	 * Use this array to define the charsets the mb_convert_encoding 
-	 * has to work with. You shouldn't touch this as long you know 
+	 * Use this array to define the charsets the mb_convert_encoding
+	 * has to work with. You shouldn't touch this as long you know
 	 * exactly what you do
 	 */
 	private $charsets = array(
-		'UTF-7', 
+		'UTF-7',
 		'ASCII'
 	);
 
@@ -70,11 +70,11 @@ class IDS_Monitor {
 			$this->request  = $request;
 			$this->tags	 	= $tags;
 		}
-		
+
 		require_once 'IDS/Report.php';
 		$this->report = new IDS_Report;
 	}
-	
+
 	/**
 	* Runs the detection mechanism
 	*
@@ -87,10 +87,10 @@ class IDS_Monitor {
 				$this->iterate($key, $value);
 			}
 		}
-		
+
 		return $this->getReport();
 	}
-	
+
 	/**
 	* Iterates through given array and tries to detect
 	* suspicious strings
@@ -120,7 +120,7 @@ class IDS_Monitor {
 			}
 		}
 	}
-	
+
 	/**
 	* Checks whether given value matches any of the
 	* filter patterns
@@ -132,11 +132,11 @@ class IDS_Monitor {
 	*/
 	private function detect($key, $value) {
 		if (!is_numeric($value) && !empty($value)) {
-			
+
 			if (in_array($key, $this->exceptions)) {
 				return false;
 			}
-			
+
 			$filters = array();
 			$filterSet = $this->storage->getFilterSet();
 			foreach ($filterSet as $filter) {
@@ -151,8 +151,8 @@ class IDS_Monitor {
 							$filters[] = $filter;
 						}
 					}
-				} 
-				
+				}
+
 				// here we make use of all filters available
 				else {
 					if ($this->prepareMatching($value, $filter)) {
@@ -163,7 +163,7 @@ class IDS_Monitor {
 			return empty($filters) ? false : $filters;
 		}
 	}
-	
+
 	/**
 	* Prepares matching process
 	*
@@ -185,15 +185,15 @@ class IDS_Monitor {
 				$value = iconv($this->charsets[0], 'UTF-8', $value);
 				if ($filter->match(urldecode($value))) {
 					return true;
-				}                                
+				}
 			}
 		} else {
 			return $filter->match(urldecode($value));
 		}
 
-    	return false;    
+    	return false;
 	}
-	
+
 	/**
 	* Sets exception array
 	*
@@ -204,17 +204,17 @@ class IDS_Monitor {
 	public function setExceptions(array $exceptions){
 		return $this->exceptions = $exceptions;
 	}
-	
+
 	/**
 	* Returns exception array
 	*
 	* @access   public
 	* @return   array
-	*/	  
+	*/
 	public function getExceptions(){
 		return $this->exceptions;
 	}
-	
+
 	/**
 	* Sets pattern modifier
 	*
@@ -235,7 +235,7 @@ class IDS_Monitor {
 	public function getModifier() {
 		return $this->modifier;
 	}
-	
+
 	/**
 	* Returns result array containing suspicious
 	* variables and additionally the filter that detected

@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -27,7 +27,7 @@
  * @author	Lars Strojny <lstrojny@neu.de>
  */
 class IDS_Event implements Countable, IteratorAggregate {
-	
+
 	/**
 	 * Event name
 	 *
@@ -128,7 +128,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @return integer
 	 */
 	public function getImpact() {
-		
+
 		// Impact is calculated?
 		if (!$this->_impact) {
 			$this->_impact = 0;
@@ -136,7 +136,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 				$this->_impact += $filter->getImpact();
 			}
 		}
-		
+
 		return $this->_impact;
 	}
 
@@ -152,16 +152,16 @@ class IDS_Event implements Countable, IteratorAggregate {
 			$this->_tags = array();
 			foreach ($this->getFilters() as $filter) {
 				$this->_tags = array_merge(
-					$this->_tags, 
+					$this->_tags,
 					$filter->getTags()
 				);
 			}
-			
+
 			$this->_tags = array_values(
 				array_unique($this->_tags)
 			);
 		}
-		
+
 		return $this->_tags;
 	}
 

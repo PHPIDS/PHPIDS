@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -101,7 +101,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 
 		return false;
 	}
-   
+
 	/**
 	 * Get list of tags
 	 *
@@ -112,21 +112,21 @@ class IDS_Report implements Countable, IteratorAggregate {
 	public function getTags() {
 		if (!$this->_tags) {
 			$this->_tags = array();
-			
+
 			foreach ($this->_events as $event) {
 				$this->_tags = array_merge(
-					$this->_tags, 
+					$this->_tags,
 					$event->getTags()
 				);
 			}
-			
+
 			$this->_tags = array_values(
 				array_unique($this->_tags)
 			);
 		}
 		return $this->_tags;
 	}
- 
+
 	 /**
 	 * Get impact level
 	 *
@@ -171,13 +171,13 @@ class IDS_Report implements Countable, IteratorAggregate {
 	public function count() {
 		return count($this->_events);
 	}
- 
+
 	 /**
 	 * Return iterator object
 	 *
 	 * In order to provide the possibility to directly iterate over
 	 * the IDS_Event object the IteratorAggregate is implemented. So
-	 * a user can easily use foreach () to iterate through all the 
+	 * a user can easily use foreach () to iterate through all the
 	 * IDS_Event objects
 	 *
 	 * @return	Iterator
@@ -185,7 +185,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	public function getIterator() {
 		return new ArrayObject($this->_events);
 	}
- 
+
 	 /**
 	 * Report is empty?
 	 *

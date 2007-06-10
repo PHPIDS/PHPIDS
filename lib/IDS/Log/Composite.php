@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -28,15 +28,15 @@ require_once 'Interface.php';
 * @author 	christ1an <ch0012@gmail.com>
 */
 class IDS_Log_Composite implements IDS_Log_Interface {
-	
+
 	/**
 	* Holds stored loggers
-	* 
+	*
 	* @var		array
 	* @access	public
 	*/
 	public $loggers = array();
-	
+
 	/**
 	* Loops through registered loggers and executes
 	* their execute method
@@ -48,9 +48,9 @@ class IDS_Log_Composite implements IDS_Log_Interface {
 	public function execute(IDS_Report $data) {
 		foreach ($this->loggers as $logger) {
 			$logger->execute($data);
-		}		
+		}
 	}
-	
+
 	/**
 	* Adds a logger
 	*
@@ -66,24 +66,24 @@ class IDS_Log_Composite implements IDS_Log_Interface {
 			$this->loggers[] = $logger;
 		}
 	}
-	
+
 	/**
 	* Removes a logger
 	*
 	* @param	object
-	* @access	public	
+	* @access	public
 	* @return	boolean
 	*/
 	public function removeLogger(IDS_Log_Interface $logger) {
 		$key = array_search($logger, $this->loggers);
-		
+
 		if (isset($this->loggers[$key])) {
 			unset($this->loggers[$key]);
 			return true;
 		}
-		
+
 		return false;
-	}	
+	}
 }
 /*
  * Local variables:

@@ -2,7 +2,7 @@
 
 /**
  * PHP IDS
- * 
+ *
  * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
  *
  * Copyright (c) 2007 PHPIDS (http://phpids.org)
@@ -11,7 +11,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the license.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -34,9 +34,9 @@ class IDS_Monitor_TestCase extends PHPUnit_Framework_TestCase {
 		$test = new IDS_Monitor(
 			array('user' => 'admin<script/src=http/attacker.com>'),
 			$this->storage,
-			array('csrf')				
+			array('csrf')
 		);
-		
+
 		$result = $test->run();
 
 		foreach ($result->getEvent('user')->getFilters() as $filter) {
@@ -52,9 +52,9 @@ class IDS_Monitor_TestCase extends PHPUnit_Framework_TestCase {
 			),
 			$this->storage
 		);
-		
+
 		$result = $test->run();
-		
+
 		$this->assertTrue($result->hasEvent('id'));
 		$this->assertTrue($result->hasEvent('name'));
 	}
