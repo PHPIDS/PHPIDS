@@ -291,7 +291,7 @@
 		<impact>2</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%0(?:0|a)|&#0(?:0|a)|\\0(?:0|a)?|&#x0(?:0|a))]]></rule>
+		<rule><![CDATA[(?:%0\w|&#0\w|\\0\w|&#x0\w)]]></rule>
 		<description>detects nullbytes and HTTP response splitting</description>
 		<tags>
 			<tag>id</tag>
