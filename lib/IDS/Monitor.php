@@ -62,7 +62,7 @@ class IDS_Monitor {
 	 * @param	array	$reqeust			Request array
 	 * @param	object  IDS_Filter_Storage	Filter storage object
 	 * @param	tags	optional			List of tags where filters should be applied
-	 * @return   mixed
+	 * @return 	mixed
 	 */
 	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = null) {
 		if (!empty($request)) {
@@ -78,7 +78,7 @@ class IDS_Monitor {
 	/**
 	 * Runs the detection mechanism
 	 *
-	 * @return   IDS_Report
+	 * @return	IDS_Report
 	 */
 	public function run() {
 		if(!empty($this->request)){
@@ -94,10 +94,10 @@ class IDS_Monitor {
 	 * Iterates through given array and tries to detect
 	 * suspicious strings
 	 *
-	 * @access   private
+	 * @access	private
 	 * @param	mixed   $key
 	 * @param	mixed   $value
-	 * @return   void
+	 * @return 	void
 	 */
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
@@ -124,10 +124,10 @@ class IDS_Monitor {
 	 * Checks whether given value matches any of the supplied
 	 * filter patterns
 	 *
-	 * @access   private
+	 * @access	private
 	 * @param	mixed	$key
 	 * @param	mixed	$value
-	 * @return   mixed   false or array of filter(s) that matched the value
+	 * @return	mixed   false or array of filter(s) that matched the value
 	 */
 	private function detect($key, $value) {
 		if (!is_numeric($value) && !empty($value)) {
@@ -196,18 +196,21 @@ class IDS_Monitor {
 	/**
 	 * Sets exception array
 	 *
-	 * @param	array	$exceptions List of fields names that should be ignored
+	 * @param	mixed	$exceptions list of fields names that should be ignored
 	 * @return	void
 	 */
-	public function setExceptions(Array $exceptions)
-	{
+	public function setExceptions($exceptions) {
+		if (!is_array($exceptions)) {
+			$exceptions = array($exceptions);
+		}
+		
 		$this->exceptions = $exceptions;
 	}
 
 	/**
 	 * Returns exception array
 	 *
-	 * @return   array
+	 * @return	array
 	 */
 	public function getExceptions() {
 		return $this->exceptions;
@@ -217,7 +220,7 @@ class IDS_Monitor {
 	 * Returns report object providing various functions to
 	 * work with detected results
 	 *
-	 * @return   IDS_Report
+	 * @return	IDS_Report
 	 */
 	public function getReport() {
 		return $this->report;
