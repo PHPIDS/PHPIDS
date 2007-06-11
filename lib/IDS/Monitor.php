@@ -171,28 +171,15 @@ class IDS_Monitor {
 	 * @return	bool
 	 */
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
-
-		# Use mb_convert_encoding if available
-		if (function_exists('mb_convert_encoding')) {
-			$value = @mb_convert_encoding($value, 'UTF-8', $this->charsets);
-			return $filter->match(urldecode($value));
-
-		# Use iconv if available
-		} elseif (!function_exists('iconv')) {
-			foreach($this->charsets as $charset){
-				$value = iconv($this->charsets[0], 'UTF-8', $value);
-				if ($filter->match(urldecode($value))) {
-					return true;
-				}
-			}
-			
-		} else {
-			return $filter->match(urldecode($value));
-		}
-
-    	return false;
+		require_once('IDS/Converter/Converter.php';
+		
+		return $filter->match(
+			urldecode(
+				IDS_Converter::convertFromUTF7($value)
+			)
+		);
 	}
-
+	
 	/**
 	 * Sets exception array
 	 *
