@@ -64,8 +64,8 @@
 		<impact>2</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})]]></rule>
-		<description>detects the IE hex entities</description>
+		<rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(\\\d{2,3})]]></rule>
+		<description>detects the IE octal, hex and unicode entities</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -183,6 +183,15 @@
 		</tags>
 		<impact>5</impact>
 	</filter>
+	<filter>
+		<rule><![CDATA[(?:\/\/\d{4}\.\d{4}\.\d{4}.\d{4})|(?:0x\w{2}\.0x\w{2}\.0x\w{2}\.0x\w{2})]]></rule>
+		<description>detects octal and hexadecimal ip address schemes</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>3</impact>
+	</filter>    
 	<filter>
 		<rule><![CDATA[(?:binding\s?=|moz-binding|behavior\s?=)]]></rule>
 		<description>detects bindings and behavior injections</description>
