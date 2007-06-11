@@ -130,7 +130,8 @@ class IDS_Monitor {
 	 * @return	mixed   false or array of filter(s) that matched the value
 	 */
 	private function detect($key, $value) {
-		if (!is_numeric($value) && !empty($value)) {
+		
+        if (!is_numeric($value) && !empty($value)) {
 
 			if (in_array($key, $this->exceptions)) {
 				return false;
@@ -173,11 +174,10 @@ class IDS_Monitor {
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
         require_once 'IDS/Converter.php';
 		
-		return $filter->match(
-			urldecode(
-				IDS_Converter::convertFromUTF7($value)
-			)
-		);
+        $value = IDS_Converter::convertFromUTF7($value);
+        $value = IDS_Converter::convertFromURLNullByte($value);
+        
+		return $filter->match(urldecode($value));
 	}
 	
 	/**

@@ -50,9 +50,9 @@ class IDS_Converter {
             '+ACQ'      => '$',
             '+AD0'      => '=',
             '+AGA'      => '`',
-            '+ALQ'      => '´',
-			'+IBg-'		=> '‘',
-			'+IBk-'		=> '’',		
+            '+ALQ'      => 'ï¿½',
+			'+IBg-'		=> 'ï¿½',
+			'+IBk-'		=> 'ï¿½',		
             '+AHw-'     => '|',
             '+ACo-'     => '*',
             '+AF4-'     => '^'
@@ -65,4 +65,24 @@ class IDS_Converter {
         return $data;
     }
 
+    /**
+     * Converts urlencoded special chars to double-urlencoded 
+     * chars to enable detection
+     *
+     * @param   string  $data
+     * @return  string  converted $data
+     */
+    public static function convertFromURLNullByte($data) {
+
+        $schemes = array(
+            '%0'   => '%250', 
+            '%1'   => '%251'   
+        );
+        
+        foreach ($schemes as $scheme => $replacement) {         
+            $data = str_replace($scheme, $replacement, $data);  
+        }
+
+        return $data;        
+    }
 }
