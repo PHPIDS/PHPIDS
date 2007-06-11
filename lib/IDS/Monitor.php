@@ -171,7 +171,6 @@ class IDS_Monitor {
 	 * @return	bool
 	 */
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
-		
         require_once 'IDS/Converter.php';
 		
 		return $filter->match(
