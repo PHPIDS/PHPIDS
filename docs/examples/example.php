@@ -71,17 +71,17 @@ try {
     */
     require_once '../../lib/IDS/Log/File.php';
     require_once '../../lib/IDS/Log/Composite.php';
-    
+   
+    /* uncomment if docs/example/log.txt is available and writeable    
     $compositeLog = new IDS_Log_Composite();
-    /* uncomment if docs/example/log.txt is available and writeable
     $compositeLog->addLogger(
        IDS_Log_File::getInstance('log.txt')
     );
-    */
     
-    if (!empty($report)) {
+    if (!$report->isEmpty()) {
         $compositeLog->execute($report);
     }
+    */
 } catch (Exception $e) {
     /*
     * sth went terribly wrong - maybe the 
