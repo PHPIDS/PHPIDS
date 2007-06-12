@@ -99,7 +99,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\/|\\|[%&#xu]+\w+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]+(?:%|[&#xu0]+25|37)))]]></rule>
+		<rule><![CDATA[(?:(?:\/|\\|[%&#xu0]+[5C|92]+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]{3,}(?:%|[&#xu0]+25|37)))]]></rule>
 		<description>detects specific directory and path traversal</description>
 		<tags>
 			<tag>dt</tag>
