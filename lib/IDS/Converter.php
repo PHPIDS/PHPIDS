@@ -73,15 +73,11 @@ class IDS_Converter {
      * @return  string  converted $data
      */
     public static function convertFromURLNullByte($data) {
-
-        $schemes = array(
-            '%0'   => '%250', 
-            '%1'   => '%251'   
-        );
-        
-        foreach ($schemes as $scheme => $replacement) {         
-            $data = str_replace($scheme, $replacement, $data);  
-        }
+    
+        $data = rawurlencode($data);
+        $data = preg_replace('/%([01]\w)/', "%2525$1", $data);
+        $data = preg_replace('/%5C0/', '%252500', $data);
+        $data = rawurldecode($data);
 
         return $data;        
     }

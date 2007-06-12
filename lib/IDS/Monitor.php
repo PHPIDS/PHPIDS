@@ -47,16 +47,6 @@ class IDS_Monitor {
 	);
 
 	/**
-	 * Use this array to define the charsets the mb_convert_encoding
-	 * has to work with. You shouldn't touch this as long you know
-	 * exactly what you do
-	 */
-	private $charsets = array(
-		'UTF-7',
-		'ASCII'
-	);
-
-	/**
 	 * Constructor
 	 *
 	 * @param	array	$reqeust			Request array
@@ -101,7 +91,8 @@ class IDS_Monitor {
 	 */
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
-			if ($filter = $this->detect($key, $value)) {
+
+        	if ($filter = $this->detect($key, $value)) {
 				require_once 'IDS/Event.php';
 				$this->report->addEvent(
 					new IDS_Event(
@@ -172,6 +163,7 @@ class IDS_Monitor {
 	 * @return	bool
 	 */
 	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
+        
         require_once 'IDS/Converter.php';
 		
         $value = IDS_Converter::convertFromUTF7($value);
