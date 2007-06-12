@@ -66,19 +66,18 @@ class IDS_Converter {
     }
 
     /**
-     * Converts urlencoded special chars to double-urlencoded 
-     * chars to enable detection
-     *
-     * @param   string  $data
-     * @return  string  converted $data
+     * Checks if data needs to be urldecoded
+     * 
+     * @param   string  $key
+     * @param   string  $value
+     ? @return  string  $data
      */
-    public static function convertFromURLNullByte($data) {
-    
-        $data = rawurlencode($data);
-        $data = preg_replace('/%([01]\w)/', "%2525$1", $data);
-        $data = preg_replace('/%5C0/', '%252500', $data);
-        $data = rawurldecode($data);
+    public static function convertToUrlencoded($key, $value) {
+        
+        if(isset($_POST[$key]) && !preg_match('/%[01]\w/iDs', $_POST[$key])){
+            $value = urldecode($value);
+        }
 
-        return $data;        
+        return $value;    
     }
 }

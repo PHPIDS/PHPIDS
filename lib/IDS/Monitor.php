@@ -138,14 +138,14 @@ class IDS_Monitor {
 				*/
 				if (is_array($this->tags)) {
 					if (array_intersect($this->tags, $filter->getTags())) {
-						if ($this->prepareMatching($value, $filter)) {
+						if ($this->prepareMatching($key, $value, $filter)) {
 							$filters[] = $filter;
 						}
 					}
 
 				# We make use of all filters available
 				} else {
-					if ($this->prepareMatching($value, $filter)) {
+					if ($this->prepareMatching($key, $value, $filter)) {
 						$filters[] = $filter;
 					}
 				}
@@ -162,14 +162,14 @@ class IDS_Monitor {
 	 * @param	IDS_Filter_Abstract	$filter
 	 * @return	bool
 	 */
-	private function prepareMatching($value, IDS_Filter_Abstract $filter) {
+	private function prepareMatching($key, $value, IDS_Filter_Abstract $filter) {
         
         require_once 'IDS/Converter.php';
 		
         $value = IDS_Converter::convertFromUTF7($value);
-        $value = IDS_Converter::convertFromURLNullByte($value);
+        $value = IDS_Converter::convertToUrlencoded($key, $value);
         
-		return $filter->match(urldecode($value));
+		return $filter->match($value);
 	}
 	
 	/**
