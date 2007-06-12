@@ -146,15 +146,26 @@
 		<impact>3</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:javascript:|@import|;base64|alert[\s]?\(|expression[\s]?\(|urn[\s]?\(|fromCharcode[\s]?\(|decodeURIComponent[\s]?\(|eval[\s]?\(|Execute[\s]?\()]]></rule>
-		<description>detects imported poisoned stylesheets, base64 attacks, vbscript probings and typical js injections</description>
+		<rule><![CDATA[(?:javascript:|@import|;base64)]]></rule>
+		<description>detects possible includes</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
 			<tag>id</tag>
 			<tag>rfe</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:(?:alert|prompt|confirm|dialog|expression|urn|fromCharcode|decodeURIComponent|eval|Execute)[\s]?[(;])]]></rule>
+		<description>detects possible includesa and typical script methods</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>5</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:\s?(?:window|parent|top|self|document)?\s?.\s?location\s?(?:=|[%&#xu0]+[163d]+))|(?:\s?document\s?.\s?cookie)]]></rule>
