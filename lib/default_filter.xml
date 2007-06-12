@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <filters>
 	<filter>
-		<rule><![CDATA[(?:\\?\W.*\>)|(?:\s?\/>)]]></rule>
+		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\>)|(?:\s?\/>)]]></rule>
 		<description>finds html breaking injections including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -10,7 +10,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?\W.*\<)]]></rule>
+		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\<)]]></rule>
 		<description>finds attribute breaking injections including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -73,7 +73,7 @@
 		<impact>2</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?\W\s*(?:\)|\}))]]></rule>
+		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)\s*(?:\)|\}))]]></rule>
 		<description>finds closing javascript breaker including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
