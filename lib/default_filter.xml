@@ -99,7 +99,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\/|\\|[%&#xu]+\w+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)\w+(?:%|[&#xu0]+25|37)))]]></rule>
+		<rule><![CDATA[(?:(?:\/|\\|[%&#xu]+\w+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]+(?:%|[&#xu0]+25|37)))]]></rule>
 		<description>detects specific directory and path traversal</description>
 		<tags>
 			<tag>dt</tag>
@@ -291,7 +291,7 @@
 		<impact>2</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%0\w|&#0\w|\\0\w|&#x0\w)]]></rule>
+		<rule><![CDATA[(?:%[01]\w|&#0\w|\\0\w|&#x0\w)]]></rule>
 		<description>detects nullbytes and HTTP response splitting</description>
 		<tags>
 			<tag>id</tag>
