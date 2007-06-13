@@ -99,7 +99,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\/|\\|[%&#xu0]+[5C|92]+)+(bin|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]{3,}(?:%|[&#xu0]+25|37)))]]></rule>
+		<rule><![CDATA[(?:(?:\/|\\|[%&#xu0]+[5C|92]+)+(bin|home|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]{3,}(?:%|[&#xu0]+25|37)))]]></rule>
 		<description>detects specific directory and path traversal</description>
 		<tags>
 			<tag>dt</tag>
@@ -270,8 +270,18 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/[\w\s]+$)|(?:(?:#|--|{)$)]]></rule>
+		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)]]></rule>
 		<description>detects common comment types</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+		</tags>
+		<impact>3</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:--.*>)]]></rule>
+		<description>detects comments to exploit firefox' faulty rendering</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -302,7 +312,7 @@
 		<impact>2</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%[01]\w|&#0\w|\\0\w|&#x0\w)]]></rule>
+		<rule><![CDATA[(?:%[01]\w|&#0\w|\\0\w?|&#x0\w)]]></rule>
 		<description>detects nullbytes and HTTP response splitting</description>
 		<tags>
 			<tag>id</tag>
