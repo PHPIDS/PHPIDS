@@ -473,7 +473,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:<[?%](?:php)?\s?(?:eval|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
+		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
 		<description>detects code injection attempts including eval, execute, preg-like functions and others</description>
 		<tags>
 			<tag>id</tag>
