@@ -20,8 +20,8 @@
 /**
  * PHPIDS specific utility class to convert charsets manually
  *
- * @author		christ1an <ch0012@gmail.com>
- * @version		$Id$
+ * @author      christ1an <ch0012@gmail.com>
+ * @version     $Id$
  */
 class IDS_Converter {
 
@@ -51,8 +51,8 @@ class IDS_Converter {
             '+AD0'      => '=',
             '+AGA'      => '`',
             '+ALQ'      => '�',
-			'+IBg-'		=> '�',
-			'+IBk-'		=> '�',		
+            '+IBg-'     => '�',
+            '+IBk-'     => '�',     
             '+AHw-'     => '|',
             '+ACo-'     => '*',
             '+AF4-'     => '^'
@@ -77,7 +77,11 @@ class IDS_Converter {
         if(isset($_POST[$key]) && !preg_match('/%[01]\w/iDs', $_POST[$key])){
             $value = urldecode($value);
         }
-
+        
+        if(isset($_GET[$key]) && preg_match('/%[01]\w/iDs', rawurlencode($_GET[$key]), $matches)){
+            $value = urldecode(preg_replace('/%([01]\w)/iDs', "%25$1", rawurlencode($value)));
+        }
+        
         return $value;    
     }
 }
