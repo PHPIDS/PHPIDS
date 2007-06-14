@@ -61,6 +61,11 @@ class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
 		$this->assertTrue($result->hasEvent('name'));
 	}
 
+	public function testNoResult() {
+		$test = new IDS_Monitor(array('test', 'bla'), $this->storage);
+		$this->assertTrue($test->run()->isEmpty());
+	}
+
 	public function testList()
 	{
 		$test = new IDS_Monitor(
