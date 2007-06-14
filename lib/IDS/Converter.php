@@ -70,18 +70,40 @@ class IDS_Converter {
      * 
      * @param   string  $key
      * @param   string  $value
-     ? @return  string  $data
+     ? @return  string  $value
      */
     public static function convertToUrlencoded($key, $value) {
         
+        #check if value is post and decode to normalize
         if(isset($_POST[$key]) && !preg_match('/%[01]\w/iDs', $_POST[$key])){
             $value = urldecode($value);
         }
         
+        #check if value is get and matches nullbyte pattern
         if(isset($_GET[$key]) && preg_match('/%[01]\w/iDs', rawurlencode($_GET[$key]), $matches)){
             $value = urldecode(preg_replace('/%([01]\w)/iDs', "%25$1", rawurlencode($value)));
         }
         
         return $value;    
     }
+
+    /**
+     * Checks if data needs to be urldecoded
+     * 
+     * @param   string  $key
+     ? @return  string  $value
+     */ 
+     public static function convertFromJSCharcode($value) {   
+
+        #check if value matches typical charCode pattern
+        if(preg_match('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)){
+            $converted = '';
+            $charcode = explode(',', preg_replace('/\s/', '', $matches[0]));       
+            foreach($charcode as $char){
+                $converted .= chr($char);                               
+            }       
+            $value .= ' [' . $converted . '] ';
+        }
+        return $value;
+     }
 }
