@@ -43,7 +43,7 @@ class IDS_Monitor {
 	 * by the php ids - default is the utmz google analytics parameter
 	 */
 	private $exceptions = array(
-		'_utmz'
+		'__utmz'
 	);
 
 	/**
