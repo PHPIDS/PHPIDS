@@ -38,7 +38,7 @@
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:\\?\W\s+[\w\/\\\*]+\s*=)]]></rule>
-		<description>finds attribute breaking injections including obsucated attributes</description>
+		<description>finds attribute breaking injections including obfuscated attributes</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
