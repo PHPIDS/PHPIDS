@@ -34,33 +34,31 @@ class IDS_Converter {
     public static function convertFromUTF7($data) {
 
         $schemes = array(
-            '+AFwAIg'   => '"',
-            '+AFw\''    => '\'',
-            '+ADw'      => '<',
-            '+AD4'      => '>',
-            '+AFs'      => '[',
-            '+AF0'      => ']',
-            '+AHs'      => '{',
-            '+AH0'      => '}',
-            '+AFwAXA'   => '\\',
-            '+ADs'      => ';',
-            '+ACM'      => '#',
-            '+ACY'      => '&',
-            '+ACU'      => '%',
-            '+ACQ'      => '$',
-            '+AD0'      => '=',
-            '+AGA'      => '`',
-            '+ALQ'      => '�',
-            '+IBg-'     => '�',
-            '+IBk-'     => '�',     
-            '+AHw-'     => '|',
-            '+ACo-'     => '*',
-            '+AF4-'     => '^'
+            '+AFwAIg'  => '"',
+            '+AFw\''   => '\'',
+            '+ADw'     => '<',
+            '+AD4'     => '>',
+            '+AFs'     => '[',
+            '+AF0'     => ']',
+            '+AHs'     => '{',
+            '+AH0'     => '}',
+            '+AFwAXA'  => '\\',
+            '+ADs'     => ';',
+            '+ACM'     => '#',
+            '+ACY'     => '&',
+            '+ACU'     => '%',
+            '+ACQ'     => '$',
+            '+AD0'     => '=',
+            '+AGA'     => '`',
+            '+ALQ'     => '"',
+            '+IBg'     => '"',
+            '+IBk'     => '"',     
+            '+AHw'     => '|',
+            '+ACo'     => '*',
+            '+AF4'     => '^'
         );
         
-        foreach ($schemes as $scheme => $replacement) {         
-            $data = str_replace($scheme, $replacement, $data);  
-        }
+        $data = str_ireplace(array_keys($schemes), array_values($schemes), $data);  
 
         return $data;
     }
