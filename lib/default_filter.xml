@@ -234,7 +234,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:on\w+[^=]*=.*\\?(?:\W|\>)?)]]></rule>
+		<rule><![CDATA[(?:on(?!g\>)\w+[^=]*=.*\\?(?:\W|\>)?)]]></rule>
 		<description>detects possible event handlers</description>
 		<tags>
 			<tag>xss</tag>
@@ -243,7 +243,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<s(?:.*)t)]]></rule>
+		<rule><![CDATA[(?:\<s(?:[^\>]*)t(?!rong))]]></rule>
 		<description>detects obfuscated script tags</description>
 		<tags>
 			<tag>xss</tag>
