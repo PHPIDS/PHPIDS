@@ -36,8 +36,8 @@ class IDS_Converter {
         $schemes = array(
             '+AFwAIg'  => '"',
             '+AFw\''   => '\'',
-            '+ADw'     => '<',
-            '+AD4'     => '>',
+            '+ADw-'     => '<',
+            '+AD4-'     => '>',
             '+AFs'     => '[',
             '+AF0'     => ']',
             '+AHs'     => '{',

@@ -46,7 +46,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\+A\w\w-|ACIAPgA8|AFAAVAA)]]></rule>
+		<rule><![CDATA[(?:\+?A\w\w-|ACIAPgA8|AFAAVAA|AFwAXA|AFwAIg)]]></rule>
 		<description>finds utf7 attacks in general</description>
 		<tags>
 			<tag>xss</tag>
@@ -158,7 +158,7 @@
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:(?:alert|prompt|confirm|dialog|expression|urn|fromCharcode|decodeURIComponent|eval|Execute)[\s]?[(;])]]></rule>
-		<description>detects possible includesa and typical script methods</description>
+		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
