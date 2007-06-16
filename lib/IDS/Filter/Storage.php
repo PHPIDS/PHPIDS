@@ -88,11 +88,11 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
 			if (file_exists($source)) {
 				$filters = simplexml_load_file($source, null, LIBXML_COMPACT);
-			} else {
+			} elseif (substr($source, 0, 1) == '<') {
 				$filters = simplexml_load_string($source, null, LIBXML_COMPACT);
 			}
 
-			if ($filters === false) {
+			if (empty($filters)) {
 				throw new Exception(
 					'XML data could not be loaded.' .
 					'Make sure you specified the correct path.'
