@@ -3,7 +3,7 @@
 /**
  * PHP IDS
  *
- * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
+ * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS (http://php-ids.org)
  *
@@ -76,5 +76,45 @@ class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
 		$this->assertTrue($result->hasEvent(1));
 		$this->assertEquals(6, $result->getImpact());
 	}
+
+    public function testXSSList() {
+        $test = new IDS_Monitor(
+            array('\'\'"--><script>eval(String.fromCharCode(88,83,83)));%00', '"></a style="xss:ex/**/pression(alert(1));"'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(22, $result->getImpact());        
+    }
+
+    public function testSQLIList() {
+        $test = new IDS_Monitor(
+            array('" OR 1=1#', '; DROP table Users --'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(8, $result->getImpact());        
+    }
+    
+    public function testDTList(){
+        $test = new IDS_Monitor(
+            array('../../etc/passwd', '\%windir%\cmd.exe'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(5, $result->getImpact());        
+    }
+    
+    public function testRFEList() {
+        $test = new IDS_Monitor(
+            array(';phpinfo()', '"; <?php exec("rm -rf /"); ?>'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(20, $result->getImpact());       
+    }
 
 }

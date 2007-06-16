@@ -3,7 +3,7 @@
 /**
  * PHP IDS
  * 
- * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
+ * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS (http://php-ids.org)
  *

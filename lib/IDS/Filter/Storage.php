@@ -3,7 +3,7 @@
 /**
  * PHP IDS
  *
- * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
+ * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS (http://php-ids.org)
  *
@@ -87,9 +87,9 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 		if (extension_loaded('SimpleXML')) {
 
 			if (file_exists($source)) {
-				$filters = simplexml_load_file($source);
+				$filters = simplexml_load_file($source, null, LIBXML_COMPACT);
 			} else {
-				$filters = simplexml_load_string($source);
+				$filters = simplexml_load_string($source, null, LIBXML_COMPACT);
 			}
 
 			if ($filters === false) {
@@ -100,13 +100,15 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 			}
 
 			if(!empty($filters->filter)){
-				foreach ($filters->filter as $filter) {
+				
+                require_once 'Regexp.php';
+                
+                foreach ($filters->filter as $filter) {
 					$rule	= (string) $filter->rule;
 					$impact = (string) $filter->impact;
 					$tags	= array_values((array) $filter->tags);
 					$description = (string) $filter->description;
 
-					require_once 'Regexp.php';
 					$this->addFilter(
 						new IDS_Filter_Regexp(
 							$rule,

@@ -3,7 +3,7 @@
 /**
  * PHP IDS
  *
- * Requirements: PHP5, SimpleXML, MultiByte Extension (optional)
+ * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS (http://php-ids.org)
  *
@@ -122,8 +122,9 @@ class IDS_Monitor {
 	 */
 	private function detect($key, $value) {
 		
-        if (!is_numeric($value) && !empty($value)) {
-
+        #only start detection if value isn't alphanumeric
+        if (preg_match('/\W+/iDs', $value) && !empty($value)) {
+            
 			if (in_array($key, $this->exceptions)) {
 				return false;
 			}
