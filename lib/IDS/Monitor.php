@@ -169,7 +169,6 @@ class IDS_Monitor {
 		
         $value = IDS_Converter::convertFromUTF7($value);
         $value = IDS_Converter::convertFromJSCharcode($value);
-        $value = IDS_Converter::convertToUrlencoded($key, $value);
         
 		return $filter->match($value);
 	}
