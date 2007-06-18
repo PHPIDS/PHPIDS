@@ -234,7 +234,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:on(?!g\>)\w+[^=]*=.*\\?(?:\W|\>)?)]]></rule>
+		<rule><![CDATA[(?:on(?!g\&gt;|id)\w+[^=]*=.*\\?(?:\W|\&gt;)?)]]></rule>
 		<description>detects possible event handlers</description>
 		<tags>
 			<tag>xss</tag>
