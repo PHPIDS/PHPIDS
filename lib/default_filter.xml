@@ -46,7 +46,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\+?A\w\w-|ACIAPgA8|AFAAVAA|AFwAXA|AFwAIg)]]></rule>
+		<rule><![CDATA[(?:\+?\bA\w\w-|ACIAPgA8|AFAAVAA|AFwAXA|AFwAIg)]]></rule>
 		<description>finds utf7 attacks in general</description>
 		<tags>
 			<tag>xss</tag>
