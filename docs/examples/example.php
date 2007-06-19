@@ -38,22 +38,22 @@ try {
     * array you want like $_REQUEST, $_SESSION etc.
     */
     $get = new IDS_Monitor($_GET, $storage);
-    $report = $get->run();
+    $result = $get->run();
     
     /*
-    * in the report object you will find any suspicious 
-    * fields of the passed object
+    * in the result object you will find any suspicious 
+    * fields of the passed array enriched with additional info
     */
-    if (!$report->isEmpty()) {
+    if (!$result->isEmpty()) {
         
         # Get the overall impact
-        echo "Impact: {$report->getImpact()}\n";
+        echo "Impact: {$result->getImpact()}\n";
         
         # Get array of every tag used
-        echo "Tags: " . join(", ", $report->getTags()) . "\n";
+        echo "Tags: " . join(", ", $result->getTags()) . "\n";
         
-        # Iterate through the report an get every event (IDS_Event)
-        foreach ($report as $event) {
+        # Iterate through the result an get every event (IDS_Event)
+        foreach ($result as $event) {
             echo "Variable: {$event->getName()} | Value: {$event->getValue()}\n";
             echo "Impact: {$event->getImpact()} | Tags: " . join(", ", $event->getTags()) . "\n";
             
@@ -78,8 +78,8 @@ try {
        IDS_Log_File::getInstance('log.txt')
     );
     
-    if (!$report->isEmpty()) {
-        $compositeLog->execute($report);
+    if (!$result->isEmpty()) {
+        $compositeLog->execute($result);
     }
     */
 } catch (Exception $e) {
