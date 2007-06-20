@@ -482,4 +482,13 @@
 		</tags>
 		<impact>5</impact>
 	</filter>	
+	<filter>
+		<rule><![CDATA[(?:[\w.-]+@[\w.-]+%(?:[01]\w)+\w+:)]]></rule>
+		<description>detects common mail header injections</description>
+		<tags>
+			<tag>id</tag>
+            <tag>spam</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>	
 </filters>
