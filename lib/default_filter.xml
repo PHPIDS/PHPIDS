@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <filters>
 	<filter>
 		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\>)|(?:\s?\/>)]]></rule>
@@ -191,6 +190,17 @@
 		<tags>
 			<tag>xss</tag>
 			<tag>rfe</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:firefoxurl:\w+\|)|(?:file:[\\\/]+\w+)]]></rule>
+		<description>detects IE firefoxurl injections and local file inclusions</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>rfe</tag>
+			<tag>lfi</tag>
+			<tag>xsrf</tag>
 		</tags>
 		<impact>5</impact>
 	</filter>
