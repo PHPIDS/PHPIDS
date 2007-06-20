@@ -378,7 +378,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?(?:"|'|`|´|‘|’)\s?(AND|OR)+[\s(]*\w+\s+)]]></rule>
+		<rule><![CDATA[(?:%?(?:"|'|`|´|‘|’)\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)]]></rule>
 		<description>detects more SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
