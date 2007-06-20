@@ -60,6 +60,7 @@ class IDS_Filter_TestCase extends PHPUnit_Framework_TestCase
 
 	public function testInvalid()
 	{
+		
 		$this->assertFalse(true);
 	}
 }
