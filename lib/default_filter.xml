@@ -194,7 +194,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:firefoxurl:\w+\|)|(?:file:[\\\/]+\w+)]]></rule>
+		<rule><![CDATA[(?:firefoxurl:\w+\|)|(?:file:[%\\\/2f]+\w+)]]></rule>
 		<description>detects IE firefoxurl injections and local file inclusions</description>
 		<tags>
 			<tag>xss</tag>
