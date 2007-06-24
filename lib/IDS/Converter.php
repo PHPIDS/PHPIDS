@@ -21,6 +21,7 @@
  * PHPIDS specific utility class to convert charsets manually
  *
  * @author      christ1an <ch0012@gmail.com>
+ * @author		.mario <mario.heiderich@gmail.com>
  * @version     $Id:Converter.php 174 2007-06-18 15:41:56Z mario $
  */
 class IDS_Converter {
@@ -70,24 +71,24 @@ class IDS_Converter {
      */ 
      public static function convertFromJSCharcode($value) {   
 
-        #check if value matches typical charCode pattern
-        if(preg_match_all('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)){
+        # check if value matches typical charCode pattern
+        if (preg_match_all('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)) {
 
-            $converted = '';
-            $charcode = explode(',', preg_replace('/\s/', '', implode(',', $matches[0])));       
+            $converted  = '';
+            $charcode   = explode(',', preg_replace('/\s/', '', implode(',', $matches[0])));       
             foreach($charcode as $char){
                 if(!empty($char)){
                     $converted .= chr($char);                               
                 }                              
-            }       
+            }
             $value .= ' [' . $converted . '] ';
         }
 
-        #check for octal charcode pattern
-        if(preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/iDs', $value, $matches)){
+        # check for octal charcode pattern
+        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/iDs', $value, $matches)) {
 
-            $converted = '';
-            $charcode = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
+            $converted  = '';
+            $charcode   = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
 
             foreach($charcode as $char){
                 if(!empty($char)){
@@ -97,11 +98,11 @@ class IDS_Converter {
             $value .= ' [' . $converted . '] ';
         }
 
-        #check for hexadecimal charcode pattern
-        if(preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/iDs', $value, $matches)){
+        # check for hexadecimal charcode pattern
+        if (preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/iDs', $value, $matches)) {
 
-            $converted = '';
-            $charcode = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
+            $converted  = '';
+            $charcode   = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
 
             foreach($charcode as $char){
                 if(!empty($char)){
@@ -110,6 +111,7 @@ class IDS_Converter {
             }   
             $value .= ' [' . $converted . '] ';
         }
+
         return $value;
      }
 }
