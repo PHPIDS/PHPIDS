@@ -23,7 +23,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
 require_once "IDS/Filter/Regexp.php";
 
-class IDS_Filter_TestCase extends PHPUnit_Framework_TestCase
+class IDS_Filter_TestCase extends PHPUnit2_Framework_TestCase
 	{
 	public function testObjectConstruction()
 	{
@@ -56,11 +56,5 @@ class IDS_Filter_TestCase extends PHPUnit_Framework_TestCase
 			$this->fail("Excpected Exception");
 		} catch (Exception $e) {}
 
-	}
-
-	public function testInvalid()
-	{
-		
-		$this->assertFalse(true);
 	}
 }

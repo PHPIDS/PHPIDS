@@ -21,7 +21,7 @@
  * PHPIDS specific utility class to convert charsets manually
  *
  * @author      christ1an <ch0012@gmail.com>
- * @version     $Id$
+ * @version     $Id:Converter.php 174 2007-06-18 15:41:56Z mario $
  */
 class IDS_Converter {
 
@@ -64,20 +64,50 @@ class IDS_Converter {
     }
 
     /**
-     * Checks if data needs to be urldecoded
+     * Checks for common charcode pattern and decodes them
      * 
-     * @param   string  $key
-     ? @return  string  $value
+     * @return  string  $value
      */ 
      public static function convertFromJSCharcode($value) {   
 
         #check if value matches typical charCode pattern
-        if(preg_match('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)){
+        if(preg_match_all('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)){
+
             $converted = '';
-            $charcode = explode(',', preg_replace('/\s/', '', $matches[0]));       
+            $charcode = explode(',', preg_replace('/\s/', '', implode(',', $matches[0])));       
             foreach($charcode as $char){
-                $converted .= chr($char);                               
+                if(!empty($char)){
+                    $converted .= chr($char);                               
+                }                              
             }       
+            $value .= ' [' . $converted . '] ';
+        }
+
+        #check for octal charcode pattern
+        if(preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/iDs', $value, $matches)){
+
+            $converted = '';
+            $charcode = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
+
+            foreach($charcode as $char){
+                if(!empty($char)){
+                    $converted .= chr(octdec($char));                               
+                }
+            }       
+            $value .= ' [' . $converted . '] ';
+        }
+
+        #check for hexadecimal charcode pattern
+        if(preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/iDs', $value, $matches)){
+
+            $converted = '';
+            $charcode = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
+
+            foreach($charcode as $char){
+                if(!empty($char)){
+                    $converted .= chr(hexdec($char));                               
+                }
+            }   
             $value .= ' [' . $converted . '] ';
         }
         return $value;

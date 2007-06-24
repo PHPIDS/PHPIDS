@@ -24,7 +24,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
-class IDS_Monitor_TestCase extends PHPUnit_Framework_TestCase {
+class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
 
 	public function setUp()
 	{
@@ -116,5 +116,35 @@ class IDS_Monitor_TestCase extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(20, $result->getImpact());       
     }
+    
+    public function testDecimalCCConverter() {
+        $test = new IDS_Monitor(
+            array('XXX', '60,115,99,114,105,112,116,62,97,108,101,114,116,40,49,41,60,47,115,99,114,105,112,116,62'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(11, $result->getImpact());              
+    }
 
+    public function testOctalCCConverter() {
+        $test = new IDS_Monitor(
+            array('XXX', '\74\163\143\162\151\160\164\76\141\154\145\162\164\50\47\150\151\47\51\74\57\163\143\162\151\160\164\76'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(29, $result->getImpact());              
+    }
+
+    public function testHexCCConverter() {
+
+        $test = new IDS_Monitor(
+            array('XXX', '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(13, $result->getImpact());              
+    }
 }
