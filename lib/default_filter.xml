@@ -127,15 +127,6 @@
 		<impact>3</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[¼¢]+\/?\)?)]]></rule>
-		<description>detects US-ASCII HTML breaking code</description>
-		<tags>
-			<tag>xss</tag>
-			<tag>csrf</tag>
-		</tags>
-		<impact>4</impact>
-	</filter>
-	<filter>
 		<rule><![CDATA[(?:%u(?:ff|00|e\d)\w\w)|(?:%(?:e\w|c\w|))(?:%\w\w)(?:%\w\w)?]]></rule>
 		<description>detects halfwidth/fullwidth encoded unicode HTML breaking attempts</description>
 		<tags>
