@@ -158,6 +158,15 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*with\s*\()]]></rule>
+		<description>detects self contained xss via with()</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:\s?(?:window|parent|top|self|document)?\s?.\s?location\s?(?:=|[%&#xu0]+[163d]+))|(?:\s?document\s?.\s?cookie)]]></rule>
 		<description>detects cookie stealing and redirection attempts</description>
 		<tags>
