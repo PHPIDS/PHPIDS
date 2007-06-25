@@ -83,7 +83,6 @@ class IDS_Converter {
             foreach($charcode as $char){
                 $char = preg_replace('/[\W]0/s', '', $char);
                 if(preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)){
-                    echo $char;
                     $match = preg_split('/([\W]?\d+)/', (implode('', $matches[0])), null, PREG_SPLIT_DELIM_CAPTURE); 
                     $converted .= chr(array_sum($match));
     
