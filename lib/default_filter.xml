@@ -18,13 +18,13 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:location)?[. ]*hash[. ]*(?:substr|replace)\s?\()]]></rule>
-		<description>detects fragment identifier payload activation</description>
+		<rule><![CDATA[(?:(?:location)?[. ]*hash[. ]*(?:substr(?:ing)?|replace)\s?\()]]></rule>
+		<description>detects self contained xss payload attacks</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
 		</tags>
-		<impact>3</impact>
+		<impact>4</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:>[\w\s]*<\/\w+>)]]></rule>
@@ -72,7 +72,7 @@
 		<impact>2</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)\s*(?:\)|\}))]]></rule>
+		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)\s*[)}\]]+)]]></rule>
 		<description>finds closing javascript breaker including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -80,7 +80,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\(|\{)\s*\\?\W)]]></rule>
+		<rule><![CDATA[(?:[\(\{\[]+\s*\\?\W\w+)]]></rule>
 		<description>finds opening javascript breaker including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -158,7 +158,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*with\s*\()]]></rule>
+		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*(with|eval)\s*\()]]></rule>
 		<description>detects self contained xss via with()</description>
 		<tags>
 			<tag>xss</tag>
