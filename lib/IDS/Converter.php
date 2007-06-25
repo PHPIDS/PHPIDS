@@ -72,12 +72,22 @@ class IDS_Converter {
      public static function convertFromJSCharcode($value) {   
 
         # check if value matches typical charCode pattern
-        if (preg_match_all('/(?:\d*(?:\s?,\s?\d+)+)/iDs', $value, $matches)) {
-
+        if (preg_match_all('/(?:[\w+-=\/\* ]*(?:\s?,\s?[\w+-=\/\* ]+)+)/s', $value, $matches)) {
+            
             $converted  = '';
-            $charcode   = explode(',', preg_replace('/\s/', '', implode(',', $matches[0])));       
+            $string = implode(',', $matches[0]);
+            $string = preg_replace('/\s/', '', $string);
+            $string = preg_replace('/\w+=/', '', $string);
+            $charcode   = explode(',', $string);       
+            
             foreach($charcode as $char){
-                if(!empty($char)){
+                $char = preg_replace('/[\W]0/s', '', $char);
+                if(preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)){
+                    echo $char;
+                    $match = preg_split('/([\W]?\d+)/', (implode('', $matches[0])), null, PREG_SPLIT_DELIM_CAPTURE); 
+                    $converted .= chr(array_sum($match));
+    
+                } elseif(!empty($char)) {
                     $converted .= chr($char);                               
                 }                              
             }

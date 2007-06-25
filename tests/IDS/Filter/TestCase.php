@@ -19,7 +19,7 @@
  * @version	$Id$
  */
 
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit2/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
 require_once "IDS/Filter/Regexp.php";
 
