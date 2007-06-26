@@ -1,3 +1,6 @@
+<!--
+	Build file for PHPIDS
+-->
 <project name="PHPIDS" default="info">
 	<target name="info"/>
 
