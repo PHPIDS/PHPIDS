@@ -87,10 +87,10 @@ class IDS_Log_Composite implements IDS_Log_Interface {
 		return false;
 	}
 }
+
 /*
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4
  * End:
  */
-

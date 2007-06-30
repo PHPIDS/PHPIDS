@@ -54,7 +54,7 @@ try {
         
         # Iterate through the result an get every event (IDS_Event)
         foreach ($result as $event) {
-            echo "Variable: {$event->getName()} | Value: {$event->getValue()}\n";
+            echo "Variable: {$event->getName()} | Value: " . htmlspecialchars($event->getValue()) . "\n";
             echo "Impact: {$event->getImpact()} | Tags: " . join(", ", $event->getTags()) . "\n";
             
             # Iterator throught every filter 
@@ -64,7 +64,7 @@ try {
             }
         }
     }
-    
+	
     /*
     * now store the data using IDS_Log_Composite and
     * Log_File

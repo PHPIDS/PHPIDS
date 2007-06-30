@@ -27,10 +27,10 @@
 interface IDS_Log_Interface {
 	public function execute(IDS_Report $data);
 }
+
 /*
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4
  * End:
  */
-

@@ -56,7 +56,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @access	public
 	* @return	object
 	*/
-	public static function getInstance($address, $subject, $headers = null) {
+	public static function getInstance($address, $subject, $headers = NULL) {
 		if (!isset(self::$instances[$address])) {
 			self::$instances[$address] = new IDS_Log_Email(
 				$address,
@@ -85,7 +85,23 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @return	mixed
 	*/
 	protected function prepareData($data) {
-		return serialize($data);
+	
+		$dataString = "The following attack has been detected by PHPIDS\n\n";
+		
+		$dataString .= 'IP: ' . $_SERVER['REMOTE_ADDR'] . "\n";
+		$dataString .= 'Date: ' . date('c') . "\n";
+		$dataString .= 'Impact: ' . $data->getImpact() . "\n";
+		$dataString .= 'Affected tags: ' . join(', ', $data->getTags()) . "\n";
+		
+		$attackedParameters = '';
+		foreach ($data as $event) {
+			$attackedParameters .= $event->getName() . ',';
+		}
+		
+		$dataString .= 'Affected parameters: ' . $attackedParameters . "\n";
+		$dataString .= 'Request URI: "' . $_SERVER['REQUEST_URI'] . "\"\n";
+		
+		return $dataString;
 	}
 
 	/**
@@ -158,10 +174,10 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	}
 
 }
+
 /*
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4
  * End:
  */
-

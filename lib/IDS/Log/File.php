@@ -77,7 +77,22 @@ class IDS_Log_File implements IDS_Log_Interface {
 	* @return	mixed
 	*/
 	protected function prepareData($data) {
-		return serialize($data);
+		
+		$dataString = $_SERVER['REMOTE_ADDR'];
+		$dataString .= ' - - ';
+		$dataString .= '[' . date('c') . ']';
+		$dataString .= ' [' . $data->getImpact() . ']';
+		$dataString .= ' [' . join(', ', $data->getTags()) . ']';
+		
+		$attackedParameters = '';
+		foreach ($data as $event) {
+			$attackedParameters .= $event->getName() . ',';
+		}
+		
+		$dataString .= ' [' . $attackedParameters . ']';
+		$dataString .= ' "' . $_SERVER['REQUEST_URI'] . '"';
+		
+		return $dataString;
 	}
 
 	/**
@@ -121,6 +136,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 	}
 
 }
+
 /*
  * Local variables:
  * tab-width: 4
