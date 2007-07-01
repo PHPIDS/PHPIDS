@@ -18,6 +18,7 @@
  * @version	$Id:allTests.php 182 2007-06-20 01:45:23Z lars $
  */
 
+
 error_reporting(E_ALL | E_STRICT);
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
