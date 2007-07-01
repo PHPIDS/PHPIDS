@@ -36,6 +36,28 @@ class IDS_Filter_TestCase extends PHPUnit2_Framework_TestCase
 		$this->assertEquals(12, $filter->getImpact());
 	}
 
+	public function testModificator()
+	{
+		$filter = new IDS_Filter_Regex('^te.st$', 'My description', array('tag1', 'tag2'), 1);
+
+		// Default must be 
+		// ... case-insensitive
+		$this->assertTrue($filter->match('TE1ST'));
+		// ... dot all (\n is matched by .)
+		$this->assertTrue($filter->match("TE\nST"));
+		// .. "$" is end only
+		$this->assertFalse($filter->match("TE1ST\n"));
+
+		// Change it to the opposite
+		IDS_Filter_Regex::setFlags('');
+		// Must fail because of case-sensitivity
+		$this->assertFalse($filter->match('TE1ST'));
+		// Must fail because "." does not match "\n"
+		$this->assertFalse($filter->match("TE\nST"));
+		// Must pass because $ means end of line or newline
+		$this->assertTrue($filter->match("te1st\n"));
+	}
+
 	public function testExceptions()
 	{
 		$filter = new IDS_Filter_Regex('^test$', 'My description', array('foo', 'bar'), 10);
