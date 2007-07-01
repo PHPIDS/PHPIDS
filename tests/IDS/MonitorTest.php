@@ -19,17 +19,17 @@
  * @version	$Id$
  */
 
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
-class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
+class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp()
 	{
 		$this->storage = new IDS_Filter_Storage();
-		$this->storage->getFilterFromXML(dirname(__FILE__) . '/../../../lib/default_filter.xml');
+		$this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/default_filter.xml');
 	}
 
 	public function testRunWithTags() {
