@@ -21,13 +21,13 @@
 
 require_once 'PHPUnit2/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
-require_once "IDS/Filter/Regexp.php";
+require_once "IDS/Filter/Regex.php";
 
 class IDS_Filter_TestCase extends PHPUnit2_Framework_TestCase
 	{
 	public function testObjectConstruction()
 	{
-		$filter = new IDS_Filter_Regexp('^test$', 'My description', array('foo', 'bar'), 12);
+		$filter = new IDS_Filter_Regex('^test$', 'My description', array('foo', 'bar'), 12);
 
 		$this->assertTrue($filter->match('test'));
 		$this->assertEquals("My description", $filter->getDescription(), "Should return description");
@@ -38,7 +38,7 @@ class IDS_Filter_TestCase extends PHPUnit2_Framework_TestCase
 
 	public function testExceptions()
 	{
-		$filter = new IDS_Filter_Regexp('^test$', 'My description', array('foo', 'bar'), 10);
+		$filter = new IDS_Filter_Regex('^test$', 'My description', array('foo', 'bar'), 10);
 
 		try {
 			$filter->match(1);
@@ -47,12 +47,12 @@ class IDS_Filter_TestCase extends PHPUnit2_Framework_TestCase
 
 
 		try {
-			$filter = new IDS_Filter_Regexp('^test$', 'my desc', array('foo'), 'test');
+			$filter = new IDS_Filter_Regex('^test$', 'my desc', array('foo'), 'test');
 			$this->fail("Expected Exception");
 		} catch (Exception $e) {}
 
 		try {
-			$filter = new IDS_Filter_Regexp(1, 'my desc', array("foo"), 'bla');
+			$filter = new IDS_Filter_Regex(1, 'my desc', array("foo"), 'bla');
 			$this->fail("Excpected Exception");
 		} catch (Exception $e) {}
 

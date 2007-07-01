@@ -104,7 +104,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
 			if (!empty($filters->filter)) {
 				
-                require_once 'Regexp.php';
+                require_once 'IDS/Filter/Regex.php';
                 
                 foreach ($filters->filter as $filter) {
 					$rule	= (string) $filter->rule;
@@ -113,7 +113,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 					$description = (string) $filter->description;
 
 					$this->addFilter(
-						new IDS_Filter_Regexp(
+						new IDS_Filter_Regex(
 							$rule,
 							$description,
 							(array) $tags[0],

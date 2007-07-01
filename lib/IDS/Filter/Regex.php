@@ -20,7 +20,7 @@
 require_once 'IDS/Filter/Abstract.php';
 
 /**
- * Regexp filter class
+ * Regex filter class
  *
  * The filter class based on regular expression matching is the default
  * filter class used in PHP IDS.
@@ -29,12 +29,12 @@ require_once 'IDS/Filter/Abstract.php';
  *
  * @version	$Id$
  */
-class IDS_Filter_Regexp extends IDS_Filter_Abstract {
+class IDS_Filter_Regex extends IDS_Filter_Abstract {
 
 	/**
 	 * Match method
 	 *
-	 * IDS_Filter_Regexp->match() used preg_match() to match the rule against
+	 * IDS_Filter_Regex->match() used preg_match() to match the rule against
 	 * the given string.
 	 *
 	 * @return	bool Filter matched?

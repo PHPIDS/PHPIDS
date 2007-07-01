@@ -22,7 +22,7 @@
 require_once 'PHPUnit2/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
 require_once 'IDS/Event.php';
-require_once 'IDS/Filter/Regexp.php';
+require_once 'IDS/Filter/Regex.php';
 
 class IDS_Event_TestCase extends PHPUnit2_Framework_TestCase
 {
@@ -30,8 +30,8 @@ class IDS_Event_TestCase extends PHPUnit2_Framework_TestCase
 	{
 		$this->event = new IDS_Event("handled_key", "my val",
 			array(
-				new IDS_Filter_Regexp('^test$', 'my description', array('tag1', 'tag2'), 10),
-				new IDS_Filter_Regexp('^test2$', 'my other desc', array('tag2', 'tag3'), 4)
+				new IDS_Filter_Regex('^test$', 'my description', array('tag1', 'tag2'), 10),
+				new IDS_Filter_Regex('^test2$', 'my other desc', array('tag2', 'tag3'), 4)
 			)
 		);
 	}
