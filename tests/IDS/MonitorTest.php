@@ -20,7 +20,7 @@
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../lib');
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
