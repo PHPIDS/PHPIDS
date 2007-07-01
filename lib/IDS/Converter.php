@@ -78,18 +78,19 @@ class IDS_Converter {
             $string = implode(',', $matches[0]);
             $string = preg_replace('/\s/', '', $string);
             $string = preg_replace('/\w+=/', '', $string);
-            $charcode   = explode(',', $string);       
+            $charcode = explode(',', $string);       
             
-            foreach($charcode as $char){
+            foreach ($charcode as $char) {
                 $char = preg_replace('/[\W]0/s', '', $char);
-                if(preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)){
-                    $match = preg_split('/([\W]?\d+)/', (implode('', $matches[0])), null, PREG_SPLIT_DELIM_CAPTURE); 
+                if (preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)) {
+                    $match = preg_split('/([\W]?\d+)/', (implode('', $matches[0])), NULL, PREG_SPLIT_DELIM_CAPTURE); 
                     $converted .= chr(array_sum($match));
     
                 } elseif(!empty($char)) {
                     $converted .= chr($char);                               
                 }                              
             }
+			
             $value .= ' [' . $converted . '] ';
         }
 
@@ -99,11 +100,12 @@ class IDS_Converter {
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
 
-            foreach($charcode as $char){
-                if(!empty($char)){
+            foreach ($charcode as $char) {
+                if (!empty($char)) {
                     $converted .= chr(octdec($char));                               
                 }
             }       
+			
             $value .= ' [' . $converted . '] ';
         }
 
@@ -113,14 +115,22 @@ class IDS_Converter {
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
 
-            foreach($charcode as $char){
-                if(!empty($char)){
-                    $converted .= chr(hexdec($char));                               
+            foreach ($charcode as $char) {
+                if (!empty($char)) {
+                	$converted .= chr(hexdec($char));                               
                 }
-            }   
+            }
+			
             $value .= ' [' . $converted . '] ';
         }
 
         return $value;
      }
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */

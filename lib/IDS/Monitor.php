@@ -40,7 +40,7 @@ class IDS_Monitor {
 
 	/**
 	 * This array is meant to define which variables need to be ignored
-	 * by the php ids - default is the utmz google analytics parameter
+	 * by the PHPIDS - default is the utmz google analytics parameter
 	 */
 	private $exceptions = array(
 		'__utmz'
@@ -54,7 +54,7 @@ class IDS_Monitor {
 	 * @param	tags	optional			List of tags where filters should be applied
 	 * @return 	mixed
 	 */
-	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = null) {
+	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = NULL) {
 		if (!empty($request)) {
 			$this->storage  = $storage;
 			$this->request  = $request;
@@ -71,7 +71,7 @@ class IDS_Monitor {
 	 * @return	IDS_Report
 	 */
 	public function run() {
-		if(!empty($this->request)){
+		if (!empty($this->request)) {
 			foreach ($this->request as $key => $value) {
 				$this->iterate($key, $value);
 			}

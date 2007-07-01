@@ -35,14 +35,14 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 *
 	 * @var scalar
 	 */
-	protected $name	= NULL;
+	protected $name	= null;
 
 	/**
 	 * Value the filter has been applied
 	 *
 	 * @var scalar
 	 */
-	protected $value = NULL;
+	protected $value   = null;
 
 	/**
 	 * List of filters
@@ -76,7 +76,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 * @param scalar $value
 	 * @param value $filters
 	 */
-	public function __construct($name, $value, Array $filters) {
+	public function __construct($name, $value, array $filters) {
 		if (!is_scalar($name)) {
 			throw new InvalidArgumentException('Expected $name to be a scalar, '
 				. gettype($name) . ' given');

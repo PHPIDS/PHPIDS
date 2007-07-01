@@ -86,7 +86,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 		
 		$attackedParameters = '';
 		foreach ($data as $event) {
-			$attackedParameters .= $event->getName() . ',';
+			$attackedParameters .= $event->getName() . '=' . $event->getValue . ',';
 		}
 		
 		$dataString .= ' [' . $attackedParameters . ']';
@@ -116,9 +116,17 @@ class IDS_Log_File implements IDS_Log_Interface {
 				$data = trim($data);
 
 				if (!empty($data)) {
-					$handle = fopen($this->logfile, 'a');
-					fwrite($handle, $data . "\n");
-					fclose($handle);
+					if (is_writable($this->logfile)) {
+					
+                    	$handle = fopen($this->logfile, 'a');
+						fwrite($handle, $data . "\n");
+						fclose($handle);
+						
+                    } else {
+                        throw new Exception(
+                            'Please make sure that ' . $this->logfile . ' is writeable.'
+                        );                        
+                    }
 				}
 			} else {
 				throw new Exception(

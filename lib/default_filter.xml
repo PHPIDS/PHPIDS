@@ -108,6 +108,16 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:etc\/passwd\\+\w)]]></rule>
+		<description>detects etc/passwd inclusion attempts</description>
+		<tags>
+			<tag>dt</tag>
+			<tag>id</tag>
+			<tag>lfi</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:\/|\\|[%&#xu]+\w+)?(?:\.|[%&#xu]+[0246ef]+)(?:\.|[%&#xu]+[0246ef]+)(?:\/|\\|[%&#xu]+\w+)]]></rule>
 		<description>detects obfuscated directory traversal</description>
 		<tags>
@@ -158,7 +168,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*(with|eval)\s*\()]]></rule>
+		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>
 		<description>detects self contained xss via with()</description>
 		<tags>
 			<tag>xss</tag>
@@ -322,7 +332,7 @@
 		<impact>3</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%[01]\w|&#0\w|\\0\w?|&#x0\w)]]></rule>
+		<rule><![CDATA[(?:\\x[01FB]\w|%[01FB]\w|&#[01FB]\w|\\[01FB]\w?|&#x[01FB]\w)]]></rule>
 		<description>detects nullbytes and HTTP response splitting</description>
 		<tags>
 			<tag>id</tag>
@@ -455,6 +465,15 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:alter\s*\w+.*character\s+set\s+\w+)]]></rule>
+		<description>detects MySQL charset switch attempts</description>
+		<tags>
+			<tag>sqli</tag>
+			<tag>id</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?(?:"|'|`|´|‘|’)+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
 		<description>detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
 		<tags>
@@ -483,7 +502,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
+		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
 		<description>detects code injection attempts including eval, execute, preg-like functions and others</description>
 		<tags>
 			<tag>id</tag>
@@ -500,5 +519,42 @@
             <tag>spam</tag>
 		</tags>
 		<impact>5</impact>
-	</filter>	
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:\.pl\?\w+=\w?\|\w+;)]]></rule>
+		<description>detects perl echo shellcode injection</description>
+		<tags>
+			<tag>fli</tag>
+            <tag>rfe</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:[\W]{128}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,})]]></rule>
+		<description>detects basic dos attempts</description>
+		<tags>
+            <tag>rfe</tag>
+			<tag>dos</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:\/default[\\]+.ida[\\?]+.*)]]></rule>
+		<description>detects code red worm probings</description>
+		<tags>
+            <tag>rfe</tag>
+			<tag>dos</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:(?:\\?\/[fdbks]+)+(?:\\?\/)+)]]></rule>
+		<description>detects apache forward and back pointers</description>
+		<tags>
+            <tag>id</tag>
+			<tag>dt</tag>
+			<tag>lfi</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>		
 </filters>

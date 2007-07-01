@@ -25,12 +25,7 @@ require_once 'IDS/Filter/Storage/Abstract.php';
 * This class provides various default functions for gathering filter
 * patterns to be used later on by the IDS.
 *
-* In case new methods need to be implemented,
-* Filter_Storage_Abstract::addFilter() can be used to modify the
-* filter set array.
-*
 * @author	christ1an <ch0012@gmail.com>
-*
 * @version	$Id$
 */
 class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
@@ -86,11 +81,19 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 	public function getFilterFromXML($source) {
 		if (extension_loaded('SimpleXML')) {
 
-			if (file_exists($source)) {
-				$filters = simplexml_load_file($source, null, LIBXML_COMPACT);
-			} elseif (substr($source, 0, 1) == '<') {
-				$filters = simplexml_load_string($source, null, LIBXML_COMPACT);
-			}
+            if (file_exists($source)) {
+                if (LIBXML_VERSION >= 20621) {
+                    $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
+                } else {
+                    $filters = simplexml_load_file($source);
+                }
+            } elseif (substr($source, 0, 1) == '<') {
+                if (LIBXML_VERSION >= 20621) {
+                    $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
+                } else {
+                    $filters = simplexml_load_string($source);
+                }
+            }
 
 			if (empty($filters)) {
 				throw new Exception(
@@ -99,7 +102,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 				);
 			}
 
-			if(!empty($filters->filter)){
+			if (!empty($filters->filter)) {
 				
                 require_once 'Regexp.php';
                 

@@ -124,7 +124,7 @@ class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(11, $result->getImpact());              
+        $this->assertEquals(15, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -134,7 +134,7 @@ class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(29, $result->getImpact());              
+        $this->assertEquals(34, $result->getImpact());              
     }
 
     public function testHexCCConverter() {
@@ -145,6 +145,6 @@ class IDS_Monitor_TestCase extends PHPUnit2_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(13, $result->getImpact());              
+        $this->assertEquals(22, $result->getImpact());              
     }
 }
