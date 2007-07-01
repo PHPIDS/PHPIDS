@@ -32,6 +32,34 @@ require_once 'IDS/Filter/Abstract.php';
 class IDS_Filter_Regex extends IDS_Filter_Abstract {
 
 	/**
+	 * PCRE flags
+	 *
+	 * @var string
+	 */
+	protected static $flags = 'iDs';
+
+	/**
+	 * Set PCRE flags
+	 *
+	 * @param string $flags Regular expression modifier flags
+	 * @return void
+	 */
+	public static function setFlags($flags)
+	{
+		self::$flags = $flags;
+	}
+
+	/**
+	 * Returns PCRE flags
+	 *
+	 * @return string
+	 */
+	public static function getFlags()
+	{
+		return self::$flags;
+	}
+
+	/**
 	 * Match method
 	 *
 	 * IDS_Filter_Regex->match() used preg_match() to match the rule against
@@ -46,7 +74,7 @@ class IDS_Filter_Regex extends IDS_Filter_Abstract {
 			);
 		}
 
-		return (bool) preg_match('/' . $this->getRule() . '/iDs', $string);
+		return (bool) preg_match('/' . $this->getRule() . '/' . self::getFlags(), $string);
 	}
 }
 
