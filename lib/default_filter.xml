@@ -18,13 +18,13 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:location)?[. ]*hash[. ]*(?:substr(?:ing)?|replace)\s?\()]]></rule>
-		<description>detects self contained xss payload attacks</description>
+		<rule><![CDATA[(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\(|(?:location|referrer).*(?:substr|split)\W+|\Weval\W+\w+\W+substr\()]]></rule>
+		<description>detects self-, url- and referrer-contained and xss payload attacks</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:>[\w\s]*<\/\w+>)]]></rule>
@@ -146,7 +146,7 @@
 		<impact>3</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:javascript:|@import|;base64)]]></rule>
+		<rule><![CDATA[(?:\w+script:|@import|;base64)]]></rule>
 		<description>detects possible includes</description>
 		<tags>
 			<tag>xss</tag>
@@ -157,7 +157,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:alert|prompt|confirm|dialog|expression|urn|fromCharcode|decodeURIComponent|eval|Execute)[\s]?[(;])]]></rule>
+		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|fromCharcode|decodeURIComponent|eval|toString|substr|Execute|window)[\s]?[(;\[])]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
