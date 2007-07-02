@@ -84,17 +84,17 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(22, $result->getImpact());        
+        $this->assertEquals(26, $result->getImpact());        
     }
 
     public function testSQLIList() {
         $test = new IDS_Monitor(
-            array('" OR 1=1#', '; DROP table Users --'),
+            array('" OR 1=1#', '; DROP table Users --', '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1'),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(8, $result->getImpact());        
+        $this->assertEquals(12, $result->getImpact());        
     }
     
     public function testDTList(){

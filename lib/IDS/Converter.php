@@ -126,6 +126,29 @@ class IDS_Converter {
 
         return $value;
      }
+
+    /**
+     * Check for comments and erases them if available
+     * 
+     * @return  string  $value
+     */ 
+    public static function convertFromCommented($value) {
+
+
+        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)/Ds', $value)) {            
+
+            $pattern = array('/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/Ds', 
+                             '/(?:(?:\/\*\/*[^\/\*]*)+\*\/)/Ds', 
+                             '/(?:(?:\/\/|--|#|{).*)/Ds'
+                            );
+            
+            $converted = preg_replace($pattern, null, $value);
+    
+            $value .= ' [' . $converted . '] ';    
+        }  
+          
+        return $value;
+    }
 }
 
 /*

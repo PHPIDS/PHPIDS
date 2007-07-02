@@ -157,7 +157,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|fromCharcode|decodeURIComponent|eval|toString|substr|Execute|window)[\s]?[(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window)[\s]?[(;\[])]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -166,6 +166,39 @@
 			<tag>rfe</tag>
 		</tags>
 		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:(?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|innerhtml|innertext|outerhtml)[\s]?[(;\[])]]></rule>
+		<description>detects javascript script object properties and methods</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>
+   	<filter>
+		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)[\s]?[(;\[])]]></rule>
+		<description>detects javascript script array properties and methods</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>
+    <filter>
+		<rule><![CDATA[(?:(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring)[\s]?[(;\[])]]></rule>
+		<description>detects javascript script string properties and methods</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>4</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>

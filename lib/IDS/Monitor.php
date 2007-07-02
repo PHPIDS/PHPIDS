@@ -169,6 +169,7 @@ class IDS_Monitor {
 		
         $value = IDS_Converter::convertFromUTF7($value);
         $value = IDS_Converter::convertFromJSCharcode($value);
+        $value = IDS_Converter::convertFromCommented($value);
         
 		return $filter->match($value);
 	}
