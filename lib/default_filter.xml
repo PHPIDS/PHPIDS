@@ -9,7 +9,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\<)]]></rule>
+		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\<|=\\?(?:"|'|`|´|‘|’)[^"'`´‘’]+\\?(?:"|'|`|´|‘|’))]]></rule>
 		<description>finds attribute breaking injections including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -20,6 +20,15 @@
 	<filter>
 		<rule><![CDATA[(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\(|(?:location|referrer).*(?:substr|split)\W+|\Weval\W+\w+\W+substr\()]]></rule>
 		<description>detects self-, url- and referrer-contained and xss payload attacks</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:with\([^)]*\)\))]]></rule>
+		<description>detects JS with() code injection attempts</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -132,7 +141,7 @@
 		<description>detects protocol relative url inclusions</description>
 		<tags>
 			<tag>xss</tag>
-			<tag>csrf</tag>
+			window[eval.toString.match(/eval/)[0]](code-here)>XXX<tag>csrf</tag>
 		</tags>
 		<impact>3</impact>
 	</filter>
@@ -157,7 +166,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window)[\s]?[(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)[\s]?[\/(;\[])]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -168,7 +177,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|innerhtml|innertext|outerhtml)[\s]?[(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|innerhtml|innertext|outerhtml)[\s]?[\/(;\[])]]></rule>
 		<description>detects javascript script object properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -179,7 +188,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)[\s]?[(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)[\s]?[\/(;\[])]]></rule>
 		<description>detects javascript script array properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -190,7 +199,7 @@
 		<impact>4</impact>
 	</filter>
     <filter>
-		<rule><![CDATA[(?:(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring)[\s]?[(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)[\s]?[\/(;\[])]]></rule>
 		<description>detects javascript script string properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -210,7 +219,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\s?(?:window|parent|top|self|document)?\s?.\s?location\s?(?:=|[%&#xu0]+[163d]+))|(?:\s?document\s?.\s?cookie)]]></rule>
+		<rule><![CDATA[(?:\s?(?:window|parent|top|self|document)?\s?.\s?location\s?(?:=|[%&#xu0]+[163d]+))|(?:\s?document\s?.\s?cookie|\w+=\W*cookie)]]></rule>
 		<description>detects cookie stealing and redirection attempts</description>
 		<tags>
 			<tag>xss</tag>
