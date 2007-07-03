@@ -1,6 +1,6 @@
 <filters>
 	<filter>
-		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\>)|(?:\s?\/>)]]></rule>
+		<rule><![CDATA[(?:\\?"+.*\>)|(?:\s?\/>)]]></rule>
 		<description>finds html breaking injections including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -9,7 +9,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)+.*\<|=\\?(?:"|'|`|´|‘|’)[^"'`´‘’]+\\?(?:"|'|`|´|‘|’))]]></rule>
+		<rule><![CDATA[(?:\\?"+.*\<|=\\?"[^"]+\\?")]]></rule>
 		<description>finds attribute breaking injections including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -81,7 +81,7 @@
 		<impact>2</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\\?(?:"|'|`|´|‘|’)\s*[)}\]]+)]]></rule>
+		<rule><![CDATA[(?:\\?"\s*[)}\]]+)]]></rule>
 		<description>finds closing javascript breaker including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -141,7 +141,7 @@
 		<description>detects protocol relative url inclusions</description>
 		<tags>
 			<tag>xss</tag>
-			window[eval.toString.match(/eval/)[0]](code-here)>XXX<tag>csrf</tag>
+			<tag>csrf</tag>
 		</tags>
 		<impact>3</impact>
 	</filter>
@@ -166,7 +166,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)[\s]?[\/(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:alert|msgbox|prompt|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*[{}\/();\[])]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -177,7 +177,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|innerhtml|innertext|outerhtml)[\s]?[\/(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[{}\/();\[])]]></rule>
 		<description>detects javascript script object properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -188,7 +188,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)[\s]?[\/(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[{}\/();\[])]]></rule>
 		<description>detects javascript script array properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -199,8 +199,19 @@
 		<impact>4</impact>
 	</filter>
     <filter>
-		<rule><![CDATA[(?:(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)[\s]?[\/(;\[])]]></rule>
+		<rule><![CDATA[(?:(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[{}\/();\[])]]></rule>
 		<description>detects javascript script string properties and methods</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+			<tag>id</tag>
+			<tag>rfe</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>
+   	<filter>
+		<rule><![CDATA[(?:(?:for|while|each|try|catch|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[])]]></rule>
+		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -352,7 +363,7 @@
 		<impact>3</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<[\/]?(?:(?:[i]?frame)|(?:script)|(?:input)|(?:button)|(?:textarea)|(?:style)|(?:base)|(?:meta)|(?:link)|(?:object)|(?:embed)|(?:param)|(?:im(?:g|port)))(?:\s*(?:type|href|src)=\s?\\?(?:"|'|`|´|‘|’)?\s?)?)]]></rule>
+		<rule><![CDATA[(?:\<[\/]?(?:(?:[i]?frame)|(?:script)|(?:input)|(?:button)|(?:textarea)|(?:style)|(?:base)|(?:meta)|(?:link)|(?:object)|(?:embed)|(?:param)|(?:im(?:g|port)))(?:\s*(?:type|href|src)=\s?\\?"?\s?)?)]]></rule>
 		<description>detects possibly malicious html elements including some attributes</description>
 		<tags>
 			<tag>xss</tag>
@@ -392,7 +403,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\w+\s?=\s?\\?(?:"|'|`|´|‘|’)?\s?\w+:)]]></rule>
+		<rule><![CDATA[(?:\w+\s?=\s?\\?"?\s?\w+:)]]></rule>
 		<description>detects common uri schemes</description>
 		<tags>
 			<tag>rfe</tag>
@@ -430,7 +441,7 @@
 		<impact>3</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:"|'|`|´|‘|’)?\)?\s+(?:OR|AND)\s+\(?\\?(?:"|'|`|´|‘|’)?\s?[\w]+\\?(?:"|'|`|´|‘|’)?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?]]></rule>
+		<rule><![CDATA["?\)?\s+(?:OR|AND)\s+\(?\\?"?\s?[\w]+\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?]]></rule>
 		<description>detects classic SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -440,7 +451,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?(?:"|'|`|´|‘|’)\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)]]></rule>
+		<rule><![CDATA[(?:%?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)]]></rule>
 		<description>detects more SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -460,7 +471,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:^[admin\/\* ]+(?:"|'|`|´|‘|’)+\s?(?:--|#|\/\*|{)?)|(?:union\s+select\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:^[admin\/\* ]+"+\s?(?:--|#|\/\*|{)?)|(?:union\s+select\s+\d+\s?,)]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -470,7 +481,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?[\s"`´‘’'\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -516,7 +527,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?(?:"|'|`|´|‘|’)+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
+		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
 		<description>detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
 		<tags>
 			<tag>sqli</tag>

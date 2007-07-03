@@ -134,7 +134,7 @@ class IDS_Converter {
      */ 
     public static function convertFromCommented($value) {
 
-
+        # check for existing comments
         if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)/Ds', $value)) {            
 
             $pattern = array('/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/Ds', 
@@ -149,6 +149,22 @@ class IDS_Converter {
           
         return $value;
     }
+
+    /**
+     * Normalize quotes
+     * 
+     * @return  string  $value
+     */ 
+    public static function convertQuotes($value) {
+
+        # normalize different quotes to "
+        $pattern = array('\'', '`', '´', '‘', '’');
+        
+        $value = str_replace($pattern, '"', $value);
+          
+        return $value;
+    }    
+    
 }
 
 /*

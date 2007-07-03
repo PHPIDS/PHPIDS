@@ -167,6 +167,7 @@ class IDS_Monitor {
         
         require_once 'IDS/Converter.php';
 		
+        $value = IDS_Converter::convertQuotes($value);
         $value = IDS_Converter::convertFromUTF7($value);
         $value = IDS_Converter::convertFromJSCharcode($value);
         $value = IDS_Converter::convertFromCommented($value);
