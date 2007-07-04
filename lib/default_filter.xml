@@ -210,7 +210,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:constructor|prototype|for|while|each|try|catch|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[])]]></rule>
+		<rule><![CDATA[(?:(?:constructor|prototype|for|while|each|try|catch|top|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[])]]></rule>
 		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
@@ -219,6 +219,15 @@
 			<tag>rfe</tag>
 		</tags>
 		<impact>4</impact>
+	</filter>
+   	<filter>
+		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&]))]]></rule>
+		<description>detects obfuscated javascript script injections via associative DOM method execution</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>
@@ -451,7 +460,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)]]></rule>
+		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)]]></rule>
 		<description>detects more SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -471,7 +480,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:^[admin\/\* ]+"+\s?(?:--|#|\/\*|{)?)|(?:union\s+select\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:^[admin\/\* ]+\\?"+\s?(?:--|#|\/\*|{)?)|(?:union\s+select\s+\d+\s?,)]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -481,7 +490,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
