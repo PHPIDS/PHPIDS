@@ -210,7 +210,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:for|while|each|try|catch|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[])]]></rule>
+		<rule><![CDATA[(?:(?:constructor|prototype|for|while|each|try|catch|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[])]]></rule>
 		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
