@@ -166,11 +166,12 @@ class IDS_Monitor {
 	private function prepareMatching($key, $value, IDS_Filter_Abstract $filter) {
         
         require_once 'IDS/Converter.php';
-		
+
         $value = IDS_Converter::convertQuotes($value);
         $value = IDS_Converter::convertFromUTF7($value);
         $value = IDS_Converter::convertFromJSCharcode($value);
         $value = IDS_Converter::convertFromCommented($value);
+        $value = IDS_Converter::convertConcatenations($value);
         
 		return $filter->match($value);
 	}

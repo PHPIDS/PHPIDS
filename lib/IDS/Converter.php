@@ -163,8 +163,31 @@ class IDS_Converter {
         $value = str_replace($pattern, '"', $value);
           
         return $value;
-    }    
-    
+    }     
+
+    /**
+     * Converts basic concatenations
+     * 
+     * @return  string  $value
+     */ 
+    public static function convertConcatenations($value) {
+
+        if(get_magic_quotes_gpc()){
+            $converted = stripslashes($value);  
+        }
+
+        if(preg_match('/("\s*\+\s*")/', $converted, $matches)){
+        
+            $pattern = array('/("\s*\+\s*")*/Ds');
+        
+            # strip out concatenations
+            $converted = preg_replace($pattern, null, $converted);
+            
+            $value .= ' [' . $converted . '] ';  
+        }
+        
+        return $value;    
+    }
 }
 
 /*

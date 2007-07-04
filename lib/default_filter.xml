@@ -18,8 +18,17 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\(|(?:location|referrer).*(?:substr|split)\W+|\Weval\W+\w+\W+substr\()]]></rule>
-		<description>detects self-, url- and referrer-contained and xss payload attacks</description>
+		<rule><![CDATA[(?:(?:location|referrer).*(?:substr|split)\W+|\Weval\W+\w+\W+substr\()]]></rule>
+		<description>url- and referrer-contained and xss payload attacks</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:(?:\Wlocation\s*.\s*hash\W)|(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\())]]></rule>
+		<description>hash-contained xss payload attacks</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
