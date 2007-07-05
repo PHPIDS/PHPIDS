@@ -230,7 +230,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|\d+\s*[|&]+"\w+)|(?:\w+\s*[|&]+\s*\w+)]]></rule>
+		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|\d+\s*[|&]+"\w+)|(?:\w+\W\s*[|&]+\s*\W?\w+)]]></rule>
 		<description>detects obfuscated javascript script injections via associative DOM method execution</description>
 		<tags>
 			<tag>xss</tag>
