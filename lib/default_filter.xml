@@ -545,6 +545,15 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)]]></rule>
+		<description>detects MySQL stored procedure/function injections</description>
+		<tags>
+			<tag>sqli</tag>
+			<tag>id</tag>
+		</tags>
+		<impact>4</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
 		<description>detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
 		<tags>
