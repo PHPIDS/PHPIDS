@@ -27,7 +27,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\Wlocation\s*.\s*hash\W)|(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\())]]></rule>
+		<rule><![CDATA[(?:(?:\Wlocation\s*.\s*hash\W)|(?:(?:location)?[. ]*hash[.\s\(\[]*(?:\w+)\s?\()|(?:\w+\s*.hash\W+))]]></rule>
 		<description>hash-contained xss payload attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -230,7 +230,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|\d+\s*[|&]+"\w+)]]></rule>
+		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|\d+\s*[|&]+"\w+)|(?:\w+\s*[|&]+\s*\w+)]]></rule>
 		<description>detects obfuscated javascript script injections via associative DOM method execution</description>
 		<tags>
 			<tag>xss</tag>

@@ -173,16 +173,19 @@ class IDS_Converter {
     public static function convertConcatenations($value) {
 
         if(get_magic_quotes_gpc()){
-            $converted = stripslashes($value);  
+            $compare = stripslashes($value);  
         }
 
-        if(preg_match('/("\s*\+\s*")/', $converted, $matches)){
-        
-            $pattern = array('/("\s*\+\s*")*/Ds');
-        
-            # strip out concatenations
-            $converted = preg_replace($pattern, null, $converted);
+        $pattern = array('/("\s*[\W]+\s*")*/Ds',
+                         '/(";\w\s*+=\s*\w?\s*")*/Ds',
+                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*"?)*/Ds',
+                         '/(";\s*\w+\W+\w*\s*[|&]*")*/Ds'
+                         ); 
+
+        # strip out concatenations
+        $converted = preg_replace($pattern, null, $compare);
             
+        if($compare != $converted){    
             $value .= ' [' . $converted . '] ';  
         }
         
