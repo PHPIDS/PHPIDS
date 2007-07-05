@@ -499,7 +499,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:;\s?SELECT\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:[;>]\s?SELECT\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
