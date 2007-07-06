@@ -27,7 +27,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\s\w]+\s*hash)|(?:\w+=\W*[^,]*,\w+\()]]></rule>
+		<rule><![CDATA[(?:[^\s\w]+\s*hash)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)]]></rule>
 		<description>hash-contained xss payload attacks</description>
 		<tags>
 			<tag>xss</tag>
@@ -186,7 +186,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^y](?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[{}\/():;\[\|])]]></rule>
+		<rule><![CDATA[(?:[^y](?:hash|host|hostname|href|source|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects javascript script object properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -238,6 +238,15 @@
 		</tags>
 		<impact>5</impact>
 	</filter>    
+   	<filter>
+		<rule><![CDATA[(?:\/[\w\s]+\/\.)|(?:,.*?")]]></rule>
+		<description>detects basic obfuscated javascript script injections</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
    	<filter>
 		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|.[|&]+.)]]></rule>
 		<description>detects obfuscated javascript script injections via associative DOM method execution</description>
