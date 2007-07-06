@@ -175,7 +175,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*[{}\/();\[\|])]]></rule>
+		<rule><![CDATA[(?:(?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -186,7 +186,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^y](?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[{}\/();\[\|])]]></rule>
+		<rule><![CDATA[(?:[^y](?:hash|host|hostname|href|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects javascript script object properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -197,7 +197,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[{}\/();\[\|])]]></rule>
+		<rule><![CDATA[(?:(?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects javascript script array properties and methods</description>
 		<tags>
 			<tag>xss</tag>(?:\W+(href|protocol|host\w*|pathname|search|hash|port|cookie)\W+)
@@ -208,7 +208,7 @@
 		<impact>4</impact>
 	</filter>
     <filter>
-		<rule><![CDATA[(?:[^y](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[{}\/();\[\|])]]></rule>
+		<rule><![CDATA[(?:[^y](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects javascript script string properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -219,7 +219,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:constructor|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean)\s*[{}\/();\[\|])]]></rule>
+		<rule><![CDATA[(?:(?:constructor|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean)\s*[{}\/():;\[\|])]]></rule>
 		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
@@ -230,13 +230,13 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\s*.\s*location|document\s*.\s*\w+)]]></rule>
+		<rule><![CDATA[(?:\w+\s*.\s*location|document\s*.\s*\w+)|(?:\(\w+\?[:\w']+\))]]></rule>
 		<description>detects javascript location/document property access</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
 	</filter>    
    	<filter>
 		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|.[|&]+.)]]></rule>

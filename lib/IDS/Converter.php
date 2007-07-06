@@ -179,7 +179,8 @@ class IDS_Converter {
         $pattern = array('/("\s*[\W]+\s*\n*")*/Ds',
                          '/(";\w\s*+=\s*\w?\s*\n*")*/Ds',
                          '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/Ds',
-                         '/(";\s*\w+\W+\w*\s*[|&]*")*/Ds'
+                         '/(";\s*\w+\W+\w*\s*[|&]*")*/Ds', 
+                         '/(?:"?\+[^"]*")/Ds'
                          ); 
 
         # strip out concatenations
