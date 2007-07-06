@@ -87,6 +87,20 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(30, $result->getImpact());        
     }
 
+    public function testSelfContainedXSSList() {
+        $test = new IDS_Monitor(
+            array('a=0||\'ev\'+\'al\',b=0||1[a](\'loca\'+\'tion.hash\'),c=0||\'sub\'+\'str\',1[a](b[c](1));', 
+                  'eval.call(this,unescape.call(this,location))',
+                  'd=0||\'une\'+\'scape\'||0;a=0||\'ev\'+\'al\'||0;b=0||\'locatio\';b+=0||\'n\'||0;c=b[a];d=c(d);c(d(c(b)))',
+                  '_=eval,__=unescape,___=document.URL,_(__(___))'
+                  ),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(45, $result->getImpact());        
+    }
+
     public function testSQLIList() {
         $test = new IDS_Monitor(
             array('" OR 1=1#', '; DROP table Users --', '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1'),
