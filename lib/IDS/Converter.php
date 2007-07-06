@@ -176,9 +176,9 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/("\s*[\W]+\s*")*/Ds',
-                         '/(";\w\s*+=\s*\w?\s*")*/Ds',
-                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*"?)*/Ds',
+        $pattern = array('/("\s*[\W]+\s*\n*")*/Ds',
+                         '/(";\w\s*+=\s*\w?\s*\n*")*/Ds',
+                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/Ds',
                          '/(";\s*\w+\W+\w*\s*[|&]*")*/Ds'
                          ); 
 
