@@ -74,7 +74,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		);
 		$result = $test->run();
 		$this->assertTrue($result->hasEvent(1));
-		$this->assertEquals(10, $result->getImpact());
+		$this->assertEquals(16, $result->getImpact());
 	}
 
     public function testXSSList() {
@@ -84,7 +84,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(30, $result->getImpact());        
+        $this->assertEquals(73, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -98,7 +98,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(45, $result->getImpact());        
+        $this->assertEquals(72, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -108,7 +108,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(16, $result->getImpact());        
+        $this->assertEquals(25, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -118,7 +118,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(5, $result->getImpact());        
+        $this->assertEquals(20, $result->getImpact());        
     }
     
     public function testRFEList() {
@@ -128,7 +128,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(20, $result->getImpact());       
+        $this->assertEquals(25, $result->getImpact());       
     }
     
     public function testDecimalCCConverter() {
