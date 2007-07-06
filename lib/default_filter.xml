@@ -71,7 +71,7 @@
 		</tags>
 		<impact>3</impact>
 	</filter>
-	<filter>http://sla.ckers.org/forum/read.php?2,13209,page=1
+	<filter>
 		<rule><![CDATA[(?:&#\w+)]]></rule>
 		<description>detects all entitites including the bizarre IE US-ASCII entitites</description>
 		<tags>
