@@ -45,6 +45,15 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:\([^([]+(\(|\[)[^\])]+(]|\))+)]]></rule>
+		<description>detects self-executing JS functions</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:>[\w\s]*<\/\w+>)]]></rule>
 		<description>finds unquoted attribute breaking injections</description>
 		<tags>
@@ -248,8 +257,17 @@
 		<impact>5</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|.[|&]+.)]]></rule>
+		<rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+[|&])|.[|&]+.|\W=\w+,)]]></rule>
 		<description>detects obfuscated javascript script injections via associative DOM method execution</description>
+		<tags>
+			<tag>xss</tag>
+			<tag>csrf</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+   	<filter>
+		<rule><![CDATA[(?:(\$\$?|ext[\s.]+\w+|cssquery|dojo[\s.]+\w+)\s*\(|__gwt_)]]></rule>
+		<description>detects library based JS injections (covers jQuery, Prototype, Ext, cssQuery, GWT and dojo)</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>

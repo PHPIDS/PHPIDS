@@ -84,7 +84,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(78, $result->getImpact());        
+        $this->assertEquals(88, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -92,13 +92,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             array('a=0||\'ev\'+\'al\',b=0||1[a](\'loca\'+\'tion.hash\'),c=0||\'sub\'+\'str\',1[a](b[c](1));', 
                   'eval.call(this,unescape.call(this,location))',
                   'd=0||\'une\'+\'scape\'||0;a=0||\'ev\'+\'al\'||0;b=0||\'locatio\';b+=0||\'n\'||0;c=b[a];d=c(d);c(d(c(b)))',
-                  '_=eval,__=unescape,___=document.URL,_(__(___))'
+                  '_=eval,__=unescape,___=document.URL,_(__(___))', 
+                  '$=document,$=$.URL,$$=unescape,$$$=eval,$$$($$($))'
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(80, $result->getImpact());        
+        $this->assertEquals(115, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -148,7 +149,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(22, $result->getImpact());              
+        $this->assertEquals(27, $result->getImpact());              
     }
 
     public function testHexCCConverter() {
