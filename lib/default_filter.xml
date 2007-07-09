@@ -36,8 +36,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:with\([^)]*\)\))]]></rule>
-		<description>detects JS with() code injection attempts</description>
+		<rule><![CDATA[(?:with\([^)]*\)\))|\.source\W]]></rule>
+		<description>detects JS with() and .source code injection attempts</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -45,7 +45,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\]\s*\()]]></rule>
+		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()]]></rule>
 		<description>detects self-executing JS functions</description>
 		<tags>
 			<tag>xss</tag>
