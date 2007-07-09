@@ -129,6 +129,15 @@ class IDS_Monitor {
 				return false;
 			}
 
+            # require and use the converter
+            require_once 'IDS/Converter.php';
+    
+            $value = IDS_Converter::convertQuotes($value);
+            $value = IDS_Converter::convertFromUTF7($value);
+            $value = IDS_Converter::convertFromJSCharcode($value);
+            $value = IDS_Converter::convertFromCommented($value);
+            $value = IDS_Converter::convertConcatenations($value);
+
 			$filters = array();
 			$filterSet = $this->storage->getFilterSet();
 			foreach ($filterSet as $filter) {
@@ -164,14 +173,6 @@ class IDS_Monitor {
 	 * @return	bool
 	 */
 	private function prepareMatching($key, $value, IDS_Filter_Abstract $filter) {
-        
-        require_once 'IDS/Converter.php';
-
-        $value = IDS_Converter::convertQuotes($value);
-        $value = IDS_Converter::convertFromUTF7($value);
-        $value = IDS_Converter::convertFromJSCharcode($value);
-        $value = IDS_Converter::convertFromCommented($value);
-        $value = IDS_Converter::convertConcatenations($value);
         
 		return $filter->match($value);
 	}

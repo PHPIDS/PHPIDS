@@ -101,7 +101,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(139, $result->getImpact());        
+        $this->assertEquals(144, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -151,7 +151,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(27, $result->getImpact());              
+        $this->assertEquals(22, $result->getImpact());              
     }
 
     public function testHexCCConverter() {

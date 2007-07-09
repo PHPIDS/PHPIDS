@@ -45,7 +45,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\([^([]+(\(|\[)[^\])]+(]|\))+)]]></rule>
+		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\))]]></rule>
 		<description>detects self-executing JS functions</description>
 		<tags>
 			<tag>xss</tag>
@@ -228,7 +228,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:(?:constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean)\s*[<={}\/():;\[\|])]]></rule>
+		<rule><![CDATA[(?:(?:constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|settimeout|setinterval)\s*[<={}\/():;\[\|])]]></rule>
 		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
