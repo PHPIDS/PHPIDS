@@ -45,7 +45,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\))]]></rule>
+		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\]\s*\()]]></rule>
 		<description>detects self-executing JS functions</description>
 		<tags>
 			<tag>xss</tag>
@@ -397,7 +397,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)]]></rule>
+		<rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)|(?:\/{3,}.*$)]]></rule>
 		<description>detects common comment types</description>
 		<tags>
 			<tag>xss</tag>
