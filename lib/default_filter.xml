@@ -36,7 +36,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:with\([^)]*\)\))|\.source\W]]></rule>
+		<rule><![CDATA[(?:with\([^)]*\)\))|\.\s*source\W]]></rule>
 		<description>detects JS with() and .source code injection attempts</description>
 		<tags>
 			<tag>xss</tag>
@@ -248,7 +248,7 @@
 		<impact>5</impact>
 	</filter>    
    	<filter>
-		<rule><![CDATA[(?:\/[\w\s]+\/\.)|(?:,.+=.+(\?|,).*\))]]></rule>
+		<rule><![CDATA[(?:\/[\w\s]+\/\.)|(?:,.+=.+(\?|,).*\))|(?:=\s*\/\w+\/\s*\.)]]></rule>
 		<description>detects basic obfuscated javascript script injections</description>
 		<tags>
 			<tag>xss</tag>
