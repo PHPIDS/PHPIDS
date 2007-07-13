@@ -646,7 +646,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[\W]{128}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,})]]></rule>
+		<rule><![CDATA[(?:[\W]{128}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
 		<description>detects basic dos attempts</description>
 		<tags>
             <tag>rfe</tag>
@@ -655,8 +655,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\/default[\\]+.ida[\\?]+.*)]]></rule>
-		<description>detects code red worm probings</description>
+		<rule><![CDATA[(?:\/default[\\]+.ida[\\?]+.*)|(?:aim:[ \/]+)]]></rule>
+		<description>detects code red worm probings and AIM protocol attacks</description>
 		<tags>
             <tag>rfe</tag>
 			<tag>dos</tag>
