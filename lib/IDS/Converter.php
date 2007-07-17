@@ -36,14 +36,13 @@ class IDS_Converter {
 
         $schemes = array(
             '+AFwAIg'  => '"',
-            '+AFw\''   => '\'',
             '+ADw-'     => '<',
             '+AD4-'     => '>',
             '+AFs'     => '[',
             '+AF0'     => ']',
             '+AHs'     => '{',
             '+AH0'     => '}',
-            '+AFwAXA'  => '\\',
+            '+AFw'     => '\\',
             '+ADs'     => ';',
             '+ACM'     => '#',
             '+ACY'     => '&',
@@ -172,6 +171,7 @@ class IDS_Converter {
      */ 
     public static function convertConcatenations($value) {
 
+        $compare = '';
         if(get_magic_quotes_gpc()){
             $compare = stripslashes($value);  
         }

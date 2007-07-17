@@ -107,7 +107,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[\(\{\[]+\s*\\?(?!\+http)\W+\w+)]]></rule>
+		<rule><![CDATA[(?:[\(\{\[]+\s*\\?(?!\+http)[^\w\s+]+\w+)]]></rule>
 		<description>finds opening javascript breaker including whitespace attacks</description>
 		<tags>
 			<tag>xss</tag>
