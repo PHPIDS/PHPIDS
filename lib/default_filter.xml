@@ -239,7 +239,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\s*.\s*location|document\s*.\s*\w+)|(?:\(\w+\?[:\w']+\))]]></rule>
+		<rule><![CDATA[(?:\w+\s*.\s*location|document\s*\.\s*\w+.*\))|(?:\(\w+\?[:\w']+\))]]></rule>
 		<description>detects javascript location/document property access</description>
 		<tags>
 			<tag>xss</tag>
