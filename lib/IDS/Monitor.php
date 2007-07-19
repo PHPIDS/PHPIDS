@@ -138,6 +138,10 @@ class IDS_Monitor {
             $value = IDS_Converter::convertFromCommented($value);
             $value = IDS_Converter::convertConcatenations($value);
 
+            if (get_magic_quotes_gpc()) {
+                $value = stripslashes($value);
+            }
+
 			$filters = array();
 			$filterSet = $this->storage->getFilterSet();
 			foreach ($filterSet as $filter) {

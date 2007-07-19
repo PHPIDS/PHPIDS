@@ -115,8 +115,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testDTList(){
+        $test1 = '../../etc/passwd';
+        $test2 = '\%windir%\cmd.exe';
+        if(get_magic_quotes_gpc()){
+            $test1 = addslashes($test1);
+            $test2 = addslashes($test2);
+        }        
         $test = new IDS_Monitor(
-            array('../../etc/passwd', '\%windir%\cmd.exe'),
+            array($test1, $test2),
             $this->storage
         );
         $result = $test->run();
@@ -145,8 +151,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testOctalCCConverter() {
+        $test1 = 'XXX';
+        $test2 = '\74\163\143\162\151\160\164\76\141\154\145\162\164\50\47\150\151\47\51\74\57\163\143\162\151\160\164\76';
+        if(get_magic_quotes_gpc()){
+            $test1 = addslashes($test1);
+            $test2 = addslashes($test2);
+        }        
         $test = new IDS_Monitor(
-            array('XXX', '\74\163\143\162\151\160\164\76\141\154\145\162\164\50\47\150\151\47\51\74\57\163\143\162\151\160\164\76'),
+            array($test1, $test2),
             $this->storage
         );
         $result = $test->run();
@@ -155,9 +167,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testHexCCConverter() {
-
+        $test1 = 'XXX';
+        $test2 = '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e';
+        if(get_magic_quotes_gpc()){
+            $test1 = addslashes($test1);
+            $test2 = addslashes($test2);
+        } 
         $test = new IDS_Monitor(
-            array('XXX', '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e'),
+            array($test1, $test2),
             $this->storage
         );
         $result = $test->run();
