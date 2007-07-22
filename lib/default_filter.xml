@@ -545,7 +545,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:;\s?(?:DROP|ALTER)\s+(?:table|database|column)\s+)|(?:;\s?(?:UPDATE|INSERT)\s+\w+)]]></rule>
+		<rule><![CDATA[(?:;\s?(?:DROP|ALTER)\s+(?:table|database|column)\s+)|(?:;\s?(?:UPDATE|INSERT)\s+\w+)|(?:SET\s*@\w+)]]></rule>
 		<description>detects chained SQL injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
