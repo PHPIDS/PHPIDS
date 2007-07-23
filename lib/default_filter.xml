@@ -581,13 +581,13 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)]]></rule>
+		<rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)]]></rule>
 		<description>detects MySQL stored procedure/function injections</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
