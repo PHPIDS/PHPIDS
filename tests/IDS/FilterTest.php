@@ -45,8 +45,8 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($filter->match('TE1ST'));
 		// ... dot all (\n is matched by .)
 		$this->assertTrue($filter->match("TE\nST"));
-		// .. "$" is end only
-		$this->assertFalse($filter->match("TE1ST\n"));
+		// .. "$" is end only #has changed since modifiers are ims
+		$this->assertTrue($filter->match("TE1ST\n"));
 
 		// Change it to the opposite
 		IDS_Filter_Regex::setFlags('');

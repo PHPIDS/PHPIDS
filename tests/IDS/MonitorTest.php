@@ -95,23 +95,41 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   '_=eval,__=unescape,___=document.URL,_(__(___))', 
                   '$=document,$=$.URL,$$=unescape,$$$=eval,$$$($$($))', 
                   'y=<a>alert</a >;content[y](123)', 
-                  '$_=document,$__=$_.URL,$___=unescape,$_=$_.body,$_.innerHTML = $___(http=$__)'
+                  '$_=document,$__=$_.URL,$___=unescape,$_=$_.body,$_.innerHTML = $___(http=$__)', 
+                  'eval.call(this,unescape.call(this,location))', 
+                  'setTimeout//
+                    (name//
+                    ,0)//', 
+                  'a=/ev/ 
+                    .source
+                    a+=/al/ 
+                    .source,a = a[a]
+                    a(name)'
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(193, $result->getImpact());        
+        $this->assertEquals(245, $result->getImpact());        
     }
 
     public function testSQLIList() {
         $test = new IDS_Monitor(
-            array('" OR 1=1#', '; DROP table Users --', '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1'),
+            array('" OR 1=1#', 
+                  '; DROP table Users --', 
+                  '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1',
+                  'admin\'--', 
+                  'SELECT /*!32302 1/0, */ 1 FROM tablename', 
+                  '10;DROP members --', 
+                  ' SELECT IF(1=1,\'true\',\'false\')', 
+                  'SELECT CHAR(0x66)', 
+                  'SELECT LOAD_FILE(0x633A5C626F6F742E696E69)'
+                  ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(17, $result->getImpact());        
+        $this->assertEquals(53, $result->getImpact());        
     }
     
     public function testDTList(){

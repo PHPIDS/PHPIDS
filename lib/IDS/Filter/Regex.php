@@ -36,7 +36,7 @@ class IDS_Filter_Regex extends IDS_Filter_Abstract {
 	 *
 	 * @var string
 	 */
-	protected static $flags = 'iDs';
+	protected static $flags = 'ims';
 
 	/**
 	 * Set PCRE flags

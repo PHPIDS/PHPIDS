@@ -71,7 +71,7 @@ class IDS_Converter {
      public static function convertFromJSCharcode($value) {   
 
         # check if value matches typical charCode pattern
-        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+)/s', $value, $matches)) {
+        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+)/ms', $value, $matches)) {
             
             $converted  = '';
             $string = implode(',', $matches[0]);
@@ -90,11 +90,11 @@ class IDS_Converter {
                 }                              
             }
 			
-            $value .= ' [' . $converted . '] ';
+            $value .= "\n[" . $converted . "] ";
         }
 
         # check for octal charcode pattern
-        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/iDs', $value, $matches)) {
+        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/ims', $value, $matches)) {
 
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
@@ -105,11 +105,11 @@ class IDS_Converter {
                 }
             }       
 			
-            $value .= ' [' . $converted . '] ';
+            $value .= "\n[" . $converted . "] ";
         }
 
         # check for hexadecimal charcode pattern
-        if (preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/iDs', $value, $matches)) {
+        if (preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/ims', $value, $matches)) {
 
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
@@ -120,7 +120,7 @@ class IDS_Converter {
                 }
             }
 			
-            $value .= ' [' . $converted . '] ';
+            $value .= "\n[" . $converted . "] ";
         }
 
         return $value;
@@ -134,16 +134,16 @@ class IDS_Converter {
     public static function convertFromCommented($value) {
 
         # check for existing comments
-        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)/Ds', $value)) {            
+        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)/ms', $value)) {            
 
-            $pattern = array('/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/Ds', 
-                             '/(?:(?:\/\*\/*[^\/\*]*)+\*\/)/Ds', 
-                             '/(?:(?:\/\/|--|#|{).*)/Ds'
+            $pattern = array('/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/ms', 
+                             '/(?:(?:\/\*\/*[^\/\*]*)+\*\/)/ms', 
+                             '/(?:(?:\/\/|--|#|{).*)/ms'
                             );
             
             $converted = preg_replace($pattern, null, $value);
     
-            $value .= ' [' . $converted . '] ';    
+            $value .= "\n[" . $converted . "] ";
         }  
           
         return $value;
@@ -176,18 +176,18 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/("\s*[\W]+\s*\n*")*/Ds',
-                         '/(";\w\s*+=\s*\w?\s*\n*")*/Ds',
-                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/Ds',
-                         '/(";\s*\w+\W+\w*\s*[|&]*")*/Ds', 
-                         '/(?:"?\+[^"]*")/Ds'
+        $pattern = array('/("\s*[\W]+\s*\n*")*/ms',
+                         '/(";\w\s*+=\s*\w?\s*\n*")*/ms',
+                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/ms',
+                         '/(";\s*\w+\W+\w*\s*[|&]*")*/ms', 
+                         '/(?:"?\+[^"]*")/ms'
                          ); 
 
         # strip out concatenations
         $converted = preg_replace($pattern, null, $compare);
             
         if($compare != $converted){    
-            $value .= ' [' . $converted . '] ';  
+            $value .= "\n[" . $converted . "] ";
         }
         
         return $value;    

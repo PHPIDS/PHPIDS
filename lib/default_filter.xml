@@ -184,7 +184,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\w](?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*(?:[^!\w\s&]|\n))]]></rule>
+		<rule><![CDATA[(?:[^\w](?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*(?:[^\]!\w\s&]|\n))]]></rule>
 		<description>detects possible includes and typical script methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -195,7 +195,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\w](?:hash|host|hostname|href|source|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*(?:[^!\w\s&]|\n))]]></rule>
+		<rule><![CDATA[(?:[^\w](?:hash|host|hostname|href|source|pathname|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*(?:[^\]!\w\s&]|\n))]]></rule>
 		<description>detects javascript script object properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -206,7 +206,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:[^\w](?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^!\w\s&]|\n))]]></rule>
+		<rule><![CDATA[(?:[^\w](?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^!\]\w\s&]|\n))]]></rule>
 		<description>detects javascript script array properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -217,7 +217,7 @@
 		<impact>4</impact>
 	</filter>
     <filter>
-		<rule><![CDATA[(?:[^\w](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^!\w\s&]|\n))]]></rule>
+		<rule><![CDATA[(?:[^\w](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^\]!\w\s&]|\n))]]></rule>
 		<description>detects javascript script string properties and methods</description>
 		<tags>
 			<tag>xss</tag>
@@ -228,7 +228,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:[^\w](?:constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^!\w\s&]|\n))]]></rule>
+		<rule><![CDATA[(?:[^\w](?:constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^\]!\w\s&]|\n))]]></rule>
 		<description>detects javascript script language constructs</description>
 		<tags>
 			<tag>xss</tag>
@@ -545,7 +545,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:;\s?(?:DROP|ALTER)\s+(?:table|database|column)\s+)|(?:;\s?(?:UPDATE|INSERT)\s+\w+)|(?:SET\s*@\w+)]]></rule>
+		<rule><![CDATA[(?:;\s?(?:DROP|ALTER)\s+[\w-+]+\s+)|(?:;\s?(?:UPDATE|INSERT)\s+\w+)|(?:SET\s*@\w+)]]></rule>
 		<description>detects chained SQL injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -609,7 +609,11 @@
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:<[?%](?:php)?.*(?:[?%]>)?)]]></rule>
-		<description>detects code injection attempts</description>
+		<description>deteczer Fußmarsch, fertig. Klingt spannend, cool? Sollte man meinen - scheint es aber nicht zu sein, denn die Hacker Foundation hat ein noch größeres Paket geschnürt.
+
+Unsere US-amerikanischen Kollegen der [Externer Link]Hacker Foundation bieten [Externer Link] ein Komplett-Paket an: Für 1337 Euro die Defcon in Las Vegas und das Chaos Communication Camp besuchen, inklusive Eintritt, Flug zur Defcon, Flug zurück nach Frankfurt, und von Frankfurt aus dann bis direkt auf den [Externer Link]Flughafen Finow mit einer eigenen "Hackers on a Plane" Maschine.
+
+Ebenfalls angeboten wird das Paket in der umgekehrten Variante für amerikanische Besucher - also mit Flug nach Deutschland und Flug zurück in die USA, dann für 1337 $. ts code injection attempts</description>
 		<tags>
 			<tag>id</tag>
 			<tag>rfe</tag>
