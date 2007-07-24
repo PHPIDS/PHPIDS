@@ -311,8 +311,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:firefoxurl:\w+\|)|(?:(?:file|res)\s*:\s*[%&#xu\/]+)|(wyciwyg|firefoxurl\s*:\s*\/\s*\/)]]></rule>
-		<description>detects IE firefoxurl injections, cache poisoning attempts and local file inclusions</description>
+		<rule><![CDATA[(?:firefoxurl:\w+\|)|(?:(?:file|res|telnet|nntp|news|mailto)\s*:\s*[%&#xu\/]+)|(wyciwyg|firefoxurl\s*:\s*\/\s*\/)]]></rule>
+		<description>detects IE firefoxurl injections, cache poisoning attempts and local file inclusion/execution</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>rfe</tag>
