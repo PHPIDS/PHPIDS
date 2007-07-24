@@ -87,7 +87,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                 } else {
                     $filters = simplexml_load_file($source);
                 }
-            } elseif (substr($source, 0, 1) == '<') {
+            } elseif (substr(trim($source), 0, 1) == '<') {
                 if (LIBXML_VERSION >= 20621) {
                     $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
                 } else {
