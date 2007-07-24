@@ -515,7 +515,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\d.+SELECT.+FROM.*(?:WHERE)?)]]></rule>
+		<rule><![CDATA[(?:\d.+SELECT.+FROM.*(?:WHERE)?)|(?:" union select)]]></rule>
 		<description>detects very basic SQL injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -599,8 +599,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:EXEC\s+master\.)]]></rule>
-		<description>detects MSSQL code execution attempts</description>
+		<rule><![CDATA[(?:EXEC\s+master\.)|(?:union select @)]]></rule>
+		<description>detects MSSQL code execution and information gathering attempts</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
@@ -609,11 +609,7 @@
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:<[?%](?:php)?.*(?:[?%]>)?)]]></rule>
-		<description>deteczer Fußmarsch, fertig. Klingt spannend, cool? Sollte man meinen - scheint es aber nicht zu sein, denn die Hacker Foundation hat ein noch größeres Paket geschnürt.
-
-Unsere US-amerikanischen Kollegen der [Externer Link]Hacker Foundation bieten [Externer Link] ein Komplett-Paket an: Für 1337 Euro die Defcon in Las Vegas und das Chaos Communication Camp besuchen, inklusive Eintritt, Flug zur Defcon, Flug zurück nach Frankfurt, und von Frankfurt aus dann bis direkt auf den [Externer Link]Flughafen Finow mit einer eigenen "Hackers on a Plane" Maschine.
-
-Ebenfalls angeboten wird das Paket in der umgekehrten Variante für amerikanische Besucher - also mit Flug nach Deutschland und Flug zurück in die USA, dann für 1337 $. ts code injection attempts</description>
+		<description>detects code injection attempts</description>
 		<tags>
 			<tag>id</tag>
 			<tag>rfe</tag>
