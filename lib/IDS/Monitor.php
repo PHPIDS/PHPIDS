@@ -123,7 +123,7 @@ class IDS_Monitor {
 	private function detect($key, $value) {
 		
         #only start detection if value isn't alphanumeric
-        if (preg_match('/\W+/ims', $value) && !empty($value)) {
+        if (preg_match('/[^\w\s\/]+/ims', $value) && !empty($value)) {
             
 			if (in_array($key, $this->exceptions, true)) {
 				return false;
