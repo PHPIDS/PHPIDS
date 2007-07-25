@@ -554,8 +554,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:SELECT\s+(?:BENCHMARK|IF)\s?\(\s?\(?\s?\w+)]]></rule>
-		<description>detects SQL benchmark injection attempts including conditional queries</description>
+		<rule><![CDATA[(?:(SELECT|;)\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
+		<description>detects SQL benchmark and sleep injection attempts including conditional queries</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
@@ -599,8 +599,17 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:EXEC\s+master\.)|(?:union select @)]]></rule>
+		<rule><![CDATA[(?:EXEC\s+master\.)|(?:union select @)|(?:select.*\w?user\()]]></rule>
 		<description>detects MSSQL code execution and information gathering attempts</description>
+		<tags>
+			<tag>sqli</tag>
+			<tag>id</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:SELECT\s*[\/\*])|(SELECT\s*\(\s*SPACE\s*\()]]></rule>
+		<description>detects MySQL comment-/space-obfuscated injections</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
