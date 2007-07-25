@@ -18,8 +18,8 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\s\w]+\s*(?:location|referrer))|(?:(?<=eval).*(?:(?:location|referrer)|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
-		<description>url- and referrer-contained and xss payload attacks</description>
+		<rule><![CDATA[(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
+		<description>url-, name- and referrer-contained payload attacks</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
@@ -239,7 +239,7 @@
 		<impact>4</impact>
 	</filter>
    	<filter>
-		<rule><![CDATA[(?:\w+\s*.\s*location|document\s*\.\s*\w+.*\))|(?:\(\w+\?[:\w']+\))]]></rule>
+		<rule><![CDATA[(?:\w+\s*.\s*(?:location|document)[^\w]\s*\.\s*\w+.*\))|(?:\(\w+\?[:\w']+\))]]></rule>
 		<description>detects javascript location/document property access</description>
 		<tags>
 			<tag>xss</tag>
