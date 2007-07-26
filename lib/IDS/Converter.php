@@ -20,6 +20,10 @@
 /**
  * PHPIDS specific utility class to convert charsets manually
  *
+ * Note that if you make use of IDS_Converter::runAll(), existing class
+ * methods will be executed in the same order as they are implemented in the
+ * class tree!
+ *
  * @author      christ1an <ch0012@gmail.com>
  * @author		.mario <mario.heiderich@gmail.com>
  * @version     $Id:Converter.php 174 2007-06-18 15:41:56Z mario $
@@ -28,6 +32,10 @@ class IDS_Converter {
 
 	/**
 	 * Runs all converter functions
+	 *
+	 * Note that if you make use of IDS_Converter::runAll(), existing class
+	 * methods will be executed in the same order as they are implemented in the
+	 * class tree!
 	 *
      * @param   string  $value
 	 * @return	string
