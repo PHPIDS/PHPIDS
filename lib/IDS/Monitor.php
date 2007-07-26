@@ -38,7 +38,7 @@ class IDS_Monitor {
 
 	private $report;
 	
-	public	$scanKeys = true;
+	public	$scanKeys = false;
 
 	/**
 	 * This array is meant to define which variables need to be ignored
