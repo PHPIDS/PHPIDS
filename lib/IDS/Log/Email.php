@@ -95,7 +95,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		
 		$attackedParameters = '';
 		foreach ($data as $event) {
-			$attackedParameters .= "\n" . $event->getName() . '=' . $event->getValue . ",\n";
+			$attackedParameters .= "\n" . $event->getName() . '=' . $event->getValue() . ",\n";
 		}
 		
 		$dataString .= 'Affected parameters: ' . $attackedParameters . "\n";

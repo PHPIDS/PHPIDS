@@ -86,7 +86,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 		
 		$attackedParameters = '';
 		foreach ($data as $event) {
-			$attackedParameters .= $event->getName() . '=' . $event->getValue . ',';
+			$attackedParameters .= $event->getName() . '=' . $event->getValue() . ',';
 		}
 		
 		$dataString .= ' [' . $attackedParameters . ']';

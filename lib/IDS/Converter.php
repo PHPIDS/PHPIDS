@@ -26,6 +26,25 @@
  */
 class IDS_Converter {
 
+	/**
+	 * Runs all converter functions
+	 *
+     * @param   string  $value
+	 * @return	string
+	 */
+	 public static function runAll($value) {
+	 	$methods = get_class_methods(__CLASS__);
+		
+		$key = array_search('runAll', $methods);
+		unset($methods[$key]);
+		
+		foreach ($methods as $key => $func) {
+			$value = self::$func($value);
+		}
+		
+		return $value;
+	 }
+
     /**
      * Converts listed UTF-7 tags to UTF-8
      *

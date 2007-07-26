@@ -37,6 +37,8 @@ class IDS_Monitor {
 	private $storage = NULL;
 
 	private $report;
+	
+	public	$scanKeys = true;
 
 	/**
 	 * This array is meant to define which variables need to be ignored
@@ -122,7 +124,7 @@ class IDS_Monitor {
 	 */
 	private function detect($key, $value) {
 		
-        #only start detection if value isn't alphanumeric
+        # only start detection if value isn't alphanumeric
         if (preg_match('/[^\w\s\/]+/ims', $value) && !empty($value)) {
             
 			if (in_array($key, $this->exceptions, true)) {
@@ -131,42 +133,55 @@ class IDS_Monitor {
 
             # require and use the converter
             require_once 'IDS/Converter.php';
-    
-            $value = IDS_Converter::convertFromUTF7($value);
-            $value = IDS_Converter::convertQuotes($value);
-            $value = IDS_Converter::convertFromJSCharcode($value);
-            $value = IDS_Converter::convertFromCommented($value);
-            $value = IDS_Converter::convertConcatenations($value);
-
-            if (get_magic_quotes_gpc()) {
-                $value = stripslashes($value);
-            }
+            $value	= IDS_Converter::runAll($value);
+			$value	= get_magic_quotes_gpc() 	? stripslashes($value) 			: $value;
+			$key 	= $this->scanKeys 			? IDS_Converter::runAll($key) 	: $key;
 
 			$filters = array();
 			$filterSet = $this->storage->getFilterSet();
 			foreach ($filterSet as $filter) {
 
-				/**
-				* In case we have a tag array specified the IDS will only
-				* use those filters that are meant to detect any of the given tags
-				*/
+				# In case we have a tag array specified the IDS will only
+				# use those filters that are meant to detect any of the given tags
 				if (is_array($this->tags)) {
 					if (array_intersect($this->tags, $filter->getTags())) {
-						if ($filter->match($value)) {
+						if ($this->match($key, $value, $filter)) {
 							$filters[] = $filter;
 						}
 					}
 
 				# We make use of all filters available
 				} else {
-					if ($filter->match($value)) {
+					if ($this->match($key, $value, $filter)) {
 						$filters[] = $filter;
 					}
 				}
 			}
-			
+					
 			return empty($filters) ? false : $filters;
 		}
+	}
+	
+	/**
+	 * Matches given value and/or key against given filter
+	 *
+	 * @param	mixed	$key
+	 * @param	mixed	$value
+	 * @param	object	$filter
+	 * @return	boolean
+	 */
+	private function match($key, $value, $filter) {
+		if ($this->scanKeys) {
+			if ($filter->match($key)) {
+				return true;
+			}
+		}
+
+		if ($filter->match($value)) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
