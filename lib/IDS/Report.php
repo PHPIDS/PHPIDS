@@ -215,4 +215,3 @@ class IDS_Report implements Countable, IteratorAggregate {
  * c-basic-offset: 4
  * End:
  */
-
