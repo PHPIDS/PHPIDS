@@ -26,7 +26,7 @@
  *
  * @author      christ1an <ch0012@gmail.com>
  * @author		.mario <mario.heiderich@gmail.com>
- * @version     $Id:Converter.php 174 2007-06-18 15:41:56Z mario $
+ * @version     $Id
  */
 class IDS_Converter {
 
