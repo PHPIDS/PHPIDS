@@ -37,7 +37,7 @@ class IDS_Converter {
 		
 		$key = array_search('runAll', $methods);
 		unset($methods[$key]);
-		
+				
 		foreach ($methods as $key => $func) {
 			$value = self::$func($value);
 		}
