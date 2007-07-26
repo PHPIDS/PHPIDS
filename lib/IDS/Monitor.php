@@ -152,14 +152,14 @@ class IDS_Monitor {
 				*/
 				if (is_array($this->tags)) {
 					if (array_intersect($this->tags, $filter->getTags())) {
-						if ($this->prepareMatching($key, $value, $filter)) {
+						if ($filter->match($value)) {
 							$filters[] = $filter;
 						}
 					}
 
 				# We make use of all filters available
 				} else {
-					if ($this->prepareMatching($key, $value, $filter)) {
+					if ($filter->match($value)) {
 						$filters[] = $filter;
 					}
 				}
@@ -167,18 +167,6 @@ class IDS_Monitor {
 			
 			return empty($filters) ? false : $filters;
 		}
-	}
-
-	/**
-	 * Prepares matching process
-	 *
-	 * @param	string				$value
-	 * @param	IDS_Filter_Abstract	$filter
-	 * @return	bool
-	 */
-	private function prepareMatching($key, $value, IDS_Filter_Abstract $filter) {
-        
-		return $filter->match($value);
 	}
 	
 	/**
