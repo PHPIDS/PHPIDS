@@ -26,7 +26,7 @@
  *
  * @author      christ1an <ch0012@gmail.com>
  * @author		.mario <mario.heiderich@gmail.com>
- * @version     $Id
+ * @version     $Id$
  */
 class IDS_Converter {
 
