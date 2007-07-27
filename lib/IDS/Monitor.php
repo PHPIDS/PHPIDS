@@ -21,8 +21,7 @@
  * Introdusion Dectection System
  *
  * This class provides function(s) to scan incoming data for
- * malicious script fragments and to return an array of possibly
- * intrusive parameters.
+ * malicious script fragments
  *
  * @author		.mario <mario.heiderich@gmail.com>
  * @author		christ1an <ch0012@gmail.com>
@@ -54,7 +53,7 @@ class IDS_Monitor {
 	 * @param	array	$reqeust			Request array
 	 * @param	object  IDS_Filter_Storage	Filter storage object
 	 * @param	tags	optional			List of tags where filters should be applied
-	 * @return 	mixed
+	 * @return 	void
 	 */
 	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = NULL) {
 		if (!empty($request)) {
@@ -68,9 +67,9 @@ class IDS_Monitor {
 	}
 
 	/**
-	 * Runs the detection mechanism
+	 * Starts the detection mechanism
 	 *
-	 * @return	IDS_Report
+	 * @return	object	IDS_Report
 	 */
 	public function run() {
 		if (!empty($this->request)) {
@@ -83,8 +82,9 @@ class IDS_Monitor {
 	}
 
 	/**
-	 * Iterates through given array and tries to detect
-	 * suspicious strings
+	 * Iterates through given data and delegates it
+	 * to IDS_Monitor::detect() in order to check for malicious
+	 * appearing fragments
 	 *
 	 * @access	private
 	 * @param	mixed   $key
@@ -137,8 +137,8 @@ class IDS_Monitor {
 			$value	= get_magic_quotes_gpc() 	? stripslashes($value) 			: $value;
 			$key 	= $this->scanKeys 			? IDS_Converter::runAll($key) 	: $key;
 
-			$filters = array();
-			$filterSet = $this->storage->getFilterSet();
+			$filters	= array();
+			$filterSet	= $this->storage->getFilterSet();
 			foreach ($filterSet as $filter) {
 
 				# In case we have a tag array specified the IDS will only

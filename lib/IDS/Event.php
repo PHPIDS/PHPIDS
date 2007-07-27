@@ -18,7 +18,7 @@
  */
 
 /**
- * IDS event object
+ * PHPIDS event object
  *
  * This class represents a certain event which has been occured while applying
  * the filters to the given data. It aggregates a bunch of IDS_Filter_Abstract

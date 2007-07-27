@@ -18,7 +18,7 @@
  */
 
 /**
- * PHP IDS report object
+ * PHPIDS report object
  *
  * The report objects collects a number of events in order to present the
  * filter results. It provides a convenient API to work with the results.
