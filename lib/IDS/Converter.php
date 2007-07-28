@@ -199,7 +199,7 @@ class IDS_Converter {
     public static function convertConcatenations($value) {
 
         $compare = '';
-        if(get_magic_quotes_gpc()){
+        if (get_magic_quotes_gpc()) {
             $compare = stripslashes($value);  
         }
 
@@ -213,7 +213,7 @@ class IDS_Converter {
         # strip out concatenations
         $converted = preg_replace($pattern, null, $compare);
             
-        if($compare != $converted){    
+        if ($compare != $converted) {    
             $value .= "\n[" . $converted . "] ";
         }
         

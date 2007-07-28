@@ -211,7 +211,7 @@ class IDS_Monitor {
 	 * Returns report object providing various functions to
 	 * work with detected results
 	 *
-	 * @return	IDS_Report
+	 * @return	object	IDS_Report
 	 */
 	public function getReport() {
 		return $this->report;
