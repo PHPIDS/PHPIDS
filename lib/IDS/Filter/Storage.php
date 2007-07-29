@@ -35,7 +35,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 	*
 	* @access	public
 	* @param	mixed	string or filename
-	* @return	mixed	true on success, otherwise exception object
+	* @return	object	$this on success, otherwise exception object
 	*/
 	public function getFilterFromJson($source) {
 		if (extension_loaded('Json')) {
@@ -76,7 +76,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 	*
 	* @access	public
 	* @param	mixed	string or filename
-	* @return	mixed	true on success, otherwise exception object
+	* @return	object	$this on success, otherwise exception object
 	*/
 	public function getFilterFromXML($source) {
 		if (extension_loaded('SimpleXML')) {
