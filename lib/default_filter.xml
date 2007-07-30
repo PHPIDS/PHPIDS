@@ -173,8 +173,8 @@
 		<impact>3</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\w+script:|@import|;base64)]]></rule>
-		<description>detects possible includes</description>
+		<rule><![CDATA[(?:\w+script:|@import|;base64)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
+		<description>detects possible includes and packed functions</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
