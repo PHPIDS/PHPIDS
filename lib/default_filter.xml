@@ -673,6 +673,15 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:info:\/)]]></rule>
+		<description>detects konqueror UXSS attacks</description>
+		<tags>
+            <tag>rfe</tag>
+			<tag>dos</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:(?:\\?\/[fdbks]+)+(?:\\?\/)+)]]></rule>
 		<description>detects apache forward and back pointers</description>
 		<tags>
