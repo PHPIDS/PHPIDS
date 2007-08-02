@@ -82,7 +82,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	*
 	* @param	mixed
 	* @access	protected
-	* @return	mixed
+	* @return	string
 	*/
 	protected function prepareData($data) {
 		
