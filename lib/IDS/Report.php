@@ -207,6 +207,32 @@ class IDS_Report implements Countable, IteratorAggregate {
 		$this->impact = false;
 		$this->tags = false;
 	}
+	
+	/**
+	* Displays available information
+	*
+	* @return	string
+	*/
+	public function __toString() {
+		if (!$this->isEmpty()) {
+			$output = '';
+			
+			$output .= 'Impact: ' . $this->getImpact() . "\n";
+			$output .= 'Tags: ' . join(', ', $this->getTags()) . "\n";
+			
+			foreach ($this->events as $event) {
+				$output .= 'Variable: ' . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "\n";
+				$output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "\n";
+				
+				foreach ($event as $filter) {
+					$output .= 'Description: ' . $filter->getDescription() . "\n";
+					$output .= 'Tags: ' . join(', ', $filter->getTags()) . "\n";
+				}
+			}
+		}
+		
+		return isset($output) ? $output : '';
+	}
 }
 
 /*

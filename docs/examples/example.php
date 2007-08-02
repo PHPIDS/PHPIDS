@@ -47,6 +47,14 @@ try {
     /*
     * in the result object you will find any suspicious 
     * fields of the passed array enriched with additional info
+	*
+	* Note: it is moreover possible to dump this information by
+	* simply echoing the result object, since IDS_Report implemented
+	* a __toString method whose output is identical with the one below.
+	*
+	* <code>
+	*  echo $result;
+	* </code>
     */
     if (!$result->isEmpty()) {
         

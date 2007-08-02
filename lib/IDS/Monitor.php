@@ -93,16 +93,18 @@ class IDS_Monitor {
 	 */
 	private function iterate($key, $value) {
 		if (!is_array($value)) {
+			if (is_string($value)) {
 
-        	if ($filter = $this->detect($key, $value)) {
-				require_once 'IDS/Event.php';
-				$this->report->addEvent(
-					new IDS_Event(
-						$key,
-						$value,
-						$filter
-					)
-				);
+				if ($filter = $this->detect($key, $value)) {
+					require_once 'IDS/Event.php';
+					$this->report->addEvent(
+						new IDS_Event(
+							$key,
+							$value,
+							$filter
+						)
+					);
+				}
 			}
 		} else {
 			foreach ($value as $subKey => $subValue) {

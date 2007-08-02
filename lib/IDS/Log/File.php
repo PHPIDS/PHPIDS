@@ -78,19 +78,18 @@ class IDS_Log_File implements IDS_Log_Interface {
 	*/
 	protected function prepareData($data) {
 		
-		$dataString = $_SERVER['REMOTE_ADDR'];
-		$dataString .= ' - - ';
-		$dataString .= '[' . date('c') . ']';
-		$dataString .= ' [' . $data->getImpact() . ']';
-		$dataString .= ' [' . join(', ', $data->getTags()) . ']';
+		$dataString = '"' . $_SERVER['REMOTE_ADDR'] . '",';
+		$dataString .= date('c') . ',';
+		$dataString .= $data->getImpact() . ',';
+		$dataString .= '"' . join(' ', $data->getTags()) . '",';
 		
-		$attackedParameters = '';
+		$attackedParameters = '"';
 		foreach ($data as $event) {
-			$attackedParameters .= $event->getName() . '=' . $event->getValue() . ',';
+			$attackedParameters .= $event->getName() . '=' . urlencode($event->getValue()) . ' ';
 		}
 		
-		$dataString .= ' [' . $attackedParameters . ']';
-		$dataString .= ' "' . $_SERVER['REQUEST_URI'] . '"';
+		$dataString .= trim($attackedParameters) . '",';
+		$dataString .= '"' . urlencode($_SERVER['REQUEST_URI']) . '"';
 		
 		return $dataString;
 	}
