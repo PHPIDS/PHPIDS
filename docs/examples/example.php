@@ -73,7 +73,7 @@ try {
     $compositeLog = new IDS_Log_Composite();
     $compositeLog->addLogger(
        IDS_Log_File::getInstance('log.txt'),  
-       IDS_Log_Email::getInstance('mario.heiderich@gmail.com', 'PHPIDS - attack detected')
+       IDS_Log_Email::getInstance('example@example.invalid', 'PHPIDS - attack detected')
 	);
 
     
@@ -87,7 +87,7 @@ try {
     * filter rules weren't found?
     */
     printf(
-    'An error occured: %s',
-    $e->getMessage()
+        'An error occured: %s',
+        $e->getMessage()
     );
 }
