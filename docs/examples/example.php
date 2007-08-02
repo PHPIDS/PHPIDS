@@ -59,7 +59,7 @@ try {
     if (!$result->isEmpty()) {
         
         # echo the results
-        print $result->__toString();
+        echo $result;
     }
 	
     /*
