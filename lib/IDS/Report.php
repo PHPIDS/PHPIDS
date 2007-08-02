@@ -217,16 +217,16 @@ class IDS_Report implements Countable, IteratorAggregate {
 		if (!$this->isEmpty()) {
 			$output = '';
 			
-			$output .= 'Impact: ' . $this->getImpact() . "\n";
-			$output .= 'Tags: ' . join(', ', $this->getTags()) . "\n";
+			$output .= 'Total impact: ' . $this->getImpact() . "<br/>\n";
+			$output .= 'Affected tags: ' . join(', ', $this->getTags()) . "<br/>\n";
 			
 			foreach ($this->events as $event) {
-				$output .= 'Variable: ' . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "\n";
-				$output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "\n";
+				$output .= "<br/>\nVariable: " . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "<br/>\n";
+				$output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "<br/>\n";
 				
 				foreach ($event as $filter) {
-					$output .= 'Description: ' . $filter->getDescription() . "\n";
-					$output .= 'Tags: ' . join(', ', $filter->getTags()) . "\n";
+					$output .= 'Description: ' . $filter->getDescription() . ' | ';
+					$output .= 'Tags: ' . join(', ', $filter->getTags()) . "<br/>\n";
 				}
 			}
 		}

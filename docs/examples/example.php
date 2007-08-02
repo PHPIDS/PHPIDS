@@ -59,20 +59,20 @@ try {
     if (!$result->isEmpty()) {
         
         # Get the overall impact
-        echo "Impact: {$result->getImpact()}\n";
+        echo "Total impact: {$result->getImpact()}<br/>\n";
         
         # Get array of every tag used
-        echo "Tags: " . join(", ", $result->getTags()) . "\n";
+        echo "Affected tags: " . join(", ", $result->getTags()) . "<br/>\n\n";
         
         # Iterate through the result an get every event (IDS_Event)
         foreach ($result as $event) {
-            echo "Variable: " . htmlspecialchars($event->getName()) . " | Value: " . htmlspecialchars($event->getValue()) . "\n";
-            echo "Impact: {$event->getImpact()} | Tags: " . join(", ", $event->getTags()) . "\n";
+            echo "<br />\nVariable: " . htmlspecialchars($event->getName()) . " | Value: " . htmlspecialchars($event->getValue()) . "<br/>\n";
+            echo "Impact: {$event->getImpact()} | Tags: " . join(", ", $event->getTags()) . "<br/>\n";
             
             # Iterator throught every filter 
             foreach ($event as $filter) {
-                echo "Description: {$filter->getDescription()}\n";
-                echo "Tags: " . join(", ", $filter->getTags()) . "\n";
+                echo "Description: {$filter->getDescription()} | ";
+                echo "Tags: " . join(", ", $filter->getTags()) . "<br/>\n";
             }
         }
     }
@@ -85,9 +85,9 @@ try {
     require_once '../../lib/IDS/Log/Composite.php';
    
     $compositeLog = new IDS_Log_Composite();
-    $compositeLog->addLogger(
-       IDS_Log_File::getInstance('log.txt')
-    );
+  #  $compositeLog->addLogger(
+  #     IDS_Log_File::getInstance('log.txt')
+  # );
     
     if (!$result->isEmpty()) {
         $compositeLog->execute($result);
