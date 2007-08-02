@@ -58,23 +58,8 @@ try {
     */
     if (!$result->isEmpty()) {
         
-        # Get the overall impact
-        echo "Total impact: {$result->getImpact()}<br/>\n";
-        
-        # Get array of every tag used
-        echo "Affected tags: " . join(", ", $result->getTags()) . "<br/>\n\n";
-        
-        # Iterate through the result an get every event (IDS_Event)
-        foreach ($result as $event) {
-            echo "<br />\nVariable: " . htmlspecialchars($event->getName()) . " | Value: " . htmlspecialchars($event->getValue()) . "<br/>\n";
-            echo "Impact: {$event->getImpact()} | Tags: " . join(", ", $event->getTags()) . "<br/>\n";
-            
-            # Iterator throught every filter 
-            foreach ($event as $filter) {
-                echo "Description: {$filter->getDescription()} | ";
-                echo "Tags: " . join(", ", $filter->getTags()) . "<br/>\n";
-            }
-        }
+        # echo the results
+        print $result->__toString();
     }
 	
     /*
@@ -82,11 +67,13 @@ try {
     * Log_File
     */
     require_once '../../lib/IDS/Log/File.php';
+    require_once '../../lib/IDS/Log/Email.php';
     require_once '../../lib/IDS/Log/Composite.php';
    
     $compositeLog = new IDS_Log_Composite();
     $compositeLog->addLogger(
-       IDS_Log_File::getInstance('log.txt')
+       IDS_Log_File::getInstance('log.txt'),  
+       IDS_Log_Email::getInstance('mario.heiderich@gmail.com', 'PHPIDS - attack detected')
 	);
 
     
