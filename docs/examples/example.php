@@ -85,9 +85,10 @@ try {
     require_once '../../lib/IDS/Log/Composite.php';
    
     $compositeLog = new IDS_Log_Composite();
-  #  $compositeLog->addLogger(
-  #     IDS_Log_File::getInstance('log.txt')
-  # );
+    $compositeLog->addLogger(
+       IDS_Log_File::getInstance('log.txt')
+	);
+
     
     if (!$result->isEmpty()) {
         $compositeLog->execute($result);

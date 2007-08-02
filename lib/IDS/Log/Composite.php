@@ -59,13 +59,24 @@ class IDS_Log_Composite implements IDS_Log_Interface {
 	* Note that each logger must implement the IDS_Log_Interface
 	* interface in order to assure the systems API
 	*
-	* @param	object
 	* @access	public
-	* @return	void
+	* @return	mixed	exception object on failure
 	*/
-	public function addLogger(IDS_Log_Interface $logger) {
-		if (!in_array($logger, $this->loggers)) {
-			$this->loggers[] = $logger;
+	public function addLogger() {
+		$args = func_get_args();
+
+		foreach ($args as $class) {
+			if ($class instanceof IDS_Log_Interface) {
+				if (!in_array($class, $this->loggers)) {
+					$this->loggers[] = $class;
+				}
+			} else {
+				throw new Exception(
+					'Given object of class \'' . $class . '\' is invalid.
+					 Make sure ' . $class . ' is an instance of
+					 IDS_Log_Interface.'
+				);
+			}
 		}
 	}
 

@@ -85,23 +85,30 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @return	mixed
 	*/
 	protected function prepareData($data) {
-	
-		$dataString = "The following attack has been detected by PHPIDS\n\n";
 		
-		$dataString .= 'IP: ' . $_SERVER['REMOTE_ADDR'] . "\n";
-		$dataString .= 'Date: ' . date('c') . "\n";
-		$dataString .= 'Impact: ' . $data->getImpact() . "\n";
-		$dataString .= 'Affected tags: ' . join(', ', $data->getTags()) . "\n";
+		$format	 = "The following attack has been detected by PHPIDS\n\n";
+		$format .= "IP: %s \n";
+		$format .= "Date: %s \n";
+		$format .= "Impact: %d \n";
+		$format .= "Affected tags: %s \n";
 		
 		$attackedParameters = '';
 		foreach ($data as $event) {
-			$attackedParameters .= "\n" . $event->getName() . '=' . $event->getValue() . ",\n";
+			$attackedParameters .= $event->getName() . '=' . urlencode($event->getValue()) . ", ";
 		}
 		
-		$dataString .= 'Affected parameters: ' . $attackedParameters . "\n";
-		$dataString .= 'Request URI: "' . $_SERVER['REQUEST_URI'] . "\"\n";
+		$format .= "Affected parameters: %s \n";
+		$format .= "Request URI: %s";
 		
-		return $dataString;
+		return sprintf(
+			$format,
+			$_SERVER['REMOTE_ADDR'],
+			date('c'),
+			$data->getImpact(),
+			join(' ', $data->getTags()),
+			trim($attackedParameters),
+			urlencode($_SERVER['REQUEST_URI'])
+		);
 	}
 
 	/**
