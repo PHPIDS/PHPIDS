@@ -29,7 +29,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		$this->storage = new IDS_Filter_Storage();
-		$this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/default_filter.xml');
+		$this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
 	}
 
 	public function testRunWithTags() {

@@ -93,7 +93,7 @@ class IdsComponent extends Object {
         
         #instanciate the needed stuff
         $storage = new IDS_Filter_Storage();
-        $storage->getFilterFromXML(VENDORS . '/phpids/default_filter.xml');
+        $storage->getFilterFromXML(VENDORS . '/phpids/IDS/default_filter.xml');
 
         # add request url and user agent
         $_REQUEST['IDS_request_uri'] = $_SERVER['REQUEST_URI'];

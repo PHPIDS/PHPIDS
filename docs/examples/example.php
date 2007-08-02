@@ -33,7 +33,7 @@ try {
     * 2nd: instanciate the storage object and fetch the rules
     */
     $storage = new IDS_Filter_Storage();
-    $storage->getFilterFromXML('../../lib/default_filter.xml');
+    $storage->getFilterFromXML('../../lib/IDS/default_filter.xml');
     
     /*
     * 3rd: instanciate the ids and start the detection
