@@ -219,6 +219,22 @@ class IDS_Converter {
         
         return $value;    
     }
+    
+    /**
+     * Converts from hex/dec entities
+     * 
+     * @return  string  $value
+     */     
+    public static function convertEntities($value) {
+    
+        $converted = '';
+        if(preg_match('/&#x?[\w]+;/ms', $value)){
+            $converted = html_entity_decode($value);   
+            $value .= "\n[" . $converted . "] ";     
+        }
+        
+        return $value;  
+    }    
 }
 
 /*
