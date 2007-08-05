@@ -1,4 +1,4 @@
-PHP IDS
+PHPIDS
 
 Requirements: PHP5, SimpleXML
 
@@ -13,5 +13,5 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-Read header comments in ids.php for further informatio on how to 
+Read header comments in Monitor.php for further information on how to 
 install this software

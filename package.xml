@@ -9,14 +9,14 @@
 	">
 	<name>PHPIDS</name>
 	<channel>pear.php.net</channel>
-	<summary>Easy to use web application security layer</summary>
+	<summary>Easy to use Web application security layer</summary>
 	<description>
 		This package provides an easy to use intrusion detection systems (IDS) which 
 		is capable of detecting malicious user input and reaction on configurable ways 
 		to protect the security of the application the IDSD is used with.
 		
 		Most of the provided filter rules detect XSS attacks, directory traversals and 
-		basic SQL Injections. The filter rules can easily be extended. 
+		several different SQL Injections attempts. The filter rules can easily be extended. 
 	</description>
 	<lead>
 		<user>christ1an</user>
@@ -30,40 +30,61 @@
 		<email>mario.heiderich@gmail.com</email>
 		<active>yes</active>
 	</lead>	
-	<date>2007-05-03</date>	
+	<date>2007-05-08</date>	
 	<version>
-		<release>1.0.0a1</release>
-		<api>1.0.0a1</api>
+		<release>0.3.1</release>
+		<api>0.3.1</api>
 	</version>
 	<stability>
-		<release>beta</release>
-		<api>beta</api>
+		<release>alpha</release>
+		<api>alpha</api>
 	</stability>
 	<license uri="http://www.php.net/license">PHP License</license>
 	<notes>
-		This is the first release.
+		This is the third release.
 	</notes>
 	<contents>
-		<dir name="/" baseinstalldir="IDS">
-			<file role="php" name="ids.php" />
-			<file role="php" name="storage.php" />
-			<file role="data" name="default_filter.xml" />
-			<dir name="log">
-				<file role="php" name="log_composite.php" />
-				<file role="php" name="log_email.php" />
-				<file role="php" name="log_file.php" />			
-				<file role="php" name="log_interface.php" />
+        <dir name="/" baseinstalldir="lib/IDS">
+			<file role="php" name="Monitor.php" />
+            <file role="php" name="Converter.php" />
+            <file role="php" name="Event.php" />
+            <file role="php" name="Report.php" />
+        	<file role="data" name="default_filter.xml" />
+			<dir name="Log">
+				<file role="php" name="Composite.php" />
+				<file role="php" name="Email.php" />
+				<file role="php" name="File.php" />			
+				<file role="php" name="Interface.php" />
+            </dir>			
+            <dir name="Filter">
+				<file role="php" name="Abstract.php" />
+				<file role="php" name="Regex.php" />
+                <file role="php" name="Storage.php" />
+                <dir name="Storage">
+				    <file role="php" name="Abstract.php" />			
+			    </dir>
 			</dir>
 		</dir>
 		<dir name="docs">
-			<dir name="examples">
-				<file role="doc" name="example_cakephp_component.php" />			
-				<file role="doc" name="example.php" />
+			<dir name="examples">			
+                <file role="doc" name="example.php" />
+                <file role="text" name="log.txt" />
+                <dir name="cakephp">
+                    <file role="php" name="ids.php" />	
+                    <file role="php" name="intrusion.php" />
+                    <file role="dbschema" name="intrusions.sql" />
+                    <file role="readme" name="README" />
+			    </dir>
 			</dir>		
 		</dir>
 		<dir name="tests">
 			<file role="test" name="allTests.php" />			
-			<file role="test" name="idsTest.php" />		
+			<dir name="IDS">
+                <file role="test" name="EventTest.php" />	
+                <file role="test" name="MonitorTest.php" />
+                <file role="test" name="FilterTest.php" />
+                <file role="test" name="ReportTest.php" />
+		    </dir>	
 		</dir>	
 	</contents>
 </package>
