@@ -27,8 +27,8 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\s\w]+\s*hash)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)]]></rule>
-		<description>hash-contained xss payload attacks</description>
+		<rule><![CDATA[(?:[^\s\w]+\s*hash)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)|(?:__[a-z]+__)]]></rule>
+		<description>hash-contained xss payload attacks and __property__ overloading</description>
 		<tags>
 			<tag>xss</tag>
 			<tag>csrf</tag>
