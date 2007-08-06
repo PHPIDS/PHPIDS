@@ -45,7 +45,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\([^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()]]></rule>
+		<rule><![CDATA[(?:\((?!compatible)[^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()]]></rule>
 		<description>detects self-executing JS functions</description>
 		<tags>
 			<tag>xss</tag>
@@ -125,7 +125,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\/|\\|[%&#xu0]+5C|92)+(bin|home|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|(?:%|[&#xu0]+25|37)[a-z_-]{3,}(?:%|[&#xu0]+25|37)))]]></rule>
+		<rule><![CDATA[(?:(?:\/|\\)+(bin|home|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|%[a-z_-]{3,}%)(?:\/|\\))]]></rule>
 		<description>detects specific directory and path traversal</description>
 		<tags>
 			<tag>dt</tag>
@@ -284,7 +284,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:[^\s\w]+\s*[^\w](href|protocol|host\w*|pathname|search|hash|port|cookie))]]></rule>
+		<rule><![CDATA[(?:[^\s\w]+\s*[^\w\/](href|protocol|host\w*|pathname|search|hash|port|cookie))]]></rule>
 		<description>detects javascript cookie stealing and redirection attempts</description>
 		<tags>
 			<tag>xss</tag>
@@ -361,7 +361,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:on(?!g\&gt;|id)\w+[^=]*=.*\\?(?:\W|\&gt;)?)]]></rule>
+		<rule><![CDATA[(?:on(?!g\&gt;|id)\w+[^=_]*=.*\\?(?:\W|\&gt;)?)]]></rule>
 		<description>detects possible event handlers</description>
 		<tags>
 			<tag>xss</tag>
@@ -682,7 +682,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:\\?\/[fdbks]+)+(?:\\?\/)+)]]></rule>
+		<rule><![CDATA[(?:(?:\\?\/[fdbks]{2,})+(?:\\?\/)+)]]></rule>
 		<description>detects apache forward and back pointers</description>
 		<tags>
             <tag>id</tag>
