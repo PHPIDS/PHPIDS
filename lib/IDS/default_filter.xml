@@ -466,14 +466,14 @@
 		<impact>3</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\/\*!\s?\d+)]]></rule>
-		<description>detects MySQL version comments</description>
+		<rule><![CDATA[(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)]]></rule>
+		<description>detects MySQL version comments and ch(a)r injections</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>3</impact>
+		<impact>4</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:HAVING\s+[\d\w]\s?=)|(?:IF\s?\([\d\w]\s?=)]]></rule>
