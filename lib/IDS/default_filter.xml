@@ -72,15 +72,6 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\+?\bA\w\w-|ACIAPgA8|AFAAVAA|AFwAXA|AFwAIg)]]></rule>
-		<description>finds utf7 attacks in general</description>
-		<tags>
-			<tag>xss</tag>
-			<tag>csrf</tag>
-		</tags>
-		<impact>3</impact>
-	</filter>
-	<filter>
 		<rule><![CDATA[(?:&#\w+)]]></rule>
 		<description>detects all entitites including the bizarre IE US-ASCII entitites</description>
 		<tags>
