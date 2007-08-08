@@ -100,8 +100,6 @@ class IDS_Report implements Countable, IteratorAggregate {
 		if ($this->hasEvent($name)) {
 			return $this->events[$name];
 		}
-
-		return false;
 	}
 
 	/**
@@ -231,7 +229,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 			}
 		}
 		
-		return isset($output) ? $output : '';
+		return isset($output) ? $output : false;
 	}
 }
 
