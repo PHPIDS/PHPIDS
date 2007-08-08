@@ -31,47 +31,6 @@ require_once 'IDS/Filter/Storage/Abstract.php';
 class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
 	/**
-	* Loads filters from Json file via ext/json
-	*
-	* @access	public
-	* @param	mixed	string or filename
-	* @return	object	$this on success, otherwise exception object
-	*/
-	public function getFilterFromJson($source) {
-		if (extension_loaded('Json')) {
-
-			if (file_exists($source)) {
-				$source = file_get_contents($source);
-			} else {
-				throw new Exception(
-					'JSON data could not be loaded.' .
-					'Make sure you specified the correct path.'
-				);
-			}
-
-			$filters = json_decode($source);
-			if(!empty($filters)){
-				foreach ($filters as $filter) {
-					$this->addFilter(
-						array(
-							'rule'		=> $filter->rule,
-							'impact'	=> $filter->impact,
-							'tags'		=> $filter->tags
-						)
-					);
-				}
-			}
-
-		} else {
-			throw new Exception(
-				'ext/json not loaded.'
-			);
-		}
-
-		return $this;
-	}
-
-	/**
 	* Loads filters from XML file via SimpleXML
 	*
 	* @access	public
@@ -131,5 +90,4 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
 		return $this;
 	}
-
 }
