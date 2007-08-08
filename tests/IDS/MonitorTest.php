@@ -66,16 +66,89 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($test->run()->isEmpty());
 	}
 
+    public function testSetExceptionsString()
+    {
+        $test = new IDS_Monitor(array('test', 'bla'), $this->storage);
+        $exception = 'test1';
+        $test->setExceptions($exception);
+        $result = $test->getExceptions();
+        $this->assertEquals($exception, $result[0]);                    
+    }
+
+    public function testSetExceptionsArray()
+    {
+        $test = new IDS_Monitor(array('test', 'bla'), $this->storage);
+        $exceptions = array('test1', 'test2');
+        $test->setExceptions($exceptions);
+        $this->assertEquals($exceptions, $test->getExceptions());                    
+    }
+
 	public function testList()
 	{
 		$test = new IDS_Monitor(
-			array('9<script/src=http/attacker.com>', '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'),
+			array('9<script/src=http/attacker.com>', 
+                  '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'),
 			$this->storage
 		);
 		$result = $test->run();
 		$this->assertTrue($result->hasEvent(1));
 		$this->assertEquals(16, $result->getImpact());
 	}
+
+    public function testListWithKeyScanning()
+    {
+        $test = new IDS_Monitor(
+            array('test1' => '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="',
+                  'test2' => '9<script/src=http/attacker.com>', 
+                  '9<script/src=http/attacker.com>' => '9<script/src=http/attacker.com>'  
+                ),
+            $this->storage
+        );
+        $test->scanKeys = true;
+        $result = $test->run();
+        $this->assertEquals(22, $result->getImpact());
+    }
+
+    public function testListWithException()
+    {
+        $test = new IDS_Monitor(
+            array('9<script/src=http/attacker.com>', 
+                  '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'),
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(16, $result->getImpact());
+    }
+
+    public function testListWithSubKeys()
+    {
+        $exploits = array('9<script/src=http/attacker.com>');
+        $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
+        $exploits[] = array('9<script/src=http/attacker.com>');
+        
+        $test = new IDS_Monitor(
+            $exploits,                   
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertEquals(22, $result->getImpact());
+    }
+
+    public function testListWithSubKeysAndExceptions()
+    {
+        $exploits = array('test1' => '9<script/src=http://attacker.com>');
+        $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
+        $exploits[] = array('9<script/src=http/attacker.com>');
+        
+        $test = new IDS_Monitor(
+            $exploits,                   
+            $this->storage
+        );
+        $test->setExceptions('test1');
+        $result = $test->run();
+        $this->assertEquals(16, $result->getImpact());
+    }
 
     public function testXSSList() {
         $test = new IDS_Monitor(
@@ -228,5 +301,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(58, $result->getImpact());              
+    }
+    
+    public function testXMLFilterString()
+    {
+        $this->storage = new IDS_Filter_Storage();
+        $this->storage->getFilterFromXML(file_get_contents(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml'));
     }
 }

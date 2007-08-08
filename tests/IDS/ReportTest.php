@@ -92,4 +92,15 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 		$this->assertType('IteratorAggregate', $this->report);
 		$this->assertType('IteratorAggregate', $this->report->getIterator());
 	}
+    
+    public function testToString()
+    {
+        $this->assertEquals(preg_match('/Total impact: 10/', $this->report->__toString()),1);                 
+    }
+    
+    public function testToStringEmpty()
+    {
+        $this->report = new IDS_Report();
+        $this->assertFalse($this->report->__toString());               
+    }        
 }
