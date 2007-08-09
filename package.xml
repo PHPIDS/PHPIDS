@@ -83,6 +83,7 @@
                 <file role="test" name="EventTest.php" />	
                 <file role="test" name="MonitorTest.php" />
                 <file role="test" name="FilterTest.php" />
+                <file role="test" name="ExceptionTest.php" />
                 <file role="test" name="ReportTest.php" />
 		    </dir>	
 		</dir>	

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  *
  * Requirements: PHP5, SimpleXML
  *
@@ -16,7 +16,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @version	$Id: ReportTest.php 208 2007-07-01 21:58:25Z lars $
+ * @version	$Id$
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
