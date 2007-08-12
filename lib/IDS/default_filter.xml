@@ -599,6 +599,15 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
+		<rule><![CDATA[(?:MERGE.*USING\s*\()]]></rule>
+		<description>detects Oracle MERGE attacks</description>
+		<tags>
+			<tag>sqli</tag>
+			<tag>id</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
 		<rule><![CDATA[(?:SELECT\s*[\/\*])|(SELECT\s*\(\s*SPACE\s*\()]]></rule>
 		<description>detects MySQL comment-/space-obfuscated injections</description>
 		<tags>

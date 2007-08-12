@@ -204,13 +204,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   'SELECT CHAR(0x66)', 
                   'SELECT LOAD_FILE(0x633A5C626F6F742E696E69)', 
                   'EXEC(@stored_proc @param)', 
-                  'chr(11)||chr(12)||char(13)'
+                  'chr(11)||chr(12)||char(13)', 
+                  'MERGE INTO bonuses B USING (SELECT'
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(77, $result->getImpact());        
+        $this->assertEquals(82, $result->getImpact());        
     }
     
     public function testDTList(){
