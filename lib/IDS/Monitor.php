@@ -133,10 +133,12 @@ class IDS_Monitor {
 				return false;
 			}
 
-            # require and use the converter
+            # check for magic quotes and remove them if necessary
+            $value  = get_magic_quotes_gpc()    ? stripslashes($value)          : $value;
+
+            # use the converter
             require_once 'IDS/Converter.php';
             $value	= IDS_Converter::runAll($value);
-			$value	= get_magic_quotes_gpc() 	? stripslashes($value) 			: $value;
 			$key 	= $this->scanKeys 			? IDS_Converter::runAll($key) 	: $key;
 
 			$filters	= array();

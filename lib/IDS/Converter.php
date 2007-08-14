@@ -98,7 +98,7 @@ class IDS_Converter {
      public static function convertFromJSCharcode($value) {   
 
         # check if value matches typical charCode pattern
-        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+)/ms', $value, $matches)) {
+        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){2,}/ms', $value, $matches)) {
             
             $converted  = '';
             $string = implode(',', $matches[0]);
