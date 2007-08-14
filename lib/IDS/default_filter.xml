@@ -483,10 +483,10 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>3</impact>
+		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA["?\)?\s+(?:OR|AND)\s+\(?\\?"?\s?[\w]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?]]></rule>
+		<rule><![CDATA[(?:"?\)?\s+(?:OR|AND)\s+\(?\\?"?\s?[\w-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(OR|AND)\s+[\w-]+\s+LIKE\s+\W+)]]></rule>
 		<description>detects classic SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -513,7 +513,7 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:^admin|[\/\* ]+\\?"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)]]></rule>
@@ -523,7 +523,7 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>5</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:[;>]\s?(?:SELECT|DELETE|UPDATE|INSERT)\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:(?:SELECT|DELETE|UPDATE|INSERT)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
@@ -627,8 +627,28 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
+		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
 		<description>detects code injection attempts including eval, execute, preg-like functions and others</description>
+		<tags>
+			<tag>id</tag>
+			<tag>rfe</tag>
+			<tag>lfi</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:;\s*(?:echo|print)[^;]+;)|(?:;\s*file_get_contents|fopen|include|require|require_once?\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
+		<description>detects more code injection attempts including file access, rm and output methods</description>
+		<tags>
+			<tag>id</tag>
+			<tag>rfe</tag>
+			<tag>lfi</tag>
+		</tags>
+		<impact>5</impact>
+	</filter>
+	<filter>
+		<rule><![CDATA[(?:\w+(?<!href|src|longdesc)=(?:http|ftp|https):\/\/)]]></rule>
+		<description>detects url injections and RFE attempts</description>
 		<tags>
 			<tag>id</tag>
 			<tag>rfe</tag>

