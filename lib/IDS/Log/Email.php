@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  *
  * Requirements: PHP5, SimpleXML
  *
@@ -26,6 +26,7 @@ require_once 'IDS/Log/Interface.php';
 * via email and implements the singleton pattern
 *
 * @author	christ1an <ch0012@gmail.com>
+* @todo     take care of the spam issue
 *
 * @version	$Id$
 */
@@ -35,7 +36,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private $subject			= NULL;
 	private $additionalHeaders 	= NULL;
 	private static $instances	= array();
-
+	
 	/**
 	* Constructor
 	*
@@ -75,7 +76,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private function __clone() { }
 
 	/**
-	* Converts data that is passed to IDS_Log_Mail::execute()
+	* Converts data that is passed to IDS_Log_Email::execute()
 	* into a format that can be stored in a file
 	*
 	* You might edit this method to your requirements
@@ -142,9 +143,9 @@ class IDS_Log_Email implements IDS_Log_Interface {
 				$headers = $this->additionalHeaders;
 			}
 
-			if(!empty($this->address)){
-				if(is_array($this->address)){
-					foreach($this->address as $address){
+			if (!empty($this->address)) {
+				if (is_array($this->address)){
+					foreach ($this->address as $address) {
 						$this->send($address, $data, $headers);
 					}
 				} else {
