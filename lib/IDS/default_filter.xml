@@ -496,7 +496,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)|(?:\w[\\]+"\w)]]></rule>
+		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(?:SELECT|DELETE|UPDATE|INSERT)|(?:\w[\\]+"\w)]]></rule>
 		<description>detects more SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -506,7 +506,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\d.+SELECT.+FROM.*(?:WHERE)?)|(?:" union select)]]></rule>
+		<rule><![CDATA[(?:\d.+(?:SELECT|DELETE|UPDATE|INSERT).+FROM.*(?:WHERE)?)|(?:" union select)]]></rule>
 		<description>detects very basic SQL injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -516,7 +516,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:^admin|[\/\* ]+\\?"+\s?(?:--|#|\/\*|{)?)|(?:union\s+select\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:^admin|[\/\* ]+\\?"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -526,7 +526,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:[;>]\s?SELECT\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:SELECT\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:[;>]\s?(?:SELECT|DELETE|UPDATE|INSERT)\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:(?:SELECT|DELETE|UPDATE|INSERT)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -545,7 +545,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(SELECT|;)\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
+		<rule><![CDATA[(?:(?:SELECT|DELETE|UPDATE|INSERT)|;\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
 		<description>detects SQL benchmark and sleep injection attempts including conditional queries</description>
 		<tags>
 			<tag>sqli</tag>
@@ -554,7 +554,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:create\s+function\s+\w+\s+returns)]]></rule>
+		<rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)]]></rule>
 		<description>detects MySQL UDF injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -563,7 +563,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:alter\s*\w+.*character\s+set\s+\w+)]]></rule>
+		<rule><![CDATA[(?:ALTER\s*\w+.*character\s+set\s+\w+)]]></rule>
 		<description>detects MySQL charset switch attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -572,7 +572,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)|(exec\s*\(\s*@)]]></rule>
+		<rule><![CDATA[(?:CREATE\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)|(exec\s*\(\s*@)]]></rule>
 		<description>detects MySQL stored procedure/function injections</description>
 		<tags>
 			<tag>sqli</tag>
@@ -581,7 +581,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?shutdown\s?(?:--|#|\/\*|{))]]></rule>
+		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?SHUTDOWN\s?(?:--|#|\/\*|{))]]></rule>
 		<description>detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -608,7 +608,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:SELECT\s*[\/\*])|(SELECT\s*\(\s*SPACE\s*\()]]></rule>
+		<rule><![CDATA[(?:(?:SELECT|DELETE|UPDATE|INSERT)\s*[\/\*])|((?:SELECT|DELETE|UPDATE|INSERT)\s*\(\s*SPACE\s*\()]]></rule>
 		<description>detects MySQL comment-/space-obfuscated injections</description>
 		<tags>
 			<tag>sqli</tag>
