@@ -516,7 +516,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:^admin|[\/\* ]+\\?"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:^admin"|[\/\*]+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
