@@ -527,7 +527,7 @@
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:[;>]\s?(?:SELECT|DELETE|UPDATE|INSERT)\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:(?:SELECT|DELETE|UPDATE|INSERT)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
-		<description>detects concatinated basic SQL injection and SQLLFI attempts</description>
+		<description>detects concatenated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
