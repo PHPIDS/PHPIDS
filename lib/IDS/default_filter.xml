@@ -352,7 +352,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:on(?!g\&gt;|id)\w+[^=_+-]*=[^$]+\\?(?:\W|\&gt;)?)]]></rule>
+		<rule><![CDATA[(?:\Won(?!g\&gt;|id)\w+[^=_+-]*=[^$]+\\?(?:\W|\&gt;)?)]]></rule>
 		<description>detects possible event handlers</description>
 		<tags>
 			<tag>xss</tag>
@@ -448,7 +448,7 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\w+\s?=\s?\\?"?\s?\w+:)]]></rule>
+		<rule><![CDATA[(?:\w+\s*=\W*\w+:)]]></rule>
 		<description>detects common uri schemes</description>
 		<tags>
 			<tag>rfe</tag>
@@ -496,7 +496,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(?:SELECT|DELETE|UPDATE|INSERT)|(?:\w[\\]+"\w)]]></rule>
+		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)|(?:\w[\\]+"\w)]]></rule>
 		<description>detects more SQL injection probings</description>
 		<tags>
 			<tag>sqli</tag>
@@ -516,7 +516,7 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:^admin"|[\/\*]+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)]]></rule>
+		<rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)|(?:LIKE\s*"\%)]]></rule>
 		<description>detects basic SQL authentication bypass attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -545,7 +545,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:SELECT|DELETE|UPDATE|INSERT)|;\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
+		<rule><![CDATA[(?:(SELECT|;)\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
 		<description>detects SQL benchmark and sleep injection attempts including conditional queries</description>
 		<tags>
 			<tag>sqli</tag>

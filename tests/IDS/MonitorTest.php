@@ -190,7 +190,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(226, $result->getImpact());        
+        $this->assertEquals(222, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -213,7 +213,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(112, $result->getImpact());        
+        $this->assertEquals(92, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -250,7 +250,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(214, $result->getImpact());          
+        $this->assertEquals(210, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -266,7 +266,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(85, $result->getImpact());       
+        $this->assertEquals(80, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
