@@ -486,8 +486,8 @@
 		<impact>4</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:"?\)?\s+(?:OR|AND)\s+\(?\\?"?\s?[\w-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(OR|AND)\s+[\w-]+\s+LIKE\s+\W+)]]></rule>
-		<description>detects classic SQL injection probings</description>
+		<rule><![CDATA[(?:"?\)?\s+(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+\(?\\?"?\s?[\w-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\w-]+\s+LIKE\s+\W+)]]></rule>
+		<description>detects classic SQL injection probings 1/3</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
@@ -496,8 +496,8 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:%?\\?"\s?(AND|OR)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR)\(SELECT)|(?:\w[\\]+"\w)]]></rule>
-		<description>detects more SQL injection probings</description>
+		<rule><![CDATA[(?:%?\\?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)]]></rule>
+		<description>detects classic SQL injection probings 2/3</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
@@ -506,8 +506,8 @@
 		<impact>5</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\d.+(?:SELECT|DELETE|UPDATE|INSERT).+FROM.*(?:WHERE)?)|(?:" union select)]]></rule>
-		<description>detects very basic SQL injection attempts</description>
+		<rule><![CDATA[(?:\d.+(?:SELECT|DELETE|UPDATE|INSERT).+FROM.*(?:WHERE)?)|(?:" union select)|(INTO\s*DUMPFILE)|\W(AND|OR|XOR|NAND|NOT|\|\||\&\&)\W+\w|(\W+(--|#)\w+$)]]></rule>
+		<description>detects classic SQL injection probings 3/3</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
