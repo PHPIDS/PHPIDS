@@ -423,7 +423,7 @@
 		<rule><![CDATA[(?:!--)]]></rule>
 		<description>detects SSI attacks</description>
 		<tags>
-			<tag>id</tag>
+	version 		<tag>id</tag>
 			<tag>rfe</tag>
 			<tag>lfi</tag>
 		</tags>
@@ -466,14 +466,14 @@
 		<impact>3</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)]]></rule>
-		<description>detects MySQL version comments and ch(a)r injections</description>
+		<rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)]]></rule>
+		<description>detects MySQL comments and ch(a)r injections</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>6</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:HAVING\s+[\d\w]\s?=)|(?:IF\s?\([\d\w]\s?=)]]></rule>
@@ -493,7 +493,7 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>6</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:%?\\?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)]]></rule>
@@ -503,17 +503,17 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>6</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:\d.+(?:SELECT|DELETE|UPDATE|INSERT).+FROM.*(?:WHERE)?)|(?:" union select)|(INTO\s*DUMPFILE)|\W(AND|OR|XOR|NAND|NOT|\|\||\&\&)\W+\w|(\W+(--|#)\w+$)]]></rule>
+		<rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(DUMP|OUT)FILE)|\W(AND|OR|XOR|NAND|NOT|\|\||\&\&)\W+\w|(\W+(--|#)\w+$)]]></rule>
 		<description>detects classic SQL injection probings 3/3</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>6</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)|(?:LIKE\s*"\%)]]></rule>
@@ -523,10 +523,10 @@
 			<tag>id</tag>
             <tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>7</impact>
 	</filter>	
 	<filter>
-		<rule><![CDATA[(?:[;>]\s?(?:SELECT|DELETE|UPDATE|INSERT)\s?[*\w]+\s?\\?[\s"\+\-\|]+)|(?:(?:SELECT|DELETE|UPDATE|INSERT)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+		<rule><![CDATA[(?:[;>]\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
 		<description>detects concatenated basic SQL injection and SQLLFI attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -536,7 +536,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:;|#|--)\s?(?:DROP|ALTER)\s+[\w-+]+\s+)|(?:;\s?(?:UPDATE|INSERT)\s+\w+)|(?:SET\s*@\w+)]]></rule>
+		<rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT))|(?:SET\s*@\w+)]]></rule>
 		<description>detects chained SQL injection attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -554,16 +554,16 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)]]></rule>
-		<description>detects MySQL UDF injection attempts</description>
+		<rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)|(?:;\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))]]></rule>
+		<description>detects MySQL UDF injection and other data/structure manipulation attempts</description>
 		<tags>
 			<tag>sqli</tag>
 			<tag>id</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>6</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:ALTER\s*\w+.*character\s+set\s+\w+)]]></rule>
+		<rule><![CDATA[(?:ALTER\s*\w+.*CHARACTER\s+SET\s+\w+)]]></rule>
 		<description>detects MySQL charset switch attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -572,7 +572,7 @@
 		<impact>4</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:CREATE\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)|(exec\s*\(\s*@)]]></rule>
+		<rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)|(exec\s*\(\s*@)]]></rule>
 		<description>detects MySQL stored procedure/function injections</description>
 		<tags>
 			<tag>sqli</tag>
@@ -581,7 +581,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:SELECT\s?pg_sleep\s?\(\s?\d+)|(?:waitfor\s+delay\s?\\?"+\s?\d)|(?:;\s?SHUTDOWN\s?(?:--|#|\/\*|{))]]></rule>
+		<rule><![CDATA[(?:SELECT\s*pg_sleep)|(?:WAITFOR\s*DELAY\s?\\?"+\s?\d)|(?:;\s*SHUTDOWN\s*(?:--|#|\/\*|{))]]></rule>
 		<description>detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -590,7 +590,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:EXEC\s+master\.)|(?:union select @)|(?:select.*\w?user\()]]></rule>
+		<rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:SELECT.*\w?user\()]]></rule>
 		<description>detects MSSQL code execution and information gathering attempts</description>
 		<tags>
 			<tag>sqli</tag>
@@ -608,7 +608,7 @@
 		<impact>5</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:(?:SELECT|DELETE|UPDATE|INSERT)\s*[\/\*])|((?:SELECT|DELETE|UPDATE|INSERT)\s*\(\s*SPACE\s*\()]]></rule>
+		<rule><![CDATA[(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*[\/\*])|((?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\(\s*SPACE\s*\()]]></rule>
 		<description>detects MySQL comment-/space-obfuscated injections</description>
 		<tags>
 			<tag>sqli</tag>
@@ -624,7 +624,7 @@
 			<tag>rfe</tag>
 			<tag>lfi</tag>
 		</tags>
-		<impact>4</impact>
+		<impact>7</impact>
 	</filter>	
 	<filter>
 		<rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
@@ -634,7 +634,7 @@
 			<tag>rfe</tag>
 			<tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>6</impact>
 	</filter>
 	<filter>
 		<rule><![CDATA[(?:;\s*(?:echo|print)[^;]+;)|(?:;\s*file_get_contents|fopen|include|require|require_once?\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
@@ -644,10 +644,10 @@
 			<tag>rfe</tag>
 			<tag>lfi</tag>
 		</tags>
-		<impact>5</impact>
+		<impact>6</impact>
 	</filter>
 	<filter>
-		<rule><![CDATA[(?:\w+(?<!href|src|longdesc)=(?:http|ftp|https):\/\/)]]></rule>
+		<rule><![CDATA[(?:\w+(?<!HREF|SRC|LONGDESC)=(?:http|ftp|https):\/\/)]]></rule>
 		<description>detects url injections and RFE attempts</description>
 		<tags>
 			<tag>id</tag>
