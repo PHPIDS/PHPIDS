@@ -506,7 +506,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(DUMP|OUT)FILE)|\W(AND|OR|XOR|NAND|NOT|\|\||\&\&)\W+\w|(\W+(--|#)\w+$)]]></rule>
+        <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(?:DUMP|OUT)FILE)|(?:([^\w\s]|\W{2,})(--|#)\w+$)]]></rule>
         <description>detects classic SQL injection probings 3/3</description>
         <tags>
             <tag>sqli</tag>
