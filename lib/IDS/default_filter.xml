@@ -675,7 +675,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[\W]{128}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
+        <rule><![CDATA[(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
         <description>detects basic dos attempts</description>
         <tags>
             <tag>rfe</tag>
