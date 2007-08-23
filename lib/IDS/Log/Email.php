@@ -111,6 +111,9 @@ class IDS_Log_Email implements IDS_Log_Interface {
 				}
 			}
 		}
+		/**
+		* end deleting garbage files
+		*/
 		
 		$remoteAddr = $_SERVER['REMOTE_ADDR'];
 		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
