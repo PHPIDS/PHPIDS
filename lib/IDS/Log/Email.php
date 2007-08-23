@@ -26,8 +26,6 @@ require_once 'IDS/Log/Interface.php';
 * via email and implements the singleton pattern
 *
 * @author	christ1an <ch0012@gmail.com>
-* @todo     take care of the spam issue
-*
 * @version	$Id$
 */
 class IDS_Log_Email implements IDS_Log_Interface {
@@ -37,6 +35,10 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private $additionalHeaders 	= NULL;
 	private static $instances	= array();
 	
+	public	$safeMode		= 'on';
+	public	$allowedRate	= 15;
+	public	$protocolDir	= 'IDS/tmp/';
+
 	/**
 	* Constructor
 	*
@@ -74,6 +76,42 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* of a correct singleton pattern
 	*/
 	private function __clone() { }
+	
+	
+	/**
+	* Detects spam attempts
+	*
+	* To avoid mail spam through this logging class this function
+	* is used to detect such attempts based on the alert
+	* frequency
+	*
+	* @return	boolean
+	*/
+	protected function isSpamAttempt() {
+		$remoteAddr = $_SERVER['REMOTE_ADDR'];
+		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
+		
+		$filename	= 'IDS_Log_Email_' . md5($remoteAddr . $userAgent);
+		$file		= $this->protocolDir . $filename;
+		
+		if (!file_exists($file)) {
+			$handle = fopen($file, 'w');
+			fwrite($handle, time());
+			fclose($handle);
+			
+			return false;
+		}
+		
+		$lastAttack = file_get_contents($file);
+		$difference = time() - $lastAttack;
+		if ($difference > $this->allowedRate) {
+			unlink($file);
+		} else {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	* Converts data that is passed to IDS_Log_Email::execute()
@@ -121,6 +159,12 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @return	mixed	bool or exception object on failure
 	*/
 	public function execute(IDS_Report $data) {
+	
+		if ($this->safeMode == 'on') {
+			if ($this->isSpamAttempt()) {
+				return false;
+			}
+		}
 
 		/**
 		* In case the data has been modified before it might
