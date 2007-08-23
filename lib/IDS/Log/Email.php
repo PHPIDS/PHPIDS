@@ -100,7 +100,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		$numPrefixChars = strlen($this->safeMode['filePrefix']);
 		
 		$files = scandir($dir);
-		foreach ($files as $key => $file) {
+		foreach ($files as $file) {
 			if (is_file($dir . $file)) {
 				if (substr($file, 0, $numPrefixChars) == $this->safeMode['filePrefix']) {
 					$lastModified = filemtime($dir . $file);
