@@ -35,10 +35,13 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private $additionalHeaders 	= NULL;
 	private static $instances	= array();
 	
-	public	$safeMode		= 'on';
-	public	$allowedRate	= 15;
-	public	$protocolDir	= 'IDS/tmp/';
-
+	public	$safeMode = array(
+		'mode'			=> 'on',
+		'allowedRate'	=> 15,
+		'protocolDir'	=> 'IDS/tmp/',
+		'filePrefix'	=> 'IDS_Log_Email_'
+	);
+	
 	/**
 	* Constructor
 	*
@@ -88,11 +91,32 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @return	boolean
 	*/
 	protected function isSpamAttempt() {
+		
+		/**
+		* loop through all files in the tmp directory and
+		* delete garbage files
+		*/
+		$dir = $this->safeMode['protocolDir'];
+		$numPrefixChars = strlen($this->safeMode['filePrefix']);
+		
+		$files = scandir($dir);
+		foreach ($files as $key => $file) {
+			if (is_file($dir . $file)) {
+				if (substr($file, 0, $numPrefixChars) == $this->safeMode['filePrefix']) {
+					$lastModified = filemtime($dir . $file);
+					
+					if ((time() - $lastModified) > 3600) {
+						unlink($dir . $file);
+					}
+				}
+			}
+		}
+		
 		$remoteAddr = $_SERVER['REMOTE_ADDR'];
 		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
 		
-		$filename	= 'IDS_Log_Email_' . md5($remoteAddr . $userAgent);
-		$file		= $this->protocolDir . $filename;
+		$filename	= $this->safeMode['filePrefix'] . md5($remoteAddr . $userAgent) . '.tmp';
+		$file		= $dir . $filename;
 		
 		if (!file_exists($file)) {
 			$handle = fopen($file, 'w');
@@ -104,7 +128,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		
 		$lastAttack = file_get_contents($file);
 		$difference = time() - $lastAttack;
-		if ($difference > $this->allowedRate) {
+		if ($difference > $this->safeMode['allowedRate']) {
 			unlink($file);
 		} else {
 			return true;
@@ -160,7 +184,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	*/
 	public function execute(IDS_Report $data) {
 	
-		if ($this->safeMode == 'on') {
+		if ($this->safeMode['mode'] == 'on') {
 			if ($this->isSpamAttempt()) {
 				return false;
 			}
