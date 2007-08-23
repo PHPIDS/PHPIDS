@@ -18,7 +18,7 @@
  */
 
 /**
- * You can use this SQL to create the db and tabkle structure the logger needs.
+ * Database table structure
  * 
 
 	DROP DATABASE IF NOT EXISTS `phpids`; 
@@ -43,49 +43,71 @@
 require_once 'IDS/Log/Interface.php';
 
 /**
-* File wrapper
+* Database wrapper
 *
 * This class is designed to store incoming data in
-* a file and implements the singleton pattern
+* an sql database and implements the singleton pattern
 *
-* @author   christ1an <ch0012@gmail.com>
+* @author	.mario <mario.heiderich@gmail.com>
 *
-* @version  $Id: File.php 338 2007-08-05 17:36:06Z mario $
+* @version  $Id$
 */
 class IDS_Log_Database implements IDS_Log_Interface {
 
-    private $wrapper = null;
-    private $user = null;
-    private $password = null;
-    private $handle = null;
-    private $statement = null;
+    private $wrapper	= NULL;
+    private $user		= NULL;
+    private $password	= NULL;
+    private $handle		= NULL;
+    private $statement	= NULL;
+	
     private static $instances = array();
 
     /**
     * Constructor
     *
     * @param    string
+    * @param    string
+    * @param    string
     * @access   protected
-    * @return   void
+    * @return   mixed	void or exception object
     */
     protected function __construct($wrapper = false, $user = false, $password = false) {
     
-    	if($wrapper && $user && $password) {
+    	if ($wrapper && $user && $password) {
             $this->wrapper = $wrapper;
             $this->user = $user;
             $this->password = $password;	
 		} else {
-            throw new Exception('Invalid connection parameters');
+            throw new Exception('
+				Insufficient connection parameters'
+			);
 		}
 
 		try {
-			$this->handle = new PDO($this->wrapper, 
-			$this->user, 
-			$this->password);
+			$this->handle = new PDO(
+				$this->wrapper, 
+				$this->user, 
+				$this->password
+			);
 			    	                                       
-			$this->statement = $this->handle->prepare('INSERT INTO intrusions 
-			                                          (name, value, page, ip, impact, created) 
-			                                          VALUES (:name, :value, :page, :ip, :impact, now())');    	                                       
+			$this->statement = $this->handle->prepare('
+				INSERT INTO intrusions (
+					name,
+					value,
+					page,
+					ip,
+					impact,
+					created
+				) 
+				VALUES (
+					:name,
+					:value,
+					:page,
+					:ip,
+					:impact,
+					now()
+				)
+			');    	                                       
 			
 		} catch (PDOException $e) {
             die('PDOException: ' . $e->getMessage());    	
@@ -95,6 +117,8 @@ class IDS_Log_Database implements IDS_Log_Interface {
     /**
     * Returns an instance of this class
     *
+    * @param    string
+    * @param    string
     * @param    string
     * @access   public
     * @return   object
@@ -118,18 +142,17 @@ class IDS_Log_Database implements IDS_Log_Interface {
     private function __clone() { }
 
     /**
-    * Stores incoming data record into a file
+    * Stores given data into database
     *
-    * @param    mixed
+    * @param    object
     * @access   public
-    * @return   mixed   bool or exception object on failure
+    * @return   mixed   bool true on success or exception object on failure
     */
     public function execute(IDS_Report $data) {
         
-        foreach($data as $event) {
-        	
-        	$page = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'';
-        	$ip = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:$_SERVER['HTTP_X_FORWARDED_FOR'];
+        foreach ($data as $event) {
+        	$page	= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        	$ip		= isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR'];
         	
             $this->statement->bindParam('name', $event->getName());
             $this->statement->bindParam('value', $event->getValue());
@@ -137,7 +160,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
             $this->statement->bindParam('ip', $ip);
             $this->statement->bindParam('impact', $data->getImpact());
             
-            if(!$this->statement->execute()) { 
+            if (!$this->statement->execute()) { 
                 throw new Exception($this->statement->errorCode());     
             }
         }
