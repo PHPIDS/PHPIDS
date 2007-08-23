@@ -1,4 +1,0 @@
-"127.0.0.1",2007-08-23T16:51:44+02:00,4,"xss csrf","test=%5C%22%3EXXX","%2Fphp-ids.org%2Ftrunk%2Fdocs%2Fexamples%2Fexample.php%3Ftest%3D%2522%253EXXX"
-"127.0.0.1",2007-08-23T17:11:18+02:00,4,"xss csrf","test=%5C%22%3EXXX","%2Fphp-ids.org%2Ftrunk%2Fdocs%2Fexamples%2Fexample.php%3Ftest%3D%2522%253EXXX"
-"127.0.0.1",2007-08-23T17:39:57+02:00,4,"xss csrf","test=%5C%22%3EXXX","%2Fphp-ids.org%2Ftrunk%2Fdocs%2Fexamples%2Fexample.php%3Ftest%3D%2522%253EXXX"
-"127.0.0.1",2007-08-23T17:41:58+02:00,4,"xss csrf","test=%5C%22%3EXXX","%2Fphp-ids.org%2Ftrunk%2Fdocs%2Fexamples%2Fexample.php%3Ftest%3D%2522%253EXXX"
