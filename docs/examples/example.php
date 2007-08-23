@@ -68,19 +68,20 @@ try {
     */
     require_once '../../lib/IDS/Log/File.php';
     require_once '../../lib/IDS/Log/Email.php';
+    require_once '../../lib/IDS/Log/Database.php';
     require_once '../../lib/IDS/Log/Composite.php';
    
     $compositeLog = new IDS_Log_Composite();
     $compositeLog->addLogger(
-       IDS_Log_File::getInstance('log.txt'),  
-       IDS_Log_Email::getInstance('example@example.invalid', 'PHPIDS - attack detected')
+        IDS_Log_File::getInstance('log.txt'),  
+        IDS_Log_Email::getInstance('example@example.invalid', 'PHPIDS - attack detected'), 
+        IDS_Log_Database::getInstance('mysql:host=localhost;port=3306;dbname=phpids', 'phpids', '123456')
 	);
 
     
     if (!$result->isEmpty()) {
         $compositeLog->execute($result);
     }
-    
 } catch (Exception $e) {
     /*
     * sth went terribly wrong - maybe the 
