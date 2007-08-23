@@ -40,37 +40,50 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 	public function getFilterFromXML($source) {
 		if (extension_loaded('SimpleXML')) {
 
-            if (file_exists($source)) {
-                if (LIBXML_VERSION >= 20621) {
-                    $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
-                } else {
-                    $filters = simplexml_load_file($source);
-                }
-            } elseif (substr(trim($source), 0, 1) == '<') {
-                if (LIBXML_VERSION >= 20621) {
-                    $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
-                } else {
-                    $filters = simplexml_load_string($source);
-                }
-            }
-
+			if(session_id() && !empty($_SESSION['PHPIDS']['Storage']) ) {
+				$filters = $this->getCache();
+			} else {
+	            if (file_exists($source)) {
+	               if (LIBXML_VERSION >= 20621) {
+	                   $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
+	               } else {
+	                   $filters = simplexml_load_file($source);
+	               }
+	            } elseif (substr(trim($source), 0, 1) == '<') {
+	               if (LIBXML_VERSION >= 20621) {
+	                   $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
+	                } else {
+	                   $filters = simplexml_load_string($source);
+	                }
+	            }   				
+			}
+			
 			if (empty($filters)) {
 				throw new Exception(
 					'XML data could not be loaded.' .
 					'Make sure you specified the correct path.'
 				);
+			} else {
+				$filters = !is_null($filters->filter)?$filters->filter:$filters;
 			}
 
-			if (!empty($filters->filter)) {
+			if (!empty($filters)) {
 				
                 require_once 'IDS/Filter/Regex.php';
+                $cache = array();
                 
-                foreach ($filters->filter as $filter) {
-					$rule	= (string) $filter->rule;
-					$impact = (string) $filter->impact;
-					$tags	= array_values((array) $filter->tags);
-					$description = (string) $filter->description;
+                foreach ($filters as $filter) {
+                	$rule	= $filter->rule ? (string) $filter->rule : $filter['rule'];
+					$impact = $filter->impact ? (string) $filter->impact : $filter['impact'];
+					$tags	= $filter->tags ? array_values((array) $filter->tags) : $filter['tags'];
+					$description = $filter->description ? (string) $filter->description : $filter['description'];
 
+					$cache[] = array('rule' => $rule, 
+					                 'impact' => $impact, 
+					                 'tags' => $tags, 
+					                 'description' => $description);
+					                 
+                    $this->setCache($cache);					                 
 					$this->addFilter(
 						new IDS_Filter_Regex(
 							$rule,

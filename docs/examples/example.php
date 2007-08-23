@@ -18,17 +18,24 @@
  */
 
 /*
- * 	1st: require the needed files
+ * 1st: require the needed files - also it's good to have the session 
+ * started for the PHPIDS storage cache
  */
 set_include_path(
 	get_include_path()
 	. PATH_SEPARATOR
 	. '../../lib/'
 );
+	
+if(!session_id()) {
+	session_start();
+}
+	
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
 try {
+	
     /*
     * 2nd: instanciate the storage object and fetch the rules
     */
@@ -42,7 +49,8 @@ try {
     * array you want like $_REQUEST, $_SESSION etc.
     */
     $get = new IDS_Monitor($_GET, $storage);
-    $result = $get->run();
+    $result = $get->run();	
+
     
     /*
     * in the result object you will find any suspicious 

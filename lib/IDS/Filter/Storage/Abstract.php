@@ -79,6 +79,27 @@ abstract class IDS_Filter_Storage_Abstract {
 		$this->filterSet[] = $filter;
 		return $this;
 	}
+	
+    /**
+     * Returns the storage cache from the session array
+     *
+     * @return array 
+     */
+    public function getCache() {
+        $cache = is_array($_SESSION['PHPIDS']['Storage'])?$_SESSION['PHPIDS']['Storage']:false; 
+        return $cache;        	
+    }
+    
+    /**
+     * Enter description here...
+     *
+     * @param array
+     * @return boolean
+     */
+    protected function setCache(array $cache) {
+    	$_SESSION['PHPIDS']['Storage'] = $cache; 
+    	return true;
+    }
 }
 
 /*
