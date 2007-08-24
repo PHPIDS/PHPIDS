@@ -63,38 +63,35 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                     'XML data could not be loaded.' .
                     'Make sure you specified the correct path.'
                 );
-            } else {
-                $filters = $filters instanceof SimpleXMLElement ? $filters->filter : $filters;
             }
 
-            if (!empty($filters)) {
-                
-                require_once 'IDS/Filter/Regex.php';
-                $cache = array();
-                
-                foreach ($filters as $filter) {
-                    
-                    $nocache = $filter instanceof SimpleXMLElement;
-                    $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
-                    $impact = $nocache ? (string) $filter->impact : $filter['impact'];
-                    $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
-                    $description = $nocache ? (string) $filter->description : $filter['description'];                       
+            $cache = array();
+            $nocache = $filters instanceof SimpleXMLElement;
+            $filters = $nocache ? $filters->filter : $filters;
 
-                    $cache[] = array('rule' => $rule, 
-                                     'impact' => $impact, 
-                                     'tags' => $tags, 
-                                     'description' => $description);
+            require_once 'IDS/Filter/Regex.php';
+                
+            foreach ($filters as $filter) {
+                    
+                $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
+                $impact = $nocache ? (string) $filter->impact : $filter['impact'];
+                $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
+                $description = $nocache ? (string) $filter->description : $filter['description'];                       
+
+                $cache[] = array('rule' => $rule, 
+                                 'impact' => $impact, 
+                                 'tags' => $tags, 
+                                 'description' => $description);
                                      
-                    $this->setCache($cache);                                     
-                    $this->addFilter(
-                        new IDS_Filter_Regex(
-                            $rule,
-                            $description,
-                            (array) $tags[0],
-                            (int) $impact
-                        )
-                    );
-                }
+                $this->setCache($cache);                                     
+                $this->addFilter(
+                    new IDS_Filter_Regex(
+                        $rule,
+                        $description,
+                        (array) $tags[0],
+                        (int) $impact
+                    )
+                );
             }
 
         } else {
