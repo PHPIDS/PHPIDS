@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  *
  * Requirements: PHP5, SimpleXML
  *
@@ -23,7 +23,6 @@
 * Class to assure the systems API
 *
 * @author	christ1an <ch0012@gmail.com>
-* 
 * @version	$Id$
 */
 abstract class IDS_Filter_Storage_Abstract {
@@ -83,21 +82,24 @@ abstract class IDS_Filter_Storage_Abstract {
     /**
      * Returns the storage cache from the session array
      *
-     * @return array 
+     * @return	mixed 
      */
     public function getCache() {
-        $cache = is_array($_SESSION['PHPIDS']['Storage'])?$_SESSION['PHPIDS']['Storage']:false; 
-        return $cache;        	
+		if (is_array($_SESSION['PHPIDS']['Storage'])) {
+			return $_SESSION['PHPIDS']['Storage'];
+		}
+		
+		return false;
     }
     
     /**
-     * Enter description here...
-     *
-     * @param array
-     * @return boolean
+     * Caches given data in the session
+	 *
+     * @param	array
+     * @return	boolean
      */
-    protected function setCache(array $cache) {
-    	$_SESSION['PHPIDS']['Storage'] = $cache; 
+    protected function setCache(Array $data) {
+    	$_SESSION['PHPIDS']['Storage'] = $data; 
     	return true;
     }
 }

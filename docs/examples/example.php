@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  * 
  * Requirements: PHP5, SimpleXML
  *
@@ -27,7 +27,7 @@ set_include_path(
 	. '../../lib/'
 );
 	
-if(!session_id()) {
+if (!session_id()) {
 	session_start();
 }
 	
@@ -65,8 +65,6 @@ try {
 	* </code>
     */
     if (!$result->isEmpty()) {
-        
-        # echo the results
         echo $result;
     }
 	
@@ -75,21 +73,30 @@ try {
     * Log_File
     */
     require_once '../../lib/IDS/Log/File.php';
-    require_once '../../lib/IDS/Log/Email.php';
-    require_once '../../lib/IDS/Log/Database.php';
     require_once '../../lib/IDS/Log/Composite.php';
    
     $compositeLog = new IDS_Log_Composite();
     $compositeLog->addLogger(
-        IDS_Log_File::getInstance('log.txt'),  
-        IDS_Log_Email::getInstance('example@example.invalid', 'PHPIDS - attack detected'), 
-        IDS_Log_Database::getInstance('mysql:host=localhost;port=3306;dbname=phpids', 'phpids', '123456')
+        IDS_Log_File::getInstance('log.txt')  
 	);
+   
+	/**
+	* Note that you might also use different logging facilities
+	* such as IDS_Log_Email or IDS_Log_Database
+	*
+	require_once '../../lib/IDS/Log/Email.php';
+    require_once '../../lib/IDS/Log/Database.php';
 
-    
+    $compositeLog->addLogger(
+        IDS_Log_Email::getInstance('example@example.invalid', 'PHPIDS - attack detected'),
+		IDS_Log_Database::getInstance('mysql:host=localhost;port=3306;dbname=phpids', 'phpids', '123456')
+	);
+	*/
+
     if (!$result->isEmpty()) {
         $compositeLog->execute($result);
     }
+	
 } catch (Exception $e) {
     /*
     * sth went terribly wrong - maybe the 

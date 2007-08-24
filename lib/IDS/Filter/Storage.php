@@ -40,7 +40,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
     public function getFilterFromXML($source) {
         if (extension_loaded('SimpleXML')) {
 
-            if(session_id() && !empty($_SESSION['PHPIDS']['Storage']) ) {
+            if (session_id() && !empty($_SESSION['PHPIDS']['Storage'])) {
                 $filters = $this->getCache();
             } else {
                 if (file_exists($source)) {
@@ -72,16 +72,18 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
             require_once 'IDS/Filter/Regex.php';
                 
             foreach ($filters as $filter) {
-                    
+
                 $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
                 $impact = $nocache ? (string) $filter->impact : $filter['impact'];
                 $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
                 $description = $nocache ? (string) $filter->description : $filter['description'];                       
 
-                $cache[] = array('rule' => $rule, 
-                                 'impact' => $impact, 
-                                 'tags' => $tags, 
-                                 'description' => $description);
+                $cache[] = array(
+					'rule'		=> $rule, 
+					'impact'	=> $impact, 
+					'tags'		=> $tags, 
+					'description' => $description
+				);
                                      
                 $this->setCache($cache);                                     
                 $this->addFilter(

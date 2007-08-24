@@ -23,7 +23,7 @@ require_once 'IDS/Filter/Abstract.php';
  * Regex filter class
  *
  * The filter class based on regular expression matching is the default
- * filter class used in PHP IDS.
+ * filter class used in PHPIDS.
  *
  * @author Lars Strojny <lstrojny@neu.de>
  *
@@ -44,8 +44,7 @@ class IDS_Filter_Regex extends IDS_Filter_Abstract {
 	 * @param string $flags Regular expression modifier flags
 	 * @return void
 	 */
-	public static function setFlags($flags)
-	{
+	public static function setFlags($flags) {
 		self::$flags = $flags;
 	}
 
@@ -54,8 +53,7 @@ class IDS_Filter_Regex extends IDS_Filter_Abstract {
 	 *
 	 * @return string
 	 */
-	public static function getFlags()
-	{
+	public static function getFlags() {
 		return self::$flags;
 	}
 
