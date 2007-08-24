@@ -74,16 +74,11 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                 
                 foreach ($filters as $filter) {
                     
-                    if($xml = $filter instanceof SimpleXMLElement) {
-                        $rule   = $xml ? (string) $filter->rule : $filter['rule'];
-                        $impact = $xml ? (string) $filter->impact : $filter['impact'];
-                        $tags   = $xml ? array_values((array) $filter->tags) : $filter['tags'];
-                        $description = $xml ? (string) $filter->description : $filter['description'];                       
-                    }
-                    $rule   = $filters instanceof SimpleXMLElement ? (string) $filter->rule : $filter['rule'];
-                    $impact = $filters instanceof SimpleXMLElement ? (string) $filter->impact : $filter['impact'];
-                    $tags   = $filters instanceof SimpleXMLElement ? array_values((array) $filter->tags) : $filter['tags'];
-                    $description = $filters instanceof SimpleXMLElement ? (string) $filter->description : $filter['description'];
+                    $nocache = $filter instanceof SimpleXMLElement;
+                    $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
+                    $impact = $nocache ? (string) $filter->impact : $filter['impact'];
+                    $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
+                    $description = $nocache ? (string) $filter->description : $filter['description'];                       
 
                     $cache[] = array('rule' => $rule, 
                                      'impact' => $impact, 
