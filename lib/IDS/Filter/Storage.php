@@ -25,82 +25,89 @@ require_once 'IDS/Filter/Storage/Abstract.php';
 * This class provides various default functions for gathering filter
 * patterns to be used later on by the IDS.
 *
-* @author	christ1an <ch0012@gmail.com>
-* @version	$Id$
+* @author   christ1an <ch0012@gmail.com>
+* @version  $Id:Storage.php 391 2007-08-23 21:57:38Z mario $
 */
 class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
-	/**
-	* Loads filters from XML file via SimpleXML
-	*
-	* @access	public
-	* @param	mixed	string or filename
-	* @return	object	$this on success, otherwise exception object
-	*/
-	public function getFilterFromXML($source) {
-		if (extension_loaded('SimpleXML')) {
+    /**
+    * Loads filters from XML file via SimpleXML
+    *
+    * @access   public
+    * @param    mixed   string or filename
+    * @return   object  $this on success, otherwise exception object
+    */
+    public function getFilterFromXML($source) {
+        if (extension_loaded('SimpleXML')) {
 
-			if(session_id() && !empty($_SESSION['PHPIDS']['Storage']) ) {
-				$filters = $this->getCache();
-			} else {
-	            if (file_exists($source)) {
-	               if (LIBXML_VERSION >= 20621) {
-	                   $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
-	               } else {
-	                   $filters = simplexml_load_file($source);
-	               }
-	            } elseif (substr(trim($source), 0, 1) == '<') {
-	               if (LIBXML_VERSION >= 20621) {
-	                   $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
-	                } else {
-	                   $filters = simplexml_load_string($source);
-	                }
-	            }   				
-			}
-			
-			if (empty($filters)) {
-				throw new Exception(
-					'XML data could not be loaded.' .
-					'Make sure you specified the correct path.'
-				);
-			} else {
-				$filters = !is_null($filters->filter)?$filters->filter:$filters;
-			}
+            if(session_id() && !empty($_SESSION['PHPIDS']['Storage']) ) {
+                $filters = $this->getCache();
+            } else {
+                if (file_exists($source)) {
+                   if (LIBXML_VERSION >= 20621) {
+                       $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
+                   } else {
+                       $filters = simplexml_load_file($source);
+                   }
+                } elseif (substr(trim($source), 0, 1) == '<') {
+                   if (LIBXML_VERSION >= 20621) {
+                       $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
+                    } else {
+                       $filters = simplexml_load_string($source);
+                    }
+                }                   
+            }
+            
+            if (empty($filters)) {
+                throw new Exception(
+                    'XML data could not be loaded.' .
+                    'Make sure you specified the correct path.'
+                );
+            } else {
+                $filters = $filters instanceof SimpleXMLElement ? $filters->filter : $filters;
+            }
 
-			if (!empty($filters)) {
-				
+            if (!empty($filters)) {
+                
                 require_once 'IDS/Filter/Regex.php';
                 $cache = array();
                 
                 foreach ($filters as $filter) {
-                	$rule	= $filter->rule ? (string) $filter->rule : $filter['rule'];
-					$impact = $filter->impact ? (string) $filter->impact : $filter['impact'];
-					$tags	= $filter->tags ? array_values((array) $filter->tags) : $filter['tags'];
-					$description = $filter->description ? (string) $filter->description : $filter['description'];
+                    
+                    if($xml = $filter instanceof SimpleXMLElement) {
+                        $rule   = $xml ? (string) $filter->rule : $filter['rule'];
+                        $impact = $xml ? (string) $filter->impact : $filter['impact'];
+                        $tags   = $xml ? array_values((array) $filter->tags) : $filter['tags'];
+                        $description = $xml ? (string) $filter->description : $filter['description'];                       
+                    }
+                    $rule   = $filters instanceof SimpleXMLElement ? (string) $filter->rule : $filter['rule'];
+                    $impact = $filters instanceof SimpleXMLElement ? (string) $filter->impact : $filter['impact'];
+                    $tags   = $filters instanceof SimpleXMLElement ? array_values((array) $filter->tags) : $filter['tags'];
+                    $description = $filters instanceof SimpleXMLElement ? (string) $filter->description : $filter['description'];
 
-					$cache[] = array('rule' => $rule, 
-					                 'impact' => $impact, 
-					                 'tags' => $tags, 
-					                 'description' => $description);
-					                 
-                    $this->setCache($cache);					                 
-					$this->addFilter(
-						new IDS_Filter_Regex(
-							$rule,
-							$description,
-							(array) $tags[0],
-							(int) $impact
-						)
-					);
-				}
-			}
+                    $cache[] = array('rule' => $rule, 
+                                     'impact' => $impact, 
+                                     'tags' => $tags, 
+                                     'description' => $description);
+                                     
+                    $this->setCache($cache);                                     
+                    $this->addFilter(
+                        new IDS_Filter_Regex(
+                            $rule,
+                            $description,
+                            (array) $tags[0],
+                            (int) $impact
+                        )
+                    );
+                }
+            }
 
-		} else {
-			throw new Exception(
-				'SimpleXML not loaded.'
-			);
-		}
+        } else {
+            throw new Exception(
+                'SimpleXML not loaded.'
+            );
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 }
