@@ -92,7 +92,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		);
 		$result = $test->run();
 		$this->assertTrue($result->hasEvent(1));
-		$this->assertEquals(18, $result->getImpact());
+		$this->assertEquals(22, $result->getImpact());
 	}
 
     public function testListWithKeyScanning()
@@ -106,7 +106,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $test->scanKeys = true;
         $result = $test->run();
-        $this->assertEquals(26, $result->getImpact());
+        $this->assertEquals(30, $result->getImpact());
     }
 
     public function testListWithException()
@@ -118,7 +118,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(18, $result->getImpact());
+        $this->assertEquals(22, $result->getImpact());
     }
 
     public function testListWithSubKeys()
@@ -132,7 +132,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->storage
         );
         $result = $test->run();
-        $this->assertEquals(26, $result->getImpact());
+        $this->assertEquals(30, $result->getImpact());
     }
 
     public function testListWithSubKeysAndExceptions()
@@ -147,7 +147,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $test->setExceptions('test1');
         $result = $test->run();
-        $this->assertEquals(18, $result->getImpact());
+        $this->assertEquals(22, $result->getImpact());
     }
 
     public function testXSSList() {
@@ -176,7 +176,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   '$=document,$=$.URL,$$=unescape,$$$=eval,$$$($$($))', 
                   'y=<a>alert</a>;content[y](123)', 
                   '$_=document,$__=$_.URL,$___=unescape,$_=$_.body,$_.innerHTML = $___(http=$__)', 
-                  'eval.call(this,unescape.call(this,location))', 
+                  'ev\al.call(this,unescape.call(this,location))', 
                   'setTimeout//
                     (name//
                     ,0)//', 
@@ -190,7 +190,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(195, $result->getImpact());        
+        $this->assertEquals(204, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -213,7 +213,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(158, $result->getImpact());        
+        $this->assertEquals(166, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -250,7 +250,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(230, $result->getImpact());          
+        $this->assertEquals(258, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -266,7 +266,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(98, $result->getImpact());       
+        $this->assertEquals(102, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
@@ -277,7 +277,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(65, $result->getImpact());              
+        $this->assertEquals(69, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -309,7 +309,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(68, $result->getImpact());              
+        $this->assertEquals(72, $result->getImpact());              
     }
     
     public function testXMLFilterString()

@@ -169,9 +169,9 @@ class IDS_Converter {
                             );
             
             $converted = preg_replace($pattern, null, $value);
-    
+            
             $value .= "\n[" . $converted . "] ";
-        }  
+        } 
           
         return $value;
     }
@@ -252,6 +252,22 @@ class IDS_Converter {
     	}
     	return $value;
     }
+
+    /**
+     * Basic approach to fight attacks using common parser bugs
+     * 
+     * @return  string  $value
+     */
+    public static function convertParserBugs($value) {
+
+    	$search = array('\a', '\l');
+    	$replace = array('a', 'l');
+    	
+    	$value = str_replace($search, $replace, $value);
+    	
+        return $value;
+    }    
+
 }
 
 /*

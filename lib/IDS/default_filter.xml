@@ -9,7 +9,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?"+.*\<|=\s*\\?"[^"]+\\?")]]></rule>
+        <rule><![CDATA[(?:\\?"+.*\<|=\s*\\?"[^"]+\\?")|(?:"\w+=)]]></rule>
         <description>finds attribute breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -36,7 +36,7 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
+        <rule><![CDATA[(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
         <description>url-, name- and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -90,7 +90,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?"\s*[)}\]]+)]]></rule>
+        <rule><![CDATA[(?:\\?"|:\s*[)}\]]+)]]></rule>
         <description>finds closing javascript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
