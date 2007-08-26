@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  *
  * Requirements: PHP5, SimpleXML
  *
@@ -20,27 +20,26 @@
 /**
  * PHPIDS report object
  *
- * The report objects collects a number of events in order to present the
- * filter results. It provides a convenient API to work with the results.
+ * The report objects collects a number of events and thereby presents the
+ * filtered results. It provides a convenient API to work with the results.
  *
  * @author	Lars Strojny <lstrojny@neu.de>
- *
  * @version	$Id$
  */
 class IDS_Report implements Countable, IteratorAggregate {
 
 	/**
-	 * List of events
+	 * Event container
 	 *
 	 * @var array
 	 */
 	protected $events = array();
 
 	/**
-	 * List of tags
+	 * List of affected tags
 	 *
 	 * This list of tags is collected from the collected event objects
-	 * on demand (when IDS_Report->getTags() is called)
+	 * on demand when IDS_Report->getTags() is called
 	 *
 	 * @var	array
 	 */
@@ -49,17 +48,18 @@ class IDS_Report implements Countable, IteratorAggregate {
 	/**
 	 * Impact level
 	 *
-	 * The impact level is calculated on demand (by adding the results of
-	 * the event objects on IDS_Report->getImpact())
+	 * The impact level is calculated on demand by adding the results of
+	 * the event objects on IDS_Report->getImpact()
 	 *
 	 * @var	integer
 	 */
 	protected $impact = false;
 
+
 	/**
 	 * Constructor
 	 *
-	 * @param	array $events List of IDS_Event objects
+	 * @param	array	$events
 	 */
 	public function __construct(Array $events = NULL) {
 		if ($events !== NULL) {
@@ -72,8 +72,8 @@ class IDS_Report implements Countable, IteratorAggregate {
 	/**
 	 * Add an IDS_Event object to the report
 	 *
-	 * @param	IDS_Event $event
-	 * @return	$this
+	 * @param	object	IDS_Event
+	 * @return	object	$this
 	 */
 	public function addEvent(IDS_Event $event) {
 		$this->clear();
@@ -83,29 +83,34 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 
 	/**
-	 * Get event (by name)
+	 * Get event by name
 	 *
-	 * Every event is named by its source name. You can get a specific event by
-	 * its name with this method.
+	 * In most cases an event is identified by the key of the variable
+	 * that contained maliciously looking content
 	 *
-	 * @param	scalar $name
+	 * @param	scalar	$name
 	 * @throws	InvalidArgumentException
-	 * @return	IDS_Event|false
+	 * @return	mixed	IDS_Event object or false
 	 */
 	public function getEvent($name) {
 		if (!is_scalar($name)) {
-			throw new InvalidArgumentException('Invalid argument type given');
+			throw new InvalidArgumentException(
+				'Invalid argument type given'
+			);
 		}
 
 		if ($this->hasEvent($name)) {
 			return $this->events[$name];
 		}
+		
+		return false;
 	}
 
 	/**
 	 * Get list of tags
 	 *
-	 * Returns a list of collected tags from all of the IDS_Event sub-objects
+	 * Returns a list of affected tags of all stored
+	 * IDS_Event objects
 	 *
 	 * @return	array
 	 */
@@ -131,9 +136,8 @@ class IDS_Report implements Countable, IteratorAggregate {
 	/**
 	* Get impact level
 	*
-	* Return calculated impact level. Every IDS_Event sub object and
-	* its IDS_Filter objects are used to calculate the overall impact
-	* level.
+	* Each IDS_Event object and its IDS_Filter sub objects are called
+	* to calculate the overall impact level of this request
 	*
 	* @return	integer
 	*/
@@ -149,9 +153,10 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 
 	/**
-	 * Event with name $name is existant?
+	 * Checks if a specific event with given name
+	 * exists
 	 *
-	 * @var	scalar $name
+	 * @var	scalar
 	 */
 	public function hasEvent($name) {
 		if (!is_scalar($name)) {
@@ -162,10 +167,9 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 
 	/**
-	 * Number of events
+	 * Returns total amount of events
 	 *
-	 * Returns the number of events contained in the IDS_Report object. Implements
-	 * interface Countable
+	 * Implements interface Countable
 	 *
 	 * @return	integer
 	 */
@@ -188,7 +192,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 
 	 /**
-	 * Checks whether or not report is filled
+	 * Checks whether or not any reports exist
 	 *
 	 * @return	bool
 	 */
@@ -233,7 +237,7 @@ class IDS_Report implements Countable, IteratorAggregate {
 	}
 }
 
-/*
+/**
  * Local variables:
  * tab-width: 4
  * c-basic-offset: 4

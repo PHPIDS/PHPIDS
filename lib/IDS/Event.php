@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP IDS
+ * PHPIDS
  *
  * Requirements: PHP5, SimpleXML
  *
@@ -20,12 +20,11 @@
 /**
  * PHPIDS event object
  *
- * This class represents a certain event which has been occured while applying
- * the filters to the given data. It aggregates a bunch of IDS_Filter_Abstract
+ * This class represents a certain event which occured while applying
+ * the filters to the given data. It aggregates a bunch of IDS_Filter
  * implementations and is a assembled in IDS_Report.
  *
  * @author	Lars Strojny <lstrojny@neu.de>
- *
  * @version	$Id$
  */
 class IDS_Event implements Countable, IteratorAggregate {
@@ -91,9 +90,9 @@ class IDS_Event implements Countable, IteratorAggregate {
 
 		foreach ($filters as $filter) {
 
-			if (!$filter instanceof IDS_Filter_Abstract) {
+			if (!$filter instanceof IDS_Filter) {
 				throw new InvalidArgumentException(
-					'Filter must be derived from IDS_Filter_Abstract');
+					'Filter must be derived from IDS_Filter');
 			}
 			$this->filters[] = $filter;
 		}

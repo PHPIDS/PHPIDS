@@ -77,7 +77,7 @@ try {
    
     $compositeLog = new IDS_Log_Composite();
     $compositeLog->addLogger(
-        IDS_Log_File::getInstance('log.txt')  
+		IDS_Log_File::getInstance('log.txt')  
 	);
    
 	/**

@@ -74,7 +74,7 @@ abstract class IDS_Filter_Storage_Abstract {
 	* @param	array
 	* @return	object
 	*/
-	public final function addFilter(IDS_Filter_Abstract $filter) {
+	public final function addFilter(IDS_Filter $filter) {
 		$this->filterSet[] = $filter;
 		return $this;
 	}

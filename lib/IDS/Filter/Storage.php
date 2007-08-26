@@ -69,7 +69,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
             $nocache = $filters instanceof SimpleXMLElement;
             $filters = $nocache ? $filters->filter : $filters;
 
-            require_once 'IDS/Filter/Regex.php';
+            require_once 'IDS/Filter/Filter.php';
                 
             foreach ($filters as $filter) {
 
@@ -87,7 +87,7 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                                      
                 $this->setCache($cache);                                     
                 $this->addFilter(
-                    new IDS_Filter_Regex(
+                    new IDS_Filter(
                         $rule,
                         $description,
                         (array) $tags[0],
@@ -105,3 +105,10 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
         return $this;
     }
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */

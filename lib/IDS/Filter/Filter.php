@@ -18,15 +18,17 @@
  */
 
 /**
- * Abstract filter class
+ * Main filter class
  *
- * A basic implementation of a filter object
+ * Each object of this class serves as a container for a specific
+ * filter. The object provides methods to get information about the
+ * particular filter and also to match an arbitrary string against it.
  *
  * @author	Lars Strojny <lstrojny@neu.de>
- *
- * @version	$Id$
+ * @author	christ1an <ch0012@gmail.com>
+ * @version	$Id: Abstract.php 391 2007-08-23 21:57:38Z mario $
  */
-abstract class IDS_Filter_Abstract {
+class IDS_Filter {
 
 	/**
 	 * Filter rule
@@ -59,13 +61,12 @@ abstract class IDS_Filter_Abstract {
 	/**
 	 * Constructor
 	 *
-	 * @param	mixed $rule				Filter rule
-	 * @param	string $description		Filter description
-	 * @param	array $tags				List of tags
-	 * @param	integer $impact			Filter impact level
+	 * @param	mixed	$rule			filter rule
+	 * @param	string	$description	filter description
+	 * @param	array	$tags			list of tags
+	 * @param	integer $impact			filter impact level
 	 */
 	public function __construct($rule, $description, Array $tags, $impact) {
-		
 		$this->rule 	= $rule;
 		$this->tags 	= $tags;
 		$this->impact 	= $impact;		
@@ -73,26 +74,38 @@ abstract class IDS_Filter_Abstract {
 	}
 
 	/**
-	 * Abstract match method
+	 * Match method
 	 *
-	 * The concrete match process which returns a boolean to inform
-	 * about a match
+	 * Matches given string against the filter rule the specific
+	 * object of this class represents 
 	 *
-	 * @return	bool
+	 * @return	bool	true if filter matched, otherwise false
 	 */
-	abstract public function match($string);
+	public function match($string) {
+		if (!is_string($string)) {
+			throw new Exception('
+				Invalid argument. Expected a string, received ' . gettype($string)
+			);
+		}
+
+		return (bool) preg_match('/' . $this->getRule() . '/ims', $string);
+	}
 
 	/**
-	 * Get filter description
+	 * Returns filter description
 	 *
-	 * @return	string	Filter description
+	 * @return	string
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 
 	/**
-	 * Return list of tags
+	 * Return list of affected tags
+	 *
+	 * Each filter rule is concerned with a certain kind
+	 * of attack vectors. This method returns those affected
+	 * kinds.
 	 *
 	 * @return	array	List of tags
 	 */
@@ -101,9 +114,9 @@ abstract class IDS_Filter_Abstract {
 	}
 
 	/**
-	 * Return filter rule
+	 * Returns filter rule
 	 *
-	 * @return	mixed	Filter rule
+	 * @return	string
 	 */
 	public function getRule() {
 		return $this->rule;
@@ -112,9 +125,16 @@ abstract class IDS_Filter_Abstract {
 	/**
 	 * Get filter impact level
 	 *
-	 * @return	integer	Impact level
+	 * @return	integer
 	 */
 	public function getImpact() {
 		return $this->impact;
 	}
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ */
