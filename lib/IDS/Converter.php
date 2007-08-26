@@ -235,6 +235,23 @@ class IDS_Converter {
         
         return $value;  
     }    
+    
+    /**
+     * Detects nullbytes and controls chars via ord()
+     * 
+     * @return  string  $value
+     */
+    public static function convertFromNullbytes($value) {
+
+    	$values = str_split($value);
+    	foreach($values  as $item) {
+    		if(ord($item) < 10) {
+                $value .= "\n[ %00 ] ";
+                return $value;
+    		}
+    	}
+    	return $value;
+    }
 }
 
 /*

