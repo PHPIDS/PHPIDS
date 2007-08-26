@@ -486,7 +486,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:"?\)?\s+(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+\(?\\?"?\s?[\w-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\w-]+\s+LIKE\s+\W+)|(?:(?:^|\W)(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
+        <rule><![CDATA[(?:"?\)?\s+(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+\(?\\?"?\s?[\w!?-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\w-]+\s+LIKE\s+\W+)|(?:(?:^|\W)(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
         <description>detects classic SQL injection probings 1/3</description>
         <tags>
             <tag>sqli</tag>
