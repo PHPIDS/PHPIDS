@@ -90,7 +90,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?"|:\s*[)}\]]+)]]></rule>
+        <rule><![CDATA[(?:\\?(?:"|:)\s*[)}\]]+)]]></rule>
         <description>finds closing javascript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
