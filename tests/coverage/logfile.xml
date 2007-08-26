@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="PHP IDS" tests="50" failures="0" errors="0" time="5.41995739937">
-    <testsuite name="IDS_ExceptionTest" tests="6" failures="0" errors="0" time="0.0307891368866">
-      <testcase name="testEventConstructorExceptions1" class="IDS_ExceptionTest" time="0.00808787345886"/>
-      <testcase name="testEventConstructorExceptions2" class="IDS_ExceptionTest" time="0.00485181808472"/>
-      <testcase name="testEventConstructorExceptions3" class="IDS_ExceptionTest" time="0.00459003448486"/>
-      <testcase name="testGetEventException" class="IDS_ExceptionTest" time="0.00427508354187"/>
-      <testcase name="testHasEventException" class="IDS_ExceptionTest" time="0.00422215461731"/>
-      <testcase name="testXMLFilterStringEmpty" class="IDS_ExceptionTest" time="0.00476217269897"/>
+  <testsuite name="PHP IDS" tests="50" failures="0" errors="0" time="6.29742336273">
+    <testsuite name="IDS_ExceptionTest" tests="6" failures="0" errors="0" time="0.05091381073">
+      <testcase name="testEventConstructorExceptions1" class="IDS_ExceptionTest" time="0.012069940567"/>
+      <testcase name="testEventConstructorExceptions2" class="IDS_ExceptionTest" time="0.00685381889343"/>
+      <testcase name="testEventConstructorExceptions3" class="IDS_ExceptionTest" time="0.0146768093109"/>
+      <testcase name="testGetEventException" class="IDS_ExceptionTest" time="0.00803017616272"/>
+      <testcase name="testHasEventException" class="IDS_ExceptionTest" time="0.00443506240845"/>
+      <testcase name="testXMLFilterStringEmpty" class="IDS_ExceptionTest" time="0.00484800338745"/>
     </testsuite>
-    <testsuite name="IDS_FilterTest" tests="6" failures="0" errors="0" time="0.110842227936">
-      <testcase name="testObjectConstruction" class="IDS_FilterTest" time="0.0149500370026"/>
-      <testcase name="testModificator" class="IDS_FilterTest" time="0.00417995452881"/>
-      <testcase name="testExceptions" class="IDS_FilterTest" time="0.00364995002747"/>
-      <testcase name="testFilterSetFilterSet" class="IDS_FilterTest" time="0.00271010398865"/>
-      <testcase name="testFilterGetCache" class="IDS_FilterTest" time="0.043888092041"/>
-      <testcase name="testFilterGetCacheWrongContent" class="IDS_FilterTest" time="0.0414640903473"/>
+    <testsuite name="IDS_FilterTest" tests="6" failures="0" errors="0" time="0.106079101562">
+      <testcase name="testObjectConstruction" class="IDS_FilterTest" time="0.014760017395"/>
+      <testcase name="testModificator" class="IDS_FilterTest" time="0.00423407554626"/>
+      <testcase name="testExceptions" class="IDS_FilterTest" time="0.00365805625916"/>
+      <testcase name="testFilterSetFilterSet" class="IDS_FilterTest" time="0.0026969909668"/>
+      <testcase name="testFilterGetCache" class="IDS_FilterTest" time="0.0404369831085"/>
+      <testcase name="testFilterGetCacheWrongContent" class="IDS_FilterTest" time="0.0402929782867"/>
     </testsuite>
-    <testsuite name="IDS_MonitorTest" tests="20" failures="0" errors="0" time="5.134557724">
-      <testcase name="testRunWithTags" class="IDS_MonitorTest" time="0.0862250328064"/>
-      <testcase name="testRun" class="IDS_MonitorTest" time="0.166298151016"/>
-      <testcase name="testNoResult" class="IDS_MonitorTest" time="0.0414998531342"/>
-      <testcase name="testSetExceptionsString" class="IDS_MonitorTest" time="0.0418138504028"/>
-      <testcase name="testSetExceptionsArray" class="IDS_MonitorTest" time="0.0423099994659"/>
-      <testcase name="testList" class="IDS_MonitorTest" time="0.120088815689"/>
-      <testcase name="testListWithKeyScanning" class="IDS_MonitorTest" time="0.225271940231"/>
-      <testcase name="testListWithException" class="IDS_MonitorTest" time="0.122345924377"/>
-      <testcase name="testListWithSubKeys" class="IDS_MonitorTest" time="0.166831970215"/>
-      <testcase name="testListWithSubKeysAndExceptions" class="IDS_MonitorTest" time="0.146625995636"/>
-      <testcase name="testXSSList" class="IDS_MonitorTest" time="0.213453054428"/>
-      <testcase name="testSelfContainedXSSList" class="IDS_MonitorTest" time="0.592314004898"/>
-      <testcase name="testSQLIList" class="IDS_MonitorTest" time="0.702327013016"/>
-      <testcase name="testDTList" class="IDS_MonitorTest" time="0.117540121078"/>
-      <testcase name="testURIList" class="IDS_MonitorTest" time="0.757636070251"/>
-      <testcase name="testRFEList" class="IDS_MonitorTest" time="0.390017986298"/>
-      <testcase name="testDecimalCCConverter" class="IDS_MonitorTest" time="0.629611968994"/>
-      <testcase name="testOctalCCConverter" class="IDS_MonitorTest" time="0.102494955063"/>
-      <testcase name="testHexCCConverter" class="IDS_MonitorTest" time="0.385947942734"/>
-      <testcase name="testXMLFilterString" class="IDS_MonitorTest" time="0.0839030742645"/>
+    <testsuite name="IDS_MonitorTest" tests="20" failures="0" errors="0" time="5.94427657127">
+      <testcase name="testRunWithTags" class="IDS_MonitorTest" time="0.0981359481812"/>
+      <testcase name="testRun" class="IDS_MonitorTest" time="0.168586969376"/>
+      <testcase name="testNoResult" class="IDS_MonitorTest" time="0.061735868454"/>
+      <testcase name="testSetExceptionsString" class="IDS_MonitorTest" time="0.0626389980316"/>
+      <testcase name="testSetExceptionsArray" class="IDS_MonitorTest" time="0.0639479160309"/>
+      <testcase name="testList" class="IDS_MonitorTest" time="0.17143201828"/>
+      <testcase name="testListWithKeyScanning" class="IDS_MonitorTest" time="0.321487188339"/>
+      <testcase name="testListWithException" class="IDS_MonitorTest" time="0.171016931534"/>
+      <testcase name="testListWithSubKeys" class="IDS_MonitorTest" time="0.22341799736"/>
+      <testcase name="testListWithSubKeysAndExceptions" class="IDS_MonitorTest" time="0.17413687706"/>
+      <testcase name="testXSSList" class="IDS_MonitorTest" time="0.287453889847"/>
+      <testcase name="testSelfContainedXSSList" class="IDS_MonitorTest" time="0.611170053482"/>
+      <testcase name="testSQLIList" class="IDS_MonitorTest" time="0.755394935608"/>
+      <testcase name="testDTList" class="IDS_MonitorTest" time="0.169000864029"/>
+      <testcase name="testURIList" class="IDS_MonitorTest" time="0.799962043762"/>
+      <testcase name="testRFEList" class="IDS_MonitorTest" time="0.389121055603"/>
+      <testcase name="testDecimalCCConverter" class="IDS_MonitorTest" time="0.639548063278"/>
+      <testcase name="testOctalCCConverter" class="IDS_MonitorTest" time="0.129184007645"/>
+      <testcase name="testHexCCConverter" class="IDS_MonitorTest" time="0.530138969421"/>
+      <testcase name="testXMLFilterString" class="IDS_MonitorTest" time="0.116765975952"/>
     </testsuite>
-    <testsuite name="IDS_ReportTest" tests="12" failures="0" errors="0" time="0.0967082977295">
-      <testcase name="testEmpty" class="IDS_ReportTest" time="0.00549411773682"/>
-      <testcase name="testCountable" class="IDS_ReportTest" time="0.00578594207764"/>
-      <testcase name="testGetterByName" class="IDS_ReportTest" time="0.0114760398865"/>
-      <testcase name="testGetTags" class="IDS_ReportTest" time="0.00871014595032"/>
-      <testcase name="testImpactSum" class="IDS_ReportTest" time="0.00714492797852"/>
-      <testcase name="testHasEvent" class="IDS_ReportTest" time="0.00457787513733"/>
-      <testcase name="testAddingAnotherEventAfterCalculation" class="IDS_ReportTest" time="0.0202360153198"/>
-      <testcase name="testIteratorAggregate" class="IDS_ReportTest" time="0.00671696662903"/>
-      <testcase name="testToString" class="IDS_ReportTest" time="0.0110630989075"/>
-      <testcase name="testToStringEmpty" class="IDS_ReportTest" time="0.00571703910828"/>
-      <testcase name="testGetEvent" class="IDS_ReportTest" time="0.00518703460693"/>
-      <testcase name="testGetEventWrong" class="IDS_ReportTest" time="0.00459909439087"/>
+    <testsuite name="IDS_ReportTest" tests="12" failures="0" errors="0" time="0.136835336685">
+      <testcase name="testEmpty" class="IDS_ReportTest" time="0.00824904441833"/>
+      <testcase name="testCountable" class="IDS_ReportTest" time="0.00853896141052"/>
+      <testcase name="testGetterByName" class="IDS_ReportTest" time="0.012218952179"/>
+      <testcase name="testGetTags" class="IDS_ReportTest" time="0.01313996315"/>
+      <testcase name="testImpactSum" class="IDS_ReportTest" time="0.00979280471802"/>
+      <testcase name="testHasEvent" class="IDS_ReportTest" time="0.00689101219177"/>
+      <testcase name="testAddingAnotherEventAfterCalculation" class="IDS_ReportTest" time="0.0302529335022"/>
+      <testcase name="testIteratorAggregate" class="IDS_ReportTest" time="0.00996923446655"/>
+      <testcase name="testToString" class="IDS_ReportTest" time="0.016813993454"/>
+      <testcase name="testToStringEmpty" class="IDS_ReportTest" time="0.00688815116882"/>
+      <testcase name="testGetEvent" class="IDS_ReportTest" time="0.0075991153717"/>
+      <testcase name="testGetEventWrong" class="IDS_ReportTest" time="0.0064811706543"/>
     </testsuite>
-    <testsuite name="IDS_EventTest" tests="6" failures="0" errors="0" time="0.0470600128174">
-      <testcase name="testName" class="IDS_EventTest" time="0.00680899620056"/>
-      <testcase name="testValueAggregation" class="IDS_EventTest" time="0.00813293457031"/>
-      <testcase name="testIterator" class="IDS_EventTest" time="0.0103480815887"/>
-      <testcase name="testCount" class="IDS_EventTest" time="0.00675296783447"/>
-      <testcase name="testCopy" class="IDS_EventTest" time="0.00696206092834"/>
-      <testcase name="testIteratorAggregate" class="IDS_EventTest" time="0.00805497169495"/>
+    <testsuite name="IDS_EventTest" tests="6" failures="0" errors="0" time="0.0593185424805">
+      <testcase name="testName" class="IDS_EventTest" time="0.0106918811798"/>
+      <testcase name="testValueAggregation" class="IDS_EventTest" time="0.0118730068207"/>
+      <testcase name="testIterator" class="IDS_EventTest" time="0.0153150558472"/>
+      <testcase name="testCount" class="IDS_EventTest" time="0.00669384002686"/>
+      <testcase name="testCopy" class="IDS_EventTest" time="0.00689077377319"/>
+      <testcase name="testIteratorAggregate" class="IDS_EventTest" time="0.00785398483276"/>
     </testsuite>
   </testsuite>
 </testsuites>

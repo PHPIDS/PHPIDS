@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1188160693" phpunit="3.1.7">
-  <project name="PHP IDS" timestamp="1188160693">
+<coverage generated="1188167171" phpunit="3.1.7">
+  <project name="PHP IDS" timestamp="1188167171">
     <file name="/home/mario/workspace/php-ids.org/trunk/lib/IDS/Event.php">
       <class name="IDS_Event">
         <metrics methods="8" coveredmethods="8" statements="50" coveredstatements="40" elements="58" coveredelements="48"/>
@@ -353,10 +353,10 @@
       <line num="246" type="stmt" count="16"/>
       <line num="247" type="stmt" count="16"/>
       <line num="248" type="stmt" count="16"/>
-      <line num="249" type="stmt" count="1"/>
-      <line num="250" type="stmt" count="1"/>
+      <line num="249" type="stmt" count="8"/>
+      <line num="250" type="stmt" count="8"/>
       <line num="252" type="stmt" count="16"/>
-      <line num="253" type="stmt" count="16"/>
+      <line num="253" type="stmt" count="12"/>
       <line num="261" type="method" count="16"/>
       <line num="263" type="stmt" count="16"/>
       <line num="264" type="stmt" count="16"/>

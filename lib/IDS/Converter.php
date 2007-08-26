@@ -241,11 +241,11 @@ class IDS_Converter {
      * 
      * @return  string  $value
      */
-    public static function convertFromNullbytes($value) {
+    public static function convertFromControlChars($value) {
 
     	$values = str_split($value);
     	foreach($values  as $item) {
-    		if(ord($item) < 10) {
+    		if(ord($item) < 20) {
                 $value .= "\n[ %00 ] ";
                 return $value;
     		}

@@ -164,7 +164,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(115, $result->getImpact());        
+        $this->assertEquals(142, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -190,7 +190,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(200, $result->getImpact());        
+        $this->assertEquals(232, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -213,7 +213,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(158, $result->getImpact());        
+        $this->assertEquals(222, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -250,7 +250,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(230, $result->getImpact());          
+        $this->assertEquals(260, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -266,7 +266,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(98, $result->getImpact());       
+        $this->assertEquals(103, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
@@ -277,7 +277,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(65, $result->getImpact());              
+        $this->assertEquals(70, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
