@@ -21,13 +21,12 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once "IDS/Filter/Regex.php";
 
 class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
 	public function testObjectConstruction()
 	{
-		$filter = new IDS_Filter_Regex('^test$', 'My description', array('foo', 'bar'), 12);
+		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 12);
 
 		$this->assertTrue($filter->match('test'));
 		$this->assertEquals("My description", $filter->getDescription(), "Should return description");
@@ -38,7 +37,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testModificator()
 	{
-		$filter = new IDS_Filter_Regex('^te.st$', 'My description', array('tag1', 'tag2'), 1);
+		$filter = new IDS_Filter('^te.st$', 'My description', array('tag1', 'tag2'), 1);
 
 		// Default must be 
 		// ... case-insensitive
@@ -48,19 +47,11 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 		// .. "$" is end only #has changed since modifiers are ims
 		$this->assertTrue($filter->match("TE1ST\n"));
 
-		// Change it to the opposite
-		IDS_Filter_Regex::setFlags('');
-		// Must fail because of case-sensitivity
-		$this->assertFalse($filter->match('TE1ST'));
-		// Must fail because "." does not match "\n"
-		$this->assertFalse($filter->match("TE\nST"));
-		// Must pass because $ means end of line or newline
-		$this->assertTrue($filter->match("te1st\n"));
 	}
 
 	public function testExceptions()
 	{
-		$filter = new IDS_Filter_Regex('^test$', 'My description', array('foo', 'bar'), 10);
+		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 10);
 
 		try {
 			$filter->match(1);
@@ -69,12 +60,12 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 
 		try {
-			$filter = new IDS_Filter_Regex('^test$', 'my desc', array('foo'), 'test');
+			$filter = new IDS_Filter('^test$', 'my desc', array('foo'), 'test');
 			$this->fail("Expected Exception");
 		} catch (Exception $e) {}
 
 		try {
-			$filter = new IDS_Filter_Regex(1, 'my desc', array("foo"), 'bla');
+			$filter = new IDS_Filter(1, 'my desc', array("foo"), 'bla');
 			$this->fail("Excpected Exception");
 		} catch (Exception $e) {}
 

@@ -23,7 +23,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Report.php';
 require_once 'IDS/Event.php';
-require_once 'IDS/Filter/Regex.php';
 
 class IDS_ReportTest extends PHPUnit_Framework_TestCase
 {
@@ -32,14 +31,14 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 		$this->report = new IDS_Report(array(
 			new IDS_Event("key_a", 'val_b',
 				array(
-					new IDS_Filter_Regex('^test_a1$', 'desc_a1', array('tag_a1', 'tag_a2'), 1),
-					new IDS_Filter_Regex('^test_a2$', 'desc_a2', array('tag_a2', 'tag_a3'), 2)
+					new IDS_Filter('^test_a1$', 'desc_a1', array('tag_a1', 'tag_a2'), 1),
+					new IDS_Filter('^test_a2$', 'desc_a2', array('tag_a2', 'tag_a3'), 2)
 				)
 			),
 			new IDS_Event('key_b', 'val_b',
 				array(
-					new IDS_Filter_Regex('^test_b1$', 'desc_b1', array('tag_b1', 'tag_b2'), 3),
-					new IDS_FIlter_Regex('^test_b2$', 'desc_b2', array('tag_b2', 'tag_b3'), 4),
+					new IDS_Filter('^test_b1$', 'desc_b1', array('tag_b1', 'tag_b2'), 3),
+					new IDS_FIlter('^test_b2$', 'desc_b2', array('tag_b2', 'tag_b3'), 4),
 				)
 			)
 		));
@@ -82,7 +81,7 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 	{
 		$this->testImpactSum();
 		$this->testGetTags();
-		$this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter_Regex('test_c1', 'desc_c1', array('tag_c1'), 10))));
+		$this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter('test_c1', 'desc_c1', array('tag_c1'), 10))));
 		$this->assertEquals(20, $this->report->getImpact());
 		$this->assertEquals(array('tag_a1', 'tag_a2', 'tag_a3', 'tag_b1', 'tag_b2', 'tag_b3', 'tag_c1'), $this->report->getTags());
 	}
