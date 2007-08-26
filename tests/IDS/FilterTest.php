@@ -70,4 +70,26 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 		} catch (Exception $e) {}
 
 	}
+
+	public function testFilterSetFilterSet() {
+        $this->storage = new IDS_Filter_Storage();
+        $filters = $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
+    
+	    $this->assertTrue($this->storage->setFilterSet($filters) instanceof IDS_Filter_Storage);
+	}	
+	
+	public function testFilterGetCache() {
+        $this->storage = new IDS_Filter_Storage();
+        $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
+        $cache = $this->storage->getCache();	
+
+        $this->assertTrue(is_array($cache));
+	}
+	
+	public function testFilterGetCacheWrongContent() {
+        $this->storage = new IDS_Filter_Storage();
+        $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
+        $_SESSION['PHPIDS']['Storage'] = null;
+        $this->assertFalse($this->storage->getCache());    
+    }	
 }

@@ -102,4 +102,14 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
         $this->report = new IDS_Report();
         $this->assertFalse($this->report->__toString());               
     }        
+    
+    public function testGetEvent() {
+        $this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter('test_c1', 'desc_c1', array('tag_c1'), 10))));
+        $this->assertTrue($this->report->getEvent('key_c') instanceof IDS_Event);
+    }
+
+    public function testGetEventWrong() {
+        $this->assertFalse($this->report->getEvent('not_available'));          
+    }    
+
 }
