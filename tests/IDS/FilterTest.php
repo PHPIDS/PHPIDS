@@ -76,8 +76,8 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
         if(session_id()) {
             session_destroy();        
         }
-        $filters = $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
-	    $this->assertTrue($this->storage->setFilterSet($filters) instanceof IDS_Filter_Storage);
+        $filter = new IDS_Filter('test', 'test2', array(), 1);
+	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
 	}	
 	
 	public function testFilterGetCache() {
