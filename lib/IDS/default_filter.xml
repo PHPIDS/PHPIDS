@@ -175,7 +175,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
         <description>detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -206,6 +206,17 @@
             <tag>rfe</tag>
         </tags>
         <impact>4</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:^(?:alert|msgbox|prompt|write|confirm|dialog)\s*\()]]></rule>
+        <description>detects very basic XSS probings - c'mon, you can do better!</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+            <tag>rfe</tag>
+        </tags>
+        <impact>2</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>

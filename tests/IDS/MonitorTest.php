@@ -157,14 +157,15 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   'top.__proto__._= alert
                     _(1)',
                   'document.__parent__._=alert
-                    _(1)'
+                    _(1)', 
+                  'alert(1)'
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(142, $result->getImpact());        
+        $this->assertEquals(144, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -207,13 +208,18 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                   'EXEC(@stored_proc @param)', 
                   'chr(11)||chr(12)||char(13)', 
                   'MERGE INTO bonuses B USING (SELECT', 
-                  '1 or name like \'%\''
-                  ),
+                  '1 or name like \'%\'', 
+                  '1 OR \'1\'!=0', 
+                  '1 OR ASCII(2) = ASCII(2)',
+                  '1\' OR 1&"1', 
+                  '1\' OR \'1\' XOR \'0 ',
+                  '1 OR+1=1',
+                  '1 OR+(1)=(1) '),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(222, $result->getImpact());        
+        $this->assertEquals(258, $result->getImpact());        
     }
     
     public function testDTList(){
