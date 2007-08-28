@@ -245,7 +245,7 @@ class IDS_Converter {
 
     	$values = str_split($value);
     	foreach($values  as $item) {
-    		if(ord($item) < 20) {
+    		if(ord($item) < 10) {
                 $value .= "\n[ %00 ] ";
                 return $value;
     		}
