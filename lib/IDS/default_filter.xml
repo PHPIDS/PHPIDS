@@ -27,7 +27,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?[^\w\n+-;]\s+[\w\/\\\*]+\s*=)]]></rule>
+        <rule><![CDATA[(?:\\?[^\w\n+-;]\s+(?<!\n)[\w\/\\\*]+\s*=)]]></rule>
         <description>finds attribute breaking injections including obfuscated attributes</description>
         <tags>
             <tag>xss</tag>
@@ -90,7 +90,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?(?:"|:)\s*[)}\]]+)]]></rule>
+        <rule><![CDATA[(?:[^\n]\\?(?:"|:)\s*[)}\]]+)]]></rule>
         <description>finds closing javascript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -175,7 +175,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|open|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|decodeURIComponent|eval|toString|Execute|window|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
         <description>detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -208,15 +208,15 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:^(?:alert|msgbox|prompt|write|confirm|dialog)\s*\()]]></rule>
-        <description>detects very basic XSS probings - c'mon, you can do better!</description>
+        <rule><![CDATA[(?:^(?:document\s*\.\s*)?(?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*\()]]></rule>
+        <description>detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
             <tag>id</tag>
             <tag>rfe</tag>
         </tags>
-        <impact>2</impact>
+        <impact>3</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
@@ -230,7 +230,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
         <description>detects javascript script language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -441,7 +441,7 @@
         <impact>3</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\\x[01FE]\w|%[01FE]\w|&#[01FE]\w|\\[01FE]\w?|&#x[01FE]\w)]]></rule>
+        <rule><![CDATA[(?:\\x[01FE]\w|%[01FE]\w|&#[01FE]\w|\\[01FE][0-9a-f]|&#x[01FE]\w)]]></rule>
         <description>detects nullbytes and HTTP response splitting</description>
         <tags>
             <tag>id</tag>
@@ -547,7 +547,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT))|(?:SET\s*@\w+)]]></rule>
+        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT))|(?:[^\w]SET\s*@\w+)]]></rule>
         <description>detects chained SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -610,8 +610,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:MERGE.*USING\s*\()]]></rule>
-        <description>detects Oracle MERGE attacks</description>
+        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")]]></rule>
+        <description>detects Oracle MERGE and EXECUTE IMMEDIATE attacks</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>

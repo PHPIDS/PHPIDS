@@ -165,7 +165,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(117, $result->getImpact());        
+        $this->assertEquals(118, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -283,7 +283,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(65, $result->getImpact());              
+        $this->assertEquals(61, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -315,12 +315,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(68, $result->getImpact());              
-    }
-    
-    public function testXMLFilterString()
-    {
-        $this->storage = new IDS_Filter_Storage();
-        $this->storage->getFilterFromXML(file_get_contents(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml'));
+        $this->assertEquals(64, $result->getImpact());              
     }
 }

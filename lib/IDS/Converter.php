@@ -243,9 +243,12 @@ class IDS_Converter {
      */
     public static function convertFromControlChars($value) {
 
+    	#critical ctrl values
+    	$crlf = array(0,1,2,3,4,5,6,7,8,11,12,14,15,16,17,18,19);
+
     	$values = str_split($value);
     	foreach($values  as $item) {
-    		if(ord($item) < 10) {
+    		if(in_array(ord($item), $crlf, true)) {
                 $value .= "\n[ %00 ] ";
                 return $value;
     		}
