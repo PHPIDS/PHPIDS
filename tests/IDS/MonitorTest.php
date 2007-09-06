@@ -95,13 +95,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(18, $result->getImpact());
 	}
 
-    public function testListWithKeyScanning()
-    {
+    public function testListWithKeyScanning() {
+        $exploits = array();
+        $exploits['test1'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+        $exploits['test2'] = '9<script/src=http/attacker.com>';
+        $exploits['9<script/src=http/attacker.com>'] = '9<script/src=http/attacker.com>';
+        
         $test = new IDS_Monitor(
-            array('test1' => '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="',
-                  'test2' => '9<script/src=http/attacker.com>', 
-                  '9<script/src=http/attacker.com>' => '9<script/src=http/attacker.com>'  
-                ),
+            $exploits,
             $this->storage
         );
         $test->scanKeys = true;
@@ -109,11 +110,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(26, $result->getImpact());
     }
 
-    public function testListWithException()
-    {
+    public function testListWithException() {
+    	$exploits = array();
+    	$exploits[] = '9<script/src=http/attacker.com>';
+    	$exploits[] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+    	
         $test = new IDS_Monitor(
-            array('9<script/src=http/attacker.com>', 
-                  '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'),
+            $exploits,
             $this->storage
         );
         $result = $test->run();
@@ -121,8 +124,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(18, $result->getImpact());
     }
 
-    public function testListWithSubKeys()
-    {
+    public function testListWithSubKeys() {
         $exploits = array('9<script/src=http/attacker.com>');
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
@@ -135,8 +137,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(26, $result->getImpact());
     }
 
-    public function testListWithSubKeysAndExceptions()
-    {
+    public function testListWithSubKeysAndExceptions() {
         $exploits = array('test1' => '9<script/src=http://attacker.com>');
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
@@ -150,16 +151,60 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(18, $result->getImpact());
     }
 
-    public function testXSSList() {
+    public function testCommentList() {
+
+        $exploits = array();
+        $exploits[] = '<![test';
+        $exploits[] = 'test/**/blafasel';
+        $exploits[] = 'test//test';
+        $exploits[] = 'test{test';
+        $exploits[] = 'test#';
+        $exploits[] = '<!-- test -->';
+        
+    	$test = new IDS_Monitor(
+            $exploits,
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        
+        $this->assertEquals(18, $result->getImpact());        
+    }    
+
+    public function testConcatenatedXSSList() {
+
+        $exploits = array();
+        $exploits[] = "s1=''+'java'+''+'scr'+'';s2=''+'ipt'+':'+'ale'+'';s3=''+'rt'+''+'(1)'+''; u1=s1+s2+s3;URL=u1";
+        $exploits[] = "s1=0?'1':'i'; s2=0?'1':'fr'; s3=0?'1':'ame'; i1=s1+s2+s3; s1=0?'1':'jav'; s2=0?'1':'ascr'; s3=0?'1':'ipt'; s4=0?'1':':'; s5=0?'1':'ale'; s6=0?'1':'rt'; s7=0?'1':'(1)'; i2=s1+s2+s3+s4+s5+s6+s7;";
+        $exploits[] = "s1=0?'':'i';s2=0?'':'fr';s3=0?'':'ame';i1=s1+s2+s3;s1=0?'':'jav';s2=0?'':'ascr';s3=0?'':'ipt';s4=0?'':':';s5=0?'':'ale';s6=0?'':'rt';s7=0?'':'(1)';i2=s1+s2+s3+s4+s5+s6+s7;i=createElement(i1);i.src=i2;x=parentNode;x.appendChild(i);";
+        $exploits[] = "s1=['java'+''+''+'scr'+'ipt'+':'+'aler'+'t'+'(1)'];";
+        $exploits[] = "s1=['java'||''+'']; s2=['scri'||''+'']; s3=['pt'||''+''];";
+        $exploits[] = "s1='java'||''+'';s2='scri'||''+'';s3='pt'||''+'';";
+        $exploits[] = "s1=!''&&'jav';s2=!''&&'ascript';s3=!''&&':';s4=!''&&'aler';s5=!''&&'t';s6=!''&&'(1)';s7=s1+s2+s3+s4+s5+s6;URL=s7;";
+        
         $test = new IDS_Monitor(
-            array('\'\'"--><script>eval(String.fromCharCode(88,83,83)));%00', 
-                  '"></a style="xss:ex/**/pression(alert(1));"',
-                  'top.__proto__._= alert
-                    _(1)',
-                  'document.__parent__._=alert
-                    _(1)', 
-                  'alert(1)'
-                  ),
+            $exploits,
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        
+        $this->assertEquals(85, $result->getImpact());        
+    }     
+    
+    public function testXSSList() {
+    	
+    	$exploits = array();
+    	$exploits[] = '\'\'"--><script>eval(String.fromCharCode(88,83,83)));%00';
+    	$exploits[] = '"></a style="xss:ex/**/pression(alert(1));"';
+    	$exploits[] = 'top.__proto__._= alert
+                       _(1)';
+    	$exploits[] = 'document.__parent__._=alert
+                      _(1)';
+    	$exploits[] = 'alert(1)';
+    	
+        $test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
@@ -185,13 +230,15 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                     .source
                     a+=/al/ 
                     .source,a = a[a]
-                    a(name)'
+                    a(name)', 
+                  'a=eval,b=(name);a(b)', 
+                  'a=eval,b= [ referrer ] ;a(b)' 
                   ),
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(198, $result->getImpact());        
+        $this->assertEquals(208, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -223,7 +270,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testDTList(){
-        $test1 = '../../etc/passwd';
+        
+    	$test1 = '../../etc/passwd';
         $test2 = '\%windir%\cmd.exe';
         if(get_magic_quotes_gpc()){
             $test1 = addslashes($test1);

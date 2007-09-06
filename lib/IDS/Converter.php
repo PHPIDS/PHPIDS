@@ -203,11 +203,14 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/("\s*[\W]+\s*\n*")*/ms',
+        $pattern = array('/(";\w+=)|(!""&&")/ms', 
+                         '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/ms',
+                         '/("\s*[\W]+\s*\n*")*/ms',
                          '/(";\w\s*+=\s*\w?\s*\n*")*/ms',
                          '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/ms',
                          '/(";\s*\w+\W+\w*\s*[|&]*")*/ms', 
-                         '/(?:"?\+[^"]*")/ms'
+                         '/(?:"?\+[^"]*")/ms' 
+                         
                          ); 
 
         # strip out concatenations
@@ -216,7 +219,7 @@ class IDS_Converter {
         if ($compare != $converted) {    
             $value .= "\n[" . $converted . "] ";
         }
-        
+
         return $value;    
     }
     
