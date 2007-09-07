@@ -36,7 +36,7 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:[(\[]\s*(?:name|location|referrer)\s*[)\]]\s*;)|(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
+        <rule><![CDATA[(?:;\s*URL)|(?:[(\[]\s*(?:name|location|referrer)\s*[)\]]\s*;)|(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
         <description>url-, name- and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -208,7 +208,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|decodeURIComponent|\wetTimeout)\s*\W)]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|(?:next|previous)Sibling|decodeURIComponent|\wetTimeout)\s*\W)]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>

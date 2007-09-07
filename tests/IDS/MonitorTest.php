@@ -181,6 +181,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "s1=['java'||''+'']; s2=['scri'||''+'']; s3=['pt'||''+''];";
         $exploits[] = "s1='java'||''+'';s2='scri'||''+'';s3='pt'||''+'';";
         $exploits[] = "s1=!''&&'jav';s2=!''&&'ascript';s3=!''&&':';s4=!''&&'aler';s5=!''&&'t';s6=!''&&'(1)';s7=s1+s2+s3+s4+s5+s6;URL=s7;";
+        $exploits[] = "s1=(0^0==0)?'java'+'s':'ABCDEFG';s2=(!1&2|1==4)?'ABCDEFG':'crip'+'t';s3=(1^2==0)?':':'ABC'+'DEFG';s4=(1/2==1)?'ABC'+'XYZ':'aler';s5=(2-1==1)?'t':'t';s6=(1&2!=0)?'(1)':'0123AEF'+'ABCDEFG';s7=s1+s2+s3+s4+s5+s6;URL=s7; ";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -189,7 +190,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(85, $result->getImpact());        
+        $this->assertEquals(102, $result->getImpact());        
     }     
     
     public function testXSSList() {
