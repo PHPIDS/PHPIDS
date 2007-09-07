@@ -36,7 +36,7 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:;\s*URL)|(?:[(\[]\s*(?:name|location|referrer)\s*[)\]]\s*;)|(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
+        <rule><![CDATA[(?:[(\[]\s*(?:name|location|referrer)\s*[)\]]\s*;)|(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
         <description>url-, name- and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -208,7 +208,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|(?:next|previous)Sibling|decodeURIComponent|\wetTimeout)\s*\W)]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|decodeURIComponent|\wetTimeout)\s*\W)]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -548,7 +548,7 @@
         <impact>7</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:[;>]\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
+        <rule><![CDATA[(?:^\s*[;>"]\s*(?:UNION|SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
         <description>Detects concatenated basic SQL injection and SQLLFI attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -612,7 +612,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:SELECT.*\w?user\()]]></rule>
+        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
