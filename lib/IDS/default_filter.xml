@@ -476,7 +476,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT))|(?:[^\w]SET\s*@\w+)]]></rule>
+        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)]]></rule>
         <description>Detects chained SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -494,7 +494,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)|(?:;\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))]]></rule>
+        <rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)|(?:;\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\w{2,})]]></rule>
         <description>Detects MySQL UDF injection and other data/structure manipulation attempts</description>
         <tags>
             <tag>sqli</tag>
