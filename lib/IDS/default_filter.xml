@@ -36,7 +36,7 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:;\s*URL\s*=)|(?:\W\s*(?:location|referrer|name)\s*\W)]]></rule>
+        <rule><![CDATA[(?:;\W*URL\s*=)|(?:\W\s*(?:location|referrer|name)\s*\W)]]></rule>
         <description>Detects url-, name- and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)]]></rule>
+        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
