@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:""\W+")|(?:"\W+"")|(?:"\+")|(?:":\d;)]]></rule>
+        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>

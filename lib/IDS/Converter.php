@@ -97,7 +97,9 @@ class IDS_Converter {
      */ 
      public static function convertFromJSCharcode($value) {   
 
-        # check if value matches typical charCode pattern
+        $matches = array();
+     	
+        // check if value matches typical charCode pattern
         if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){2,}/ms', $value, $matches)) {
             
             $converted  = '';
@@ -203,14 +205,14 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/(";\w+=)|(!""&&")/ms', 
+        $pattern = array('/(?:"\s*;.{4,24}:\s*")/ms',
+                         '/(";\w+=)|(!""&&")/ms', 
                          '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/ms',
                          '/("\s*[\W]+\s*\n*")*/ms',
                          '/(";\w\s*+=\s*\w?\s*\n*")*/ms',
                          '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/ms',
                          '/(";\s*\w+\W+\w*\s*[|&]*")*/ms', 
                          '/(?:"?\+[^"]*")/ms' 
-                         
                          ); 
 
         # strip out concatenations
