@@ -189,7 +189,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|decodeURIComponent|\wetTimeout)\s*\W)]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|decodeURIComponent|\wetTimeout|userAgent)\s*\W)]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
