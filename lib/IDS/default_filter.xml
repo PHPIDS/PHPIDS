@@ -156,7 +156,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|toString|Execute|window|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
