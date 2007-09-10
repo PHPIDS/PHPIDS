@@ -54,8 +54,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()]]></rule>
-        <description>Detects self contained xss via with()</description>
+        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()|(?:(?:do|while|for)\s*\([^)]*\)\s*\{)]]></rule>
+        <description>Detects self contained xss via with() and common loops</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -156,7 +156,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -222,7 +222,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|close)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")|(?:=\s*\w\s*\[\s*\d+\s*\])]]></rule>
+        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")|(?:=\s*\w\s*\[[^\]]+\])]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
@@ -364,8 +364,8 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:--.*>)]]></rule>
-        <description>Detects comments to exploit firefox' faulty rendering</description>
+        <rule><![CDATA[(?:--.*>)|(?:opera\s*\.\s*\()]]></rule>
+        <description>Detects comments to exploit firefox' faulty rendering and proprietary opera attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
