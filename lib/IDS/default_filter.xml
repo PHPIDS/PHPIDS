@@ -222,7 +222,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|close)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
