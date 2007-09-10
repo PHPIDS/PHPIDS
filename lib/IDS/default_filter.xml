@@ -364,7 +364,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:--.*>)|(?:opera\s*\.\s*\()]]></rule>
+        <rule><![CDATA[(?:--.*>)|(?:opera\s*\.\s*\w+\s*\()]]></rule>
         <description>Detects comments to exploit firefox' faulty rendering and proprietary opera attacks</description>
         <tags>
             <tag>xss</tag>
