@@ -34,14 +34,14 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 *
 	 * @var scalar
 	 */
-	protected $name	= null;
+	protected $name	= NULL;
 
 	/**
 	 * Value the filter has been applied
 	 *
 	 * @var scalar
 	 */
-	protected $value   = null;
+	protected $value = NULL;
 
 	/**
 	 * List of filters
@@ -55,7 +55,7 @@ class IDS_Event implements Countable, IteratorAggregate {
 	 *
 	 * @var integer|bool
 	 */
-	protected $impact  = false;
+	protected $impact = false;
 
 	/**
 	 * Assembled tags

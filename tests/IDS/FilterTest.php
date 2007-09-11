@@ -21,9 +21,15 @@
 
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
+require_once 'IDS/Init.php';
 
 class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
+	public function setUp() {
+		
+		$this->init = IDS_Init::init();	
+	}
+		
 	public function testObjectConstruction()
 	{
 		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 12);
@@ -72,26 +78,11 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testFilterSetFilterSet() {
-        $this->storage = new IDS_Filter_Storage();
+        $this->storage = new IDS_Filter_Storage($this->init);
         if(session_id()) {
             session_destroy();        
         }
         $filter = new IDS_Filter('test', 'test2', array(), 1);
 	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
 	}	
-	
-	public function testFilterGetCache() {
-        $this->storage = new IDS_Filter_Storage();
-        $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
-        $cache = $this->storage->getCache();	
-
-        $this->assertTrue(is_array($cache));
-	}
-	
-	public function testFilterGetCacheWrongContent() {
-        $this->storage = new IDS_Filter_Storage();
-        $this->storage->getFilterFromXML(dirname(__FILE__) . '/../../lib/IDS/default_filter.xml');
-        $_SESSION['PHPIDS']['Storage'] = null;
-        $this->assertFalse($this->storage->getCache());    
-    }	
 }

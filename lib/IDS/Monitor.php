@@ -20,7 +20,7 @@
 /**
  * Introdusion Dectection System
  *
- * This class provides function(s) to scan incoming data for
+ * This class provides methods to scan incoming data for
  * malicious script fragments
  *
  * @author		.mario <mario.heiderich@gmail.com>
@@ -37,29 +37,34 @@ class IDS_Monitor {
 
 	private $report;
 	
-	public	$scanKeys = false;
-
+	/**
+	 * Switch to turn key scanning on or off
+	 */
+	public	$scanKeys = NULL;
+	
 	/**
 	 * This array is meant to define which variables need to be ignored
 	 * by the PHPIDS - default is the utmz google analytics parameter
 	 */
-	private $exceptions = array(
-		'__utmz'
-	);
+	private $exceptions = NULL;
 
 	/**
 	 * Constructor
 	 *
-	 * @param	array	$reqeust			Request array
-	 * @param	object  IDS_Filter_Storage	Filter storage object
-	 * @param	tags	optional			List of tags where filters should be applied
+	 * @param	object	instance of IDS_Init
+	 * @param	array	request array
+	 * @param	array	optional list of tags to which filters should be applied
 	 * @return 	void
 	 */
-	public function __construct(Array $request, IDS_Filter_Storage $storage, Array $tags = NULL) {
+	public function __construct(IDS_Init $init, Array $request, Array $tags = NULL) {
+		
 		if (!empty($request)) {
-			$this->storage  = $storage;
-			$this->request  = $request;
-			$this->tags	 	= $tags;
+			$this->storage     = new IDS_Filter_Storage($init);
+			$this->request     = $request;
+			$this->tags	 	   = $tags;
+			
+			$this->scanKeys    = $init->config['IDS_Basic']['scan_keys'];
+			$this->exceptions  = $init->config['IDS_Basic']['exceptions'];
 		}
 
 		require_once 'IDS/Report.php';

@@ -36,26 +36,42 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
     * @access   public
     * @param    mixed   string or filename
     * @return   object  $this on success, otherwise exception object
+    * @throws   Exception in case the XML data can't be found or parsed 
     */
-    public function getFilterFromXML($source) {
-        if (extension_loaded('SimpleXML')) {
+    public function getFilterFromXML() {
 
-            if (session_id() && !empty($_SESSION['PHPIDS']['Storage'])) {
-                $filters = $this->getCache();
-            } else {
-                if (file_exists($source)) {
-                   if (LIBXML_VERSION >= 20621) {
-                       $filters = simplexml_load_file($source, NULL, LIBXML_COMPACT);
+    	if (extension_loaded('SimpleXML')) {
+
+    		$filters = false;
+    		
+            if ($this->caching) {
+            	require_once 'IDS/Caching/Factory.php';
+            	$cache = IDS_Caching::createCaching(
+                            $this->caching, 
+                            'storage'
+            	         );
+                            
+                if($cache) {
+                	
+                	// get cache
+                    $filters = $cache->getCache();
+                }
+            } 
+            
+            if(!$filters || !$cache) {
+            	
+            	if (file_exists($this->filterPath)) {
+                	
+                	if (LIBXML_VERSION >= 20621) {
+                    	$filters = simplexml_load_file(
+							$this->filterPath, 
+							NULL, 
+							LIBXML_COMPACT
+						);
                    } else {
-                       $filters = simplexml_load_file($source);
+                       $filters = simplexml_load_file($this->filterPath);
                    }
-                } elseif (substr(trim($source), 0, 1) == '<') {
-                   if (LIBXML_VERSION >= 20621) {
-                       $filters = simplexml_load_string($source, NULL, LIBXML_COMPACT);
-                    } else {
-                       $filters = simplexml_load_string($source);
-                    }
-                }                   
+                }        
             }
             
             if (empty($filters)) {
@@ -65,12 +81,12 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                 );
             }
 
-            $cache = array();
+            $data = array();
             $nocache = $filters instanceof SimpleXMLElement;
             $filters = $nocache ? $filters->filter : $filters;
 
             require_once 'IDS/Filter/Filter.php';
-                
+            
             foreach ($filters as $filter) {
 
                 $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
@@ -78,14 +94,13 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                 $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
                 $description = $nocache ? (string) $filter->description : $filter['description'];                       
 
-                $cache[] = array(
+                $data[] = array(
 					'rule'		=> $rule, 
 					'impact'	=> $impact, 
 					'tags'		=> $tags, 
 					'description' => $description
 				);
-                                     
-                $this->setCache($cache);                                     
+
                 $this->addFilter(
                     new IDS_Filter(
                         $rule,
@@ -95,6 +110,11 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
                     )
                 );
             }
+            
+            // write cache
+            if($cache) {
+                $cache->setCache($data);
+            }             
 
         } else {
             throw new Exception(
@@ -104,8 +124,99 @@ class IDS_Filter_Storage extends IDS_Filter_Storage_Abstract {
 
         return $this;
     }
-}
 
+
+    /**
+    * Loads filters from Json file via ext/Json
+    *
+    * @access   public
+    * @param    mixed   string or filename
+    * @return   mixed   true on success, otherwise exception object
+    * @throws   Exception in case the JSON data can't be found or parsed
+    */
+    public function getFilterFromJson() {
+        
+    	if (extension_loaded('Json')) { 
+
+            $filters = false;
+            
+            if ($this->caching) {
+                require_once 'IDS/Caching/Factory.php';
+                $cache = IDS_Caching::createCaching(
+                            $this->caching, 
+                            'storage'
+                         );
+                            
+                if($cache) {
+                    
+                    // get cache
+                    $filters = $cache->getCache();
+                }
+            }    		
+    		
+            if(!$filters || !$cache) {
+                
+                if (file_exists($this->filterPath)) {
+                	$filters = json_decode(file_get_contents($this->filterPath));
+                } else {
+	                throw new Exception(
+	                    'JSON data could not be loaded.' .
+	                    'Make sure you specified the correct path.'
+	                );
+                }                  
+            }
+
+            if ($filters == null) {
+            	throw new Exception(
+                    'JSON data could not be loaded.' .
+                    'Make sure you specified the correct path.'
+                );
+            }            
+
+            $data = array();
+            $nocache = !is_array($filters);
+            $filters = $nocache ? $filters->filters->filter : $filters;
+
+            require_once 'IDS/Filter/Filter.php';
+            
+            foreach ($filters as $filter) {
+            	
+                $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
+                $impact = $nocache ? (string) $filter->impact : $filter['impact'];
+                $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
+                $description = $nocache ? (string) $filter->description : $filter['description'];                       
+
+                $data[] = array(
+                    'rule'      => $rule, 
+                    'impact'    => $impact, 
+                    'tags'      => $tags, 
+                    'description' => $description
+                );
+                
+                $this->addFilter(
+                    new IDS_Filter(
+                        $rule,
+                        $description,
+                        (array) $tags[0],
+                        (int) $impact
+                    )
+                );
+            }
+            
+            // write cache
+            if($cache) {
+                $cache->setCache($data);
+            }             
+        
+        } else {
+            throw new Exception(
+                'ext/json not loaded.'
+            );
+        }
+        
+        return $this;
+    }
+}
 /*
  * Local variables:
  * tab-width: 4

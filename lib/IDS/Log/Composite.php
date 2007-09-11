@@ -63,6 +63,7 @@ class IDS_Log_Composite implements IDS_Log_Interface {
 	* @return	mixed	exception object on failure
 	*/
 	public function addLogger() {
+		
 		$args = func_get_args();
 
 		foreach ($args as $class) {

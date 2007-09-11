@@ -33,6 +33,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 
 	private $logfile = NULL;
 	private static $instances = array();
+	private $ip = NULL;
 
 	/**
 	* Constructor
@@ -42,7 +43,15 @@ class IDS_Log_File implements IDS_Log_Interface {
 	* @return	void
 	*/
 	protected function __construct($logfile) {
-		$this->logfile = $logfile;
+		
+        //determine attackers IP
+        $this->ip = ($_SERVER['SERVER_ADDR']!='127.0.0.1')
+                ?$_SERVER['SERVER_ADDR']
+                :(isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                    ?$_SERVER['HTTP_X_FORWARDED_FOR']
+                    :'local/unknown');  		
+		
+		$this->logfile = dirname(__FILE__) . '/../../' .$logfile;
 	}
 
 	/**
@@ -87,7 +96,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 		
 		$dataString = sprintf(
 			$format,
-			$_SERVER['REMOTE_ADDR'],
+			$this->ip,
 			date('c'),
 			$data->getImpact(),
 			join(' ', $data->getTags()),
@@ -115,6 +124,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 		$data = $this->prepareData($data);
 
 		if (is_string($data)) {
+			
 			if (file_exists($this->logfile)) {
 				$data = trim($data);
 
@@ -133,7 +143,8 @@ class IDS_Log_File implements IDS_Log_Interface {
 				}
 			} else {
 				throw new Exception(
-					'Given file does not exist.'
+					'Given file does not exist. Please make sure the  
+                    logfile is present in the given folder.'
 				);
 			}
 		} else {

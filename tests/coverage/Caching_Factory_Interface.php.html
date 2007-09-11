@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>PHP IDS</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr><td class="title">PHP IDS</td></tr>
+      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
+
+      <tr>
+        <td width="100%">
+          <table cellpadding="1" border="0" width="100%">
+            <tr>
+              <td class="headerItem" width="20%">Current view:</td>
+              <td class="headerValue" width="80%" colspan="4"><a href="index.html">/home/mario/workspace/php-ids.org/branches/0.4.0/lib/IDS</a>/<a href="Caching.html">Caching</a>/<a href="Caching_Factory.html">Factory</a>/<a href="Caching_Factory_Interface.php.html">Interface.php</a></td>
+            </tr>
+            <tr>
+              <td class="headerItem" width="20%">Date:</td>
+              <td class="headerValue" width="20%">Mon Sep 3 0:54:08 CEST 2007</td>
+              <td width="20%"></td>
+              <td class="headerItem" width="20%">Executable lines:</td>
+              <td class="headerValue" width="20%">2</td>
+            </tr>
+            <tr>
+              <td class="headerItem" width="20%">Code covered:</td>
+              <td class="headerValue" width="20%">100.00%</td>
+              <td width="20%"></td>
+              <td class="headerItem" width="20%">Executed lines:</td>
+              <td class="headerValue" width="20%">2</td>
+            </tr>
+            <tr>
+              <td class="legendItem" width="20%">Legend:</td>
+              <td class="legendValue" width="80%" colspan="4">
+                <span class="legendCov">executed</span>
+                <span class="legendNoCov">not executed</span>
+                <span class="legendDeadCode">dead code</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td>
+      </tr>
+    </table>
+
+    <br />
+
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td><br /></td>
+      </tr>
+      <tr>
+        <td>
+<pre class="source">
+<span class="lineNum"><a name="1"></a><a href="#1">       1</a> </span>                : <span class="default">&lt;?php</span>                                                                  
+<span class="lineNum"><a name="2"></a><a href="#2">       2</a> </span>                :                                                                        
+<span class="lineNum"><a name="3"></a><a href="#3">       3</a> </span>                : <span class="comment">/**</span>                                                                    
+<span class="lineNum"><a name="4"></a><a href="#4">       4</a> </span>                : <span class="comment">&nbsp;*&nbsp;PHPIDS</span>                                                              
+<span class="lineNum"><a name="5"></a><a href="#5">       5</a> </span>                : <span class="comment">&nbsp;*</span>                                                                     
+<span class="lineNum"><a name="6"></a><a href="#6">       6</a> </span>                : <span class="comment">&nbsp;*&nbsp;Requirements:&nbsp;PHP5,&nbsp;SimpleXML</span>                                       
+<span class="lineNum"><a name="7"></a><a href="#7">       7</a> </span>                : <span class="comment">&nbsp;*</span>                                                                     
+<span class="lineNum"><a name="8"></a><a href="#8">       8</a> </span>                : <span class="comment">&nbsp;*&nbsp;Copyright&nbsp;(c)&nbsp;2007&nbsp;PHPIDS&nbsp;(http://php-ids.org)</span>                      
+<span class="lineNum"><a name="9"></a><a href="#9">       9</a> </span>                : <span class="comment">&nbsp;*</span>                                                                     
+<span class="lineNum"><a name="10"></a><a href="#10">      10</a> </span>                : <span class="comment">&nbsp;*&nbsp;This&nbsp;program&nbsp;is&nbsp;free&nbsp;software;&nbsp;you&nbsp;can&nbsp;redistribute&nbsp;it&nbsp;and/or&nbsp;modify</span>
+<span class="lineNum"><a name="11"></a><a href="#11">      11</a> </span>                : <span class="comment">&nbsp;*&nbsp;it&nbsp;under&nbsp;the&nbsp;terms&nbsp;of&nbsp;the&nbsp;GNU&nbsp;General&nbsp;Public&nbsp;License&nbsp;as&nbsp;published&nbsp;by</span>
+<span class="lineNum"><a name="12"></a><a href="#12">      12</a> </span>                : <span class="comment">&nbsp;*&nbsp;the&nbsp;Free&nbsp;Software&nbsp;Foundation;&nbsp;version&nbsp;2&nbsp;of&nbsp;the&nbsp;license.</span>             
+<span class="lineNum"><a name="13"></a><a href="#13">      13</a> </span>                : <span class="comment">&nbsp;*</span>                                                                     
+<span class="lineNum"><a name="14"></a><a href="#14">      14</a> </span>                : <span class="comment">&nbsp;*&nbsp;This&nbsp;program&nbsp;is&nbsp;distributed&nbsp;in&nbsp;the&nbsp;hope&nbsp;that&nbsp;it&nbsp;will&nbsp;be&nbsp;useful,</span>     
+<span class="lineNum"><a name="15"></a><a href="#15">      15</a> </span>                : <span class="comment">&nbsp;*&nbsp;but&nbsp;WITHOUT&nbsp;ANY&nbsp;WARRANTY;&nbsp;without&nbsp;even&nbsp;the&nbsp;implied&nbsp;warranty&nbsp;of</span>      
+<span class="lineNum"><a name="16"></a><a href="#16">      16</a> </span>                : <span class="comment">&nbsp;*&nbsp;MERCHANTABILITY&nbsp;or&nbsp;FITNESS&nbsp;FOR&nbsp;A&nbsp;PARTICULAR&nbsp;PURPOSE.&nbsp;&nbsp;See&nbsp;the</span>       
+<span class="lineNum"><a name="17"></a><a href="#17">      17</a> </span>                : <span class="comment">&nbsp;*&nbsp;GNU&nbsp;General&nbsp;Public&nbsp;License&nbsp;for&nbsp;more&nbsp;details.</span>                        
+<span class="lineNum"><a name="18"></a><a href="#18">      18</a> </span>                : <span class="comment">&nbsp;*/</span>                                                                    
+<span class="lineNum"><a name="19"></a><a href="#19">      19</a> </span>                :                                                                        
+<span class="lineNum"><a name="20"></a><a href="#20">      20</a> </span>                : <span class="comment">/**</span>                                                                    
+<span class="lineNum"><a name="21"></a><a href="#21">      21</a> </span>                : <span class="comment">&nbsp;*</span>                                                                     
+<span class="lineNum"><a name="22"></a><a href="#22">      22</a> </span>                : <span class="comment">&nbsp;*/</span>                                                                    
+<span class="lineNum"><a name="23"></a><a href="#23">      23</a> </span><span class="lineCov">              1 : <span class="default">interface</span><span class="default">&nbsp;</span><span class="default">IDS_Caching_Interface</span><span class="default">&nbsp;</span><span class="keyword">{</span>                                      </span>
+<span class="lineNum"><a name="24"></a><a href="#24">      24</a> </span>                :                                                                        
+<span class="lineNum"><a name="25"></a><a href="#25">      25</a> </span>                : <span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">public</span><span class="default">&nbsp;</span><span class="keyword">function</span><span class="default">&nbsp;</span><span class="default">setCache</span><span class="keyword">(</span><span class="keyword">array</span><span class="default">&nbsp;</span><span class="default">$data</span><span class="keyword">)</span><span class="keyword">;</span>                             
+<span class="lineNum"><a name="26"></a><a href="#26">      26</a> </span>                : <span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span>                                                                       
+<span class="lineNum"><a name="27"></a><a href="#27">      27</a> </span>                : <span class="default">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword">public</span><span class="default">&nbsp;</span><span class="keyword">function</span><span class="default">&nbsp;</span><span class="default">getCache</span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">;</span>                                        
+<span class="lineNum"><a name="28"></a><a href="#28">      28</a> </span>                : <span class="keyword">}</span>                                                                      
+<span class="lineNum"><a name="29"></a><a href="#29">      29</a> </span>                :                                                                        
+<span class="lineNum"><a name="30"></a><a href="#30">      30</a> </span>                : <span class="comment">/**</span>                                                                    
+<span class="lineNum"><a name="31"></a><a href="#31">      31</a> </span>                : <span class="comment">&nbsp;*&nbsp;Local&nbsp;variables:</span>                                                    
+<span class="lineNum"><a name="32"></a><a href="#32">      32</a> </span>                : <span class="comment">&nbsp;*&nbsp;tab-width:&nbsp;4</span>                                                        
+<span class="lineNum"><a name="33"></a><a href="#33">      33</a> </span>                : <span class="comment">&nbsp;*&nbsp;c-basic-offset:&nbsp;4</span>                                                   
+<span class="lineNum"><a name="34"></a><a href="#34">      34</a> </span>                : <span class="comment">&nbsp;*&nbsp;End:</span>                                                                
+
+</pre>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
+      <tr><td class="versionInfo">Generated by: <a href="http://www.phpunit.de/">PHPUnit 3.1.7</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.0</a>.</td></tr>
+      <tr><td class="versionInfo">Logfile: <a href="logfile.txt">Plain Text</a> | <a href="logfile.tap">TAP</a> | <a href="logfile.xml">XML</a> | <a href="coverage.xml">Code Coverage</a></td></tr>
+    </table>
+
+    <br />
+
+  </body>
+</html>

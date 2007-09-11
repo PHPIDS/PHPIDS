@@ -33,14 +33,13 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	private $address 			= NULL;
 	private $subject			= NULL;
 	private $additionalHeaders 	= NULL;
+	private $safemode           = NULL;
+	private $allowed_rate       = NULL;	
+	private $tmp_path            = NULL;
+	private $file_prefix        = 'PHPIDS_safemode_';
+		
+	private $ip                 = NULL;
 	private static $instances	= array();
-	
-	public	$safeMode = array(
-		'mode'			=> 'on',
-		'allowedRate'	=> 15,
-		'protocolDir'	=> 'IDS/tmp/',
-		'filePrefix'	=> 'IDS_Log_Email_'
-	);
 	
 	/**
 	* Constructor
@@ -49,10 +48,21 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @access	protected
 	* @return	void
 	*/
-	protected function __construct($address, $subject, $headers) {
+	protected function __construct($address, $subject, $headers, $safemode = false, $allowed_rate = null, $tmp_path) {
+		
+		//determine attackers IP
+        $this->ip = ($_SERVER['SERVER_ADDR']!='127.0.0.1')
+                ?$_SERVER['SERVER_ADDR']
+                :(isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                    ?$_SERVER['HTTP_X_FORWARDED_FOR']
+                    :'local/unknown');  		
+		
 		$this->address = $address;
 		$this->subject = $subject;
 		$this->additionalHeaders = $headers;
+		$this->safemode = $safemode;
+		$this->allowed_rate = $allowed_rate;
+		$this->tmp_path = $tmp_path;
 	}
 
 	/**
@@ -62,12 +72,16 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	* @access	public
 	* @return	object
 	*/
-	public static function getInstance($address, $subject, $headers = NULL) {
+	public static function getInstance($address, $subject, $headers = NULL, $safemode, $allowed_rate, $tmp_path) {
+		
 		if (!isset(self::$instances[$address])) {
 			self::$instances[$address] = new IDS_Log_Email(
 				$address,
 				$subject,
-				$headers
+				$headers,
+				$safemode, 
+				$allowed_rate, 
+				$tmp_path
 			);
 		}
 
@@ -92,17 +106,17 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	*/
 	protected function isSpamAttempt() {
 		
-		/**
+		/*
 		* loop through all files in the tmp directory and
 		* delete garbage files
 		*/
-		$dir = $this->safeMode['protocolDir'];
-		$numPrefixChars = strlen($this->safeMode['filePrefix']);
+		$dir = dirname(__FILE__) . '/../../' .$this->tmp_path;
+		$numPrefixChars = strlen($this->file_prefix);
 		
 		$files = scandir($dir);
 		foreach ($files as $file) {
 			if (is_file($dir . $file)) {
-				if (substr($file, 0, $numPrefixChars) == $this->safeMode['filePrefix']) {
+				if (substr($file, 0, $numPrefixChars) == $this->file_prefix) {
 					$lastModified = filemtime($dir . $file);
 					
 					if ((time() - $lastModified) > 3600) {
@@ -111,15 +125,15 @@ class IDS_Log_Email implements IDS_Log_Interface {
 				}
 			}
 		}
-		/**
+		
+		/*
 		* end deleting garbage files
 		*/
-		
-		$remoteAddr = $_SERVER['REMOTE_ADDR'];
+		$remoteAddr = $this->ip;
 		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
 		
-		$filename	= $this->safeMode['filePrefix'] . md5($remoteAddr . $userAgent) . '.tmp';
-		$file		= $dir . $filename;
+		$filename	= $this->file_prefix . md5($remoteAddr . $userAgent) . '.tmp';
+		$file		= $dir . DIRECTORY_SEPARATOR . $filename;
 		
 		if (!file_exists($file)) {
 			$handle = fopen($file, 'w');
@@ -131,7 +145,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		
 		$lastAttack = file_get_contents($file);
 		$difference = time() - $lastAttack;
-		if ($difference > $this->safeMode['allowedRate']) {
+		if ($difference > $this->allowed_rate) {
 			unlink($file);
 		} else {
 			return true;
@@ -168,7 +182,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		
 		return sprintf(
 			$format,
-			$_SERVER['REMOTE_ADDR'],
+			$this->ip,
 			date('c'),
 			$data->getImpact(),
 			join(' ', $data->getTags()),
@@ -187,13 +201,13 @@ class IDS_Log_Email implements IDS_Log_Interface {
 	*/
 	public function execute(IDS_Report $data) {
 	
-		if ($this->safeMode['mode'] == 'on') {
+		if ($this->safemode) {
 			if ($this->isSpamAttempt()) {
 				return false;
 			}
 		}
 
-		/**
+		/*
 		* In case the data has been modified before it might
 		* be necessary to convert it to string since it's pretty
 		* senseless to send array or object via e-mail
@@ -203,8 +217,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		if (is_string($data)) {
 			$data = trim($data);
 
-			// if headers are passed as array, we need to make
-			// a string of it
+			// if headers are passed as array, we need to make a string of it
 			if (is_array($this->additionalHeaders)) {
 				$headers = "";
 				foreach ($this->additionalHeaders as $header) {

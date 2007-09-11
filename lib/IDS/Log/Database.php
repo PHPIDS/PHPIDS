@@ -18,10 +18,9 @@
  */
 
 /**
- * Database table structure
+ * Needed SQL:
  * 
 
-	DROP DATABASE IF NOT EXISTS `phpids`; 
 	CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 	DROP TABLE IF EXISTS `intrusions`;
 	CREATE TABLE IF NOT EXISTS `intrusions` (
@@ -57,8 +56,10 @@ class IDS_Log_Database implements IDS_Log_Interface {
     private $wrapper	= NULL;
     private $user		= NULL;
     private $password	= NULL;
+    private $table      = NULL;
     private $handle		= NULL;
     private $statement	= NULL;
+    private $ip         = NULL;
 	
     private static $instances = array();
 
@@ -71,12 +72,20 @@ class IDS_Log_Database implements IDS_Log_Interface {
     * @access   protected
     * @return   mixed	void or exception object
     */
-    protected function __construct($wrapper = false, $user = false, $password = false) {
-    
+    protected function __construct($wrapper = false, $user = false, $password = false, $table = false) {
+        
+    	//determine attackers IP
+        $this->ip = ($_SERVER['SERVER_ADDR']!='127.0.0.1')
+                ?$_SERVER['SERVER_ADDR']
+                :(isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                    ?$_SERVER['HTTP_X_FORWARDED_FOR']
+                    :'local/unknown');    	
+    	
     	if ($wrapper && $user && $password) {
             $this->wrapper = $wrapper;
             $this->user = $user;
             $this->password = $password;	
+            $this->table = $table;
 		} else {
             throw new Exception('
 				Insufficient connection parameters'
@@ -89,9 +98,9 @@ class IDS_Log_Database implements IDS_Log_Interface {
 				$this->user, 
 				$this->password
 			);
-			    	                                       
+			
 			$this->statement = $this->handle->prepare('
-				INSERT INTO intrusions (
+				INSERT INTO '.$this->table.' (
 					name,
 					value,
 					page,
@@ -123,12 +132,13 @@ class IDS_Log_Database implements IDS_Log_Interface {
     * @access   public
     * @return   object
     */
-    public static function getInstance($wrapper, $user, $password) {
+    public static function getInstance($wrapper, $user, $password, $table) {
         if (!isset(self::$instances[$wrapper])) {
             self::$instances[$wrapper] = new IDS_Log_Database(
                 $wrapper,
                 $user,
-                $password
+                $password, 
+                $table
             );
         }
 
@@ -152,7 +162,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
         
         foreach ($data as $event) {
         	$page	= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-        	$ip		= isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR'];
+        	$ip		= $this->ip;
         	
             $this->statement->bindParam('name', $event->getName());
             $this->statement->bindParam('value', $event->getValue());
@@ -161,7 +171,10 @@ class IDS_Log_Database implements IDS_Log_Interface {
             $this->statement->bindParam('impact', $data->getImpact());
             
             if (!$this->statement->execute()) { 
-                throw new Exception($this->statement->errorCode());     
+            	
+            	$info = $this->statement->errorInfo();
+                throw new Exception($this->statement->errorCode() . ', 
+                ' . $info[1] . ', ' . $info[2]);     
             }
         }
         

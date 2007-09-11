@@ -97,9 +97,7 @@ class IDS_Converter {
      */ 
      public static function convertFromJSCharcode($value) {   
 
-        $matches = array();
-     	
-        // check if value matches typical charCode pattern
+        # check if value matches typical charCode pattern
         if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){2,}/ms', $value, $matches)) {
             
             $converted  = '';
@@ -205,13 +203,11 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/(?:"\s*;.{8,18}:\s*")/ms',
-                         '/(";\w+=)|(!""&&")|(?:~)/ms', 
-                         '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/ms',
-                         '/("\s*[\W]+\s*\n*")/ms',
-                         '/(";\w\s*+=\s*\w?\s*\n*")/ms',
-                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/ms',
-                         '/(";\s*\w+\W+\w*\s*[|&]*")/ms'
+        $pattern = array('/("\s*[\W]+\s*\n*")*/ms',
+                         '/(";\w\s*+=\s*\w?\s*\n*")*/ms',
+                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/ms',
+                         '/(";\s*\w+\W+\w*\s*[|&]*")*/ms', 
+                         '/(?:"?\+[^"]*")/ms'
                          ); 
 
         # strip out concatenations
@@ -220,7 +216,7 @@ class IDS_Converter {
         if ($compare != $converted) {    
             $value .= "\n[" . $converted . "] ";
         }
-
+        
         return $value;    
     }
     
@@ -247,18 +243,18 @@ class IDS_Converter {
      */
     public static function convertFromControlChars($value) {
 
-    	#critical ctrl values
-    	$crlf = array(0,1,2,3,4,5,6,7,8,11,12,14,15,16,17,18,19);
-
-    	$values = str_split($value);
-    	foreach($values  as $item) {
-    		if(in_array(ord($item), $crlf, true)) {
+        #critical ctrl values
+        $crlf = array(0,1,2,3,4,5,6,7,8,11,12,14,15,16,17,18,19);
+	
+        $values = str_split($value);
+        foreach($values  as $item) {
+            if(in_array(ord($item), $crlf, true)) {
                 $value .= "\n[ %00 ] ";
                 return $value;
-    		}
-    	}
-    	return $value;
-    }
+            }
+        }
+        return $value;
+	}
 
     /**
      * Basic approach to fight attacks using common parser bugs
@@ -267,11 +263,9 @@ class IDS_Converter {
      */
     public static function convertParserBugs($value) {
 
-    	$search = array('\a', '\l');
-    	$replace = array('a', 'l');
-    	
-    	$value = str_replace($search, $replace, $value);
-    	
+        $search = array('\a', '\l');
+        $replace = array('a', 'l');
+        $value = str_replace($search, $replace, $value);
         return $value;
     }    
 
