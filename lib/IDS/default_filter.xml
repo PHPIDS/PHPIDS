@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\((?!compatible|mozilla)[^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()|(?:\(\w\[)]]></rule>
+        <rule><![CDATA[(?:\((?!compatible|mozilla)[^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()|(?:\(\w\[)|(?:\]\()]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -178,7 +178,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:concat|join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")|(?:=\s*\w\s*\[[^\]]+\])]]></rule>
+        <rule><![CDATA[(?:=\s*\w\s*!\s*=\s*\w)|(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")|(?:=\s*\w\s*\[[^\]]+\])]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
