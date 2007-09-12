@@ -106,7 +106,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:\/|\\)?\.\.(\/|\\)(?:\.\.)?)|(?:\w+\.exe\??\s)]]></rule>
+        <rule><![CDATA[(?:(?:\/|\\)?\.\.(\/|\\)(?:\.\.)?)|(?:\w+\.exe\??\s)|(?:;\s*\w+\s*\/)]]></rule>
         <description>Detects basic directory traversal</description>
         <tags>
             <tag>dt</tag>
