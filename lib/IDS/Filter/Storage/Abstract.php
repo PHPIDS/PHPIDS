@@ -41,7 +41,7 @@ abstract class IDS_Filter_Storage_Abstract {
 	public final function __construct(IDS_Init $init) {
 		if ($init->config) {
 			$this->filterPath = dirname(__FILE__) . '/../../../' . 
-			    $init->config['IDS_Basic']['filter_path'];
+			    $init->config['General']['filter_path'];
 			
 			if(isset($init->config['IDS_Caching']['caching']) 
 			    && $init->config['IDS_Caching']['caching'] != 'none') {
