@@ -209,7 +209,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * Stores given data into the database
      *
      * @param   object  $data   IDS_Report instance
-     * @throws  LogException
+     * @throws  Exception
      * @return  boolean
      */
     public function execute(IDS_Report $data) {
@@ -227,7 +227,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
             if (!$this->statement->execute()) { 
             	
             	$info = $this->statement->errorInfo();
-                throw new LogException(
+                throw new Exception(
                     $this->statement->errorCode() . ', ' . $info[1] . ', ' . $info[2]
                 );     
             }

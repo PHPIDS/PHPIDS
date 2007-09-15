@@ -143,7 +143,7 @@ class IDS_Log_File implements IDS_Log_Interface {
      * Stores given data into a file
      *
      * @param   object  $data   IDS_Report
-     * @throws  LogException
+     * @throws  Exception
      * @return  mixed
      */
 	public function execute(IDS_Report $data) {
@@ -167,19 +167,19 @@ class IDS_Log_File implements IDS_Log_Interface {
 						fclose($handle);
 						
                     } else {
-                        throw new LogException(
+                        throw new Exception(
                             'Please make sure that ' . $this->logfile . ' is writeable.'
                         );                        
                     }
 				}
 			} else {
-				throw new LogException(
+				throw new Exception(
 					'Given file does not exist. Please make sure the  
                     logfile is present in the given directory.'
 				);
 			}
 		} else {
-			throw new LogException(
+			throw new Exception(
 				'Please make sure that data returned by
 				IDS_Log_File::prepareData() is a string.'
 			);

@@ -260,7 +260,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * Sends the report to registered recipients
      *
      * @param   object  $data   IDS_Report instance
-     * @throws  LogException
+     * @throws  Exception
      * @return  boolean
      */
 	public function execute(IDS_Report $data) {
@@ -302,7 +302,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 			}
 
 		} else {
-			throw new LogException(
+			throw new Exception(
 				'Please make sure that data returned by
 				 IDS_Log_Email::prepareData() is a string.'
 			);
