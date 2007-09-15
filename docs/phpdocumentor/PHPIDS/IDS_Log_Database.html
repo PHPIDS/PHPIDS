@@ -20,17 +20,22 @@
 						
 					</div>
 	<div class="info-box-body">
+                <p class="implements">
+            Implements interfaces:
+            <ul>
+                <li><a href="../PHPIDS/IDS_Log_Interface.html">IDS_Log_Interface</a></li>            </ul>
+        </p>
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Database logging wrapper</p>
 <p class="description"><p>The database wrapper is designed to store reports into an sql database. It implements the  singleton pattern and is based in PDO, supporting different database types.</p></p>
 	<ul class="tags">
 				<li><span class="field">author:</span> .mario &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> SVN: $Id: Database.php 515 2007-09-15 13:43:40Z christ1an $</li>
+				<li><span class="field">version:</span> SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $</li>
 				<li><span class="field">copyright:</span> 2007 The PHPIDS Group</li>
 				<li><span class="field">link:</span> <a href="http://php-ids.org/">http://php-ids.org/</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_Log---Database.php.html">/Log/Database.php</a> (line <span class="field">55</span>)
+			Located in <a class="field" href="_Log---Database.php.html">/Log/Database.php</a> (line <span class="field">56</span>)
 		</p>
 		
 				
@@ -86,7 +91,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method getInstance</span> (line <span class="line-number">186</span>)
+		<span class="method-title">static method getInstance</span> (line <span class="line-number">187</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -118,7 +123,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">124</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">125</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -148,13 +153,13 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">execute</span> (line <span class="line-number">214</span>)
+		<span class="method-title">execute</span> (line <span class="line-number">215</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Stores given data into the database</p>
 	<ul class="tags">
-				<li><span class="field">throws:</span> LogException</li>
+				<li><span class="field">throws:</span> Exception</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -172,6 +177,11 @@
 				<span class="var-name">$data</span><span class="var-description">: IDS_Report instance</span>			</li>
 				</ul>
 		
+				<hr class="separator" />
+		<div class="notes">Implementation of:</div>
+			<dl>
+			<dt><a href="../PHPIDS/IDS_Log_Interface.html#methodexecute">IDS_Log_Interface::execute()</a></dt>
+					</dl>
 			
 	</div>
 						
@@ -180,7 +190,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 15 Sep 2007 16:57:24 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
+		Documentation generated on Sat, 15 Sep 2007 17:58:37 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
 	</p>
 	</div></body>
 </html>
