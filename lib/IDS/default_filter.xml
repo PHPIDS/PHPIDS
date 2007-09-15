@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\((?!compatible|mozilla)[^)]*\([^)]*\)\)|\[[^\]]\]\([^)]*\)|\(\s*\w+\s*\/\/[^)]*\)|\w\[[^\]]\][\w\s]*\()|(?:\(\w\[)|(?:\]\()|(?:\{[^(]\([^\)]\)[^}]*\})|(?:\w\s*:\s*\(\s*\w+\W+)]]></rule>
+        <rule><![CDATA[(?:[{([][^}\])]+[}\])]\s*){2,}]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>

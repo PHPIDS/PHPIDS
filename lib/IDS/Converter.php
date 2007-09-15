@@ -15,6 +15,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ * 
+ * @package PHPIDS
  */
 
 /**
@@ -25,33 +27,34 @@
  * class tree!
  *
  * @author      christ1an <ch0012@gmail.com>
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author      .mario <mario.heiderich@gmail.com>
  * @version     $Id$
+ * @package PHPIDS
  */
 class IDS_Converter {
 
-	/**
-	 * Runs all converter functions
-	 *
-	 * Note that if you make use of IDS_Converter::runAll(), existing class
-	 * methods will be executed in the same order as they are implemented in the
-	 * class tree!
-	 *
+    /**
+     * Runs all converter functions
+     *
+     * Note that if you make use of IDS_Converter::runAll(), existing class
+     * methods will be executed in the same order as they are implemented in the
+     * class tree!
+     *
      * @param   string  $value
-	 * @return	string
-	 */
-	 public static function runAll($value) {
-	 	$methods = get_class_methods(__CLASS__);
-		
-		$key = array_search('runAll', $methods);
-		unset($methods[$key]);
-				
-		foreach ($methods as $key => $func) {
-			$value = self::$func($value);
-		}
-		
-		return $value;
-	 }
+     * @return  string
+     */
+     public static function runAll($value) {
+        $methods = get_class_methods(__CLASS__);
+        
+        $key = array_search('runAll', $methods);
+        unset($methods[$key]);
+                
+        foreach ($methods as $key => $func) {
+            $value = self::$func($value);
+        }
+        
+        return $value;
+     }
 
     /**
      * Converts listed UTF-7 tags to UTF-8
@@ -97,7 +100,9 @@ class IDS_Converter {
      */ 
      public static function convertFromJSCharcode($value) {   
 
-        # check if value matches typical charCode pattern
+        $matches = array();
+        
+        // check if value matches typical charCode pattern
         if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){2,}/ms', $value, $matches)) {
             
             $converted  = '';
@@ -116,7 +121,7 @@ class IDS_Converter {
                     $converted .= chr($char);                               
                 }                              
             }
-			
+            
             $value .= "\n[" . $converted . "] ";
         }
 
@@ -131,7 +136,7 @@ class IDS_Converter {
                     $converted .= chr(octdec($char));                               
                 }
             }       
-			
+            
             $value .= "\n[" . $converted . "] ";
         }
 
@@ -143,10 +148,10 @@ class IDS_Converter {
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
-                	$converted .= chr(hexdec($char));                               
+                    $converted .= chr(hexdec($char));                               
                 }
             }
-			
+            
             $value .= "\n[" . $converted . "] ";
         }
 
@@ -203,11 +208,14 @@ class IDS_Converter {
             $compare = stripslashes($value);  
         }
 
-        $pattern = array('/("\s*[\W]+\s*\n*")*/ms',
-                         '/(";\w\s*+=\s*\w?\s*\n*")*/ms',
-                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)*/ms',
-                         '/(";\s*\w+\W+\w*\s*[|&]*")*/ms', 
-                         '/(?:"?\+[^"]*")/ms'
+        $pattern = array('/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/ms',
+                         '/(?:"\s*(?:;|\+).{8,18}:\s*")/ms',
+                         '/(";\w+=)|(!""&&")|(?:~)/ms', 
+                         '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/ms',
+                         '/("\s*[\W]+\s*\n*")/ms',
+                         '/(";\w\s*+=\s*\w?\s*\n*")/ms',
+                         '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/ms',
+                         '/(";\s*\w+\W+\w*\s*[|&]*")/ms'
                          ); 
 
         # strip out concatenations
@@ -216,7 +224,7 @@ class IDS_Converter {
         if ($compare != $converted) {    
             $value .= "\n[" . $converted . "] ";
         }
-        
+
         return $value;    
     }
     
@@ -245,7 +253,7 @@ class IDS_Converter {
 
         #critical ctrl values
         $crlf = array(0,1,2,3,4,5,6,7,8,11,12,14,15,16,17,18,19);
-	
+
         $values = str_split($value);
         foreach($values  as $item) {
             if(in_array(ord($item), $crlf, true)) {
@@ -254,7 +262,7 @@ class IDS_Converter {
             }
         }
         return $value;
-	}
+    }
 
     /**
      * Basic approach to fight attacks using common parser bugs
@@ -265,7 +273,9 @@ class IDS_Converter {
 
         $search = array('\a', '\l');
         $replace = array('a', 'l');
+        
         $value = str_replace($search, $replace, $value);
+        
         return $value;
     }    
 
