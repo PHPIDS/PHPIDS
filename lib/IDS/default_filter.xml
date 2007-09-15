@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[{([][^}\])]+[}\])]\s*){2,}]]></rule>
+        <rule><![CDATA[(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:\w[{([][^({[][{([][^}\])]+[}\])]{2,})]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -189,7 +189,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|parentNode|decodeURIComponent|\wetTimeout|userAgent)\s*\W)]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)\s*\W)]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\W\s*\w+\s*[[])|(?:=\s*\w\s*!\s*=\s*\w)|(?:"\s*"\s*\W+")|(?:"\s*\W+\s*"\s*")|(?:"\s*\+\s*")|(?:"\s*:\s*\d\s*;)|(?:\+\s*\w+\s*\[\s*)|(?:\d[&|]{2}")|(?:=\s*\w\s*\[[^\]]+\])|(?:\{\s*\w\s*(?:=|:)\s*\w+\W)]]></rule>
+        <rule><![CDATA[(?:\w\s*==\s*\w)|(?:[\d\W]\s*"\s*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
