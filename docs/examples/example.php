@@ -77,7 +77,7 @@ try {
     require_once 'IDS/Log/Database.php';
 
     $compositeLog->addLogger(
-        IDS_Log_Email::getInstance($init)
+        IDS_Log_Email::getInstance($init),
 		IDS_Log_Database::getInstance($init)
     );
     */

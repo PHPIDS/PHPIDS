@@ -3,7 +3,6 @@
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
- * @package     PHPIDS
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
  *
@@ -15,6 +14,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
+ * @package	PHPIDS
  */
 
 /**

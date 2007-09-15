@@ -3,7 +3,6 @@
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
- * @package     PHPIDS
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
  *
@@ -15,6 +14,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
+ * @package	PHPIDS
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -52,7 +53,7 @@ require_once 'IDS/Log/Interface.php';
  * @version		SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
-class IDS_Log_Database {
+class IDS_Log_Database implements IDS_Log_Interface {
 
     /**
      * Database wrapper
