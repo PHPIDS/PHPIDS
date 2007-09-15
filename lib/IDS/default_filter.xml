@@ -36,8 +36,8 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:;\W*URL\s*=)|(?:\W\s*(?:location|referrer|name)\s*\W)]]></rule>
-        <description>Detects url-, name- and referrer-contained payload attacks</description>
+        <rule><![CDATA[(?:;\W*URL\s*=)|(?:\W\s*(?:location|referrer|name)\s*\W)|(?:{[^:]+:[^}]+})]]></rule>
+        <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>

@@ -249,7 +249,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(292, $result->getImpact());        
+        $this->assertEquals(317, $result->getImpact());        
     }     
     
     public function testXSSList() {
@@ -413,7 +413,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(67, $result->getImpact());              
+        $this->assertEquals(72, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -458,6 +458,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(70, $result->getImpact());              
+        $this->assertEquals(75, $result->getImpact());              
     }
 }
