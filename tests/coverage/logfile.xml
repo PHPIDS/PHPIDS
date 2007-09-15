@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="PHPIDS" tests="66" failures="2" errors="0" time="8.13956880569">
+    <testsuite name="IDS_MonitorTest" package="PHPIDS" tests="23" failures="0" errors="0" time="7.71719241142">
+      <testcase name="testRunWithTags" class="IDS_MonitorTest" time="0.0991809368134"/>
+      <testcase name="testRun" class="IDS_MonitorTest" time="0.0980949401855"/>
+      <testcase name="testNoResult" class="IDS_MonitorTest" time="0.0293090343475"/>
+      <testcase name="testSetExceptionsString" class="IDS_MonitorTest" time="0.0449450016022"/>
+      <testcase name="testSetExceptionsArray" class="IDS_MonitorTest" time="0.0454051494598"/>
+      <testcase name="testList" class="IDS_MonitorTest" time="0.149258136749"/>
+      <testcase name="testListWithJsonFilters" class="IDS_MonitorTest" time="0.15034198761"/>
+      <testcase name="testListWithKeyScanning" class="IDS_MonitorTest" time="0.293546915054"/>
+      <testcase name="testListWithException" class="IDS_MonitorTest" time="0.149961948395"/>
+      <testcase name="testListWithSubKeys" class="IDS_MonitorTest" time="0.199895143509"/>
+      <testcase name="testListWithSubKeysAndExceptions" class="IDS_MonitorTest" time="0.149568080902"/>
+      <testcase name="testAttributeBreakerList" class="IDS_MonitorTest" time="0.247678995132"/>
+      <testcase name="testCommentList" class="IDS_MonitorTest" time="0.29483795166"/>
+      <testcase name="testConcatenatedXSSList" class="IDS_MonitorTest" time="1.29227614403"/>
+      <testcase name="testXSSList" class="IDS_MonitorTest" time="0.320244073868"/>
+      <testcase name="testSelfContainedXSSList" class="IDS_MonitorTest" time="0.691404819489"/>
+      <testcase name="testSQLIList" class="IDS_MonitorTest" time="1.06718111038"/>
+      <testcase name="testDTList" class="IDS_MonitorTest" time="0.198014974594"/>
+      <testcase name="testURIList" class="IDS_MonitorTest" time="0.540992021561"/>
+      <testcase name="testRFEList" class="IDS_MonitorTest" time="0.361603975296"/>
+      <testcase name="testDecimalCCConverter" class="IDS_MonitorTest" time="0.648655891418"/>
+      <testcase name="testOctalCCConverter" class="IDS_MonitorTest" time="0.111263990402"/>
+      <testcase name="testHexCCConverter" class="IDS_MonitorTest" time="0.533531188965"/>
+    </testsuite>
+    <testsuite name="IDS_ReportTest" package="PHPIDS" tests="12" failures="0" errors="0" time="0.146165132523">
+      <testcase name="testEmpty" class="IDS_ReportTest" time="0.00874996185303"/>
+      <testcase name="testCountable" class="IDS_ReportTest" time="0.00915288925171"/>
+      <testcase name="testGetterByName" class="IDS_ReportTest" time="0.0126781463623"/>
+      <testcase name="testGetTags" class="IDS_ReportTest" time="0.013594865799"/>
+      <testcase name="testImpactSum" class="IDS_ReportTest" time="0.0104141235352"/>
+      <testcase name="testHasEvent" class="IDS_ReportTest" time="0.00674200057983"/>
+      <testcase name="testAddingAnotherEventAfterCalculation" class="IDS_ReportTest" time="0.0331079959869"/>
+      <testcase name="testIteratorAggregate" class="IDS_ReportTest" time="0.0107011795044"/>
+      <testcase name="testToString" class="IDS_ReportTest" time="0.0186910629272"/>
+      <testcase name="testToStringEmpty" class="IDS_ReportTest" time="0.0072169303894"/>
+      <testcase name="testGetEvent" class="IDS_ReportTest" time="0.0080828666687"/>
+      <testcase name="testGetEventWrong" class="IDS_ReportTest" time="0.00703310966492"/>
+    </testsuite>
+    <testsuite name="IDS_InitTest" package="PHPIDS" tests="4" failures="0" errors="0" time="0.0430128574371">
+      <testcase name="testInit" class="IDS_InitTest" time="0.004065990448"/>
+      <testcase name="testInitConfig" class="IDS_InitTest" time="0.00744295120239"/>
+      <testcase name="testInitClone" class="IDS_InitTest" time="0.0254399776459"/>
+      <testcase name="testInitGetConfigPath" class="IDS_InitTest" time="0.00606393814087"/>
+    </testsuite>
+    <testsuite name="IDS_ExceptionTest" package="PHPIDS" tests="9" failures="2" errors="0" time="0.103972911835">
+      <testcase name="testEventConstructorExceptions1" class="IDS_ExceptionTest" time="0.00803589820862"/>
+      <testcase name="testEventConstructorExceptions2" class="IDS_ExceptionTest" time="0.00721502304077"/>
+      <testcase name="testEventConstructorExceptions3" class="IDS_ExceptionTest" time="0.0066499710083"/>
+      <testcase name="testGetEventException" class="IDS_ExceptionTest" time="0.00657296180725"/>
+      <testcase name="testHasEventException" class="IDS_ExceptionTest" time="0.00657105445862"/>
+      <testcase name="testInitConfigWrongPathException" class="IDS_ExceptionTest" time="0.00739908218384"/>
+      <testcase name="testWrongFilterTypeException" class="IDS_ExceptionTest" time="0.00858497619629"/>
+      <testcase name="testWrongJsonFilterPathException" class="IDS_ExceptionTest" time="0.0457739830017">
+        <failure message="Expected exception Exception" type="PHPUnit_Framework_AssertionFailedError"></failure>
+      </testcase>
+      <testcase name="testWrongXmlFilterPathException" class="IDS_ExceptionTest" time="0.00716996192932">
+        <failure message="Expected exception Exception" type="PHPUnit_Framework_AssertionFailedError"></failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="IDS_FilterTest" package="PHPIDS" tests="4" failures="0" errors="0" time="0.0543050765991">
+      <testcase name="testObjectConstruction" class="IDS_FilterTest" time="0.0178360939026"/>
+      <testcase name="testModificator" class="IDS_FilterTest" time="0.00454807281494"/>
+      <testcase name="testExceptions" class="IDS_FilterTest" time="0.00394701957703"/>
+      <testcase name="testFilterSetFilterSet" class="IDS_FilterTest" time="0.0279738903046"/>
+    </testsuite>
+    <testsuite name="IDS_CachingTest" package="PHPIDS" tests="8" failures="0" errors="0" time="0.0343074798584">
+      <testcase name="testCachingNone" class="IDS_CachingTest" time="0.00337219238281"/>
+      <testcase name="testCachingFile" class="IDS_CachingTest" time="0.00303101539612"/>
+      <testcase name="testCachingFileSetCache" class="IDS_CachingTest" time="0.00339007377625"/>
+      <testcase name="testCachingFileGetCache" class="IDS_CachingTest" time="0.00745916366577"/>
+      <testcase name="testCachingSession" class="IDS_CachingTest" time="0.00372099876404"/>
+      <testcase name="testCachingSessionSetCache" class="IDS_CachingTest" time="0.00311493873596"/>
+      <testcase name="testCachingSessionGetCache" class="IDS_CachingTest" time="0.00695490837097"/>
+      <testcase name="testCachingSessionGetCacheDestroyed" class="IDS_CachingTest" time="0.00326418876648"/>
+    </testsuite>
+    <testsuite name="IDS_EventTest" package="PHPIDS" tests="6" failures="0" errors="0" time="0.0406129360199">
+      <testcase name="testName" class="IDS_EventTest" time="0.00659894943237"/>
+      <testcase name="testValueAggregation" class="IDS_EventTest" time="0.00826501846313"/>
+      <testcase name="testIterator" class="IDS_EventTest" time="0.0105340480804"/>
+      <testcase name="testCount" class="IDS_EventTest" time="0.0046648979187"/>
+      <testcase name="testCopy" class="IDS_EventTest" time="0.00490784645081"/>
+      <testcase name="testIteratorAggregate" class="IDS_EventTest" time="0.00564217567444"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
