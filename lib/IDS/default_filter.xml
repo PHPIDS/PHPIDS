@@ -45,7 +45,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\W\s*hash\s*\W)|(?:\w+=\W*[^,]*,\w+\()|(?:\?"\w+":)|(?:(?<!\/)__[a-z]+__)]]></rule>
+        <rule><![CDATA[(?:\W\s*hash\s*\W)|(?:\w+=\W*[^,]*,[^\s(]\s*\()|(?:\?"[^\s"]":)|(?:(?<!\/)__[a-z]+__)]]></rule>
         <description>Detects hash-contained xss payload attacks and __property__ overloading</description>
         <tags>
             <tag>xss</tag>
@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:[$\w=][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:[\w$]=\s*\.?[\w$]+\.?\s*[{([][^}\])]+[}\])])]]></rule>
+        <rule><![CDATA[(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -90,7 +90,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[":,]\s*[)}\]]+)]]></rule>
+        <rule><![CDATA[(?:[":;,]\s*[)}\]]+)]]></rule>
         <description>finds closing JavaScript breaker including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w\s*==\s*\w)|(?:[\d\W]\s*"\s*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\d;)|(?:[^\w\s]\s*[!=]{2,}\s*[^\w\s])]]></rule>
+        <rule><![CDATA[(?:\w\s*==\s*\w)|(?:[\d\W]\s*"\s*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:[^\w\s]\s*[!=]{2,}\s*[^\w\s])]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
