@@ -252,6 +252,28 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         
         $this->assertEquals(356, $result->getImpact());        
     }     
+
+    public function testConcatenatedXSSList2() {
+
+        $exploits = array();
+        $exploits[] = "ä=/ä/?'': 0;b=(ä+'eva'+ä);b=(b+'l'+ä);d=(ä+'XSS'+ä);c=(ä+'aler'+ä);c=(c+'t(d)'+ä);ä=.0[b];ä(c)";
+        $exploits[] = "b = (x());
+						$ = .0[b];a=$;
+						a( h() );
+						function x () { return 'eva' + p(); };
+						function p() { return 'l' ; };
+						function h() { return 'aler' + i(); };
+						function i() { return 't (123456)' ; };";
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        
+        $this->assertEquals(18, $result->getImpact());        
+    }    
     
     public function testXSSList() {
         
