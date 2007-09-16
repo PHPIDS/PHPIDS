@@ -194,13 +194,10 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
     private function connect() {
         
     	// validate connection parameters
-    	if (!$this->config['driver'] 
-            || !$this->config['host'] 
-                || !$this->config['port'] 
-                    || !$this->config['database'] 
-                        || !$this->config['user'] 
-                            || !$this->config['password'] 
-                                || !$this->config['table']) {
+    	if (!$this->config['wrapper'] 
+            || !$this->config['user'] 
+                || !$this->config['password'] 
+                    || !$this->config['table']) {
             
             throw new Exception('
                 Insufficient connection parameters'
@@ -210,10 +207,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
         // try to connect
         try {
             $handle = new PDO(
-                $this->config['driver'].':host='
-                    .$this->config['host']
-                        .';post='.$this->config['port']
-                            .';dbname='.$this->config['database'], 
+                $this->config['wrapper'], 
                 $this->config['user'], 
                 $this->config['password']
             );
