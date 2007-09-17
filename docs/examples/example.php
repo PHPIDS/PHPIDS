@@ -54,38 +54,37 @@ try {
     */
     if (!$result->isEmpty()) {
         echo $result;
-    }
-	
-    /*
-    * The following steps are optional to log the results
-    */
-    require_once 'IDS/Log/File.php';
-    require_once 'IDS/Log/Composite.php';
-   
-    $compositeLog = new IDS_Log_Composite();
-    $compositeLog->addLogger(IDS_Log_File::getInstance($init));
-   
-	/*
-	* Note that you might also use different logging facilities
-    * such as IDS_Log_Email or IDS_Log_Database
-    *
-    * Just uncomment the following lines to test the wrappers
-    */
-    /*
-    *
-	require_once 'IDS/Log/Email.php';
-    require_once 'IDS/Log/Database.php';
 
-    $compositeLog->addLogger(
-        IDS_Log_Email::getInstance($init),
-		IDS_Log_Database::getInstance($init)
-    );
-    */
-
-    if (!$result->isEmpty()) {
-        $compositeLog->execute($result);
-    }
+        /*
+	    * The following steps are optional to log the results
+	    */
+	    require_once 'IDS/Log/File.php';
+	    require_once 'IDS/Log/Composite.php';
+	   
+	    $compositeLog = new IDS_Log_Composite();
+	    $compositeLog->addLogger(IDS_Log_File::getInstance($init));
+	   
+	    /*
+	    * Note that you might also use different logging facilities
+	    * such as IDS_Log_Email or IDS_Log_Database
+	    *
+	    * Just uncomment the following lines to test the wrappers
+	    */
+	    /*
+	    *
+	    require_once 'IDS/Log/Email.php';
+	    require_once 'IDS/Log/Database.php';
 	
+	    $compositeLog->addLogger(
+	        IDS_Log_Email::getInstance($init),
+	        IDS_Log_Database::getInstance($init)
+	    );
+	    */
+	
+	    if (!$result->isEmpty()) {
+	        $compositeLog->execute($result);
+	    }        
+    }
 } catch (Exception $e) {
     /*
     * sth went terribly wrong - maybe the 
