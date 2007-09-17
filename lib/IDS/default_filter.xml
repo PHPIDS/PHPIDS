@@ -63,8 +63,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\d\?"{2,}:)]]></rule>
-        <description>Detects JavaScript with(), ternary operators and .source code injection attempts</description>
+        <rule><![CDATA[(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+;)|(?:>\s*[,;.])]]></rule>
+        <description>Detects JavaScript with(), ternary operators and XML predicate attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
