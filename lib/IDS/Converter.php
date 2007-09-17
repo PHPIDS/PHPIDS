@@ -304,7 +304,19 @@ class IDS_Converter {
         $value = str_replace($search, $replace, $value);
         
         return $value;
-    }    
+    }  
+
+    /**
+     * Strip newlines
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */
+    public static function convertFromNewLines ($value) {
+        
+    	return preg_replace('/(?:\n|\r)/m', ' ', $value);	
+    }
 
 }
 

@@ -27,7 +27,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\w\n+-;]\s+(?<!\n)[\w\/\\\*]+\s*=)]]></rule>
+        <rule><![CDATA[(?:[^\w+-;]\s+[\w\/\\\*]+\s*=)]]></rule>
         <description>finds attribute breaking injections including obfuscated attributes</description>
         <tags>
             <tag>xss</tag>
@@ -156,7 +156,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*(?:[^-+\$\]!\w\s&,]|\n))]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*(?:[^-+\$\]!\w\s&,]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -167,7 +167,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -178,7 +178,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -200,7 +200,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -222,7 +222,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-\s](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]|\n))]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-\s](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w\s*==\s*\w)|(?:[\d\W]\s*"\s*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:[^\w\s]\s*[!=]{2,}\s*[^\w\s])]]></rule>
+        <rule><![CDATA[(?:;[^\s]+=)|(?:\w\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:[^\w\s]\s*[!=]{2,}\s*[^\w\s])]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
@@ -354,7 +354,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:[^:]\/\/[^\n]*$)|(?:(?:#|--|{)\s*$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
+        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)\s*$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
         <description>Detects common comment types</description>
         <tags>
             <tag>xss</tag>
@@ -567,7 +567,7 @@
         <impact>7</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)(?:[\s\n\r])*\(\s?(?:[?%]>)?)]]></rule>
+        <rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)\s*\(\s?(?:[?%]>)?)]]></rule>
         <description>Detects code injection attempts 2/3</description>
         <tags>
             <tag>id</tag>
