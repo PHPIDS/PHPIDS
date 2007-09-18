@@ -109,7 +109,7 @@ class IDS_Converter {
         $matches = array();
         
         // check if value matches typical charCode pattern
-        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){2,}/ms', $value, $matches)) {
+        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){4,}/ms', $value, $matches)) {
             
             $converted  = '';
             $string = implode(',', $matches[0]);
@@ -128,9 +128,11 @@ class IDS_Converter {
                         PREG_SPLIT_DELIM_CAPTURE
                     ); 
 
-                    $converted .= chr(array_sum($match));
+                    if(array_sum($match) >= 20 && $char <= 127){
+                        $converted .= chr(array_sum($match));
+                    }
     
-                } elseif (!empty($char)) {
+                } elseif (!empty($char) && $char >= 20 && $char <= 127) {
                     $converted .= chr($char);                               
                 }                              
             }
@@ -139,14 +141,16 @@ class IDS_Converter {
         }
 
         // check for octal charcode pattern
-        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){2,})/ims', $value, $matches)) {
+        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){8,})/ims', $value, $matches)) {
 
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/\s/', '', implode(',', $matches[0])));
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
-                    $converted .= chr(octdec($char));                               
+                	if(octdec($char) >= 20 && octdec($char) <= 127) {
+                        $converted .= chr(octdec($char));
+                	}                               
                 }
             }       
             
@@ -154,14 +158,16 @@ class IDS_Converter {
         }
 
         // check for hexadecimal charcode pattern
-        if (preg_match_all('/(?:(?:[\\\]+\w+\s*){2,})/ims', $value, $matches)) {
+        if (preg_match_all('/(?:(?:[\\\]+\w+\s*){8,})/ims', $value, $matches)) {
 
             $converted  = '';
             $charcode   = explode('\\', preg_replace('/[ux]/', '', implode(',', $matches[0])));
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
-                    $converted .= chr(hexdec($char));                               
+                    if(hexdec($char) >= 20 && hexdec($char) <= 127) {
+                	   $converted .= chr(hexdec($char));  
+                    }                             
                 }
             }
             
