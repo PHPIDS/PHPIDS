@@ -156,39 +156,6 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*(?:[^-+\$\]!\w\s&,]))]]></rule>
-        <description>Detects possible includes and typical script methods</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-            <tag>id</tag>
-            <tag>rfe</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
-        <description>Detects JavaScript object properties and methods</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-            <tag>id</tag>
-            <tag>rfe</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
-        <description>Detects JavaScript array properties and methods</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-            <tag>id</tag>
-            <tag>rfe</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>
-    <filter>
         <rule><![CDATA[(?:[^$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)\s*\W)]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
@@ -200,8 +167,52 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$\]!\w\s&,])]]></rule>
+        <description>Detects possible includes and typical script methods</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+            <tag>rfe</tag>
+        </tags>
+        <impact>5</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <description>Detects JavaScript object properties and methods</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+            <tag>rfe</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <description>Detects JavaScript array properties and methods</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+            <tag>rfe</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$\]!\w\s&),])]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+            <tag>id</tag>
+            <tag>rfe</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -220,17 +231,6 @@
             <tag>rfe</tag>
         </tags>
         <impact>3</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:[^\$\w\/-\s](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval)\s*(?:[^-+\$\]!\w\s&),]))]]></rule>
-        <description>Detects JavaScript language constructs</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-            <tag>id</tag>
-            <tag>rfe</tag>
-        </tags>
-        <impact>4</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))]]></rule>
@@ -396,7 +396,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\\x[01FE]\w|%[01FE]\w|&#[01FE]\w|\\[01FE][0-9a-f]|&#x[01FE]\w)]]></rule>
+        <rule><![CDATA[(?:\\x[01FE]\w)|(?:%[01FE]\w)|(?:&#[01FE]\w)|(?:\\[01FE][0-9a-f])|(?:&#x[01FE]\w)|(?:0x[01FE])\w]]></rule>
         <description>Detects nullbytes and HTTP response splitting</description>
         <tags>
             <tag>id</tag>
@@ -596,6 +596,16 @@
         </tags>
         <impact>5</impact>
     </filter>   
+    <filter>
+        <rule><![CDATA[(?:(=|new)\s*function[^(]*\([^)]*\))]]></rule>
+        <description>Detects common function declarations</description>
+        <tags>
+            <tag>id</tag>
+            <tag>rfe</tag>
+            <tag>lfi</tag>
+        </tags>
+        <impact>5</impact>
+    </filter>  
     <filter>
         <rule><![CDATA[(?:[\w.-]+@[\w.-]+%(?:[01]\w)+\w+:)]]></rule>
         <description>Detects common mail header injections</description>

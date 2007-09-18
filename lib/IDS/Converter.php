@@ -318,6 +318,23 @@ class IDS_Converter {
     	return preg_replace('/(?:\n|\r)/m', ' ', $value);	
     }
 
+    /**
+     * Strip XML patterns
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */
+    public static function convertFromXML ($value) {
+        
+    	$converted = strip_tags($value);
+    	
+    	if($converted != $value) {
+            return $value . "\n[" . $converted . "] ";     		
+    	}
+    	return $value;
+    }    
+    
 }
 
 /*
