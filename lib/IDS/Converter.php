@@ -290,6 +290,25 @@ class IDS_Converter {
     }
 
     /**
+     * Detects nullbytes and controls chars via ord()
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */
+    public static function convertFromOutOfRangeChars($value) {
+
+        $values = str_split($value);
+        foreach ($values as $item) {
+            if(ord($item) >= 128) {
+            	$value = str_replace($item, 'U', $value);
+            }
+        }
+
+        return $value;
+    }    
+    
+    /**
      * Basic approach to fight attacks using common parser bugs
      * 
      * @param   string  $value

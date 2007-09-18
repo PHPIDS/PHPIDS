@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
+        <rule><![CDATA[(?:\([^)[]+\[[^\]]+\][^)]*\))|(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -167,7 +167,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$\]!\w\s&,])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$!\w&,])]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -178,7 +178,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$!\w&),])]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -189,7 +189,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\w&),])]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -200,7 +200,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$!\w&),])]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -211,7 +211,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$\]!\w\s&),])]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$!\w&),])]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -222,7 +222,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:^(?:document\s*\.)?=?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*[^\w\s])]]></rule>
+        <rule><![CDATA[(?:^(?:document\s*\.)?=?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:;[^\s]+=)|(?:\w\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:[^\w\s]\s*[!=]{2,}\s*[^\w\s])]]></rule>
+        <rule><![CDATA[(?:;[^\s]+=)|(?:\w\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
@@ -446,7 +446,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(?:DUMP|OUT)FILE)|(?:([^\w\s]|\W{2,})(--|#)\w+$)]]></rule>
+        <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(?:DUMP|OUT)FILE)|(?:(\w+|\W{2,})(--|#)\w+$)]]></rule>
         <description>Detects classic SQL injection probings 3/4</description>
         <tags>
             <tag>sqli</tag>
@@ -607,7 +607,7 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(=|new)\s*function[^(]*\([^)]*\))]]></rule>
+        <rule><![CDATA[(?:function[^(]*\([^)]*\))]]></rule>
         <description>Detects common function declarations</description>
         <tags>
             <tag>id</tag>
