@@ -427,7 +427,7 @@
     </filter>   
     <filter>
         <rule><![CDATA[(?:^.?"$)|(?:^"?\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+(?:"|\d|LIKE))|(?:^(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
-        <description>Detects classic SQL injection probings 1/3</description>
+        <description>Detects classic SQL injection probings 1/4</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -437,7 +437,7 @@
     </filter>   
     <filter>
         <rule><![CDATA[(?:%?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^\d\W+OR\W+(?:\d|NULL|\w+\s*\())]]></rule>
-        <description>Detects classic SQL injection probings 2/3</description>
+        <description>Detects classic SQL injection probings 2/4</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -447,14 +447,24 @@
     </filter>   
     <filter>
         <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(?:DUMP|OUT)FILE)|(?:([^\w\s]|\W{2,})(--|#)\w+$)]]></rule>
-        <description>Detects classic SQL injection probings 3/3</description>
+        <description>Detects classic SQL injection probings 3/4</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter>   
+    </filter> 
+    <filter>
+        <rule><![CDATA[(?:"\s*(AND|OR|XOR|NAND|NOT|\|\||\&\&)[\w\W]+IS\s+NOT).+(?:#|--|{)]]></rule>
+        <description>Detects classic SQL injection probings 4/4</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+            <tag>lfi</tag>
+        </tags>
+        <impact>6</impact>
+    </filter>    
     <filter>
         <rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)|(?:LIKE\s*"\%)]]></rule>
         <description>Detects basic SQL authentication bypass attempts</description>
