@@ -128,7 +128,7 @@ class IDS_Converter {
                         PREG_SPLIT_DELIM_CAPTURE
                     ); 
 
-                    if(array_sum($match) >= 20 && $char <= 127){
+                    if(array_sum($match) >= 20 && array_sum($match) <= 127){
                         $converted .= chr(array_sum($match));
                     }
     
