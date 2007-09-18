@@ -334,7 +334,7 @@ class IDS_Converter {
      */
     public static function convertFromNewLines ($value) {
         
-    	return preg_replace('/(?:\n|\r)/m', ' ', $value);	
+    	return preg_replace('/(?:\n|\r)/m', NULL, $value);	
     }
 
     /**

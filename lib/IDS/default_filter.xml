@@ -167,7 +167,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$!\w&,])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$!\s\w&,])]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -178,7 +178,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$!\w&),])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$!\s\w&),])]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -189,7 +189,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\w&),])]]></rule>
+        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\s\w&),])]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -200,7 +200,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$!\w&),])]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$!\s\w&),])]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -211,7 +211,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$!\w&),])]]></rule>
+        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$!\s\w&),])]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -317,7 +317,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:;[^\s]+=)|(?:\w\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*\W)|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)]]></rule>
+        <rule><![CDATA[(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*[^\w.])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
@@ -426,7 +426,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^"?\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+(?:"|\d|LIKE))|(?:^(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()]+\w+)]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:^"?\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+(?:"|\d|LIKE))|(?:^[\w"()\+]+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()"\+]+)]]></rule>
         <description>Detects classic SQL injection probings 1/4</description>
         <tags>
             <tag>sqli</tag>
@@ -436,7 +436,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:%?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*\w+\s+)|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^\d\W+OR\W+(?:\d|NULL|\w+\s*\())]]></rule>
+        <rule><![CDATA[(?:%?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*[\w\s]+(?:#|--|{))|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^[\w"]+\s*OR\W+(?:\d|NULL|\w+\s*\().*(--|#|{))]]></rule>
         <description>Detects classic SQL injection probings 2/4</description>
         <tags>
             <tag>sqli</tag>

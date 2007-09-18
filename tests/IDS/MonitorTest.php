@@ -285,7 +285,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(59, $result->getImpact());        
+        $this->assertEquals(55, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -327,7 +327,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(112, $result->getImpact());        
+        $this->assertEquals(102, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -357,7 +357,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(221, $result->getImpact());        
+        $this->assertEquals(217, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -383,6 +383,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '1 OR+1=1';
         $exploits[] = '1 OR+(1)=(1) ';
         $exploits[] = '1 OR \'1';
+        $exploits[] = 'aaa\' or (1)=(1) #!asd';
+        $exploits[] = 'aaa\' OR (1) IS NOT NULL #!asd';
         
         $test = new IDS_Monitor(
             $exploits,
@@ -390,7 +392,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(208, $result->getImpact());        
+        $this->assertEquals(228, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -469,7 +471,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(88, $result->getImpact());              
+        $this->assertEquals(79, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -514,6 +516,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(95, $result->getImpact());              
+        $this->assertEquals(86, $result->getImpact());              
     }
 }
