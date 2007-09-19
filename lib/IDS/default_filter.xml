@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\([^)[]+\[[^\]]+\][^)]*\))|(?:(?:[{([][^}\])]+[}\])]\s*){2,})|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
+        <rule><![CDATA[(?:\([^)[]+\[[^\]]+\][^)]*\))|(?:(?:[{([][^}\])]+[}\])]\s*)(?:[{([][^}\])]*[}\])]\s*))|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]{2,})|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -587,7 +587,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:;\s*(?:echo|print)[^;]+;)|(?:;\s*file_get_contents|fopen|include|require|require_once?\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
+        <rule><![CDATA[(?:;\s*(?:echo|print|print_r|var_dump)[^;]+;)|(?:;\s*(?:file_get_contents|fopen|include|require|require_once)\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
         <description>Detects code injection attempts 3/3</description>
         <tags>
             <tag>id</tag>
