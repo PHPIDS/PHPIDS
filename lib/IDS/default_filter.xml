@@ -222,7 +222,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:^(?:document\s*\.)?=?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*\w+)]]></rule>
+        <rule><![CDATA[(?:^(?:document\s*\.)?=?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*\w+)|(?:java[\s\/]*\.[\s\/]*lang)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
