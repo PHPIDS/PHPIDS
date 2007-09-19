@@ -277,6 +277,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						+a.a8 }();
 						new Function($)();";
         $exploits[] = "x = localName.toLowerCase() + 'lert(1),' + 0x00;new Function(x)()";
+        $exploits[] = "txt = java.lang.Character (49) ;rb = java.lang.Character (41) ;lb =
+						java.lang.Character (40) ;a = java./**/lang.Character (97) ;l =
+						java.lang.Character (108) ;e = java.//
+                        lang.Character (101) ;r =
+						java.lang.Character (114) ;t = java . lang.Character (116) ; v =
+						java.lang.Character (118) ;f = as( ) ; function msg () { return lb+
+						txt+ rb }; function as () { return a+ l+ e+ r+ t+ msg() }; function
+						ask () { return e+ v+ a+ l };g = ask ( ) ; (0[g])(f) ";
                 
         $test = new IDS_Monitor(
             $exploits,
@@ -285,7 +293,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(55, $result->getImpact());        
+        $this->assertEquals(68, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
