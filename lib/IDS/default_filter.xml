@@ -156,7 +156,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)\s*\W)]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -167,7 +167,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:^|[^$\w\/-])(?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)\s*[^-+\$!\s\w&,])]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:alert|msgbox|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -178,7 +178,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)\s*[^-+\$!\s\w&),])]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -189,7 +189,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^$\w\/-](?:join|pop|push|reverse|shift|slice|splice|sort|unshift)\s*[^-+\$\]!\s\w&),])]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:join|pop|push|reverse|shift|slice|splice|sort|unshift)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -200,7 +200,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)\s*[^-+\$!\s\w&),])]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:charat|charcodeat|concat|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -211,7 +211,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\$\w\/-](?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)\s*[^-+\$!\s\w&),])]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:callee|constructor|content|prototype|for|while|each|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)(?(1).|(?:\s*[^\s\w,.-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -222,7 +222,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:^(?:document\s*\.)?=?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open)\s*\w+)|(?:java[\s\/]*\.[\s\/]*lang)]]></rule>
+        <rule><![CDATA[([^\s\w,.-]\s*)?(?:(?:document\s*\.)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1).|(?:\s*[^\s\w,.-]))|(?:java[\s\/]*\.[\s\/]*lang)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
