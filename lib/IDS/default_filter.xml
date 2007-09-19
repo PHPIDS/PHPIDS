@@ -384,7 +384,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|script|input|button|textarea|style|base|meta|link|object|embed|param|plaintext|xmp|im(?:g|port)))]]></rule>
+        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|script|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xmp|im(?:g|port)))]]></rule>
         <description>Detects possibly malicious html elements including some attributes</description>
         <tags>
             <tag>xss</tag>
