@@ -249,7 +249,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(459, $result->getImpact());        
+        $this->assertEquals(431, $result->getImpact());        
     }     
 
     public function testConcatenatedXSSList2() {
@@ -293,7 +293,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(92, $result->getImpact());        
+        $this->assertEquals(88, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -314,7 +314,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(45, $result->getImpact());        
+        $this->assertEquals(37, $result->getImpact());        
     }      
     
     public function testXSSList() {
@@ -365,7 +365,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(289, $result->getImpact());        
+        $this->assertEquals(277, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -445,7 +445,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(156, $result->getImpact());          
+        $this->assertEquals(134, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -464,7 +464,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(108, $result->getImpact());       
+        $this->assertEquals(103, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
