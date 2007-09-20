@@ -426,8 +426,8 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^"?\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+(?:"|\d|LIKE))|(?:^[\w"()\+]+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[()"\+]+)]]></rule>
-        <description>Detects classic SQL injection probings 1/4</description>
+        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|\w+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&]|\w+\s+like))]]></rule>
+        <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -436,37 +436,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:%?"\s?(AND|OR|XOR|NAND|NOT|\|\||\&\&)+[\s(]*[\w\s]+(?:#|--|{))|(?:\d\s?(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\(SELECT)|(?:\w[\\]+"\w)|(?:^[\w"]+\s*OR\W+(?:\d|NULL|\w+\s*\().*(--|#|{))]]></rule>
-        <description>Detects classic SQL injection probings 2/4</description>
-        <tags>
-            <tag>sqli</tag>
-            <tag>id</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>6</impact>
-    </filter>   
-    <filter>
-        <rule><![CDATA[(?:\d.+(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC).+FROM.*(?:WHERE)?)|(?:("|\w)\s*UNION SELECT)|(INTO\s*(?:DUMP|OUT)FILE)|(?:(\w+|\W{2,})(--|#)\w+$)]]></rule>
-        <description>Detects classic SQL injection probings 3/4</description>
-        <tags>
-            <tag>sqli</tag>
-            <tag>id</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>6</impact>
-    </filter> 
-    <filter>
-        <rule><![CDATA[(?:"\s*(AND|OR|XOR|NAND|NOT|\|\||\&\&)[\w\W]+IS\s+NOT).+(?:#|--|{)]]></rule>
-        <description>Detects classic SQL injection probings 4/4</description>
-        <tags>
-            <tag>sqli</tag>
-            <tag>id</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>6</impact>
-    </filter>    
-    <filter>
-        <rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION\s+SELECT\s+\d+\s?,)|(?:LIKE\s*"\%)]]></rule>
+        <rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)]]></rule>
         <description>Detects basic SQL authentication bypass attempts</description>
         <tags>
             <tag>sqli</tag>

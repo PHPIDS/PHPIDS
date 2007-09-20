@@ -394,9 +394,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '1 OR \'1\'!=0';
         $exploits[] = '1 OR ASCII(2) = ASCII(2)';
         $exploits[] = '1\' OR 1&"1';
-        $exploits[] = '1\' OR \'1\' XOR \'0 ';
+        $exploits[] = '1\' OR \'1\' XOR \'0';
         $exploits[] = '1 OR+1=1';
-        $exploits[] = '1 OR+(1)=(1) ';
+        $exploits[] = '1 OR+(1)=(1)';
         $exploits[] = '1 OR \'1';
         $exploits[] = 'aaa\' or (1)=(1) #!asd';
         $exploits[] = 'aaa\' OR (1) IS NOT NULL #!asd';
@@ -407,7 +407,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(237, $result->getImpact());        
+        $this->assertEquals(213, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -452,7 +452,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(134, $result->getImpact());          
+        $this->assertEquals(128, $result->getImpact());          
     }    
     
     public function testRFEList() {
