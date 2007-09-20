@@ -624,7 +624,7 @@
     </filter>
     <filter>
         <rule><![CDATA[(?:info:\/)|(?:\w+\["@\w+)|(?:(?:view-source|about):\w+)]]></rule>
-        <description>Detects konqueror UXSS attacks, Gecko 1.9 threading directives and view-source atacks</description>
+        <description>Detects konqueror UXSS attacks, Gecko 1.9 threading directives and view-source attacks</description>
         <tags>
             <tag>rfe</tag>
             <tag>dos</tag>
