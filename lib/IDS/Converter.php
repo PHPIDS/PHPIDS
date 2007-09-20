@@ -263,9 +263,18 @@ class IDS_Converter {
      */     
     public static function convertEntities($value) {
     
-        $converted = '';
-        if (preg_match('/&#x?[\w]+;/ms', $value)) {
-            $converted = html_entity_decode($value);   
+        $converted = NULL;
+        $matches = array();
+        if (preg_match_all('/&#x?[\w]+/ms', $value, $matches)) {
+            
+        	$convert = NULL;
+        	foreach($matches[0] as $entity) {
+                if(preg_match('/&#x?[\w]+/ms', $entity)) {
+                    $entity = $entity.';';  
+                }
+                $convert .= $entity;
+            }
+            $converted = html_entity_decode($convert);   
             $value .= "\n[" . $converted . "] ";     
         }
         
