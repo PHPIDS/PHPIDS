@@ -285,6 +285,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						java.lang.Character (118) ;f = as( ) ; function msg () { return lb+
 						txt+ rb }; function as () { return a+ l+ e+ r+ t+ msg() }; function
 						ask () { return e+ v+ a+ l };g = ask ( ) ; (0[g])(f) ";
+        $exploits[] =  "s=new String;
+							e = /aeavaala/+s;
+							e = new String + e[ 2 ] + e[ 4 ] + e[ 5 ] + e[ 7 ];
+							a = /aablaecrdt(1)a/+s;
+							a = new String + a[ 2]+a[ 4 ] + a[ 6 ] + a[ 8 ] + a[ 10 ] + a[ 11 ]
+							+ a[ 12 ] + a[ 13 ],
+							e=new Date() [e];";       
                 
         $test = new IDS_Monitor(
             $exploits,
@@ -293,7 +300,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(98, $result->getImpact());        
+        $this->assertEquals(109, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -479,7 +486,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(78, $result->getImpact());              
+        $this->assertEquals(81, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -527,6 +534,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(103, $result->getImpact());              
+        $this->assertEquals(106, $result->getImpact());              
     }
 }
