@@ -436,7 +436,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)]]></rule>
         <description>Detects basic SQL authentication bypass attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -492,7 +492,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare\s*@\w+)|(exec\s*\(\s*@)]]></rule>
+        <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+@\w+)|(exec\s*\(\s*@)]]></rule>
         <description>Detects MySQL stored procedure/function injections</description>
         <tags>
             <tag>sqli</tag>
