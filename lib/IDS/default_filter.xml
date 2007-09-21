@@ -426,7 +426,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|\w+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&]|\w+\s+like))]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|\w+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&!-@]|\w+\s+like))]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
@@ -510,7 +510,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()]]></rule>
+        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO\s+(?:DUMP|OUT)FILE\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>

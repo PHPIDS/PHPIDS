@@ -411,6 +411,37 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(227, $result->getImpact());        
     }
+
+    public function testSQLIList2() {
+        
+        $exploits = array();
+		$exploits[] = 'asd"or-1="-1';
+		$exploits[] = 'asd"or!1="!1';
+		$exploits[] = 'asd"or!(1)="1';
+		$exploits[] = 'asd"or@1="@1';
+		$exploits[] = 'asd"or-1 XOR"0';
+		$exploits[] = 'asd" or ascii(1)="49';
+		$exploits[] = 'asd" or md5(1)^"1';
+		$exploits[] = 'asd" or table.column^"1';
+		$exploits[] = 'asd" or @@version^"0';
+		$exploits[] = 'asd" or @@global.hot_cache.key_buffer_size^"1';
+		$exploits[] = 'asd" or!(select name from users limit 1)="1';
+		$exploits[] = '1"OR!"a';
+		$exploits[] = '1"OR!"0';
+		$exploits[] = '1"OR-"1';
+		$exploits[] = '1"OR@"1" IS NULL #1 ! (with unfiltered comment by tx ;)';
+		$exploits[] = '1"OR!(false) #1 !';
+		$exploits[] = '1"OR-(true) #a !';
+		$exploits[] = '1" INTO OUTFILE "C:/webserver/www/readme.php'; 
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(93, $result->getImpact());        
+    }
     
     public function testDTList(){
         
