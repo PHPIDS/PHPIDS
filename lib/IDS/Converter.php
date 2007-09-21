@@ -60,6 +60,18 @@ class IDS_Converter {
     }
 
     /**
+     * Strip newlines
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */
+    public static function convertFromNewLines ($value) {
+        
+        return preg_replace('/(?:\n|\r)/m', ' ', $value);  
+    }    
+    
+    /**
      * Converts relevant UTF-7 tags to UTF-8
      *
      * @param   string  $data
@@ -339,18 +351,6 @@ class IDS_Converter {
         
         return $value;
     }  
-
-    /**
-     * Strip newlines
-     * 
-     * @param   string  $value
-     * @static
-     * @return  string
-     */
-    public static function convertFromNewLines ($value) {
-        
-    	return preg_replace('/(?:\n|\r)/m', NULL, $value);	
-    }
 
     /**
      * Strip XML patterns

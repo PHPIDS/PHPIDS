@@ -204,7 +204,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(19, $result->getImpact());        
+        $this->assertEquals(22, $result->getImpact());        
     }    
 
     public function testConcatenatedXSSList() {
@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(227, $result->getImpact());        
+        $this->assertEquals(239, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -524,7 +524,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(85, $result->getImpact());              
+        $this->assertEquals(88, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -572,6 +572,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(110, $result->getImpact());              
+        $this->assertEquals(107, $result->getImpact());              
     }
 }
