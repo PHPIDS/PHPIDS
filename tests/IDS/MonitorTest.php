@@ -249,7 +249,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(453, $result->getImpact());        
+        $this->assertEquals(435, $result->getImpact());        
     }     
 
     public function testConcatenatedXSSList2() {
@@ -377,7 +377,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(319, $result->getImpact());        
+        $this->assertEquals(313, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(221, $result->getImpact());        
+        $this->assertEquals(200, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -438,6 +438,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = '1"OR!(false) #1 !';
 		$exploits[] = '1"OR-(true) #a !';
 		$exploits[] = '1" INTO OUTFILE "C:/webserver/www/readme.php'; 
+		$exploits[] = "asd' or md5(5)^'1 ";
+		$exploits[] = "asd' or column^'-1 ";
+		$exploits[] = "asd' or true -- a";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -445,7 +448,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(93, $result->getImpact());        
+        $this->assertEquals(130, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -612,6 +615,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						Edward Heath i valet av partiledare 1965. När Heath hade segrat belönades hon med att bli de konservativas talesman i bostads- och markfrågor. Hon antog den politik 
 						som hade utvecklats av hennes kollega James Allason, att sälja kommunägda bostäder till deras hyresgäster. Detta blev populärt i senare val[2]. Hon flyttade till 
 						skuggfinansgruppen efter 1966..';
+        $exploits[] = "Results are 'true' or 'false'.";
+        $exploits[] = "Choose between \"red\" and \"green\". ";
+        $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
         
         $test = new IDS_Monitor(
             $exploits,

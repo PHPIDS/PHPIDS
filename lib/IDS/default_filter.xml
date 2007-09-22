@@ -390,7 +390,7 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)]]></rule>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:ascii\s*\()]]></rule>
         <description>Detects MySQL comments and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
@@ -410,7 +410,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|[^"]+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&!-@]|\w+\s+like))]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:(^[\d"]|^[^"]+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
@@ -420,15 +420,25 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+=\s*[\w]+\s*HAVING)|(?:^(?:[\d"]|[\w"])\s*(?:OR)\s*(?:[\d"]|[\w"])+\s*(?:REGEXP|SOUND|[=\dx]+))]]></rule>
-        <description>Detects basic SQL authentication bypass attempts</description>
+        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(true|false)\s*(?:#|-))|(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)]]></rule>
+        <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
             <tag>lfi</tag>
         </tags>
         <impact>7</impact>
-    </filter>   
+    </filter> 
+      <filter>
+        <rule><![CDATA[(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))]]></rule>
+        <description>Detects basic SQL authentication bypass attempts 2/2</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+            <tag>lfi</tag>
+        </tags>
+        <impact>7</impact>
+    </filter> 
     <filter>
         <rule><![CDATA[(?:^\s*[;>"]\s*(?:UNION|SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)]]></rule>
         <description>Detects concatenated basic SQL injection and SQLLFI attempts</description>
