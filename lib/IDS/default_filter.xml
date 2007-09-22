@@ -390,8 +390,8 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:ascii\s*\()]]></rule>
-        <description>Detects MySQL comments and ch(a)r injections</description>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*\w+\()]]></rule>
+        <description>Detects MySQL comments, conditions and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -410,7 +410,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:(^[\d"]|^[^"]+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
@@ -522,7 +522,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*(?:\/?\*))|((?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\(\s*SPACE\s*\()]]></rule>
+        <rule><![CDATA[(?:SELECT\s*\*\s*FROM)|((?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\(\s*SPACE\s*\()]]></rule>
         <description>Detects MySQL comment-/space-obfuscated injections</description>
         <tags>
             <tag>sqli</tag>

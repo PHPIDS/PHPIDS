@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(200, $result->getImpact());        
+        $this->assertEquals(195, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -441,6 +441,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "asd' or md5(5)^'1 ";
 		$exploits[] = "asd' or column^'-1 ";
 		$exploits[] = "asd' or true -- a";
+		$exploits[] = '\"asd" or 1="1';
+		$exploits[] = "a 1' or if(-1=-1,true,false)#!";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -448,7 +450,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(130, $result->getImpact());        
+        $this->assertEquals(154, $result->getImpact());        
     }
     
     public function testDTList(){
@@ -619,6 +621,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "Choose between \"red\" and \"green\". ";
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
         $exploits[] = "msnbot/1.0 ([+*]+http://search.msn.com/msnbot.htm)";
+        $exploits[] = "select *something* from the menu";
         
         $test = new IDS_Monitor(
             $exploits,
