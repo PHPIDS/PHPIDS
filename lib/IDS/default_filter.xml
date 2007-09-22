@@ -590,8 +590,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\.pl\?\w+=\w?\|\w+;)]]></rule>
-        <description>Detects perl echo shellcode injection</description>
+        <rule><![CDATA[(?:\.pl\?\w+=\w?\|\w+;)|(?:\|\(\w+=\*)]]></rule>
+        <description>Detects perl echo shellcode injection and LDAP vectors</description>
         <tags>
             <tag>fli</tag>
             <tag>rfe</tag>

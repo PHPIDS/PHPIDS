@@ -579,6 +579,22 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(90, $result->getImpact());              
     }
+
+    public function testLDAPInjectionList() {
+    
+        $exploits = array();
+        $exploits[] = "%2A%28%7C%28mail%3D%2A%29%29";
+        $exploits[] = "*(|(objectclass=*))";
+        $exploits[] = "*)(uid=*))(|(uid=*";          
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(15, $result->getImpact());              
+    }    
     
     public function testForFalseAlerts() {
 
