@@ -93,7 +93,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(23, $result->getImpact());
+        $this->assertEquals(18, $result->getImpact());
     }
 
     public function testListWithJsonFilters()
@@ -111,7 +111,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(23, $result->getImpact());
+        $this->assertEquals(18, $result->getImpact());
     }    
     
     public function testListWithKeyScanning() {
@@ -126,7 +126,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $test->scanKeys = true;
         $result = $test->run();
-        $this->assertEquals(31, $result->getImpact());
+        $this->assertEquals(26, $result->getImpact());
     }
 
     public function testListWithException() {
@@ -140,7 +140,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(23, $result->getImpact());
+        $this->assertEquals(18, $result->getImpact());
     }
 
     public function testListWithSubKeys() {
@@ -153,7 +153,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(31, $result->getImpact());
+        $this->assertEquals(26, $result->getImpact());
     }
 
     public function testListWithSubKeysAndExceptions() {
@@ -167,7 +167,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $test->setExceptions('test1');
         $result = $test->run();
-        $this->assertEquals(23, $result->getImpact());
+        $this->assertEquals(18, $result->getImpact());
     }
 
     public function testAttributeBreakerList() {
@@ -249,7 +249,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(435, $result->getImpact());        
+        $this->assertEquals(430, $result->getImpact());        
     }     
 
     public function testConcatenatedXSSList2() {
@@ -300,7 +300,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(126, $result->getImpact());        
+        $this->assertEquals(121, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -347,7 +347,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(145, $result->getImpact());        
+        $this->assertEquals(140, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -377,7 +377,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(313, $result->getImpact());        
+        $this->assertEquals(288, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -493,7 +493,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(122, $result->getImpact());          
+        $this->assertEquals(117, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -618,6 +618,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "Results are 'true' or 'false'.";
         $exploits[] = "Choose between \"red\" and \"green\". ";
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
+        $exploits[] = "msnbot/1.0 ([+*]+http://search.msn.com/msnbot.htm)";
         
         $test = new IDS_Monitor(
             $exploits,

@@ -379,36 +379,38 @@ class IDS_Converter {
      */
     public static function convertFromCentrifuge ($value) {
 
-        //replace all non-special chars
-        $converted =  preg_replace('/[\w\s\p{L}]/', NULL, $value);
-
-        //split string into an array, unify and sort
-        $array = str_split($converted);
-        $array = array_unique($array);
-        asort($array);
-            
-        //normalize certain tokens
-        $schemes = array(
-            '+' => '+',
-            '~' => '+', 
-            '^' => '+', 
-            '|' => '+',
-            '=' => '+');
-            
-        $converted = implode($array);
-        $converted = str_replace(array_keys($schemes), array_values($schemes), $converted);  
-        $converted = preg_replace('/[()[\]{}]/', '(', $converted);
-        $converted = preg_replace('/[!?,.:;]/', ':', $converted);
-        $converted = preg_replace('/[^:(+]/', NULL, stripslashes($converted));
-            
-        //sort again and implode
-        $array = str_split($converted);
-        asort($array); 
-        $converted = implode($array);          
-        
-        if(preg_match('/(?:\({2,}\++:{2,})|(?:\({2,}\+{2,}:+)/', $converted)) {
-        	return $value . "\n" . $converted;          
-        }
+    	if(strlen($value) > 80) {
+    		//replace all non-special chars
+	        $converted =  preg_replace('/[\w\s\p{L}]/', NULL, $value);
+	
+	        //split string into an array, unify and sort
+	        $array = str_split($converted);
+	        $array = array_unique($array);
+	        asort($array);
+	            
+	        //normalize certain tokens
+	        $schemes = array(
+	            '+' => '+',
+	            '~' => '+', 
+	            '^' => '+', 
+	            '|' => '+',
+	            '=' => '+');
+	            
+	        $converted = implode($array);
+	        $converted = str_replace(array_keys($schemes), array_values($schemes), $converted);  
+	        $converted = preg_replace('/[()[\]{}]/', '(', $converted);
+	        $converted = preg_replace('/[!?,.:;]/', ':', $converted);
+	        $converted = preg_replace('/[^:(+]/', NULL, stripslashes($converted));
+	            
+	        //sort again and implode
+	        $array = str_split($converted);
+	        asort($array); 
+	        $converted = implode($array);          
+	        
+	        if(preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})/', $converted)) {
+	        	return $value . "\n" . $converted;          
+	        }
+    	}
         
         return $value;
     }     
