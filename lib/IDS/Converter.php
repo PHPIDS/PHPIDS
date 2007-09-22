@@ -58,7 +58,7 @@ class IDS_Converter {
         
         return $value;
     }
-
+    
     /**
      * Strip newlines
      * 
@@ -69,6 +69,32 @@ class IDS_Converter {
     public static function convertFromNewLines ($value) {
         
         return preg_replace('/(?:\n|\r)/m', ' ', $value);  
+    } 
+    
+    /**
+     * Check for comments and erases them if available
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */ 
+    public static function convertFromCommented($value) {
+
+        // check for existing comments
+        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:--[^-]*-)/ms', $value)) {            
+
+            $pattern = array(
+                '/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/ms', 
+                '/(?:(?:\/\*\/*[^\/\*]*)+\*\/)/ms', 
+                '/(?:--[^-]*-)/ms'
+            );
+            
+            $converted = preg_replace($pattern, NULL, $value);
+            
+            $value .= "\n[" . $converted . "]";
+        } 
+          
+        return $value;
     }    
     
     /**
@@ -188,32 +214,6 @@ class IDS_Converter {
 
         return $value;
      }
-
-    /**
-     * Check for comments and erases them if available
-     * 
-     * @param   string  $value
-     * @static
-     * @return  string
-     */ 
-    public static function convertFromCommented($value) {
-
-        // check for existing comments
-        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:(?:#|--|{)\s*$)/ms', $value)) {            
-
-            $pattern = array(
-                '/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/ms', 
-                '/(?:(?:\/\*\/*[^\/\*]*)+\*\/)/ms', 
-                '/(?:(?:\/\/|--|#|{).*)/ms'
-            );
-            
-            $converted = preg_replace($pattern, NULL, $value);
-            
-            $value .= "\n[" . $converted . "] ";
-        } 
-          
-        return $value;
-    }
 
     /**
      * Normalize quotes

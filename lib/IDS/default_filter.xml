@@ -81,29 +81,13 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(\\\d{2,3})]]></rule>
+        <rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(?:\\\d{2,3})|(?:=\s*0x\w+)]]></rule>
         <description>Detects the IE octal, hex and unicode entities</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
         </tags>
         <impact>2</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:([':;,])?\s*[)}\]](?(1)).+[=;:{[])]]></rule>
-        <description>finds closing JavaScript breaker including whitespace attacks</description>
-        <tags>
-            <tag>xss</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:[\(\{\[]+\s*(?!\+http)[^\w\s!?+-]+\W?\w+)]]></rule>
-        <description>finds opening JavaScript breaker including whitespace attacks</description>
-        <tags>
-            <tag>xss</tag>
-        </tags>
-        <impact>4</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:(?:\/|\\)?\.\.(\/|\\)(?:\.\.)?)|(?:\w+\.exe\??\s)|(?:;\s*\w+\s*\/[\w*-]+\/)]]></rule>
@@ -354,7 +338,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)\W*[\w\s]*$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
+        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
         <description>Detects common comment types</description>
         <tags>
             <tag>xss</tag>
@@ -426,7 +410,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|\w+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&!-@]|\w+\s+like))]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:^([\d"]|[^"]+")+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(?:[\d"([+&!-@]|\w+\s+like))]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
@@ -436,7 +420,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:UNION[\s([]+SELECT\s+\w+\s?,)|(?:LIKE\s*"\%)|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+=\s*[\w]+\s*HAVING)|(?:^(?:[\d"]|[\w"])\s*(?:OR)\s*(?:[\d"]|[\w"])+\s*(?:REGEXP|SOUND|[=\dx]+))]]></rule>
         <description>Detects basic SQL authentication bypass attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -510,7 +494,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO\s+(?:DUMP|OUT)FILE\s*")]]></rule>
+        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE[\s+]*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
