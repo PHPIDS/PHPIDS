@@ -91,7 +91,7 @@ class IDS_Converter {
             
             $converted = preg_replace($pattern, NULL, $value);
             
-            $value .= "\n[" . $converted . "]";
+            $value .= "\n" . $converted;
         } 
           
         return $value;
@@ -175,7 +175,7 @@ class IDS_Converter {
                 }                              
             }
             
-            $value .= "\n[" . $converted . "] ";
+            $value .= "\n" . $converted;
         }
 
         // check for octal charcode pattern
@@ -192,7 +192,7 @@ class IDS_Converter {
                 }
             }       
             
-            $value .= "\n[" . $converted . "] ";
+            $value .= "\n" . $converted;
         }
 
         // check for hexadecimal charcode pattern
@@ -209,7 +209,7 @@ class IDS_Converter {
                 }
             }
             
-            $value .= "\n[" . $converted . "] ";
+            $value .= "\n" . $converted;
         }
 
         return $value;
@@ -260,7 +260,7 @@ class IDS_Converter {
         $converted = preg_replace($pattern, NULL, $compare);
             
         if ($compare != $converted) {    
-            $value .= "\n[" . $converted . "] ";
+            $value .= "\n" . $converted;
         }
 
         return $value;    
@@ -287,7 +287,7 @@ class IDS_Converter {
                 $convert .= $entity;
             }
             $converted = html_entity_decode($convert);   
-            $value .= "\n[" . $converted . "] ";     
+            $value .= "\n" . $converted;     
         }
         
         return $value;  
@@ -308,7 +308,7 @@ class IDS_Converter {
         $values = str_split($value);
         foreach ($values as $item) {
             if (in_array(ord($item), $crlf, true)) {
-                $value .= "\n[ %00 ] ";
+                $value .= "\n%00";
                 return $value;
             }
         }
@@ -364,10 +364,54 @@ class IDS_Converter {
     	$converted = strip_tags($value);
     	
     	if($converted != $value) {
-            return $value . "\n[" . $converted . "] ";     		
+            return $value . "\n" . $converted;     		
     	}
     	return $value;
-    }    
+    }  
+
+    /**
+     * This method is the centrifuge prototype
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     * //TODO: Test and optimize
+     */
+    public static function convertFromCentrifuge ($value) {
+
+        //replace all non-special chars
+        $converted =  preg_replace('/[\w\s\p{L}]/', NULL, $value);
+
+        //split string into an array, unify and sort
+        $array = str_split($converted);
+        $array = array_unique($array);
+        asort($array);
+            
+        //normalize certain tokens
+        $schemes = array(
+            '+' => '+',
+            '~' => '+', 
+            '^' => '+', 
+            '|' => '+',
+            '=' => '+');
+            
+        $converted = implode($array);
+        $converted = str_replace(array_keys($schemes), array_values($schemes), $converted);  
+        $converted = preg_replace('/[()[\]{}]/', '(', $converted);
+        $converted = preg_replace('/[!?,.:;]/', ':', $converted);
+        $converted = preg_replace('/[^:(+]/', NULL, stripslashes($converted));
+            
+        //sort again and implode
+        $array = str_split($converted);
+        asort($array); 
+        $converted = implode($array);          
+        
+        if(preg_match('/(?:\({2,}\++:{2,})|(?:\({2,}\+{2,}:+)/', $converted)) {
+        	return $value . "\n" . $converted;          
+        }
+        
+        return $value;
+    }     
     
 }
 
