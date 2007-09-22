@@ -443,6 +443,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "asd' or true -- a";
 		$exploits[] = '\"asd" or 1="1';
 		$exploits[] = "a 1' or if(-1=-1,true,false)#!";
+		$exploits[] = "aa\\\\\"aaa' or '1";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -450,7 +451,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(154, $result->getImpact());        
+        $this->assertEquals(160, $result->getImpact());        
     }
     
     public function testDTList(){
