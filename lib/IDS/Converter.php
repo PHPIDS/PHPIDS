@@ -390,7 +390,6 @@ class IDS_Converter {
 	            
 	        //normalize certain tokens
 	        $schemes = array(
-	            '+' => '+',
 	            '~' => '+', 
 	            '^' => '+', 
 	            '|' => '+',
