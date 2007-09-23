@@ -277,16 +277,9 @@ class IDS_Converter {
     
         $converted = NULL;
         $matches = array();
-        if (preg_match_all('/&#x?[\w]+/ms', $value, $matches)) {
-            
-        	$convert = NULL;
-        	foreach($matches[0] as $entity) {
-                if(preg_match('/&#x?[\w]+/ms', $entity)) {
-                    $entity = $entity.';';  
-                }
-                $convert .= $entity;
-            }
-            $converted = html_entity_decode($convert);   
+        if (preg_match('/&#x?[\w]+/ms', $value)) {
+            $converted = preg_replace('/(&#x?[\w]+);?/ms', '$1;', $value);
+            $converted = html_entity_decode($converted);   
             $value .= "\n" . $converted;     
         }
         
