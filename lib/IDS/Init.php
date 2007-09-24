@@ -133,7 +133,7 @@ class IDS_Init {
      * Merges new settings into the exsiting ones or overwrites them
      * 
      * @param	array	$config
-     * @param	boolean $overwrite
+     * @param	boolean	$overwrite
      * @return	void
      */
     public function setConfig(Array $config, $overwrite = false) {
