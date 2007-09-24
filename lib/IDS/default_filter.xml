@@ -45,7 +45,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\W\s*hash\s*\W)|(?:\w+=\W*[^,]*,[^\s(]\s*\()|(?:\?"[^\s"]":)|(?:(?<!\/)__[a-z]+__)]]></rule>
+        <rule><![CDATA[(?:\W\s*hash\s*[^\w\s-])|(?:\w+=\W*[^,]*,[^\s(]\s*\()|(?:\?"[^\s"]":)|(?:(?<!\/)__[a-z]+__)]]></rule>
         <description>Detects hash-contained xss payload attacks and __property__ overloading</description>
         <tags>
             <tag>xss</tag>
@@ -129,7 +129,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+script:|@import|;base64)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
+        <rule><![CDATA[(?:\w+script:|@import[^\w]|;base64)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
         <description>Detects possible includes and packed functions</description>
         <tags>
             <tag>xss</tag>
