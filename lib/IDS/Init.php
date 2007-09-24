@@ -82,7 +82,7 @@ class IDS_Init {
         return $this;
 	}
 	
-	/**
+    /**
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
@@ -101,6 +101,24 @@ class IDS_Init {
         }
 		
 		return self::$instances[$configPath];
+    }
+
+    /**
+     * Sets config
+     *
+     * This function will accept both an array with a key / value pair or, if 
+     * second argument is set true, an array to replace the entire current config array
+     *
+     * @param   array   $settings
+     * @param   boolean $overwrite
+     * @return  void
+     */
+    public function set(Array $settings, $overwrite = false) {
+        if (!$overwrite) {
+            $this->config[$settings[0]] = $settings[1];
+        } else {
+            $this->config = $settings;
+        }
     }
 
     /**
