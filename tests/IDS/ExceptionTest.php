@@ -95,8 +95,8 @@ class IDS_ExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
         $this->init->config['General']['filter_path'] = 'IDS/wrong_path';
         $this->assertEquals(new IDS_Monitor(array('test', 'bla'), $this->init), $this->getExpectedException());
     }        
-    
+
     public function tearDown() {
-        $this->init->config['General']['filter_type'] = 'xml';
+    	$this->init->config['General']['filter_type'] = 'xml';
     }
 }

@@ -45,4 +45,16 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase
         $config = IDS_Init::init('IDS/Config/Config.ini');
         $this->assertEquals($config->getConfigPath(), 'IDS/Config/Config.ini');	
     }
+    
+    function testInitSetConfig() {
+        $config = IDS_Init::init('IDS/Config/Config.ini');
+        $config->setConfig(array('General' => array('filter_type' => 'json')));
+        $this->assertEquals($config->config['General']['filter_type'], 'json'); 
+    }
+    
+	function testInitGetConfig() {
+        $config = IDS_Init::init('IDS/Config/Config.ini');
+        $data = $config->getConfig();
+        $this->assertEquals($config->config, $data); 
+    }
 }

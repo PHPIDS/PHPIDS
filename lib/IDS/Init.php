@@ -146,6 +146,29 @@ class IDS_Init {
     public function getConfigPath() {
     	return $this->configPath;
     }
+    
+    /**
+     * Merges new settings into the exsiting ones or 
+     * overwrites them
+     * 
+     * @param array the new config array
+     * @return void
+     */
+    public function setConfig(array $config) {
+    	
+    	$this->config = array_merge($this->config, $config);
+    }
+    
+    /**
+     * Returns the config array
+     * 
+     * @return array the config array
+     */
+    public function getConfig() {
+    	
+    	return $this->config;
+    }
+    	
 }
 
 /*
