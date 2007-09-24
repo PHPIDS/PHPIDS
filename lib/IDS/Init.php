@@ -104,24 +104,6 @@ class IDS_Init {
     }
 
     /**
-     * Sets config
-     *
-     * This function will accept both an array with a key / value pair or, if 
-     * second argument is set true, an array to replace the entire current config array
-     *
-     * @param   array   $settings
-     * @param   boolean $overwrite
-     * @return  void
-     */
-    public function set(Array $settings, $overwrite = false) {
-        if (!$overwrite) {
-            $this->config[$settings[0]] = $settings[1];
-        } else {
-            $this->config = $settings;
-        }
-    }
-
-    /**
      * Sets the path to the configuration file
      *
      * @param   string  $path
@@ -152,11 +134,16 @@ class IDS_Init {
      * overwrites them
      * 
      * @param array the new config array
+     * @param   boolean $overwrite
      * @return void
      */
-    public function setConfig(array $config) {
+    public function setConfig(array $config, $overwrite = false) {
     	
-    	$this->config = array_merge($this->config, $config);
+    	if($overwrite) {
+    	   $this->config = array_merge($this->config, $config);
+    	} else {
+    	   $this->config = array_merge($config, $this->config);	
+    	}
     }
     
     /**

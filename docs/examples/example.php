@@ -38,6 +38,17 @@ try {
     $request = array_merge($_GET, $_POST);
 	$init = IDS_Init::init('IDS/Config/Config.ini');	
     
+	/**
+	 * You can also reset the whole configuration 
+	 * array or merge in own data
+	 * 
+	 * This usage doesn't overwrite already existing values
+	 * $config->setConfig(array('General' => array('filter_type' => 'xml')));
+	 * 
+	 * This does (see 2nd parameter)
+	 * $config->setConfig(array('General' => array('filter_type' => 'xml')), true);
+	 */
+	
     // 2. Initiate the PHPIDS and fetch the results
     $ids = new IDS_Monitor($request, $init);
     $result = $ids->run();            
