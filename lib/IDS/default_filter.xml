@@ -18,7 +18,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:>[\w\s]*<\/\w{2,}>)]]></rule>
+        <rule><![CDATA[(?:^>[\w\s]*<\/?\w{2,}>)]]></rule>
         <description>finds unquoted attribute breaking injections</description>
         <tags>
             <tag>xss</tag>
