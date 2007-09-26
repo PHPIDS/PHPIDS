@@ -91,8 +91,8 @@ class IDS_Monitor {
      * @var array
      */
 	private $exceptions = array(
-		'_utmz',
-		'_utmc'
+		'__utmz',
+		'__utmc'
 	);
 
 	/**
