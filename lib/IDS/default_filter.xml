@@ -420,7 +420,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(true|false)\s*(?:#|-))|(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)]]></rule>
+        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(true|false)\s*(?:#|-))|(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+(?:=|[<>])\s*[\d"])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -513,8 +513,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")]]></rule>
-        <description>Detects Oracle MERGE and EXECUTE IMMEDIATE attacks</description>
+        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)]]></rule>
+        <description>Detects MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>

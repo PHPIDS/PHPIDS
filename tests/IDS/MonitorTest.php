@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(195, $result->getImpact());        
+        $this->assertEquals(217, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -444,6 +444,31 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = '\"asd" or 1="1';
 		$exploits[] = "a 1' or if(-1=-1,true,false)#!";
 		$exploits[] = "aa\\\\\"aaa' or '1";
+		$exploits[] = "' or id= 1 having 1 #1 !";
+        $exploits[] = "' or id= 2-1 having 1 #1 !";
+        $exploits[] = "aa'or null is null #(";
+        $exploits[] = "aa'or current_user!=' 1";
+        $exploits[] = "aa'or BINARY 1= '1";
+        $exploits[] = "aa'or LOCALTIME!='0";
+		
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(270, $result->getImpact());        
+    }
+
+    public function testSQLIList3() {
+        
+        $exploits = array();
+        $exploits[] = "' OR UserID IS NOT 2";
+        $exploits[] = "' OR UserID IS NOT NULL";
+        $exploits[] = "' OR UserID > 1";
+        $exploits[] = "'  OR UserID RLIKE  '.+' ";
+        $exploits[] = "'OR UserID <> 2";
+
         
         $test = new IDS_Monitor(
             $exploits,
@@ -451,8 +476,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(160, $result->getImpact());        
-    }
+        $this->assertEquals(55, $result->getImpact());        
+    }    
     
     public function testDTList(){
         
@@ -496,7 +521,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(117, $result->getImpact());          
+        $this->assertEquals(122, $result->getImpact());          
     }    
     
     public function testRFEList() {

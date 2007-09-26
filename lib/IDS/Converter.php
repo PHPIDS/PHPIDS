@@ -239,12 +239,31 @@ class IDS_Converter {
      * @static
      * @return  string
      */ 
+    public static function convertFromSQLKeywords($value) {
+
+        $pattern = array('/NULL|TRUE|FALSE|LOCALTIME|BINARY|CURRENT_USER/ims'); 
+        $converted = preg_replace($pattern, 0, $value);
+
+        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|<>|RLIKE/ims'); 
+        $converted = preg_replace($pattern, '=', $converted);        
+        
+        if ($value != $converted) {    
+            $value .= "\n" . $converted;
+        }
+        
+        return $value;    
+    }
+
+    /**
+     * Converts basic concatenations
+     * 
+     * @param   string  $value
+     * @static
+     * @return  string
+     */ 
     public static function convertConcatenations($value) {
 
-        $compare = '';
-        if (get_magic_quotes_gpc()) {
-            $compare = stripslashes($value);  
-        }
+        $compare = stripslashes($value);  
 
         $pattern = array('/(?:"?"\+\w+\+")/ms',
             '/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/ms',
@@ -264,7 +283,7 @@ class IDS_Converter {
         }
 
         return $value;    
-    }
+    }    
     
     /**
      * Converts from hex/dec entities
