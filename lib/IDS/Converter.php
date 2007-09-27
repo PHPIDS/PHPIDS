@@ -405,12 +405,14 @@ class IDS_Converter {
 	            '~' => '+', 
 	            '^' => '+', 
 	            '|' => '+',
-	            '=' => '+');
+	            '*' => '+', 
+	            '%' => '+', 
+	            '&' => '+');
 	            
 	        $converted = implode($array);
 	        $converted = str_replace(array_keys($schemes), array_values($schemes), $converted);  
 	        $converted = preg_replace('/[()[\]{}]/', '(', $converted);
-	        $converted = preg_replace('/[!?,.:;]/', ':', $converted);
+	        $converted = preg_replace('/[!?,.:=]/', ':', $converted);
 	        $converted = preg_replace('/[^:(+]/', NULL, stripslashes($converted));
 	            
 	        //sort again and implode
@@ -419,6 +421,7 @@ class IDS_Converter {
 	        $converted = implode($array);          
 	        
 	        if(preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})/', $converted)) {
+	        	
 	        	return $value . "\n" . $converted;          
 	        }
     	}
