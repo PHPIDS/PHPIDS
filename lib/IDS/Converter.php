@@ -244,7 +244,7 @@ class IDS_Converter {
         $pattern = array('/NULL|TRUE|FALSE|LOCALTIME|BINARY|CURRENT_USER/ims'); 
         $converted = preg_replace($pattern, 0, $value);
 
-        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|<>|RLIKE/ims'); 
+        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|<>|RLIKE|REGEXP/ims'); 
         $converted = preg_replace($pattern, '=', $converted);        
         
         if ($value != $converted) {    
