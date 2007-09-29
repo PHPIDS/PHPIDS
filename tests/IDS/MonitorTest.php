@@ -204,7 +204,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(15, $result->getImpact());        
+        $this->assertEquals(21, $result->getImpact());        
     }    
 
     public function testConcatenatedXSSList() {
@@ -248,8 +248,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        
-        $this->assertEquals(412, $result->getImpact());        
+        $this->assertEquals(436, $result->getImpact());        
+
     }     
 
     public function testConcatenatedXSSList2() {
@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(231, $result->getImpact());        
+        $this->assertEquals(256, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -457,7 +457,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(277, $result->getImpact());        
+        $this->assertEquals(338, $result->getImpact());        
     }
 
     public function testSQLIList3() {
@@ -468,16 +468,32 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "' OR UserID > 1";
         $exploits[] = "'  OR UserID RLIKE  '.+' ";
         $exploits[] = "'OR UserID <> 2";
-        $exploits[] = "' or users.username=+0x61646D696E; -- -a ";
-        $exploits[] = "asd' or ISNULL(1/0) #(";
-        $exploits[] = "asd' or LEAST(2,1) -- -a";
-        $exploits[] = "' (begin union (select+aaa,bbb from ccc;) end); -- -a";
-        $exploits[] = "'='";
-        $exploits[] = "a'='a";
-        $exploits[] = "a'!='0 ";
-        $exploits[] = "aa'IS NOT NULL#( ";
-        $exploits[] = "0'XOR'1 ";
-        $exploits[] = "a'IN('a')#(";
+        $exploits[] = "1' union (select password from users) -- -a";
+        $exploits[] = "1' union (select'1','2',password from users) -- -a";
+        $exploits[] = "1' union all (select'1',password from users) -- -a";
+		$exploits[] = "aa'!='1";
+		$exploits[] = "aa'!=~'1";
+		$exploits[] = "aa'=('aa')#(";
+		$exploits[] = "aa'|+'1";
+		$exploits[] = "aa'|!'aa";
+		$exploits[] = "aa'^!'aa ";
+		$exploits[] = "abc' = !!'0";
+		$exploits[] = "abc' = !!!!'0";
+		$exploits[] = "abc' = !!!!!!!!!!!!!!'0";
+		$exploits[] = "abc' = !0 = !!'0";
+		$exploits[] = "abc' = !0 != !!!'0";
+		$exploits[] = "abc' = !+0 != !'0 ";
+		$exploits[] = "aa'=+'1";
+		$exploits[] = "';if 1=1 drop database test-- -a";
+		$exploits[] = "';if 1=1 drop table users-- -a";
+		$exploits[] = "';if 1=1 shutdown-- -a";
+		$exploits[] = "'; while 1=1 shutdown-- -a";
+		$exploits[] = "'; begin shutdown end-- -a ";
+		$exploits[] = "'+COALESCE('admin') and 1 = !1 div 1+'";
+		$exploits[] = "'+COALESCE('admin') and @@version = !1 div 1+'";
+		$exploits[] = "'+COALESCE('admin') and @@version = !@@version div @@version+'";
+		$exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
+        
         
         $test = new IDS_Monitor(
             $exploits,
@@ -485,8 +501,32 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(165, $result->getImpact());        
+        $this->assertEquals(247, $result->getImpact());        
     }    
+
+    public function testSQLIList4() {
+        
+        $exploits = array();
+        
+        $exploits[] = "aa'in (0)#(";
+        $exploits[] = "aa'!=ascii(1)#(";
+        $exploits[] = "' or SOUNDEX (1) != '0";
+        $exploits[] = "aa'RLIKE BINARY 0#(";
+        $exploits[] = "aa'or column!='1";
+        $exploits[] = "aa'or column DIV 0 =0 #";
+        $exploits[] = "aa'or column+(1)='1";
+        $exploits[] = "aa'or 0!='0";
+        $exploits[] = "aa'LIKE'0";
+        $exploits[] = "aa'or id ='\\'";
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(98, $result->getImpact());        
+    }     
     
     public function testDTList(){
         
@@ -530,7 +570,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(127, $result->getImpact());          
+        $this->assertEquals(133, $result->getImpact());          
     }    
     
     public function testRFEList() {

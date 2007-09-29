@@ -410,7 +410,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()]]></rule>
+        <rule><![CDATA[(?:^.?"$)|(?:.*(?:#|--)$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
@@ -430,7 +430,7 @@
         <impact>7</impact>
     </filter> 
       <filter>
-        <rule><![CDATA[(?:UNION[\s([]+SELECT[\s+-]+\w+\s?,)|(?:LIKE\s*"\%)|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+-.]+(?:[\s+-=]"|[\s+-=]+x))]]></rule>
+        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\s*")|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/2</description>
         <tags>
             <tag>sqli</tag>
@@ -450,13 +450,22 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)]]></rule>
-        <description>Detects chained SQL injection attempts</description>
+        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
+        <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
         </tags>
-        <impact>5</impact>
+        <impact>6</impact>
+    </filter>
+    <filter>
+        <rule><![CDATA[(?:"[^\w\s]{2,}\s*"\s*\w)|(?:COALESCE\s*\(|@@\w+\s*=)|(?:\W!+"\w)|(?:";\s*(?:if|while|begin))|(?:"[\s\d]+=\s*\d)]]></rule>
+        <description>Detects chained SQL injection attempts 2/2</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>6</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:(SELECT|;)\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
