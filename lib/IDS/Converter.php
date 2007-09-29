@@ -233,7 +233,7 @@ class IDS_Converter {
     }     
 
     /**
-     * Converts basic concatenations
+     * Converts basic SQL keywords and obfuscations
      * 
      * @param   string  $value
      * @static
@@ -241,18 +241,14 @@ class IDS_Converter {
      */ 
     public static function convertFromSQLKeywords($value) {
 
-        $pattern = array('/(?:IS\s+NULL)|(LIKE\s+NULL)|(?:(?:in)\s*\([^)]+\))/ims'); 
-        $converted = preg_replace($pattern, '=0', $value);     	
+        $pattern = array('/(?:IS\s+NULL)|(LIKE\s+NULL)|(?:(?:IN)\s*\([^)]+\))/ims'); 
+        $value = preg_replace($pattern, '=0', $value);     	
     	
-        $pattern = array('/NULL|TRUE|FALSE|LOCALTIME|LOCALTIMESTAMP|CURRENT_TIME|CURRENT_TIMESTAMP|BINARY|CURRENT_USER|(?:(?:ascii|in|soundex|regexp)\s*\([^)]+\))/ims'); 
-        $converted = preg_replace($pattern, 0, $converted);
+        $pattern = array('/NULL|TRUE|FALSE|LOCALTIME(?:STAMP)?|CURRENT_TIME|CURRENT_TIMESTAMP|BINARY|CURRENT_USER|(?:(?:ASCII|SOUNDEX|REGEXP)\s*\([^)]+\))/ims'); 
+        $value = preg_replace($pattern, 0, $value);
 
-        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|<>|RLIKE|REGEXP|RLIKE\s+BINARY|SOUNDS\s+LIKE/ims'); 
-        $converted = preg_replace($pattern, '=', $converted);        
-        
-        if ($value != $converted) {    
-            $value .= "\n" . $converted;
-        }
+        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|<>|RLIKE(?:\s+BINARY)?|REGEXP(?:\s+BINARY)?|SOUNDS\s+LIKE/ims'); 
+        $value = preg_replace($pattern, '=', $value);        
         
         return $value;    
     }
@@ -298,7 +294,6 @@ class IDS_Converter {
     public static function convertEntities($value) {
     
         $converted = NULL;
-        $matches = array();
         if (preg_match('/&#x?[\w]+/ms', $value)) {
             $converted = preg_replace('/(&#x?[\w]+);?/ms', '$1;', $value);
             $converted = html_entity_decode($converted);   

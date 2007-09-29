@@ -204,7 +204,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(21, $result->getImpact());        
+        $this->assertEquals(27, $result->getImpact());        
     }    
 
     public function testConcatenatedXSSList() {
@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(256, $result->getImpact());        
+        $this->assertEquals(250, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -457,7 +457,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(338, $result->getImpact());        
+        $this->assertEquals(310, $result->getImpact());        
     }
 
     public function testSQLIList3() {
@@ -501,7 +501,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(247, $result->getImpact());        
+        $this->assertEquals(235, $result->getImpact());        
     }    
 
     public function testSQLIList4() {
@@ -525,7 +525,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(98, $result->getImpact());        
+        $this->assertEquals(112, $result->getImpact());        
     }     
     
     public function testDTList(){
@@ -570,7 +570,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(133, $result->getImpact());          
+        $this->assertEquals(128, $result->getImpact());          
     }    
     
     public function testRFEList() {
