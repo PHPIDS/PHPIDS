@@ -399,6 +399,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         a(name)';
         $exploits[] = 'a=eval,b=(name);a(b)';
         $exploits[] = 'a=eval,b= [ referrer ] ;a(b)';
+        $exploits[] = "URL = ! isNaN(1) ? 'javascriptz:zalertz(1)z' [/replace/ [ 'source' ] ]
+                        (/z/g, [] ) : 0";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -406,7 +408,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(275, $result->getImpact());        
+        $this->assertEquals(285, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -486,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(310, $result->getImpact());        
+        $this->assertEquals(314, $result->getImpact());        
     }
 
     public function testSQLIList3() {
