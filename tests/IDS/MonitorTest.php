@@ -292,7 +292,16 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 							a = new String + a[ 2]+a[ 4 ] + a[ 6 ] + a[ 8 ] + a[ 10 ] + a[ 11 ]
 							+ a[ 12 ] + a[ 13 ],
 							e=new Date() [e];";       
-                
+        $exploits[] = '$a= !false?"ev":1
+						$b= !false? "al":1
+						$a= !false?$a+$b:1
+						$a= !false?0[$a]:1
+						$b= !false?"locat":1
+						$c= !false?"ion.h":1
+						$d= !false?"ash":1
+						$b= !false?$b+$c+$d:1
+						$a setter=$a,$a=$a=$b';
+        
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -300,7 +309,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(121, $result->getImpact());        
+        $this->assertEquals(142, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {

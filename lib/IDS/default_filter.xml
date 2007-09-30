@@ -301,7 +301,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*[^\s\w.])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)]]></rule>
+        <rule><![CDATA[(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:!?=\s*\w\s*[^\s\w.])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)|(?:!\s*0\s*\?)]]></rule>
         <description>Detects common concatenation patterns</description>
         <tags>
             <tag>xss</tag>
