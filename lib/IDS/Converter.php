@@ -264,7 +264,7 @@ class IDS_Converter {
 
         $compare = stripslashes($value);  
 
-        $pattern = array('/(?:":1[^"[]+")/s',
+        $pattern = array('/(?:":\d+[^"[]+")/s',
             '/(?:"?"\+\w+\+")/s',
             '/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/s',
             '/(?:"\s*(?:;|\+).{8,18}:\s*")/s',
