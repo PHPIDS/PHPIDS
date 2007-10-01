@@ -431,7 +431,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*(true|false)\s*(?:#|-))|(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[=+-<>]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*IN\((?:[\s\d]|"[\s\w-]))]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}")|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[+-=!&]{2,}\s*"\d)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[\w-]+\s*[!+=&"]{3,}\s*\d)|(?:like\s*\+\s*"\w)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -506,7 +506,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+@\w+)|(exec\s*\(\s*@)]]></rule>
+        <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>
         <description>Detects MySQL stored procedure/function injections</description>
         <tags>
             <tag>sqli</tag>
