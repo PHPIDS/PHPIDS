@@ -387,7 +387,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(140, $result->getImpact());        
+        $this->assertEquals(136, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -626,7 +626,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(132, $result->getImpact());          
+        $this->assertEquals(128, $result->getImpact());          
     }    
     
     public function testRFEList() {
@@ -646,7 +646,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(83, $result->getImpact());       
+        $this->assertEquals(79, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
@@ -661,7 +661,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(69, $result->getImpact());              
+        $this->assertEquals(65, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -684,7 +684,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(50, $result->getImpact());              
+        $this->assertEquals(42, $result->getImpact());              
     }
 
     public function testHexCCConverter() {
