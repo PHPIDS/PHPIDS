@@ -45,8 +45,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\W\s*hash\s*[^\w\s-])|(?:\w+=\W*[^,]*,[^\s(]\s*\()|(?:\?"[^\s"]":)|(?:(?<!\/)__[a-z]+__)]]></rule>
-        <description>Detects hash-contained xss payload attacks and __property__ overloading</description>
+        <rule><![CDATA[(?:\W\s*hash\s*[^\w\s-])|(?:\w+=\W*[^,]*,[^\s(]\s*\()|(?:\?"[^\s"]":)|(?:(?<!\/)__[a-z]+__)|(?:(?:^|\s)setter\s*=)]]></rule>
+        <description>Detects hash-contained xss payload attacks, setter usage and property overloading</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -312,7 +312,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:!?=\s*\w\s*[^\s\w.;])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)|(?:!\s*0\s*\?)]]></rule>
+        <rule><![CDATA[(?:!?=\s*\w.?\d*\s*[^\s\w.;])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*[!=]{2,}\s*\w+)|(?:!\s*0\s*\?)]]></rule>
         <description>Detects common concatenation patterns 2/2</description>
         <tags>
             <tag>xss</tag>
