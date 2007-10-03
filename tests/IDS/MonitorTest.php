@@ -453,6 +453,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1'; WAITFOR TIME '17:48:00 ' shutdown -- -a";
         $exploits[] = "1'; anything: goto anything -- -a";
         $exploits[] = "' =+ '";
+        $exploits[] = "asd' =- (-'asd') -- -a";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -460,7 +461,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(304, $result->getImpact());        
+        $this->assertEquals(310, $result->getImpact());        
     }
 
     public function testSQLIList2() {
