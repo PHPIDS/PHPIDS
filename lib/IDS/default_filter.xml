@@ -431,7 +431,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}")|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[+-=!&]{2,}\s*"\d)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[\w-]+\s*[!+=&"]{3,}\s*\d)|(?:like\s*\+\s*"\w)]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}")|(?:"\s*[!=|][\d\s!=]+.*".*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:like\s*\+\s*"\w)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -561,7 +561,7 @@
         <impact>7</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(?:<[?%](?:php)?|;)\s?(?:eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute)\s*\(\s?(?:[?%]>)?)]]></rule>
+        <rule><![CDATA[(?:(?:[';]+|(<[?%](?:php)?))\s*(?:define|eval|file_get_contents|include|require|require_once|set|phpinfo|system|passthru|preg_\w+|execute))]]></rule>
         <description>Detects code injection attempts 2/3</description>
         <tags>
             <tag>id</tag>
@@ -571,7 +571,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:;\s*(?:echo|print|print_r|var_dump)[^;]+;)|(?:;\s*(?:file_get_contents|fopen|include|require|require_once)\s*[("])|(?:;\s*rm\s+-rf\s+)]]></rule>
+        <rule><![CDATA[(?:(?:[';]+|(<[?%](?:php)?))\s*(?:echo|print|print_r|var_dump|fopen|popen))|(?:;\s*rm\s+-\w+\s+)]]></rule>
         <description>Detects code injection attempts 3/3</description>
         <tags>
             <tag>id</tag>

