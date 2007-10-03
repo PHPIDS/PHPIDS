@@ -505,7 +505,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(328, $result->getImpact());        
+        $this->assertEquals(335, $result->getImpact());        
     }
 
     public function testSQLIList3() {
@@ -592,6 +592,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "aa'|3!='4";
 		$exploits[] = "aa'|ascii(1)+1!='1";
 		$exploits[] = "aa'|LOCALTIME*0!='1 ";
+		$exploits[] = "asd' |1 != (1)#aa";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -599,7 +600,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(306, $result->getImpact());        
+        $this->assertEquals(334, $result->getImpact());        
     }     
     
     public function testDTList(){
