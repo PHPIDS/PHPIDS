@@ -431,7 +431,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}")|(?:"\s*[!=|][\d\s!=]+.*".*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:like\s*\+\s*"\w)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}")|(?:"\s*[!=|][\d\s!=]+.*".*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:like\s*[+-]+\s*"\w)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -497,13 +497,13 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:ALTER\s*\w+.*CHARACTER\s+SET\s+\w+)]]></rule>
-        <description>Detects MySQL charset switch attempts</description>
+        <rule><![CDATA[(?:ALTER\s*\w+.*CHARACTER\s+SET\s+\w+)|(";\s*WAITFOR\s+TIME\s+")|(?:";.*:\s*GOTO)]]></rule>
+        <description>Detects MySQL charset switch and MSSQL DoS attempts</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
         </tags>
-        <impact>4</impact>
+        <impact>6</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>

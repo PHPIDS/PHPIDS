@@ -450,6 +450,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'aaa\' OR (1) IS NOT NULL #!asd';
         $exploits[] = 'a\' or 1=\'1';
         $exploits[] = 'asd\' union (select username,password from admins) where id=\'1';
+        $exploits[] = "1'; WAITFOR TIME '17:48:00 ' shutdown -- -a";
+        $exploits[] = "1'; anything: goto anything -- -a";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -457,7 +459,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(278, $result->getImpact());        
+        $this->assertEquals(290, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -493,6 +495,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa'or current_user!=' 1";
         $exploits[] = "aa'or BINARY 1= '1";
         $exploits[] = "aa'or LOCALTIME!='0";
+        $exploits[] = "aa'like-'aa";
 		
         $test = new IDS_Monitor(
             $exploits,
@@ -500,7 +503,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(321, $result->getImpact());        
+        $this->assertEquals(328, $result->getImpact());        
     }
 
     public function testSQLIList3() {
