@@ -361,7 +361,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(62, $result->getImpact());        
+        $this->assertEquals(68, $result->getImpact());        
     }      
     
     public function testXSSList() {
@@ -388,7 +388,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(145, $result->getImpact());        
+        $this->assertEquals(151, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -420,7 +420,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(293, $result->getImpact());        
+        $this->assertEquals(311, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -477,7 +477,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = 'asd" or table.column^"1';
 		$exploits[] = 'asd" or @@version^"0';
 		$exploits[] = 'asd" or @@global.hot_cache.key_buffer_size^"1';
-		$exploits[] = 'asd" or!(select name from users limit 1)="1';
+		$exploits[] = 'asd" or!(selec79t name from users limit 1)="1';
 		$exploits[] = '1"OR!"a';
 		$exploits[] = '1"OR!"0';
 		$exploits[] = '1"OR-"1';
@@ -549,7 +549,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(319, $result->getImpact());        
+        $this->assertEquals(289, $result->getImpact());        
     }    
 
     public function testSQLIList4() {
@@ -600,7 +600,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(334, $result->getImpact());        
+        $this->assertEquals(406, $result->getImpact());        
     }     
     
     public function testDTList(){
@@ -669,7 +669,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(79, $result->getImpact());       
+        $this->assertEquals(85, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
