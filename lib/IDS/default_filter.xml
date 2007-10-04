@@ -431,7 +431,7 @@
         <impact>6</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\s*[+-=!]{2,}\s*")|(?:"\s*[!=|][\d\s!=]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+["(])|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+["(])|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
         <tags>
             <tag>sqli</tag>

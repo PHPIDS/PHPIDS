@@ -248,7 +248,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(504, $result->getImpact());        
+        $this->assertEquals(532, $result->getImpact());        
 
     }     
 
@@ -340,7 +340,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(183, $result->getImpact());        
+        $this->assertEquals(176, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -420,7 +420,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(311, $result->getImpact());        
+        $this->assertEquals(325, $result->getImpact());        
     }
 
     public function testSQLIList() {
@@ -454,6 +454,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1'; anything: goto anything -- -a";
         $exploits[] = "' =+ '";
         $exploits[] = "asd' =- (-'asd') -- -a";
+        $exploits[] = 'aa"in+ ("aa") or -1 != "0';
+        $exploits[] = 'aa" =+ - "0  ';
         
         $test = new IDS_Monitor(
             $exploits,
@@ -461,7 +463,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(310, $result->getImpact());        
+        $this->assertEquals(323, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -549,7 +551,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(289, $result->getImpact());        
+        $this->assertEquals(296, $result->getImpact());        
     }    
 
     public function testSQLIList4() {

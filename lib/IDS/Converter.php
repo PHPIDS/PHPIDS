@@ -241,10 +241,10 @@ class IDS_Converter {
      */ 
     public static function convertFromSQLKeywords($value) {
 
-        $pattern = array('/(?:IS\s+NULL)|(LIKE\s+NULL)|(?:(?:IN)\s*\([^)]+\))/ims'); 
+        $pattern = array('/(?:IS\s+NULL)|(LIKE\s+NULL)|(?:(?:IN)[+\s]*\([^)]+\))/ims'); 
         $value = preg_replace($pattern, '=0', $value);     	
     	
-        $pattern = array('/\sNULL|TRUE|FALSE|LOCALTIME(?:STAMP)?|CURRENT_TIME|CURRENT_TIMESTAMP|BINARY|CURRENT_USER|(?:(?:ASCII|SOUNDEX|REGEXP)\s*\([^)]+\))/ims'); 
+        $pattern = array('/\sNULL|TRUE|FALSE|LOCALTIME(?:STAMP)?|CURRENT_TIME|CURRENT_TIMESTAMP|BINARY|CURRENT_USER|(?:(?:ASCII|SOUNDEX|REGEXP)[+\s]*\([^)]+\))/ims'); 
         $value = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|<>|RLIKE(?:\s+BINARY)?|REGEXP(?:\s+BINARY)?|SOUNDS\s+LIKE/ims'); 
