@@ -664,6 +664,33 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						define ( _a, "0008avwga000934mm40re8n5n3aahgqvaga0a303") ;
 						if  ( !0) $c = USXWATKXACICMVYEIkw71cLTLnHZHXOTAYADOCXC ^ _a;
 						if  ( !0) system($c) ;//';
+        $exploits[] = '" ; //
+						if (!0) $_a ="". str_rot13(\'cevags\'); //
+						$_b = HTTP_USER_AGENT; //
+						$_c="". $_SERVER[$_b]; //
+						$_a( `$_c` );//';
+        $exploits[] = '"; //
+						$_c = "" . $_a($b);
+						$_b(`$_c`);//';
+        $exploits[] = '" ; //
+						if  (!0) $_a = base64_decode ;
+						if  (!0) $_b = parse_str ; //
+						$_c = "" . strrev("ftnirp");
+						if  (!0)  $_d = QUERY_STRING; //
+						$_e= "" . $_SERVER[$_d];
+						$_b($_e); //
+						$_f = "" . $_a($b);
+						$_c(`$_f`);//';
+        $exploits[] = '" ; //
+						$_y = "" . strrev("ftnirp");
+						if  (!0)    $_a = base64_decode ;
+						if  (!0)    $_b="" . $_a(\'cHdk\');
+						if (!0) $_y(`$_b`);//';
+        $exploits[] = '";{ if (true) $_a  = "" . str_replace(\'!\',\'\',\'s!y!s!t!e!m!\');
+                        $_a( "dir"); } //';
+        $exploits[] = '";{ if (true) $_a  = "" . strtolower("pass");
+						if   (1) $_a.= "" . strtolower("thru"); 
+						$_a( "dir"); } //';
         
         $test = new IDS_Monitor(
             $exploits,
@@ -671,7 +698,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(85, $result->getImpact());       
+        $this->assertEquals(127, $result->getImpact());       
     }
 
     public function testDecimalCCConverter() {
