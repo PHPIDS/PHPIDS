@@ -456,6 +456,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "asd' =- (-'asd') -- -a";
         $exploits[] = 'aa"in+ ("aa") or -1 != "0';
         $exploits[] = 'aa" =+ - "0  ';
+		$exploits[] = "aa' LIKE 0 -- -a";
+		$exploits[] = "aa' LIKE md5(1) or '1";
+		$exploits[] = "aa' REGEXP- md5(1) or '1";
+		$exploits[] = "aa' DIV@1 = 0 or '1";
+		$exploits[] = "aa' XOR- column != -'0";         
         
         $test = new IDS_Monitor(
             $exploits,
@@ -463,7 +468,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(323, $result->getImpact());        
+        $this->assertEquals(363, $result->getImpact());        
     }
 
     public function testSQLIList2() {
@@ -507,7 +512,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(335, $result->getImpact());        
+        $this->assertEquals(337, $result->getImpact());        
     }
 
     public function testSQLIList3() {
