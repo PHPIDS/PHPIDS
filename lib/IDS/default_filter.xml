@@ -524,7 +524,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE[\s+]*")]]></rule>
+        <rule><![CDATA[(?:\WIIF\s*\()|(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE[\s+]*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
