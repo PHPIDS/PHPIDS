@@ -73,12 +73,6 @@ class IDS_Init {
 		$this->setConfigPath($configPath);
         $this->config = parse_ini_file($this->configPath, true);
 		
-	    if (!is_writeable(dirname(__FILE__) . '/../' . $this->config['General']['tmp_path'])) {
-            throw new Exception(
-                'Please make sure the IDS/tmp folder is writable'
-            );                
-        }        
-        
         return $this;
 	}
 	

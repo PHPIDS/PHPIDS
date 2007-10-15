@@ -116,6 +116,12 @@ class IDS_Monitor {
 			}
 		}
 
+        if (!is_writeable(dirname(__FILE__) . '/../' . $init->config['General']['tmp_path'])) {
+            throw new Exception(
+                'Please make sure the IDS/tmp folder is writable'
+            );                
+        } 		
+		
 		require_once 'IDS/Report.php';
 		$this->report = new IDS_Report;
 	}
