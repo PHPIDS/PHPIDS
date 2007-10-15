@@ -615,16 +615,41 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test1 = '../../etc/passwd';
         $test2 = '\%windir%\cmd.exe';
         $test3 = '1;cat /e*c/p*d';
+        $test4 = '%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%00';
+        $test5 = '/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd';
+        $test6 = '/%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..%25%5c..winnt/desktop.ini';
+        $test7 = 'C:\boot.ini';
+        $test8 = '../../../../../../../../../../../../localstart.asp%00';
+        $test9 = '/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/boot.ini';
+        $test10 = '&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt;';
+        $test11 = '../../../../../../../../conf/server.xml';
+        
         if(get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
             $test3 = addslashes($test3);
-        }        
+            $test4 = addslashes($test4);
+            $test5 = addslashes($test5);
+            $test6 = addslashes($test6);
+            $test7 = addslashes($test7);
+            $test8 = addslashes($test8);
+            $test9 = addslashes($test9);
+            $test10 = addslashes($test10);
+            $test11 = addslashes($test11);
+        }       
         
         $exploits = array();
         $exploits[] = $test1;
         $exploits[] = $test2;
         $exploits[] = $test3;        
+        $exploits[] = $test4;
+        $exploits[] = $test5;
+        $exploits[] = $test6;  
+        $exploits[] = $test7;
+        $exploits[] = $test8;
+        $exploits[] = $test9;  
+        $exploits[] = $test10;
+        $exploits[] = $test11;
         
         $test = new IDS_Monitor(
             $exploits,
@@ -632,7 +657,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(25, $result->getImpact());        
+        $this->assertEquals(114, $result->getImpact());        
     }
 
     public function testURIList(){
