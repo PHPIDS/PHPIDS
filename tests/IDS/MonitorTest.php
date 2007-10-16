@@ -248,7 +248,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(536, $result->getImpact());        
+        $this->assertEquals(531, $result->getImpact());        
 
     }     
 
@@ -340,7 +340,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(181, $result->getImpact());        
+        $this->assertEquals(171, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
@@ -361,7 +361,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(69, $result->getImpact());        
+        $this->assertEquals(59, $result->getImpact());        
     }      
     
     public function testXSSList() {
@@ -388,7 +388,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(152, $result->getImpact());        
+        $this->assertEquals(147, $result->getImpact());        
     }
 
     public function testSelfContainedXSSList() {
@@ -743,7 +743,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(65, $result->getImpact());              
+        $this->assertEquals(60, $result->getImpact());              
     }
 
     public function testOctalCCConverter() {
@@ -795,7 +795,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(111, $result->getImpact());              
+        $this->assertEquals(106, $result->getImpact());              
     }
 
     public function testLDAPInjectionList() {
