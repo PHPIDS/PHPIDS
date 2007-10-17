@@ -332,6 +332,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						$b= !x?$b+$c+$d:0
 						$msg= !x?\'i love ternary operators\':0
 						$a=$a=$b';
+        $exploits[] = "123[''+<_>ev</_>+<_>al</_>](''+<_>aler</_>+<_>t</_>+<_>(1)</_>);";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -340,7 +341,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         
-        $this->assertEquals(176, $result->getImpact());        
+        $this->assertEquals(204, $result->getImpact());        
     }    
 
     public function testXMLPredicateXSSList() {
