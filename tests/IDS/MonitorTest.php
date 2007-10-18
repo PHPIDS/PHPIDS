@@ -248,7 +248,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(531, $result->getImpact());        
+        $this->assertEquals(527, $result->getImpact());        
 
     }     
 
