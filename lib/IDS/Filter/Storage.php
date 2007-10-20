@@ -74,11 +74,10 @@ class IDS_Filter_Storage {
     public final function __construct(IDS_Init $init) {
         if ($init->config) {
  
-            $path       = $init->config['General']['filter_path'];
             $caching    = $init->config['Caching']['caching'];
             $type       = $init->config['General']['filter_type'];
             
-            $this->source = dirname(__FILE__) . '/../../' . $path;
+            $this->source = $init->config['General']['filter_path'];
             
             if (isset($caching) && $caching != 'none') {
                 $this->cacheSettings = $init->config['Caching'];

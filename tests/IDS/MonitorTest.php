@@ -26,9 +26,12 @@ require_once 'IDS/Filter/Storage.php';
 
 class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
-    public function setUp()
-    {
-        $this->init = IDS_Init::init('IDS/Config/Config.ini');
+    public function setUp() {
+    	$path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->init = IDS_Init::init($path);
+        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
+        $this->init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
+        $this->init->config['Caching']['path'] = dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
     }
 
     public function testRunWithTags() {
@@ -100,7 +103,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     {
     	
     	$this->init->config['General']['filter_type'] = 'json';
-    	$this->init->config['General']['filter_path'] = 'IDS/default_filter.json';
+    	$this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.json';
     	
         $test = new IDS_Monitor(
             array(
@@ -112,8 +115,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(18, $result->getImpact());
+        
+        $this->init->config['General']['filter_type'] = 'xml';
+        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
     }    
-    
+
     public function testListWithKeyScanning() {
         $exploits = array();
         $exploits['test1'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';

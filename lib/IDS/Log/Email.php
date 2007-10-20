@@ -176,7 +176,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
 		* loop through all files in the tmp directory and
 		* delete garbage files
 		*/
-		$dir = dirname(__FILE__) . '/../../' .$this->tmp_path;
+		$dir = $this->tmp_path;
 		$numPrefixChars = strlen($this->file_prefix);
 		
 		$files = scandir($dir);

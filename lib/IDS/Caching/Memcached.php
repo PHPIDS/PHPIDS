@@ -164,7 +164,7 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
     	    // establish the memcache connection
             $this->memcache = new Memcache;
             $this->memcache->pconnect($this->config['host'], $this->config['port']); 
-            $this->path = dirname(__FILE__).'/../../' . $this->config['tmp_path']; 
+            $this->path = $this->config['tmp_path']; 
     	} else {
     		throw new Exception('Insufficient connection parameters');
     	}	    	

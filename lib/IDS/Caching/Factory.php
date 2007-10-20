@@ -45,10 +45,10 @@ class IDS_Caching {
         $object = false;
 
         $wrapper    = ucfirst($config['caching']);
-        $class      = 'IDS_Caching_' . $wrapper;
-        $path       = 'IDS/Caching/' . $wrapper . '.php';
+        $class      = 'IDS_Caching_' . escapeshellcmd($wrapper);
+        $path       = dirname(__FILE__) . DIRECTORY_SEPARATOR . escapeshellcmd($wrapper) . '.php';
         
-        if (file_exists(dirname(__FILE__) . '/../../' . $path)) {
+        if (file_exists($path)) {
             require_once $path;
 
             if (class_exists($class)) {

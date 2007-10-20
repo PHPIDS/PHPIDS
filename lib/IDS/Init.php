@@ -105,7 +105,7 @@ class IDS_Init {
      * @return  void
      */
     public function setConfigPath($path) {
-        if (file_exists(dirname(__FILE__) . '/../' . $path)) {
+        if (file_exists($path)) {
             $this->configPath = $path;
         } else {
             throw new Exception(

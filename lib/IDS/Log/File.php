@@ -74,7 +74,7 @@ class IDS_Log_File implements IDS_Log_Interface {
 			$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
 
-		$this->logfile = dirname(__FILE__) . '/../../' . $logfile;
+		$this->logfile = $logfile;
 	}
 
     /**

@@ -74,7 +74,7 @@ class IDS_Caching_File implements IDS_Caching_Interface {
         
         $this->type = $type;
         $this->config = $config;
-        $this->path = dirname(__FILE__).'/../../' . $this->config['path']; 
+        $this->path = $this->config['path']; 
         
         if (file_exists($this->path) && !is_writable($this->path)) {
             throw new Exception('Make sure all files in IDS/tmp are writeable!'); 

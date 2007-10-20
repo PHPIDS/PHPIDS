@@ -26,8 +26,8 @@ require_once 'IDS/Init.php';
 class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
 	public function setUp() {
-		
-		$this->init = IDS_Init::init('IDS/Config/Config.ini');	
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->init = IDS_Init::init($this->path);  
 	}
 		
 	public function testObjectConstruction()
@@ -78,10 +78,10 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testFilterSetFilterSet() {
-        $this->storage = new IDS_Filter_Storage($this->init);
-        if(session_id()) {
-            session_destroy();        
-        }
+        
+        $this->init->config['General']['filter_type'] = 'xml';
+        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';		
+		$this->storage = new IDS_Filter_Storage($this->init);
         $filter = new IDS_Filter('test', 'test2', array(), 1);
 	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
 	}	

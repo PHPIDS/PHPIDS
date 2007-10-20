@@ -46,6 +46,9 @@ class IDS_ExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
                 )
             )
         ));
+        
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->init = IDS_Init::init($this->path);        
     }    
     
     public function testEventConstructorExceptions1() {
@@ -90,7 +93,6 @@ class IDS_ExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
 
     public function testWrongXmlFilterPathException() {
         $this->setExpectedException('Exception');
-        $this->init = IDS_Init::init('IDS/Config/Config.ini');
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = 'IDS/wrong_path';
         $this->assertEquals(new IDS_Monitor(array('test', 'bla'), $this->init), $this->getExpectedException());

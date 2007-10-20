@@ -23,45 +23,44 @@ require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Init.php';
 
-class IDS_InitTest extends PHPUnit_Framework_TestCase
-	{
+class IDS_InitTest extends PHPUnit_Framework_TestCase {
+
+	public function setUp() {
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->init = IDS_Init::init($this->path);
+    }		
+		
     function testInit() {
-    	$this->assertTrue(IDS_Init::init('IDS/Config/Config.ini') instanceof IDS_Init);
+    	$this->assertTrue($this->init instanceof IDS_Init);
     }
 
     function testInitConfig() {
-    	$config = IDS_Init::init('IDS/Config/Config.ini');
     	$keys = array('General', 'Logging', 'Caching');
-    	$this->assertEquals($keys, array_keys($config->config));    	
+    	$this->assertEquals($keys, array_keys($this->init->config));    	
     }  
 
     function testInitClone() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config2 = clone $config;
-        $this->assertEquals($config2, $config);        
+        $config2 = clone $this->init;
+        $this->assertEquals($config2, $this->init);        
     }  
     
     function testInitGetConfigPath() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $this->assertEquals($config->getConfigPath(), 'IDS/Config/Config.ini');	
+        $this->assertEquals($this->init->getConfigPath(), $this->path);	
     }
     
     function testInitSetConfigOverwrite() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->setConfig(array('General' => array('filter_type' => 'json')), true);
-        $this->assertEquals($config->config['General']['filter_type'], 'json'); 
+        $this->init->setConfig(array('General' => array('filter_type' => 'json')), true);
+        $this->assertEquals($this->init->config['General']['filter_type'], 'json'); 
     }
 
 	function testInitSetConfigNoOverwrite() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->setConfig(array('General' => array('filter_type' => 'xml')), true);
-        $config->setConfig(array('General' => array('filter_type' => 'json')));
-        $this->assertEquals($config->config['General']['filter_type'], 'xml'); 
+        $this->init->setConfig(array('General' => array('filter_type' => 'xml')), true);
+        $this->init->setConfig(array('General' => array('filter_type' => 'json')));
+        $this->assertEquals($this->init->config['General']['filter_type'], 'xml'); 
     }    
     
 	function testInitGetConfig() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $data = $config->getConfig();
-        $this->assertEquals($config->config, $data); 
+        $data = $this->init->getConfig();
+        $this->assertEquals($this->init->config, $data); 
     }
 }

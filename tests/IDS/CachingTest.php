@@ -25,68 +25,65 @@ require_once 'IDS/Init.php';
 require_once 'IDS/Caching/Factory.php';
 
 class IDS_CachingTest extends PHPUnit_Framework_TestCase {
-    
+
+    public function setUp() {
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->init = IDS_Init::init($this->path);
+    }	
+	
 	function testCachingNone() {
-		$config = IDS_Init::init('IDS/Config/Config.ini');
-    	$config->config['IDS_Caching']['caching'] = 'none';
-    	$this->assertFalse(IDS_Caching::factory($config->config['IDS_Caching'], 'storage'));
+    	$this->init->config['IDS_Caching']['caching'] = 'none';
+    	$this->assertFalse(IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage'));
     }  
 
     function testCachingFile() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'file';
-        $config->config['IDS_Caching']['expiration_time'] = 0;
-        $this->assertTrue(IDS_Caching::factory($config->config['IDS_Caching'], 'storage') instanceof IDS_Caching_File);
+        $this->init->config['IDS_Caching']['caching'] = 'file';
+        $this->init->config['IDS_Caching']['expiration_time'] = 0;
+        $this->assertTrue(IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage') instanceof IDS_Caching_File);
     } 
 
     function testCachingFileSetCache() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'file';
-        $config->config['IDS_Caching']['expiration_time'] = 0;
-        $cache = IDS_Caching::factory($config->config['IDS_Caching'], 'storage');
+        $this->init->config['IDS_Caching']['caching'] = 'file';
+        $this->init->config['IDS_Caching']['expiration_time'] = 0;
+        $cache = IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertTrue($cache instanceof IDS_Caching_File);
     }    
 
     function testCachingFileGetCache() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'file';
-        $config->config['IDS_Caching']['path'] =  dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
-        $config->config['IDS_Caching']['expiration_time'] = 0;
-        $cache = IDS_Caching::factory($config->config['IDS_Caching'], 'storage');
+        $this->init->config['IDS_Caching']['caching'] = 'file';
+        $this->init->config['IDS_Caching']['path'] =  dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
+        $this->init->config['IDS_Caching']['expiration_time'] = 0;
+        $cache = IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
-    }     
+    }    
 
     function testCachingSession() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'session';
-        $this->assertTrue(IDS_Caching::factory($config->config['IDS_Caching'], 'storage') instanceof IDS_Caching_Session);
+        $this->init->config['IDS_Caching']['caching'] = 'session';
+        $this->assertTrue(IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage') instanceof IDS_Caching_Session);
     }     
 
     function testCachingSessionSetCache() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'session';
+        $this->init->config['IDS_Caching']['caching'] = 'session';
         
-        $cache = IDS_Caching::factory($config->config['IDS_Caching'], 'storage');
+        $cache = IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertTrue($cache instanceof IDS_Caching_Session);
     }    
 
     function testCachingSessionGetCache() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'session';
+        $this->init->config['IDS_Caching']['caching'] = 'session';
         
-        $cache = IDS_Caching::factory($config->config['IDS_Caching'], 'storage');
+        $cache = IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
     } 
 
     function testCachingSessionGetCacheDestroyed() {
-        $config = IDS_Init::init('IDS/Config/Config.ini');
-        $config->config['IDS_Caching']['caching'] = 'session';
+        $this->init->config['IDS_Caching']['caching'] = 'session';
         
-        $cache = IDS_Caching::factory($config->config['IDS_Caching'], 'storage');
+        $cache = IDS_Caching::factory($this->init->config['IDS_Caching'], 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $_SESSION['PHPIDS']['storage'] = null;        
         $this->assertFalse($cache->getCache());

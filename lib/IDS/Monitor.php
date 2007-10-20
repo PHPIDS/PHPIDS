@@ -116,7 +116,7 @@ class IDS_Monitor {
 			}
 		}
 
-        if (!is_writeable(dirname(__FILE__) . '/../' . $init->config['General']['tmp_path'])) {
+        if (!is_writeable($init->config['General']['tmp_path'])) {
             throw new Exception(
                 'Please make sure the IDS/tmp folder is writable'
             );                
