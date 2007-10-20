@@ -36,7 +36,7 @@ try {
     * 1. Define what to scan
     */
     $request = array_merge($_GET, $_POST);
-	$init = IDS_Init::init('IDS/Config/Config.ini');	
+	$init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');	
     
 	/**
 	 * You can also reset the whole configuration 
