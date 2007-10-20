@@ -325,6 +325,10 @@ class IDS_Converter {
             }
         }
 
+        if(preg_match('/%E2%80%A\w/', urlencode($value))) {
+        	return urldecode(preg_replace('/%E2%80%A\w/', NULL, urlencode($value))) . "\n%00";
+        }
+        
         return $value;
     }
 
