@@ -47,7 +47,12 @@ try {
 	 * 
 	 * This does (see 2nd parameter)
 	 * $config->setConfig(array('General' => array('filter_type' => 'xml')), true);
+	 * 
+	 * or you can access the config directly like here:
 	 */
+	$init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
+	$init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
+    $init->config['Caching']['caching'] = 'none';
 	
     // 2. Initiate the PHPIDS and fetch the results
     $ids = new IDS_Monitor($request, $init);
@@ -95,6 +100,8 @@ try {
 	    if (!$result->isEmpty()) {
 	        $compositeLog->execute($result);
 	    }        
+    } else {
+    	echo '<a href="?test=%22>XXX<script>alert(1)</script>">No attack detected - click for an example attack</a>';
     }
 } catch (Exception $e) {
     /*
