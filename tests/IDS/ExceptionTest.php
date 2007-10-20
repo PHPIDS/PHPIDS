@@ -25,7 +25,7 @@ require_once 'IDS/Init.php';
 require_once 'IDS/Caching/Factory.php';
 require_once 'IDS/Report.php';
 require_once 'IDS/Event.php';
-require_once 'IDS/Filter/Filter.php';
+require_once 'IDS/Filter.php';
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 

@@ -209,7 +209,7 @@ class IDS_Filter_Storage {
             $nocache = $filters instanceof SimpleXMLElement;
             $filters = $nocache ? $filters->filter : $filters;
 
-            require_once 'IDS/Filter/Filter.php';
+            require_once 'IDS/Filter.php';
             
             foreach ($filters as $filter) {
 
@@ -295,7 +295,7 @@ class IDS_Filter_Storage {
             $nocache = !is_array($filters);
             $filters = $nocache ? $filters->filters->filter : $filters;
 
-            require_once 'IDS/Filter/Filter.php';
+            require_once 'IDS/Filter.php';
             
             foreach ($filters as $filter) {
             	

@@ -22,7 +22,7 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Event.php';
-require_once 'IDS/Filter/Filter.php';
+require_once 'IDS/Filter.php';
 
 class IDS_EventTest extends PHPUnit_Framework_TestCase
 {
