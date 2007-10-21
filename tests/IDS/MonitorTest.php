@@ -631,7 +631,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test10 = '&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt;';
         $test11 = '../../../../../../../../conf/server.xml';
 
-        if(get_magic_quotes_gpc()){
+        if (get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
             $test3 = addslashes($test3);
@@ -758,7 +758,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test1 = '\47\150\151\47\51\74\57\163\143\162\151\160\164\76';
         $test2 = '\74\163\143\162\151\160\164\76\141\154\145\162\164\50\47\150\151\47\51\74\57\163\143\162\151\160\164\76';
 
-        if(get_magic_quotes_gpc()){
+        if (get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
         }
@@ -783,7 +783,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test4 = 'x=&#x65&#x76&#x61&#x6c,y=&#x61&#x6c&#x65&#x72&#x74&#x28&#x31&#x29
                     x(y)';
 
-        if(get_magic_quotes_gpc()){
+        if (get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
             $test3 = addslashes($test3);

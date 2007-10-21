@@ -166,7 +166,7 @@ class IDS_Converter {
                         PREG_SPLIT_DELIM_CAPTURE
                     );
 
-                    if(array_sum($match) >= 20 && array_sum($match) <= 127){
+                    if (array_sum($match) >= 20 && array_sum($match) <= 127){
                         $converted .= chr(array_sum($match));
                     }
 
@@ -186,7 +186,7 @@ class IDS_Converter {
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
-                    if(octdec($char) >= 20 && octdec($char) <= 127) {
+                    if (octdec($char) >= 20 && octdec($char) <= 127) {
                         $converted .= chr(octdec($char));
                     }
                 }
@@ -203,7 +203,7 @@ class IDS_Converter {
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
-                    if(hexdec($char) >= 20 && hexdec($char) <= 127) {
+                    if (hexdec($char) >= 20 && hexdec($char) <= 127) {
                        $converted .= chr(hexdec($char));
                     }
                 }
@@ -325,7 +325,7 @@ class IDS_Converter {
             }
         }
 
-        if(preg_match('/(?:%E2%80%(?:A|8)\w|%EF%BB%BF)/i', urlencode($value))) {
+        if (preg_match('/(?:%E2%80%(?:A|8)\w|%EF%BB%BF)/i', urlencode($value))) {
             return urldecode(preg_replace('/(?:%E2%80%(?:A|8)\w|%EF%BB%BF)/i', NULL, urlencode($value))) . "\n%00";
         }
 
@@ -343,7 +343,7 @@ class IDS_Converter {
 
         $values = str_split($value);
         foreach ($values as $item) {
-            if(ord($item) >= 128) {
+            if (ord($item) >= 128) {
                 $value = str_replace($item, 'U', $value);
             }
         }
@@ -379,7 +379,7 @@ class IDS_Converter {
 
         $converted = strip_tags($value);
 
-        if($converted != $value) {
+        if ($converted != $value) {
             return $value . "\n" . $converted;
         }
         return $value;
@@ -395,7 +395,7 @@ class IDS_Converter {
      */
     public static function convertFromCentrifuge($value) {
 
-        if(strlen($value) > 80) {
+        if (strlen($value) > 80) {
             // Replace all non-special chars
             $converted =  preg_replace('/[\w\s\p{L}]/', NULL, $value);
 
@@ -425,7 +425,7 @@ class IDS_Converter {
             asort($array);
             $converted = implode($array);
 
-            if(preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})/', $converted)) {
+            if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})/', $converted)) {
                 return $value . "\n" . $converted;
             }
         }

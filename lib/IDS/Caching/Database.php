@@ -174,7 +174,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
             );
             $result->execute(array($this->type));
 
-            foreach($result as $row) {
+            foreach ($result as $row) {
                 return unserialize($row['data']);
             }
 
