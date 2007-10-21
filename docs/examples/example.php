@@ -30,12 +30,12 @@ if (!session_id()) {
 require_once 'IDS/Init.php';
 
 try {
-	
-    /*
+
+	/*
 	* It's pretty easy to get the PHPIDS running
-    * 1. Define what to scan
-    */
-    $request = array_merge($_GET, $_POST);
+	* 1. Define what to scan
+	*/
+	$request = array('_GET' => $_GET, '_POST' => $_POST, '_SESSION' => $_SESSION);
 	$init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');	
     
 	/**
