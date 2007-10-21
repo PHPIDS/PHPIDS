@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 /**
@@ -25,11 +25,11 @@
  * used later on by the detection mechanism. You might extend this class to your
  * requirements.
  *
- * @author		christ1an <ch0012@gmail.com>
+ * @author        christ1an <ch0012@gmail.com>
  * 
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Storage.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Storage.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Filter_Storage {
@@ -83,10 +83,10 @@ class IDS_Filter_Storage {
                 $this->cacheSettings = $init->config['Caching'];
                 
                 require_once 'IDS/Caching/Factory.php';
-            	$this->cache = IDS_Caching::factory(
+                $this->cache = IDS_Caching::factory(
                     $this->cacheSettings, 
                     'storage'
-            	);
+                );
             }
 
             switch ($type) {
@@ -168,7 +168,7 @@ class IDS_Filter_Storage {
      */
     public function getFilterFromXML() {
 
-    	if (extension_loaded('SimpleXML')) {
+        if (extension_loaded('SimpleXML')) {
 
             /*
              * See if filters are already available in the cache
@@ -179,13 +179,13 @@ class IDS_Filter_Storage {
              * If they aren't, parse the source file
              */
             if (!$filters) {        
-            	if (file_exists($this->source)) {
-                	if (LIBXML_VERSION >= 20621) {
-                    	$filters = simplexml_load_file(
-							$this->source, 
-							NULL, 
-							LIBXML_COMPACT
-						);
+                if (file_exists($this->source)) {
+                    if (LIBXML_VERSION >= 20621) {
+                        $filters = simplexml_load_file(
+                            $this->source, 
+                            NULL, 
+                            LIBXML_COMPACT
+                        );
                    } else {
                        $filters = simplexml_load_file($this->source);
                    }
@@ -228,11 +228,11 @@ class IDS_Filter_Storage {
                 );
 
                 $data[] = array(
-					'rule'		=> $rule, 
-					'impact'	=> $impact, 
-					'tags'		=> $tags, 
-					'description' => $description
-				);
+                    'rule'        => $rule, 
+                    'impact'    => $impact, 
+                    'tags'        => $tags, 
+                    'description' => $description
+                );
             }
             
             /*
@@ -262,7 +262,7 @@ class IDS_Filter_Storage {
      */
     public function getFilterFromJson() {
         
-    	if (extension_loaded('Json')) { 
+        if (extension_loaded('Json')) { 
 
             /*
              * See if filters are already available in the cache
@@ -274,18 +274,18 @@ class IDS_Filter_Storage {
              */
             if (!$filters) {              
                 if (file_exists($this->source)) {
-                	$filters = json_decode(file_get_contents($this->source));
+                    $filters = json_decode(file_get_contents($this->source));
                 } else {
-	                throw new Exception(
-	                    'JSON data could not be loaded. Make sure you specified the correct path.'
-	                );
+                    throw new Exception(
+                        'JSON data could not be loaded. Make sure you specified the correct path.'
+                    );
                 }                  
             }
 
             if (!$filters) {
-	            throw new Exception(
-	                'JSON data could not be loaded. Make sure you specified the correct path.'
-	            );
+                throw new Exception(
+                    'JSON data could not be loaded. Make sure you specified the correct path.'
+                );
             }    
 
             /*
@@ -298,7 +298,7 @@ class IDS_Filter_Storage {
             require_once 'IDS/Filter.php';
             
             foreach ($filters as $filter) {
-            	
+                
                 $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
                 $impact = $nocache ? (string) $filter->impact : $filter['impact'];
                 $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];

@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -26,12 +26,12 @@ require_once 'IDS/Caching/Interface.php';
 
     CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `cache`;
-	CREATE TABLE `cache` (
-		`type` VARCHAR( 32 ) NOT NULL ,
-		`data` TEXT NOT NULL ,
-		`created` DATETIME NOT NULL ,
-		`modified` DATETIME NOT NULL
-	) ENGINE = MYISAM ;
+    CREATE TABLE `cache` (
+        `type` VARCHAR( 32 ) NOT NULL ,
+        `data` TEXT NOT NULL ,
+        `created` DATETIME NOT NULL ,
+        `modified` DATETIME NOT NULL
+    ) ENGINE = MYISAM ;
  */
 
 /**
@@ -39,11 +39,11 @@ require_once 'IDS/Caching/Interface.php';
  * 
  * This class inhabits functionality to get and set cache via a database.
  * 
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
  * @link        http://php-ids.org/ 
  */
@@ -118,41 +118,41 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      */
     public function setCache(array $data) {
 
-    	$handle = $this->handle;
-    	
+        $handle = $this->handle;
+        
         foreach ($handle->query('SELECT created FROM `'.mysql_escape_string($this->config['table']).'`') as $row) {
-        	if ((time()-strtotime($row['created'])) > $this->config['expiration_time']) {
-		        
-        		try {
-		        	$handle->query('TRUNCATE '.mysql_escape_string($this->config['table']).'');
-		            $statement = $handle->prepare('
-		                INSERT INTO `'.mysql_escape_string($this->config['table']).'` (
-		                    type,
-		                    data,
-		                    created,
-		                    modified
-		                ) 
-		                VALUES (
-		                    :type,
-		                    :data,
-		                    now(), 
-		                    now()
-		                )
-		            ');                                            
-		
-		            $statement->bindParam('type', mysql_escape_string($this->type));
-		            $statement->bindParam('data', serialize($data));
-		            
-		            if (!$statement->execute()) { 
-		                throw new PDOException($statement->errorCode());     
-		            }            
-		            
-		        } catch (PDOException $e) {
-		            die('PDOException: ' . $e->getMessage());       
-		        }               		
-        	}
+            if ((time()-strtotime($row['created'])) > $this->config['expiration_time']) {
+                
+                try {
+                    $handle->query('TRUNCATE '.mysql_escape_string($this->config['table']).'');
+                    $statement = $handle->prepare('
+                        INSERT INTO `'.mysql_escape_string($this->config['table']).'` (
+                            type,
+                            data,
+                            created,
+                            modified
+                        ) 
+                        VALUES (
+                            :type,
+                            :data,
+                            now(), 
+                            now()
+                        )
+                    ');                                            
+        
+                    $statement->bindParam('type', mysql_escape_string($this->type));
+                    $statement->bindParam('data', serialize($data));
+                    
+                    if (!$statement->execute()) { 
+                        throw new PDOException($statement->errorCode());     
+                    }            
+                    
+                } catch (PDOException $e) {
+                    die('PDOException: ' . $e->getMessage());       
+                }                       
+            }
         }
-    	
+        
         return $this;
     }
     
@@ -166,22 +166,22 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      */
     public function getCache() {
 
-    	try{
-	    	$handle = $this->handle;
+        try{
+            $handle = $this->handle;
             $result = $handle->prepare(
                 'SELECT * FROM '.mysql_escape_string($this->config['table'])
                 . ' where type=?'
             );
-            $result->execute(array($this->type));	    	
-	    	
-	    	foreach($result as $row) {
-	            return unserialize($row['data']);
+            $result->execute(array($this->type));            
+            
+            foreach($result as $row) {
+                return unserialize($row['data']);
             }
 
         } catch (PDOException $e) {
             die('PDOException: ' . $e->getMessage());       
         } 
-    	   
+           
         return false;
     }
     
@@ -193,8 +193,8 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      */
     private function connect() {
         
-    	// validate connection parameters
-    	if (!$this->config['wrapper'] 
+        // validate connection parameters
+        if (!$this->config['wrapper'] 
             || !$this->config['user'] 
                 || !$this->config['password'] 
                     || !$this->config['table']) {

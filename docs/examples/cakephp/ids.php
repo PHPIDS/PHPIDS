@@ -76,18 +76,18 @@ class IdsComponent extends Object {
      * define the threshold for the ids reactions
      */
     private $threshold = array(
-		'log' 	=> 3,                        
-    	'mail' 	=> 9,
-		'warn' 	=> 27, 
-		'kick' 	=> 81
-	);
+        'log'     => 3,                        
+        'mail'     => 9,
+        'warn'     => 27, 
+        'kick'     => 81
+    );
 
     /**
      * define the email addresses for idsmail
      */
     private $email = array(
-		'address1@what.ever', 
-		'address2@what.ever'
+        'address1@what.ever', 
+        'address2@what.ever'
     );
 
     /**
@@ -148,11 +148,11 @@ class IdsComponent extends Object {
     private function react(IDS_Report $result) {
 
         $new = $this->controller
-				->Session
-				->read('IDS.Impact') + $result->getImpact();
+                ->Session
+                ->read('IDS.Impact') + $result->getImpact();
         
-		
-		$this->controller->Session->write('IDS.Impact', $new);
+        
+        $this->controller->Session->write('IDS.Impact', $new);
         $impact = $this->controller->Session->read('IDS.Impact');
         
         if($impact >= $this->threshold['kick']) {
@@ -187,10 +187,10 @@ class IdsComponent extends Object {
     private function idslog($result, $reaction = 0) {
 
         $user = $this->controller
-			->Session->read('User.id') ? 
-				$this->controller->Session->read('User.id') :
-				0;
-				
+            ->Session->read('User.id') ? 
+                $this->controller->Session->read('User.id') :
+                0;
+                
         $ip = ($_SERVER['SERVER_ADDR']!='127.0.0.1') ?
                     $_SERVER['SERVER_ADDR'] :
                         (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
@@ -199,17 +199,17 @@ class IdsComponent extends Object {
         
         foreach($result as $event) {
             $data = array(
-				'Intrusion' => array(
-					'name' 		=> $event->getName(),
-					'value' 	=> stripslashes($event->getValue()),
-					'page' 		=> $_SERVER['REQUEST_URI'], 
-					'userid' 	=> $user, 
-					'session' 	=> session_id() ? session_id() : '0',
-					'ip' 		=> $ip, 
-					'reaction' 	=> $reaction, 
-					'impact' 	=> $result->getImpact()
-				)
-			);
+                'Intrusion' => array(
+                    'name'         => $event->getName(),
+                    'value'     => stripslashes($event->getValue()),
+                    'page'         => $_SERVER['REQUEST_URI'], 
+                    'userid'     => $user, 
+                    'session'     => session_id() ? session_id() : '0',
+                    'ip'         => $ip, 
+                    'reaction'     => $reaction, 
+                    'impact'     => $result->getImpact()
+                )
+            );
         }
         
         loadModel('Intrusion');
@@ -235,11 +235,11 @@ class IdsComponent extends Object {
         $compositeLog = new IDS_Log_Composite();
         $compositeLog->addLogger(
            IDS_Log_Email::getInstance($this->init->config['IDS_Logging']['recipient'], 
-							          $this->config['IDS_Logging']['subject'],
-							          NULL, //optional headers
-							          $this->init->config['IDS_Logging']['safemode'],
-							          $this->init->config['IDS_Logging']['allowed_rate'], 
-							          $this->init->config['IDS_Basic']['tmp_path'])
+                                      $this->config['IDS_Logging']['subject'],
+                                      NULL, //optional headers
+                                      $this->init->config['IDS_Logging']['safemode'],
+                                      $this->init->config['IDS_Logging']['allowed_rate'], 
+                                      $this->init->config['IDS_Basic']['tmp_path'])
         );
         
         if (!$result->isEmpty()) {

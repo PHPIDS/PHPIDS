@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -25,11 +25,11 @@ require_once 'IDS/Caching/Interface.php';
  * 
  * This class inhabits functionality to get and set cache via memcached.
  * 
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Memcached.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Memcached.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
  * @link        http://php-ids.org/
  */
@@ -115,23 +115,23 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      */
     public function setCache(array $data) {
         
-    	if (!file_exists($this->path)) {
+        if (!file_exists($this->path)) {
             $handle = fopen($this->path , 'w');
-            fclose($handle);       	   	
-    	}
+            fclose($handle);                  
+        }
 
         if (!is_writable($this->path)) {
             throw new Exception('Make sure all files in IDS/tmp are writeable!'); 
-        }    	
-    	
-    	if ((time()-filectime($this->path)) > $this->config['expiration_time']) {
+        }        
+        
+        if ((time()-filectime($this->path)) > $this->config['expiration_time']) {
             $this->memcache->set(
                 $this->config['key_prefix'] . '.storage',
                 $data
             );
         }
 
-    	return $this;
+        return $this;
     }
     
     /**
@@ -149,7 +149,7 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
             return $data;
         }
 
-        return false;    	
+        return false;        
     }
     
     /**
@@ -160,14 +160,14 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      */
     private function connect() {
         
-    	if ($this->config['host'] && $this->config['port']) {
-    	    // establish the memcache connection
+        if ($this->config['host'] && $this->config['port']) {
+            // establish the memcache connection
             $this->memcache = new Memcache;
             $this->memcache->pconnect($this->config['host'], $this->config['port']); 
             $this->path = $this->config['tmp_path']; 
-    	} else {
-    		throw new Exception('Insufficient connection parameters');
-    	}	    	
+        } else {
+            throw new Exception('Insufficient connection parameters');
+        }            
     }
 }
 

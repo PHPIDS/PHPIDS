@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -23,18 +23,18 @@ require_once 'IDS/Log/Interface.php';
 /*
  * Needed SQL:
  * 
-	CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-	DROP TABLE IF EXISTS `intrusions`;
-	CREATE TABLE IF NOT EXISTS `intrusions` (
-	  `id` int(11) unsigned NOT NULL auto_increment,
-	  `name` varchar(128) NOT NULL,
-	  `value` text NOT NULL,
-	  `page` varchar(255) NOT NULL,
-	  `ip` varchar(15) NOT NULL,
-	  `impact` int(11) unsigned NOT NULL,
-	  `created` datetime NOT NULL,
-	  PRIMARY KEY  (`id`)
-	) ENGINE=MyISAM ;
+    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    DROP TABLE IF EXISTS `intrusions`;
+    CREATE TABLE IF NOT EXISTS `intrusions` (
+      `id` int(11) unsigned NOT NULL auto_increment,
+      `name` varchar(128) NOT NULL,
+      `value` text NOT NULL,
+      `page` varchar(255) NOT NULL,
+      `ip` varchar(15) NOT NULL,
+      `impact` int(11) unsigned NOT NULL,
+      `created` datetime NOT NULL,
+      PRIMARY KEY  (`id`)
+    ) ENGINE=MyISAM ;
  * 
  * 
  *  
@@ -46,11 +46,11 @@ require_once 'IDS/Log/Interface.php';
  * The database wrapper is designed to store reports into an sql database. It implements the
  * singleton pattern and is based in PDO, supporting different database types.
  *
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Log_Database implements IDS_Log_Interface {
@@ -88,7 +88,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
      *
      * @var object  PDO instance
      */
-    private $handle	= NULL;
+    private $handle    = NULL;
 
     /**
      * Prepared SQL statement
@@ -102,7 +102,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
      *
      * @var string
      */
-	private $ip = 'local/unknown';
+    private $ip = 'local/unknown';
     
     /**
      * Instance container
@@ -124,55 +124,55 @@ class IDS_Log_Database implements IDS_Log_Interface {
      */
     protected function __construct($config) {
         
-		if ($config instanceof IDS_Init) {
-			$this->wrapper	= $config->config['Logging']['wrapper'];
-			$this->user		= $config->config['Logging']['user'];
-			$this->password = $config->config['Logging']['password'];
-			$this->table 	= $config->config['Logging']['table'];
-		
-		} elseif (is_array($config)) {
-			$this->wrapper	= $config['wrapper'];
-			$this->user		= $config['user'];
-			$this->password = $config['password'];
-			$this->table 	= $config['table'];
-		}
-		
-		// determine correct IP address
-		if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-			$this->ip = $_SERVER['REMOTE_ADDR'];
-		} elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
+        if ($config instanceof IDS_Init) {
+            $this->wrapper    = $config->config['Logging']['wrapper'];
+            $this->user        = $config->config['Logging']['user'];
+            $this->password = $config->config['Logging']['password'];
+            $this->table     = $config->config['Logging']['table'];
+        
+        } elseif (is_array($config)) {
+            $this->wrapper    = $config['wrapper'];
+            $this->user        = $config['user'];
+            $this->password = $config['password'];
+            $this->table     = $config['table'];
+        }
+        
+        // determine correct IP address
+        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+            $this->ip = $_SERVER['REMOTE_ADDR'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
 
-		try {
-			$this->handle = new PDO(
-				$this->wrapper, 
-				$this->user, 
-				$this->password
-			);
-			
-			$this->statement = $this->handle->prepare('
-				INSERT INTO ' . $this->table . ' (
-					name,
-					value,
-					page,
-					ip,
-					impact,
-					created
-				) 
-				VALUES (
-					:name,
-					:value,
-					:page,
-					:ip,
-					:impact,
-					now()
-				)
-			');    	                                       
-			
-		} catch (PDOException $e) {
-            die('PDOException: ' . $e->getMessage());    	
-		}
+        try {
+            $this->handle = new PDO(
+                $this->wrapper, 
+                $this->user, 
+                $this->password
+            );
+            
+            $this->statement = $this->handle->prepare('
+                INSERT INTO ' . $this->table . ' (
+                    name,
+                    value,
+                    page,
+                    ip,
+                    impact,
+                    created
+                ) 
+                VALUES (
+                    :name,
+                    :value,
+                    :page,
+                    :ip,
+                    :impact,
+                    now()
+                )
+            ');                                               
+            
+        } catch (PDOException $e) {
+            die('PDOException: ' . $e->getMessage());        
+        }
     }
 
     /**
@@ -185,12 +185,12 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * @return  object  $this 
      */
     public static function getInstance($config) {
-		if ($config instanceof IDS_Init) {
-			$wrapper = $config->config['Logging']['wrapper'];
-		} elseif (is_array($config)) {
-			$wrapper = $config['wrapper'];
-		}	
-	
+        if ($config instanceof IDS_Init) {
+            $wrapper = $config->config['Logging']['wrapper'];
+        } elseif (is_array($config)) {
+            $wrapper = $config['wrapper'];
+        }    
+    
         if (!isset(self::$instances[$wrapper])) {
             self::$instances[$wrapper] = new IDS_Log_Database($config);
         }
@@ -198,7 +198,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
         return self::$instances[$wrapper];
     }
 
-	/**
+    /**
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
@@ -215,9 +215,9 @@ class IDS_Log_Database implements IDS_Log_Interface {
     public function execute(IDS_Report $data) {
         
         foreach ($data as $event) {
-        	$page	= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-        	$ip		= $this->ip;
-        	
+            $page    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+            $ip        = $this->ip;
+            
             $this->statement->bindParam('name', $event->getName());
             $this->statement->bindParam('value', $event->getValue());
             $this->statement->bindParam('page', $page);
@@ -225,8 +225,8 @@ class IDS_Log_Database implements IDS_Log_Interface {
             $this->statement->bindParam('impact', $data->getImpact());
             
             if (!$this->statement->execute()) { 
-            	
-            	$info = $this->statement->errorInfo();
+                
+                $info = $this->statement->errorInfo();
                 throw new Exception(
                     $this->statement->errorCode() . ', ' . $info[1] . ', ' . $info[2]
                 );     

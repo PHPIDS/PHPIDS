@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -25,11 +25,11 @@ require_once 'IDS/Caching/Interface.php';
  * 
  * This class inhabits functionality to get and set cache via session.
  * 
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Session.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Session.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
  * @link        http://php-ids.org/
  */
@@ -77,7 +77,7 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      */
     public static function getInstance($type, $config) {
         
-    	if (!self::$cachingInstance) {
+        if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_Session($type, $config);
         }
 
@@ -92,8 +92,8 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      */
     public function setCache(array $data) {
     
-    	$_SESSION['PHPIDS'][$this->type] = $data;
-    	return $this;
+        $_SESSION['PHPIDS'][$this->type] = $data;
+        return $this;
     }
     
     /**
@@ -104,12 +104,12 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      * @return  mixed   cache data or false
      */
     public function getCache() {
-    	
-    	if ($this->type && $_SESSION['PHPIDS'][$this->type]) {
-    		return $_SESSION['PHPIDS'][$this->type];
+        
+        if ($this->type && $_SESSION['PHPIDS'][$this->type]) {
+            return $_SESSION['PHPIDS'][$this->type];
         }
 
-    	return false;
+        return false;
     }
 }
 

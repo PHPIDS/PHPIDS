@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -26,11 +26,11 @@ require_once 'IDS/Log/Interface.php';
  * This class implements the composite pattern to allow to work with multiple
  * logging wrappers at once.
  *
- * @author		christ1an <ch0012@gmail.com>
+ * @author        christ1an <ch0012@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Composite.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Composite.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Log_Composite {
@@ -40,7 +40,7 @@ class IDS_Log_Composite {
      *
      * @var array
      */
-	public $loggers = array();
+    public $loggers = array();
 
     /**
      * Iterates through registered loggers and executes them
@@ -48,11 +48,11 @@ class IDS_Log_Composite {
      * @param   object  $data   IDS_Report object
      * @return  void
      */
-	public function execute(IDS_Report $data) {
-		foreach ($this->loggers as $logger) {
-			$logger->execute($data);
-		}
-	}
+    public function execute(IDS_Report $data) {
+        foreach ($this->loggers as $logger) {
+            $logger->execute($data);
+        }
+    }
 
     /**
      * Registers a new logging wrapper
@@ -61,33 +61,33 @@ class IDS_Log_Composite {
      *
      * @return  void
      */
-	public function addLogger() {
-		
-		$args = func_get_args();
+    public function addLogger() {
+        
+        $args = func_get_args();
 
-		foreach ($args as $class) {
+        foreach ($args as $class) {
             if (!in_array($class, $this->loggers) && ($class instanceof IDS_Log_Interface)) {
                 $this->loggers[] = $class;
             }
         }
     }
 
-	/**
-	* Removes a logger
-	*
-	* @param	object  $logger IDS_Log_Interface object
-	* @return   boolean
-	*/
-	public function removeLogger(IDS_Log_Interface $logger) {
-		$key = array_search($logger, $this->loggers);
+    /**
+    * Removes a logger
+    *
+    * @param    object  $logger IDS_Log_Interface object
+    * @return   boolean
+    */
+    public function removeLogger(IDS_Log_Interface $logger) {
+        $key = array_search($logger, $this->loggers);
 
-		if (isset($this->loggers[$key])) {
-			unset($this->loggers[$key]);
-			return true;
-		}
+        if (isset($this->loggers[$key])) {
+            unset($this->loggers[$key]);
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 /*

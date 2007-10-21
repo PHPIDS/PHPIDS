@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -25,11 +25,11 @@ require_once 'IDS/Caching/Interface.php';
  * 
  * This class inhabits functionality to get and set cache via a static flatfile.
  * 
- * @author		.mario <mario.heiderich@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:File.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:File.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
  * @link        http://php-ids.org/
  */
@@ -105,9 +105,9 @@ class IDS_Caching_File implements IDS_Caching_Interface {
     public function setCache(array $data) {
 
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > $this->config['expiration_time'])) {
-        	$handle = fopen($this->path , 'w');
-	        fwrite($handle, serialize($data));
-	        fclose($handle);        	
+            $handle = fopen($this->path , 'w');
+            fwrite($handle, serialize($data));
+            fclose($handle);            
         }
         
         return $this;
@@ -122,10 +122,10 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      */
     public function getCache() {
         
-    	// make sure filters are parsed again if cache expired
-    	if (file_exists($this->path) && (time()-filectime($this->path)) < $this->config['expiration_time']) {
+        // make sure filters are parsed again if cache expired
+        if (file_exists($this->path) && (time()-filectime($this->path)) < $this->config['expiration_time']) {
             $data = unserialize(file_get_contents($this->path));
-	  	    return $data;
+              return $data;
         }
 
         return false;

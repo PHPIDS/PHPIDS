@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -26,11 +26,11 @@ require_once 'IDS/Log/Interface.php';
  * The Email wrapper is designed to send reports via email. It implements the
  * singleton pattern.
  *
- * @author		christ1an <ch0012@gmail.com>
+ * @author        christ1an <ch0012@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Email.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Email.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Log_Email implements IDS_Log_Interface {
@@ -40,7 +40,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      *
      * @var array
      */
-    private $recipients	= array();
+    private $recipients    = array();
 
     /**
      * Mail subject
@@ -107,7 +107,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @var array
      */
     private static $instance = array();
-	
+    
     /**
      * Constructor
      *
@@ -115,28 +115,28 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @return  void
      */
     protected function __construct($config) {
-		
-		if ($config instanceof IDS_Init) {
-			$this->recipients	= $config->config['Logging']['recipients'];
-			$this->subject		= $config->config['Logging']['subject'];
-			$this->headers		= $config->config['Logging']['header'];
-			$this->safemode 	= $config->config['Logging']['safemode'];
-			$this->allowed_rate = $config->config['Logging']['allowed_rate'];
-			$this->tmp_path		= $config->config['General']['tmp_path'];
-		
-		} elseif (is_array($config)) {
-			$this->recipients[]	= $config['recipients'];
-			$this->subject		= $config['subject'];
-			$this->additionalHeaders = $config['header'];
-		}
-		
-		// determine correct IP address
-		if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-			$this->ip = $_SERVER['REMOTE_ADDR'];
-		} elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
-	}
+        
+        if ($config instanceof IDS_Init) {
+            $this->recipients    = $config->config['Logging']['recipients'];
+            $this->subject        = $config->config['Logging']['subject'];
+            $this->headers        = $config->config['Logging']['header'];
+            $this->safemode     = $config->config['Logging']['safemode'];
+            $this->allowed_rate = $config->config['Logging']['allowed_rate'];
+            $this->tmp_path        = $config->config['General']['tmp_path'];
+        
+        } elseif (is_array($config)) {
+            $this->recipients[]    = $config['recipients'];
+            $this->subject        = $config['subject'];
+            $this->additionalHeaders = $config['header'];
+        }
+        
+        // determine correct IP address
+        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+            $this->ip = $_SERVER['REMOTE_ADDR'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+    }
 
     /**
      * Returns an instance of this class
@@ -147,21 +147,21 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @param   mixed   $config IDS_Init | array
      * @return  object  $this 
      */
-	public static function getInstance($config) {
-		if (!self::$instance) {
-			self::$instance = new IDS_Log_Email($config);
-		}
+    public static function getInstance($config) {
+        if (!self::$instance) {
+            self::$instance = new IDS_Log_Email($config);
+        }
 
-		return self::$instance;
-	}
+        return self::$instance;
+    }
 
-	/**
+    /**
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
      */
-	private function __clone() { }
-	
+    private function __clone() { }
+    
     /**
      * Detects spam attempts
      *
@@ -170,55 +170,55 @@ class IDS_Log_Email implements IDS_Log_Interface {
      *
      * @return  boolean
      */
-	protected function isSpamAttempt() {
-		
-		/*
-		* loop through all files in the tmp directory and
-		* delete garbage files
-		*/
-		$dir = $this->tmp_path;
-		$numPrefixChars = strlen($this->file_prefix);
-		
-		$files = scandir($dir);
-		foreach ($files as $file) {
-			if (is_file($dir . $file)) {
-				if (substr($file, 0, $numPrefixChars) == $this->file_prefix) {
-					$lastModified = filemtime($dir . $file);
-					
-					if ((time() - $lastModified) > 3600) {
-						unlink($dir . $file);
-					}
-				}
-			}
-		}
-		
-		/*
-		* end deleting garbage files
-		*/
-		$remoteAddr = $this->ip;
-		$userAgent	= $_SERVER['HTTP_USER_AGENT'];
-		
-		$filename	= $this->file_prefix . md5($remoteAddr . $userAgent) . '.tmp';
-		$file		= $dir . DIRECTORY_SEPARATOR . $filename;
-		
-		if (!file_exists($file)) {
-			$handle = fopen($file, 'w');
-			fwrite($handle, time());
-			fclose($handle);
-			
-			return false;
-		}
-		
-		$lastAttack = file_get_contents($file);
-		$difference = time() - $lastAttack;
-		if ($difference > $this->allowed_rate) {
-			unlink($file);
-		} else {
-			return true;
-		}
+    protected function isSpamAttempt() {
+        
+        /*
+        * loop through all files in the tmp directory and
+        * delete garbage files
+        */
+        $dir = $this->tmp_path;
+        $numPrefixChars = strlen($this->file_prefix);
+        
+        $files = scandir($dir);
+        foreach ($files as $file) {
+            if (is_file($dir . $file)) {
+                if (substr($file, 0, $numPrefixChars) == $this->file_prefix) {
+                    $lastModified = filemtime($dir . $file);
+                    
+                    if ((time() - $lastModified) > 3600) {
+                        unlink($dir . $file);
+                    }
+                }
+            }
+        }
+        
+        /*
+        * end deleting garbage files
+        */
+        $remoteAddr = $this->ip;
+        $userAgent    = $_SERVER['HTTP_USER_AGENT'];
+        
+        $filename    = $this->file_prefix . md5($remoteAddr . $userAgent) . '.tmp';
+        $file        = $dir . DIRECTORY_SEPARATOR . $filename;
+        
+        if (!file_exists($file)) {
+            $handle = fopen($file, 'w');
+            fwrite($handle, time());
+            fclose($handle);
+            
+            return false;
+        }
+        
+        $lastAttack = file_get_contents($file);
+        $difference = time() - $lastAttack;
+        if ($difference > $this->allowed_rate) {
+            unlink($file);
+        } else {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Prepares data
@@ -229,32 +229,32 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @param   mixed   $data
      * @return  string
      */
-	protected function prepareData($data) {
-		
-		$format	 = "The following attack has been detected by PHPIDS\n\n";
-		$format .= "IP: %s \n";
-		$format .= "Date: %s \n";
-		$format .= "Impact: %d \n";
-		$format .= "Affected tags: %s \n";
-		
-		$attackedParameters = '';
-		foreach ($data as $event) {
-			$attackedParameters .= $event->getName() . '=' . urlencode($event->getValue()) . ", ";
-		}
-		
-		$format .= "Affected parameters: %s \n";
-		$format .= "Request URI: %s";
-		
-		return sprintf(
-			$format,
-			$this->ip,
-			date('c'),
-			$data->getImpact(),
-			join(' ', $data->getTags()),
-			trim($attackedParameters),
-			urlencode($_SERVER['REQUEST_URI'])
-		);
-	}
+    protected function prepareData($data) {
+        
+        $format     = "The following attack has been detected by PHPIDS\n\n";
+        $format .= "IP: %s \n";
+        $format .= "Date: %s \n";
+        $format .= "Impact: %d \n";
+        $format .= "Affected tags: %s \n";
+        
+        $attackedParameters = '';
+        foreach ($data as $event) {
+            $attackedParameters .= $event->getName() . '=' . urlencode($event->getValue()) . ", ";
+        }
+        
+        $format .= "Affected parameters: %s \n";
+        $format .= "Request URI: %s";
+        
+        return sprintf(
+            $format,
+            $this->ip,
+            date('c'),
+            $data->getImpact(),
+            join(' ', $data->getTags()),
+            trim($attackedParameters),
+            urlencode($_SERVER['REQUEST_URI'])
+        );
+    }
 
     /**
      * Sends the report to registered recipients
@@ -263,70 +263,70 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @throws  Exception
      * @return  boolean
      */
-	public function execute(IDS_Report $data) {
-	
-		if ($this->safemode) {
-			if ($this->isSpamAttempt()) {
-				return false;
-			}
-		}
+    public function execute(IDS_Report $data) {
+    
+        if ($this->safemode) {
+            if ($this->isSpamAttempt()) {
+                return false;
+            }
+        }
 
-		/*
-		* In case the data has been modified before it might
-		* be necessary to convert it to string since it's pretty
-		* senseless to send array or object via e-mail
-		*/
-		$data = $this->prepareData($data);
+        /*
+        * In case the data has been modified before it might
+        * be necessary to convert it to string since it's pretty
+        * senseless to send array or object via e-mail
+        */
+        $data = $this->prepareData($data);
 
-		if (is_string($data)) {
-			$data = trim($data);
+        if (is_string($data)) {
+            $data = trim($data);
 
-			// if headers are passed as array, we need to make a string of it
-			if (is_array($this->headers)) {
-				$headers = "";
-				foreach ($this->headers as $header) {
-					$headers .= $header . "\r\n";
-				}
-			} else {
-				$headers = $this->headers;
-			}
+            // if headers are passed as array, we need to make a string of it
+            if (is_array($this->headers)) {
+                $headers = "";
+                foreach ($this->headers as $header) {
+                    $headers .= $header . "\r\n";
+                }
+            } else {
+                $headers = $this->headers;
+            }
 
-			if (!empty($this->recipients)) {
-				if (is_array($this->recipients)){
-					foreach ($this->recipients as $address) {
-						$this->send($address, $data, $headers);
-					}
-				} else {
-					$this->send($this->recipients, $data, $headers);
-				}
-			}
+            if (!empty($this->recipients)) {
+                if (is_array($this->recipients)){
+                    foreach ($this->recipients as $address) {
+                        $this->send($address, $data, $headers);
+                    }
+                } else {
+                    $this->send($this->recipients, $data, $headers);
+                }
+            }
 
-		} else {
-			throw new Exception(
-				'Please make sure that data returned by
-				 IDS_Log_Email::prepareData() is a string.'
-			);
-		}
+        } else {
+            throw new Exception(
+                'Please make sure that data returned by
+                 IDS_Log_Email::prepareData() is a string.'
+            );
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Sends an email
-	 *
-	 * @param   string  $address
-	 * @param   string  $data
-	 * @param   string  $headers
-	 * @return  boolean
-	 */
-	protected function send($address, $data, $headers){
-		return mail(
-			$address,
-			$this->subject,
-			$data,
-			$headers
-		);
-	}
+    /**
+     * Sends an email
+     *
+     * @param   string  $address
+     * @param   string  $data
+     * @param   string  $headers
+     * @return  boolean
+     */
+    protected function send($address, $data, $headers){
+        return mail(
+            $address,
+            $this->subject,
+            $data,
+            $headers
+        );
+    }
 }
 
 /*

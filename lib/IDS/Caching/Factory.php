@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 /**
@@ -24,12 +24,12 @@
  * This class is used as a factory to load the correct concrete caching
  * implementation.
  *
- * @author		.mario <mario.heiderich@gmail.com>
- * @author		christ1an <ch0012@gmail.com>
+ * @author        .mario <mario.heiderich@gmail.com>
+ * @author        christ1an <ch0012@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Factory.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Factory.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
  * @link        http://php-ids.org/
  */
@@ -57,7 +57,7 @@ class IDS_Caching {
         }
 
         return $object;
-	}
+    }
 }
 
 /*

@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 /**
@@ -27,37 +27,37 @@
  *
  * Note that this class implements both Countable and IteratorAggregate
  *
- * @author		Lars Strojny <lstrojny@neu.de>
+ * @author        Lars Strojny <lstrojny@neu.de>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Event.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Event.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Event implements Countable, IteratorAggregate {
 
     /**
      * Event name
-	 *
-	 * @var scalar
-	 */
-	protected $name	= NULL;
+     *
+     * @var scalar
+     */
+    protected $name    = NULL;
 
-	/**
-	 * Value of the event
-	 *
-	 * @var scalar
-	 */
-	protected $value = NULL;
+    /**
+     * Value of the event
+     *
+     * @var scalar
+     */
+    protected $value = NULL;
 
-	/**
+    /**
      * List of filter objects
      *
      * Filter objects in this array are those that matched the events value
-	 *
-	 * @var array
-	 */
-	protected $filters = array();
+     *
+     * @var array
+     */
+    protected $filters = array();
 
     /**
      * Calculated impact
@@ -66,142 +66,142 @@ class IDS_Event implements Countable, IteratorAggregate {
      *
      * @var integer
      */
-	protected $impact = 0;
+    protected $impact = 0;
 
-	/**
-	 * Affecte tags
-	 *
-	 * @var array
-	 */
-	protected $tags	= array();
+    /**
+     * Affecte tags
+     *
+     * @var array
+     */
+    protected $tags    = array();
 
-	/**
+    /**
      * Constructor
      *
      * Fills event properties
-	 *
-	 * @param   scalar  $name
-	 * @param   scalar  $value
+     *
+     * @param   scalar  $name
+     * @param   scalar  $value
      * @param   array   $filters
      * @return  void
-	 */
-	public function __construct($name, $value, array $filters) {
-		if (!is_scalar($name)) {
+     */
+    public function __construct($name, $value, array $filters) {
+        if (!is_scalar($name)) {
             throw new InvalidArgumentException(
                 'Expected $name to be a scalar,' . gettype($name) . ' given'
             );
         }
 
-		if (!is_scalar($value)) {
+        if (!is_scalar($value)) {
             throw new InvalidArgumentException('
                 Expected $value to be a scalar,' . gettype($value) . ' given'
             );
         }
 
-		$this->name = $name;
-		$this->value = $value;
+        $this->name = $name;
+        $this->value = $value;
 
-		foreach ($filters as $filter) {
-			if (!$filter instanceof IDS_Filter) {
-				throw new InvalidArgumentException(
+        foreach ($filters as $filter) {
+            if (!$filter instanceof IDS_Filter) {
+                throw new InvalidArgumentException(
                     'Filter must be derived from IDS_Filter'
                 );
             }
 
-			$this->filters[] = $filter;
-		}
-	}
+            $this->filters[] = $filter;
+        }
+    }
 
-	/**
-	 * Returns event name
-	 *
+    /**
+     * Returns event name
+     *
      * The name of the event usually is the key of the variable that was considered
      * to be malicious
-	 *
-	 * @return  scalar
-	 */
-	public function getName() {
-		return $this->name;
-	}
+     *
+     * @return  scalar
+     */
+    public function getName() {
+        return $this->name;
+    }
 
-	/**
-	 * Returns event value
-	 *
-	 * @return  scalar
-	 */
-	public function getValue() {
-		return $this->value;
-	}
+    /**
+     * Returns event value
+     *
+     * @return  scalar
+     */
+    public function getValue() {
+        return $this->value;
+    }
 
-	/**
-	 * Returns calculated impact
-	 *
-	 * @return  integer
-	 */
+    /**
+     * Returns calculated impact
+     *
+     * @return  integer
+     */
     public function getImpact() {
         if (!$this->impact) {
             $this->impact = 0;
-		    foreach ($this->filters as $filter) {
-		    	$this->impact += $filter->getImpact();
+            foreach ($this->filters as $filter) {
+                $this->impact += $filter->getImpact();
             }
         }
     
-		return $this->impact;
-	}
+        return $this->impact;
+    }
 
-	/**
-	 * Returns affected tags
-	 *
-	 * @return  array
-	 */
-	public function getTags() {
+    /**
+     * Returns affected tags
+     *
+     * @return  array
+     */
+    public function getTags() {
         $filters = $this->getFilters();
 
-		foreach ($filters as $filter) {
-			$this->tags = array_merge(
-				$this->tags,
-				$filter->getTags()
-			);
-		}
+        foreach ($filters as $filter) {
+            $this->tags = array_merge(
+                $this->tags,
+                $filter->getTags()
+            );
+        }
 
-		$this->tags = array_values(
-			array_unique($this->tags)
-		);
-		
-		return $this->tags;
-	}
+        $this->tags = array_values(
+            array_unique($this->tags)
+        );
+        
+        return $this->tags;
+    }
 
-	/**
-	 * Returns list of filter objects
-	 *
-	 * @return  array
-	 */
+    /**
+     * Returns list of filter objects
+     *
+     * @return  array
+     */
     public function getFilters() {
         return $this->filters;
-	}
+    }
 
-	/**
-	 * Returns number of filters
-	 *
-	 * To implement interface Countable this returns the number of filters
-	 * appended.
-	 *
-	 * @return  integer
-	 */
-	public function count() {
-		return count($this->getFilters());
-	}
+    /**
+     * Returns number of filters
+     *
+     * To implement interface Countable this returns the number of filters
+     * appended.
+     *
+     * @return  integer
+     */
+    public function count() {
+        return count($this->getFilters());
+    }
 
-	/**
-	 * IteratorAggregate iterator getter
-	 *
-	 * Returns an iterator to iterate over the appended filters.
-	 *
-	 * @return  Iterator|IteratorAggregate
-	 */
-	public function getIterator() {
-		return new ArrayObject($this->getFilters());
-	}
+    /**
+     * IteratorAggregate iterator getter
+     *
+     * Returns an iterator to iterate over the appended filters.
+     *
+     * @return  Iterator|IteratorAggregate
+     */
+    public function getIterator() {
+        return new ArrayObject($this->getFilters());
+    }
 }
 
 /*

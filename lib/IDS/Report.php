@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 /**
@@ -26,118 +26,118 @@
  *
  * Note that this class implements Countable, IteratorAggregate and a __toString() method
  *
- * @author		Lars Strojny <lstrojny@neu.de>
- * @author		christ1an <ch0012@gmail.com>
+ * @author        Lars Strojny <lstrojny@neu.de>
+ * @author        christ1an <ch0012@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Report.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Report.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Report implements Countable, IteratorAggregate {
 
-	/**
-	 * Event container
-	 *
-	 * @var array
-	 */
-	protected $events = array();
+    /**
+     * Event container
+     *
+     * @var array
+     */
+    protected $events = array();
 
-	/**
-	 * List of affected tags
-	 *
+    /**
+     * List of affected tags
+     *
      * This list of tags is collected from the collected event objects on demand when
      * IDS_Report->getTags() is called
-	 *
-	 * @var	array
-	 */
-	protected $tags = array();
+     *
+     * @var    array
+     */
+    protected $tags = array();
 
-	/**
-	 * Impact level
-	 *
+    /**
+     * Impact level
+     *
      * The impact level is calculated on demand by adding the results of the event
      * objects on IDS_Report->getImpact()
-	 *
-	 * @var integer
-	 */
-	protected $impact = 0;
+     *
+     * @var integer
+     */
+    protected $impact = 0;
 
 
-	/**
-	 * Constructor
-	 *
-     * @param   array	$events
+    /**
+     * Constructor
+     *
+     * @param   array    $events
      * @return  void
-	 */
-	public function __construct(array $events = NULL) {
-		if ($events) {
-			foreach ($events as $event) {
-				$this->addEvent($event);
-			}
-		}
-	}
+     */
+    public function __construct(array $events = NULL) {
+        if ($events) {
+            foreach ($events as $event) {
+                $this->addEvent($event);
+            }
+        }
+    }
 
-	/**
-	 * Adds an IDS_Event object to the report
-	 *
-	 * @param	object  $event	IDS_Event
-	 * @return	object	$this
-	 */
-	public function addEvent(IDS_Event $event) {
-		$this->clear();
-		$this->events[$event->getName()] = $event;
+    /**
+     * Adds an IDS_Event object to the report
+     *
+     * @param    object  $event    IDS_Event
+     * @return    object    $this
+     */
+    public function addEvent(IDS_Event $event) {
+        $this->clear();
+        $this->events[$event->getName()] = $event;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get event by name
-	 *
+    /**
+     * Get event by name
+     *
      * In most cases an event is identified by the key of the variable that contained
      * maliciously appearing content
-	 *
-	 * @param   scalar	$name
-	 * @throws	InvalidArgumentException
-	 * @return	mixed	IDS_Event object or false if the event does not exist
-	 */
-	public function getEvent($name) {
-		if (!is_scalar($name)) {
-			throw new InvalidArgumentException(
-				'Invalid argument type given'
-			);
-		}
+     *
+     * @param   scalar    $name
+     * @throws    InvalidArgumentException
+     * @return    mixed    IDS_Event object or false if the event does not exist
+     */
+    public function getEvent($name) {
+        if (!is_scalar($name)) {
+            throw new InvalidArgumentException(
+                'Invalid argument type given'
+            );
+        }
 
-		if ($this->hasEvent($name)) {
-			return $this->events[$name];
-		}
-		
-		return false;
-	}
+        if ($this->hasEvent($name)) {
+            return $this->events[$name];
+        }
+        
+        return false;
+    }
 
-	/**
-	 * Returns list of affected tags
-	 *
-	 * @return	array
-	 */
-	public function getTags() {
-		if (!$this->tags) {
-			$this->tags = array();
+    /**
+     * Returns list of affected tags
+     *
+     * @return    array
+     */
+    public function getTags() {
+        if (!$this->tags) {
+            $this->tags = array();
 
-			foreach ($this->events as $event) {
-				$this->tags = array_merge(
-					$this->tags,
-					$event->getTags()
-				);
-			}
+            foreach ($this->events as $event) {
+                $this->tags = array_merge(
+                    $this->tags,
+                    $event->getTags()
+                );
+            }
 
-			$this->tags = array_values(
-				array_unique($this->tags)
-			);
-		}
-		
-		return $this->tags;
-	}
+            $this->tags = array_values(
+                array_unique($this->tags)
+            );
+        }
+        
+        return $this->tags;
+    }
 
     /**
      * Returns total impact
@@ -147,97 +147,97 @@ class IDS_Report implements Countable, IteratorAggregate {
      *
      * @return  integer
      */
-	public function getImpact() {
-		if (!$this->impact) {
-			$this->impact = 0;
-			foreach ($this->events as $event) {
-				$this->impact += $event->getImpact();
-			}
-		}
+    public function getImpact() {
+        if (!$this->impact) {
+            $this->impact = 0;
+            foreach ($this->events as $event) {
+                $this->impact += $event->getImpact();
+            }
+        }
 
-		return $this->impact;
-	}
+        return $this->impact;
+    }
 
-	/**
-	 * Checks if a specific event with given name exists
-	 *
+    /**
+     * Checks if a specific event with given name exists
+     *
      * @param   scalar
      * @return  boolean
-	 */
-	public function hasEvent($name) {
-		if (!is_scalar($name)) {
-			throw new InvalidArgumentException('Invalid argument given');
-		}
+     */
+    public function hasEvent($name) {
+        if (!is_scalar($name)) {
+            throw new InvalidArgumentException('Invalid argument given');
+        }
 
-		return isset($this->events[$name]);
-	}
+        return isset($this->events[$name]);
+    }
 
-	/**
-	 * Returns total amount of events
-	 *
-	 * @return	integer
-	 */
-	public function count() {
-		return count($this->events);
-	}
+    /**
+     * Returns total amount of events
+     *
+     * @return    integer
+     */
+    public function count() {
+        return count($this->events);
+    }
 
-	 /**
-	 * Return iterator object
-	 *
+     /**
+     * Return iterator object
+     *
      * In order to provide the possibility to directly iterate over the IDS_Event object
      * the IteratorAggregate is implemented. One can easily use foreach() to iterate through
      * all stored IDS_Event objects.
-	 *
-	 * @return	Iterator
-	 */
-	public function getIterator() {
-		return new ArrayObject($this->events);
-	}
+     *
+     * @return    Iterator
+     */
+    public function getIterator() {
+        return new ArrayObject($this->events);
+    }
 
     /**
      * Checks if any events are registered
      *
      * @return  boolean
      */
-	public function isEmpty() {
-		return empty($this->events);
-	}
+    public function isEmpty() {
+        return empty($this->events);
+    }
 
-	/**
-	 * Clears calculated/collected values
-	 *
-	 * @return  void
-	 */
-	protected function clear() {
-		$this->impact = 0;
-		$this->tags = array();
-	}
-	
+    /**
+     * Clears calculated/collected values
+     *
+     * @return  void
+     */
+    protected function clear() {
+        $this->impact = 0;
+        $this->tags = array();
+    }
+    
     /**
      * Directly outputs all available information
      *
      * @return  string
      */
-	public function __toString() {
-		if (!$this->isEmpty()) {
-			$output = '';
-			
-			$output .= 'Total impact: ' . $this->getImpact() . "<br/>\n";
-			$output .= 'Affected tags: ' . join(', ', $this->getTags()) . "<br/>\n";
-			
-			foreach ($this->events as $event) {
-				$output .= "<br/>\nVariable: " . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "<br/>\n";
-				$output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "<br/>\n";
-				
-				foreach ($event as $filter) {
-					$output .= 'Description: ' . $filter->getDescription() . ' | ';
-					$output .= 'Tags: ' . join(', ', $filter->getTags()) . "<br/>\n";
-				}
-			}
-		}
-		
-		return isset($output) ? $output : false;
-	}
+    public function __toString() {
+        if (!$this->isEmpty()) {
+            $output = '';
+            
+            $output .= 'Total impact: ' . $this->getImpact() . "<br/>\n";
+            $output .= 'Affected tags: ' . join(', ', $this->getTags()) . "<br/>\n";
+            
+            foreach ($this->events as $event) {
+                $output .= "<br/>\nVariable: " . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "<br/>\n";
+                $output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "<br/>\n";
+                
+                foreach ($event as $filter) {
+                    $output .= 'Description: ' . $filter->getDescription() . ' | ';
+                    $output .= 'Tags: ' . join(', ', $filter->getTags()) . "<br/>\n";
+                }
+            }
+        }
+        
+        return isset($output) ? $output : false;
+    }
 }
 
 /*

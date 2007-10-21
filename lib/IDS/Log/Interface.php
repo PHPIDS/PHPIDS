@@ -15,21 +15,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * @package    PHPIDS
  */
 
 /**
  * Interface for logging wrappers
  *
- * @author		christ1an <ch0012@gmail.com>
+ * @author        christ1an <ch0012@gmail.com>
  *
- * @package		PHPIDS
+ * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
- * @version		SVN: $Id:Interface.php 517 2007-09-15 15:04:13Z mario $
+ * @version        SVN: $Id:Interface.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 interface IDS_Log_Interface {
-	public function execute(IDS_Report $data);
+    public function execute(IDS_Report $data);
 }
 
 /*
