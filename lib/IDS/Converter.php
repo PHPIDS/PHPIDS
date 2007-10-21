@@ -66,7 +66,7 @@ class IDS_Converter {
      * @static
      * @return  string
      */
-    public static function convertFromNewLines ($value) {
+    public static function convertFromNewLines($value) {
         
         return preg_replace('/(?:\n|\r)/m', ' ', $value);  
     } 
@@ -375,7 +375,7 @@ class IDS_Converter {
      * @static
      * @return  string
      */
-    public static function convertFromXML ($value) {
+    public static function convertFromXML($value) {
         
     	$converted = strip_tags($value);
     	
@@ -393,7 +393,7 @@ class IDS_Converter {
      * @return  string
      * //TODO: Test and optimize
      */
-    public static function convertFromCentrifuge ($value) {
+    public static function convertFromCentrifuge($value) {
 
     	if(strlen($value) > 80) {
     		//replace all non-special chars
