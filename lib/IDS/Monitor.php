@@ -103,7 +103,7 @@ class IDS_Monitor {
 	 * @param	array	$tags       optional list of tags to which filters should be applied
      * @return 	void
 	 */
-	public function __construct(Array $request, IDS_Init $init, Array $tags = NULL) {
+	public function __construct(array $request, IDS_Init $init, array $tags = NULL) {
 		
 		if (!empty($request)) {
 			$this->storage     = new IDS_Filter_Storage($init);

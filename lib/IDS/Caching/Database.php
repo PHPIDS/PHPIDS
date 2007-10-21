@@ -116,7 +116,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      * @throws  PDOException
      * @return  object  $this
      */
-    public function setCache(Array $data) {
+    public function setCache(array $data) {
 
     	$handle = $this->handle;
     	

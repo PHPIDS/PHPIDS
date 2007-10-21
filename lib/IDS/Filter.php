@@ -71,7 +71,7 @@ class IDS_Filter {
 	 * @param	array	$tags			list of tags
 	 * @param	integer $impact			filter impact level
 	 */
-	public function __construct($rule, $description, Array $tags, $impact) {
+	public function __construct($rule, $description, array $tags, $impact) {
 		$this->rule 	= $rule;
 		$this->tags 	= $tags;
 		$this->impact 	= $impact;		

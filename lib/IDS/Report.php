@@ -70,7 +70,7 @@ class IDS_Report implements Countable, IteratorAggregate {
      * @param   array	$events
      * @return  void
 	 */
-	public function __construct(Array $events = NULL) {
+	public function __construct(array $events = NULL) {
 		if ($events) {
 			foreach ($events as $event) {
 				$this->addEvent($event);

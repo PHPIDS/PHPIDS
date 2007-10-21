@@ -85,7 +85,7 @@ class IDS_Event implements Countable, IteratorAggregate {
      * @param   array   $filters
      * @return  void
 	 */
-	public function __construct($name, $value, Array $filters) {
+	public function __construct($name, $value, array $filters) {
 		if (!is_scalar($name)) {
             throw new InvalidArgumentException(
                 'Expected $name to be a scalar,' . gettype($name) . ' given'

@@ -102,7 +102,7 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      * @param   array   $data
      * @return  object  $this
      */
-    public function setCache(Array $data) {
+    public function setCache(array $data) {
 
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > $this->config['expiration_time'])) {
         	$handle = fopen($this->path , 'w');

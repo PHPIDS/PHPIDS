@@ -130,7 +130,7 @@ class IDS_Init {
      * @param	boolean	$overwrite
      * @return	void
      */
-    public function setConfig(Array $config, $overwrite = false) {
+    public function setConfig(array $config, $overwrite = false) {
     	
     	if($overwrite) {
     	   $this->config = array_merge($this->config, $config);
