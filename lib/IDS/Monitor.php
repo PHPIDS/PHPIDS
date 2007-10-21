@@ -27,14 +27,14 @@
  * @author        .mario <mario.heiderich@gmail.com>
  * @author        christ1an <ch0012@gmail.com>
  * @author        Lars Strojny <lstrojny@neu.de>
- * 
+ *
  * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
  * @version        SVN: $Id:Monitor.php 517 2007-09-15 15:04:13Z mario $
  * @link        http://php-ids.org/
  */
 class IDS_Monitor {
-    
+
     /**
      * Tags to define what to search for
      *
@@ -43,7 +43,7 @@ class IDS_Monitor {
      * @var array
      */
     private $tags = NULL;
-    
+
     /**
      * Request array
      *
@@ -52,7 +52,7 @@ class IDS_Monitor {
      * @var array
      */
     private $request = NULL;
-    
+
     /**
      * Container for filter rules
      *
@@ -71,13 +71,13 @@ class IDS_Monitor {
      * @var object
      */
     private $report = NULL;
-    
+
     /**
      * Scan keys switch
      *
      * Enabling this property will cause the monitor to scan both the key and
      * the value of variables
-     * 
+     *
      * @var boolean
      */
     public $scanKeys = false;
@@ -104,12 +104,12 @@ class IDS_Monitor {
      * @return     void
      */
     public function __construct(array $request, IDS_Init $init, array $tags = NULL) {
-        
+
         if (!empty($request)) {
             $this->storage     = new IDS_Filter_Storage($init);
             $this->request     = $request;
             $this->tags            = $tags;
-            
+
             if ($init) {
                 $this->scanKeys    = $init->config['General']['scan_keys'];
                 $this->exceptions  = $init->config['General']['exceptions'];
@@ -119,9 +119,9 @@ class IDS_Monitor {
         if (!is_writeable($init->config['General']['tmp_path'])) {
             throw new Exception(
                 'Please make sure the IDS/tmp folder is writable'
-            );                
-        }         
-        
+            );
+        }
+
         require_once 'IDS/Report.php';
         $this->report = new IDS_Report;
     }
@@ -181,10 +181,10 @@ class IDS_Monitor {
      * @return    bool|array  false or array of filter(s) that matched the value
      */
     private function detect($key, $value) {
-        
+
         // to increase performance, only start detection if value isn't alphanumeric
         if (preg_match('/[^\w\s\/]+/ims', $value) && !empty($value)) {
-            
+
             if (in_array($key, $this->exceptions, true)) {
                 return false;
             }
@@ -217,11 +217,11 @@ class IDS_Monitor {
                     }
                 }
             }
-                    
+
             return empty($filters) ? false : $filters;
         }
     }
-    
+
     /**
      * Matches given value and/or key against given filter
      *
@@ -240,10 +240,10 @@ class IDS_Monitor {
         if ($filter->match($value)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Sets exception array
      *
@@ -254,7 +254,7 @@ class IDS_Monitor {
         if (!is_array($exceptions)) {
             $exceptions = array($exceptions);
         }
-        
+
         $this->exceptions = $exceptions;
     }
 

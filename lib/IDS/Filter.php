@@ -27,7 +27,7 @@
  *
  * @author        christ1an <ch0012@gmail.com>
  * @author        Lars Strojny <lstrojny@neu.de>
- * 
+ *
  * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
  * @version        SVN: $Id:Filter.php 517 2007-09-15 15:04:13Z mario $
@@ -55,7 +55,7 @@ class IDS_Filter {
      * @var    integer
      */
     protected $impact = 0;
-    
+
     /**
      * Filter description
      *
@@ -74,7 +74,7 @@ class IDS_Filter {
     public function __construct($rule, $description, array $tags, $impact) {
         $this->rule     = $rule;
         $this->tags     = $tags;
-        $this->impact     = $impact;        
+        $this->impact     = $impact;
         $this->description = $description;
     }
 
@@ -82,7 +82,7 @@ class IDS_Filter {
      * Matches a string against current filter
      *
      * Matches given string against the filter rule the specific object of this
-     * class represents 
+     * class represents
      *
      * @param   string  $string
      * @throws  InvalidArgumentException

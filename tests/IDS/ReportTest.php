@@ -18,7 +18,7 @@
  * @package	PHPIDS tests
  * @version	SVN: $Id:ReportTest.php 515 2007-09-15 13:43:40Z christ1an $
  */
- 
+
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Report.php';
@@ -91,25 +91,25 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 		$this->assertType('IteratorAggregate', $this->report);
 		$this->assertType('IteratorAggregate', $this->report->getIterator());
 	}
-    
+
     public function testToString()
     {
-        $this->assertEquals(preg_match('/Total impact: 10/', $this->report->__toString()),1);                 
+        $this->assertEquals(preg_match('/Total impact: 10/', $this->report->__toString()),1);
     }
-    
+
     public function testToStringEmpty()
     {
         $this->report = new IDS_Report();
-        $this->assertFalse($this->report->__toString());               
-    }        
-    
+        $this->assertFalse($this->report->__toString());
+    }
+
     public function testGetEvent() {
         $this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter('test_c1', 'desc_c1', array('tag_c1'), 10))));
         $this->assertTrue($this->report->getEvent('key_c') instanceof IDS_Event);
     }
 
     public function testGetEventWrong() {
-        $this->assertFalse($this->report->getEvent('not_available'));          
-    }    
+        $this->assertFalse($this->report->getEvent('not_available'));
+    }
 
 }

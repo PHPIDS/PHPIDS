@@ -22,7 +22,7 @@ require_once 'IDS/Log/Interface.php';
 
 /*
  * Needed SQL:
- * 
+ *
     CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `intrusions`;
     CREATE TABLE IF NOT EXISTS `intrusions` (
@@ -35,9 +35,9 @@ require_once 'IDS/Log/Interface.php';
       `created` datetime NOT NULL,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM ;
- * 
- * 
- *  
+ *
+ *
+ *
  */
 
 /**
@@ -103,7 +103,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * @var string
      */
     private $ip = 'local/unknown';
-    
+
     /**
      * Instance container
      *
@@ -123,20 +123,20 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * @return  void
      */
     protected function __construct($config) {
-        
+
         if ($config instanceof IDS_Init) {
             $this->wrapper    = $config->config['Logging']['wrapper'];
             $this->user        = $config->config['Logging']['user'];
             $this->password = $config->config['Logging']['password'];
             $this->table     = $config->config['Logging']['table'];
-        
+
         } elseif (is_array($config)) {
             $this->wrapper    = $config['wrapper'];
             $this->user        = $config['user'];
             $this->password = $config['password'];
             $this->table     = $config['table'];
         }
-        
+
         // determine correct IP address
         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
             $this->ip = $_SERVER['REMOTE_ADDR'];
@@ -146,11 +146,11 @@ class IDS_Log_Database implements IDS_Log_Interface {
 
         try {
             $this->handle = new PDO(
-                $this->wrapper, 
-                $this->user, 
+                $this->wrapper,
+                $this->user,
                 $this->password
             );
-            
+
             $this->statement = $this->handle->prepare('
                 INSERT INTO ' . $this->table . ' (
                     name,
@@ -159,7 +159,7 @@ class IDS_Log_Database implements IDS_Log_Interface {
                     ip,
                     impact,
                     created
-                ) 
+                )
                 VALUES (
                     :name,
                     :value,
@@ -168,10 +168,10 @@ class IDS_Log_Database implements IDS_Log_Interface {
                     :impact,
                     now()
                 )
-            ');                                               
-            
+            ');
+
         } catch (PDOException $e) {
-            die('PDOException: ' . $e->getMessage());        
+            die('PDOException: ' . $e->getMessage());
         }
     }
 
@@ -182,15 +182,15 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * an array.
      *
      * @param   mixed   $config IDS_Init | array
-     * @return  object  $this 
+     * @return  object  $this
      */
     public static function getInstance($config) {
         if ($config instanceof IDS_Init) {
             $wrapper = $config->config['Logging']['wrapper'];
         } elseif (is_array($config)) {
             $wrapper = $config['wrapper'];
-        }    
-    
+        }
+
         if (!isset(self::$instances[$wrapper])) {
             self::$instances[$wrapper] = new IDS_Log_Database($config);
         }
@@ -213,26 +213,26 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * @return  boolean
      */
     public function execute(IDS_Report $data) {
-        
+
         foreach ($data as $event) {
             $page    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             $ip        = $this->ip;
-            
+
             $this->statement->bindParam('name', $event->getName());
             $this->statement->bindParam('value', $event->getValue());
             $this->statement->bindParam('page', $page);
             $this->statement->bindParam('ip', $ip);
             $this->statement->bindParam('impact', $data->getImpact());
-            
-            if (!$this->statement->execute()) { 
-                
+
+            if (!$this->statement->execute()) {
+
                 $info = $this->statement->errorInfo();
                 throw new Exception(
                     $this->statement->errorCode() . ', ' . $info[1] . ', ' . $info[2]
-                );     
+                );
             }
         }
-        
+
         return true;
     }
 

@@ -34,7 +34,7 @@ require_once 'IDS/Log/Interface.php';
  * @link        http://php-ids.org/
  */
 class IDS_Log_Email implements IDS_Log_Interface {
-    
+
     /**
      * Recipient container
      *
@@ -107,7 +107,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @var array
      */
     private static $instance = array();
-    
+
     /**
      * Constructor
      *
@@ -115,7 +115,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @return  void
      */
     protected function __construct($config) {
-        
+
         if ($config instanceof IDS_Init) {
             $this->recipients    = $config->config['Logging']['recipients'];
             $this->subject        = $config->config['Logging']['subject'];
@@ -123,13 +123,13 @@ class IDS_Log_Email implements IDS_Log_Interface {
             $this->safemode     = $config->config['Logging']['safemode'];
             $this->allowed_rate = $config->config['Logging']['allowed_rate'];
             $this->tmp_path        = $config->config['General']['tmp_path'];
-        
+
         } elseif (is_array($config)) {
             $this->recipients[]    = $config['recipients'];
             $this->subject        = $config['subject'];
             $this->additionalHeaders = $config['header'];
         }
-        
+
         // determine correct IP address
         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
             $this->ip = $_SERVER['REMOTE_ADDR'];
@@ -145,7 +145,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * an array.
      *
      * @param   mixed   $config IDS_Init | array
-     * @return  object  $this 
+     * @return  object  $this
      */
     public static function getInstance($config) {
         if (!self::$instance) {
@@ -161,7 +161,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * For the sake of correctness of a singleton pattern, this is necessary
      */
     private function __clone() { }
-    
+
     /**
      * Detects spam attempts
      *
@@ -171,44 +171,44 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @return  boolean
      */
     protected function isSpamAttempt() {
-        
+
         /*
         * loop through all files in the tmp directory and
         * delete garbage files
         */
         $dir = $this->tmp_path;
         $numPrefixChars = strlen($this->file_prefix);
-        
+
         $files = scandir($dir);
         foreach ($files as $file) {
             if (is_file($dir . $file)) {
                 if (substr($file, 0, $numPrefixChars) == $this->file_prefix) {
                     $lastModified = filemtime($dir . $file);
-                    
+
                     if ((time() - $lastModified) > 3600) {
                         unlink($dir . $file);
                     }
                 }
             }
         }
-        
+
         /*
         * end deleting garbage files
         */
         $remoteAddr = $this->ip;
         $userAgent    = $_SERVER['HTTP_USER_AGENT'];
-        
+
         $filename    = $this->file_prefix . md5($remoteAddr . $userAgent) . '.tmp';
         $file        = $dir . DIRECTORY_SEPARATOR . $filename;
-        
+
         if (!file_exists($file)) {
             $handle = fopen($file, 'w');
             fwrite($handle, time());
             fclose($handle);
-            
+
             return false;
         }
-        
+
         $lastAttack = file_get_contents($file);
         $difference = time() - $lastAttack;
         if ($difference > $this->allowed_rate) {
@@ -230,21 +230,21 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @return  string
      */
     protected function prepareData($data) {
-        
+
         $format     = "The following attack has been detected by PHPIDS\n\n";
         $format .= "IP: %s \n";
         $format .= "Date: %s \n";
         $format .= "Impact: %d \n";
         $format .= "Affected tags: %s \n";
-        
+
         $attackedParameters = '';
         foreach ($data as $event) {
             $attackedParameters .= $event->getName() . '=' . urlencode($event->getValue()) . ", ";
         }
-        
+
         $format .= "Affected parameters: %s \n";
         $format .= "Request URI: %s";
-        
+
         return sprintf(
             $format,
             $this->ip,
@@ -264,7 +264,7 @@ class IDS_Log_Email implements IDS_Log_Interface {
      * @return  boolean
      */
     public function execute(IDS_Report $data) {
-    
+
         if ($this->safemode) {
             if ($this->isSpamAttempt()) {
                 return false;

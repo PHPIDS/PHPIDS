@@ -20,7 +20,7 @@
 
 /**
  * Caching factory
- * 
+ *
  * This class is used as a factory to load the correct concrete caching
  * implementation.
  *
@@ -34,7 +34,7 @@
  * @link        http://php-ids.org/
  */
 class IDS_Caching {
-    
+
     /**
      * Factory method
      *
@@ -47,7 +47,7 @@ class IDS_Caching {
         $wrapper    = ucfirst($config['caching']);
         $class      = 'IDS_Caching_' . escapeshellcmd($wrapper);
         $path       = dirname(__FILE__) . DIRECTORY_SEPARATOR . escapeshellcmd($wrapper) . '.php';
-        
+
         if (file_exists($path)) {
             require_once $path;
 

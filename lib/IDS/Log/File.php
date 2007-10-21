@@ -34,7 +34,7 @@ require_once 'IDS/Log/Interface.php';
  * @link        http://php-ids.org/
  */
 class IDS_Log_File implements IDS_Log_Interface {
-    
+
     /**
      * Path to the log file
      *
@@ -66,7 +66,7 @@ class IDS_Log_File implements IDS_Log_Interface {
      * @return  void
      */
     protected function __construct($logfile) {
-        
+
         // determine correct IP address
         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
             $this->ip = $_SERVER['REMOTE_ADDR'];
@@ -85,7 +85,7 @@ class IDS_Log_File implements IDS_Log_Interface {
      * can be initiated.
      *
      * @param   mixed   $config IDS_Init or path to a file
-     * @return  object  $this 
+     * @return  object  $this
      */
     public static function getInstance($config) {
         if ($config instanceof IDS_Init) {
@@ -93,7 +93,7 @@ class IDS_Log_File implements IDS_Log_Interface {
         } elseif (is_string($config)) {
             $logfile = $config;
         }
-    
+
         if (!isset(self::$instances[$logfile])) {
             self::$instances[$logfile] = new IDS_Log_File($logfile);
         }
@@ -118,14 +118,14 @@ class IDS_Log_File implements IDS_Log_Interface {
      * @return  string
      */
     protected function prepareData($data) {
-    
+
         $format = '"%s",%s,%d,"%s","%s","%s"';
-        
+
         $attackedParameters = '';
         foreach ($data as $event) {
             $attackedParameters .= $event->getName() . '=' . rawurlencode($event->getValue()) . ' ';
         }
-        
+
         $dataString = sprintf(
             $format,
             $this->ip,
@@ -135,7 +135,7 @@ class IDS_Log_File implements IDS_Log_Interface {
             trim($attackedParameters),
             urlencode($_SERVER['REQUEST_URI'])
         );
-        
+
         return $dataString;
     }
 
@@ -155,26 +155,26 @@ class IDS_Log_File implements IDS_Log_Interface {
         $data = $this->prepareData($data);
 
         if (is_string($data)) {
-            
+
             if (file_exists($this->logfile)) {
                 $data = trim($data);
 
                 if (!empty($data)) {
                     if (is_writable($this->logfile)) {
-                    
+
                         $handle = fopen($this->logfile, 'a');
                         fwrite($handle, $data . "\n");
                         fclose($handle);
-                        
+
                     } else {
                         throw new Exception(
                             'Please make sure that ' . $this->logfile . ' is writeable.'
-                        );                        
+                        );
                     }
                 }
             } else {
                 throw new Exception(
-                    'Given file does not exist. Please make sure the  
+                    'Given file does not exist. Please make sure the
                     logfile is present in the given directory.'
                 );
             }

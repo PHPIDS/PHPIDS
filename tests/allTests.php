@@ -45,7 +45,7 @@ class allTests
                 $suite->addTestSuite($class);
             }
         }*/
-   
+
         require_once 'IDS/MonitorTest.php';
         require_once 'IDS/ReportTest.php';
         require_once 'IDS/InitTest.php';
@@ -63,6 +63,6 @@ class allTests
         $suite->addTestSuite('IDS_EventTest');
 
         return $suite;
-       
+
 	}
 }

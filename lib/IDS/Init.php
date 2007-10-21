@@ -20,7 +20,7 @@
 
 /**
  * Framework initiation
- * 
+ *
  * This class is used for the purpose to initiate the framework and inhabits
  * functionality to parse the needed configuration file.
  *
@@ -49,7 +49,7 @@ class IDS_Init {
      * @static
      */
     private static $instances = array();
-    
+
     /**
      * Path to the config file
      *
@@ -66,16 +66,16 @@ class IDS_Init {
      * @throws  Exception
      */
     private function __construct($configPath) {
-        
+
         require_once 'IDS/Monitor.php';
         require_once 'IDS/Filter/Storage.php';
-        
+
         $this->setConfigPath($configPath);
         $this->config = parse_ini_file($this->configPath, true);
-        
+
         return $this;
     }
-    
+
     /**
      * Permitting to clone this object
      *
@@ -93,7 +93,7 @@ class IDS_Init {
         if (!isset(self::$instances[$configPath])) {
             self::$instances[$configPath] = new IDS_Init($configPath);
         }
-        
+
         return self::$instances[$configPath];
     }
 
@@ -122,30 +122,30 @@ class IDS_Init {
     public function getConfigPath() {
         return $this->configPath;
     }
-    
+
     /**
      * Merges new settings into the exsiting ones or overwrites them
-     * 
+     *
      * @param    array    $config
      * @param    boolean    $overwrite
      * @return    void
      */
     public function setConfig(array $config, $overwrite = false) {
-        
+
         if($overwrite) {
            $this->config = array_merge($this->config, $config);
         } else {
-           $this->config = array_merge($config, $this->config);    
+           $this->config = array_merge($config, $this->config);
         }
     }
-    
+
     /**
      * Returns the config array
-     * 
+     *
      * @return array the config array
      */
     public function getConfig() {
-        
+
         return $this->config;
     }
 }

@@ -22,9 +22,9 @@ require_once 'IDS/Caching/Interface.php';
 
 /**
  * File caching wrapper
- * 
+ *
  * This class inhabits functionality to get and set cache via a static flatfile.
- * 
+ *
  * @author        .mario <mario.heiderich@gmail.com>
  *
  * @package        PHPIDS
@@ -40,14 +40,14 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      *
      * @var string
      */
-    private $type = NULL;     
+    private $type = NULL;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;    
+    private $config = NULL;
 
     /**
      * Path to cache file
@@ -55,13 +55,13 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      * @var string
      */
     private $path = NULL;
-    
+
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = NULL; 
+    private static $cachingInstance = NULL;
 
     /**
      * Constructor
@@ -71,19 +71,19 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      * @return  void
      */
     public function __construct($type, $config) {
-        
+
         $this->type = $type;
         $this->config = $config;
-        $this->path = $this->config['path']; 
-        
+        $this->path = $this->config['path'];
+
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp are writeable!'); 
-        }             
-    }    
-    
+            throw new Exception('Make sure all files in IDS/tmp are writeable!');
+        }
+    }
+
     /**
      * Returns an instance of this class
-     * 
+     *
      * @param   string  $type   caching type
      * @param   array   $config caching configuration
      * @return  object  $this
@@ -95,7 +95,7 @@ class IDS_Caching_File implements IDS_Caching_Interface {
 
         return self::$cachingInstance;
     }
-    
+
     /**
      * Writes cache data into the file
      *
@@ -107,12 +107,12 @@ class IDS_Caching_File implements IDS_Caching_Interface {
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > $this->config['expiration_time'])) {
             $handle = fopen($this->path , 'w');
             fwrite($handle, serialize($data));
-            fclose($handle);            
+            fclose($handle);
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Returns the cached data
      *
@@ -121,7 +121,7 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      * @return  mixed   cache data or false
      */
     public function getCache() {
-        
+
         // make sure filters are parsed again if cache expired
         if (file_exists($this->path) && (time()-filectime($this->path)) < $this->config['expiration_time']) {
             $data = unserialize(file_get_contents($this->path));

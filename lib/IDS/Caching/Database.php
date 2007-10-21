@@ -22,7 +22,7 @@ require_once 'IDS/Caching/Interface.php';
 
 /**
  * Needed SQL:
- * 
+ *
 
     CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `cache`;
@@ -36,16 +36,16 @@ require_once 'IDS/Caching/Interface.php';
 
 /**
  * Database caching wrapper
- * 
+ *
  * This class inhabits functionality to get and set cache via a database.
- * 
+ *
  * @author        .mario <mario.heiderich@gmail.com>
  *
  * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
  * @version        SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
  * @since       Version 0.4
- * @link        http://php-ids.org/ 
+ * @link        http://php-ids.org/
  */
 class IDS_Caching_Database implements IDS_Caching_Interface {
 
@@ -54,15 +54,15 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      *
      * @var string
      */
-    private $type = NULL;     
+    private $type = NULL;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;    
-    
+    private $config = NULL;
+
     /**
      * DBH
      *
@@ -75,7 +75,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      *
      * @var object
      */
-    private static $cachingInstance = NULL; 
+    private static $cachingInstance = NULL;
 
     /**
      * Constructor
@@ -87,25 +87,25 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      * @return  void
      */
     public function __construct($type, $config) {
-        
+
         $this->type = $type;
         $this->config = $config;
-        $this->handle = $this->connect();       
-    }    
-    
+        $this->handle = $this->connect();
+    }
+
     /**
      * Returns an instance of this class
-     * 
+     *
      * @param   string  $type   caching type
      * @param   array   $config caching configuration
      * @return  object  $this
      */
     public static function getInstance($type, $config) {
-        
+
         if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_Database($type, $config);
         }
-        
+
         return self::$cachingInstance;
     }
 
@@ -119,10 +119,10 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
     public function setCache(array $data) {
 
         $handle = $this->handle;
-        
+
         foreach ($handle->query('SELECT created FROM `'.mysql_escape_string($this->config['table']).'`') as $row) {
             if ((time()-strtotime($row['created'])) > $this->config['expiration_time']) {
-                
+
                 try {
                     $handle->query('TRUNCATE '.mysql_escape_string($this->config['table']).'');
                     $statement = $handle->prepare('
@@ -131,31 +131,31 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
                             data,
                             created,
                             modified
-                        ) 
+                        )
                         VALUES (
                             :type,
                             :data,
-                            now(), 
+                            now(),
                             now()
                         )
-                    ');                                            
-        
+                    ');
+
                     $statement->bindParam('type', mysql_escape_string($this->type));
                     $statement->bindParam('data', serialize($data));
-                    
-                    if (!$statement->execute()) { 
-                        throw new PDOException($statement->errorCode());     
-                    }            
-                    
+
+                    if (!$statement->execute()) {
+                        throw new PDOException($statement->errorCode());
+                    }
+
                 } catch (PDOException $e) {
-                    die('PDOException: ' . $e->getMessage());       
-                }                       
+                    die('PDOException: ' . $e->getMessage());
+                }
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Returns the cached data
      *
@@ -172,19 +172,19 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
                 'SELECT * FROM '.mysql_escape_string($this->config['table'])
                 . ' where type=?'
             );
-            $result->execute(array($this->type));            
-            
+            $result->execute(array($this->type));
+
             foreach($result as $row) {
                 return unserialize($row['data']);
             }
 
         } catch (PDOException $e) {
-            die('PDOException: ' . $e->getMessage());       
-        } 
-           
+            die('PDOException: ' . $e->getMessage());
+        }
+
         return false;
     }
-    
+
     /**
      * Connect to database and return a handle
      *
@@ -192,30 +192,30 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
      * @throws  PDOException
      */
     private function connect() {
-        
+
         // validate connection parameters
-        if (!$this->config['wrapper'] 
-            || !$this->config['user'] 
-                || !$this->config['password'] 
+        if (!$this->config['wrapper']
+            || !$this->config['user']
+                || !$this->config['password']
                     || !$this->config['table']) {
-            
+
             throw new Exception('
                 Insufficient connection parameters'
-            ); 
-        } 
+            );
+        }
 
         // try to connect
         try {
             $handle = new PDO(
-                $this->config['wrapper'], 
-                $this->config['user'], 
+                $this->config['wrapper'],
+                $this->config['user'],
                 $this->config['password']
             );
 
         } catch (PDOException $e) {
-            die('PDOException: ' . $e->getMessage());       
-        } 
-        
+            die('PDOException: ' . $e->getMessage());
+        }
+
         return $handle;
     }
 }

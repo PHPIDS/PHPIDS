@@ -22,9 +22,9 @@ require_once 'IDS/Caching/Interface.php';
 
 /**
  * File caching wrapper
- * 
+ *
  * This class inhabits functionality to get and set cache via memcached.
- * 
+ *
  * @author        .mario <mario.heiderich@gmail.com>
  *
  * @package        PHPIDS
@@ -40,14 +40,14 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      *
      * @var string
      */
-    private $type = NULL;     
+    private $type = NULL;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;    
+    private $config = NULL;
 
     /**
      * Path to memcache timestamp file
@@ -62,14 +62,14 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      * @var object
      */
     private $memcache = NULL;
-    
+
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = NULL; 
-  
+    private static $cachingInstance = NULL;
+
 
     /**
      * Constructor
@@ -80,32 +80,32 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      * @return  void
      */
     public function __construct($type, $config) {
-        
+
         $this->type = $type;
         $this->config = $config;
-        $this->memcache = $this->connect();       
-        
+        $this->memcache = $this->connect();
+
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp are writeable!'); 
-        }             
-    }      
-    
+            throw new Exception('Make sure all files in IDS/tmp are writeable!');
+        }
+    }
+
     /**
      * Returns an instance of this class
-     * 
+     *
      * @param   string  $type   caching type
      * @param   array   $config caching configuration
      * @return  object  $this
      */
     public static function getInstance($type, $config) {
-        
+
         if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_Memcached($type, $config);
         }
 
         return self::$cachingInstance;
     }
-    
+
     /**
      * Writes cache data
      *
@@ -114,16 +114,16 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      * @return  object  $this
      */
     public function setCache(array $data) {
-        
+
         if (!file_exists($this->path)) {
             $handle = fopen($this->path , 'w');
-            fclose($handle);                  
+            fclose($handle);
         }
 
         if (!is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp are writeable!'); 
-        }        
-        
+            throw new Exception('Make sure all files in IDS/tmp are writeable!');
+        }
+
         if ((time()-filectime($this->path)) > $this->config['expiration_time']) {
             $this->memcache->set(
                 $this->config['key_prefix'] . '.storage',
@@ -133,7 +133,7 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
 
         return $this;
     }
-    
+
     /**
      * Returns the cached data
      *
@@ -149,9 +149,9 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
             return $data;
         }
 
-        return false;        
+        return false;
     }
-    
+
     /**
      * Connect to the memcached server
      *
@@ -159,15 +159,15 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface {
      * @return  void
      */
     private function connect() {
-        
+
         if ($this->config['host'] && $this->config['port']) {
             // establish the memcache connection
             $this->memcache = new Memcache;
-            $this->memcache->pconnect($this->config['host'], $this->config['port']); 
-            $this->path = $this->config['tmp_path']; 
+            $this->memcache->pconnect($this->config['host'], $this->config['port']);
+            $this->path = $this->config['tmp_path'];
         } else {
             throw new Exception('Insufficient connection parameters');
-        }            
+        }
     }
 }
 

@@ -62,7 +62,7 @@ class IDS_Log_Composite {
      * @return  void
      */
     public function addLogger() {
-        
+
         $args = func_get_args();
 
         foreach ($args as $class) {

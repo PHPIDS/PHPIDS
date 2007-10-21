@@ -22,9 +22,9 @@ require_once 'IDS/Caching/Interface.php';
 
 /**
  * File caching wrapper
- * 
+ *
  * This class inhabits functionality to get and set cache via session.
- * 
+ *
  * @author        .mario <mario.heiderich@gmail.com>
  *
  * @package        PHPIDS
@@ -40,21 +40,21 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      *
      * @var string
      */
-    private $type = NULL;     
+    private $type = NULL;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;    
-    
+    private $config = NULL;
+
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = NULL; 
+    private static $cachingInstance = NULL;
 
     /**
      * Constructor
@@ -63,27 +63,27 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      * @param   array   $config caching configuration
      * @return  void
      */
-    public function __construct($type, $config) {        
+    public function __construct($type, $config) {
         $this->type = $type;
         $this->config = $config;
-    }    
-    
+    }
+
     /**
      * Returns an instance of this class
-     * 
+     *
      * @param   string  $type   caching type
      * @param   array   $config caching configuration
      * @return  object  $this
      */
     public static function getInstance($type, $config) {
-        
+
         if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_Session($type, $config);
         }
 
         return self::$cachingInstance;
     }
-    
+
     /**
      * Writes cache data into the session
      *
@@ -91,11 +91,11 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      * @return  object  $this
      */
     public function setCache(array $data) {
-    
+
         $_SESSION['PHPIDS'][$this->type] = $data;
         return $this;
     }
-    
+
     /**
      * Returns the cached data
      *
@@ -104,7 +104,7 @@ class IDS_Caching_Session implements IDS_Caching_Interface {
      * @return  mixed   cache data or false
      */
     public function getCache() {
-        
+
         if ($this->type && $_SESSION['PHPIDS'][$this->type]) {
             return $_SESSION['PHPIDS'][$this->type];
         }

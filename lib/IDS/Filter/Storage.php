@@ -26,7 +26,7 @@
  * requirements.
  *
  * @author        christ1an <ch0012@gmail.com>
- * 
+ *
  * @package        PHPIDS
  * @copyright   2007 The PHPIDS Group
  * @version        SVN: $Id:Storage.php 517 2007-09-15 15:04:13Z mario $
@@ -61,7 +61,7 @@ class IDS_Filter_Storage {
      * @var array
      */
     protected $filterSet = array();
-    
+
     /**
      * Constructor
      *
@@ -73,18 +73,18 @@ class IDS_Filter_Storage {
      */
     public final function __construct(IDS_Init $init) {
         if ($init->config) {
- 
+
             $caching    = $init->config['Caching']['caching'];
             $type       = $init->config['General']['filter_type'];
-            
+
             $this->source = $init->config['General']['filter_path'];
-            
+
             if (isset($caching) && $caching != 'none') {
                 $this->cacheSettings = $init->config['Caching'];
-                
+
                 require_once 'IDS/Caching/Factory.php';
                 $this->cache = IDS_Caching::factory(
-                    $this->cacheSettings, 
+                    $this->cacheSettings,
                     'storage'
                 );
             }
@@ -111,12 +111,12 @@ class IDS_Filter_Storage {
      *
      * @param   array   $filterSet  array containing multiple IDS_Filter instances
      * @return  object  $this
-     */ 
+     */
     public final function setFilterSet($filterSet) {
         foreach ($filterSet as $filter) {
             $this->addFilter($filter);
         }
-        
+
         return $this;
     }
 
@@ -127,8 +127,8 @@ class IDS_Filter_Storage {
      */
     public final function getFilterSet() {
         return $this->filterSet;
-    }   
-    
+    }
+
     /**
      * Adds a filter
      *
@@ -139,7 +139,7 @@ class IDS_Filter_Storage {
         $this->filterSet[] = $filter;
         return $this;
     }
-  
+
     /**
      * Checks if any filters are cached
      *
@@ -147,12 +147,12 @@ class IDS_Filter_Storage {
      */
     private function isCached() {
         $filters = false;
-        
-        if ($this->cacheSettings) {                            
+
+        if ($this->cacheSettings) {
             if ($this->cache) {
                 $filters = $this->cache->getCache();
             }
-        } 
+        }
 
         return $filters;
     }
@@ -174,22 +174,22 @@ class IDS_Filter_Storage {
              * See if filters are already available in the cache
              */
             $filters = $this->isCached();
-            
+
             /*
              * If they aren't, parse the source file
              */
-            if (!$filters) {        
+            if (!$filters) {
                 if (file_exists($this->source)) {
                     if (LIBXML_VERSION >= 20621) {
                         $filters = simplexml_load_file(
-                            $this->source, 
-                            NULL, 
+                            $this->source,
+                            NULL,
                             LIBXML_COMPACT
                         );
                    } else {
                        $filters = simplexml_load_file($this->source);
                    }
-                }        
+                }
             }
 
             /*
@@ -210,13 +210,13 @@ class IDS_Filter_Storage {
             $filters = $nocache ? $filters->filter : $filters;
 
             require_once 'IDS/Filter.php';
-            
+
             foreach ($filters as $filter) {
 
                 $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
                 $impact = $nocache ? (string) $filter->impact : $filter['impact'];
                 $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
-                $description = $nocache ? (string) $filter->description : $filter['description'];                       
+                $description = $nocache ? (string) $filter->description : $filter['description'];
 
                 $this->addFilter(
                     new IDS_Filter(
@@ -228,19 +228,19 @@ class IDS_Filter_Storage {
                 );
 
                 $data[] = array(
-                    'rule'        => $rule, 
-                    'impact'    => $impact, 
-                    'tags'        => $tags, 
+                    'rule'        => $rule,
+                    'impact'    => $impact,
+                    'tags'        => $tags,
                     'description' => $description
                 );
             }
-            
+
             /*
              * If caching is enabled, the fetched data will be cached
              */
             if ($this->cacheSettings) {
                 $this->cache->setCache($data);
-            }         
+            }
 
         } else {
             throw new Exception(
@@ -261,32 +261,32 @@ class IDS_Filter_Storage {
      * @return  object  $this
      */
     public function getFilterFromJson() {
-        
-        if (extension_loaded('Json')) { 
+
+        if (extension_loaded('Json')) {
 
             /*
              * See if filters are already available in the cache
              */
             $filters = $this->isCached();
-            
+
             /*
              * If they aren't, parse the source file
              */
-            if (!$filters) {              
+            if (!$filters) {
                 if (file_exists($this->source)) {
                     $filters = json_decode(file_get_contents($this->source));
                 } else {
                     throw new Exception(
                         'JSON data could not be loaded. Make sure you specified the correct path.'
                     );
-                }                  
+                }
             }
 
             if (!$filters) {
                 throw new Exception(
                     'JSON data could not be loaded. Make sure you specified the correct path.'
                 );
-            }    
+            }
 
             /*
              * Now the storage will be filled with IDS_Filter objects
@@ -296,13 +296,13 @@ class IDS_Filter_Storage {
             $filters = $nocache ? $filters->filters->filter : $filters;
 
             require_once 'IDS/Filter.php';
-            
+
             foreach ($filters as $filter) {
-                
+
                 $rule   = $nocache ? (string) $filter->rule : $filter['rule'];
                 $impact = $nocache ? (string) $filter->impact : $filter['impact'];
                 $tags   = $nocache ? array_values((array) $filter->tags) : $filter['tags'];
-                $description = $nocache ? (string) $filter->description : $filter['description'];                       
+                $description = $nocache ? (string) $filter->description : $filter['description'];
 
                 $this->addFilter(
                     new IDS_Filter(
@@ -314,26 +314,26 @@ class IDS_Filter_Storage {
                 );
 
                 $data[] = array(
-                    'rule'      => $rule, 
-                    'impact'    => $impact, 
-                    'tags'      => $tags, 
+                    'rule'      => $rule,
+                    'impact'    => $impact,
+                    'tags'      => $tags,
                     'description' => $description
                 );
             }
-            
+
             /*
              * If caching is enabled, the fetched data will be cached
              */
             if ($this->cacheSettings) {
                 $this->cache->setCache($data);
-            }     
-        
+            }
+
         } else {
             throw new Exception(
                 'ext/json not loaded.'
             );
         }
-        
+
         return $this;
     }
 }

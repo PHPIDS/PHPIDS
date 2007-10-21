@@ -111,7 +111,7 @@ class IDS_Report implements Countable, IteratorAggregate {
         if ($this->hasEvent($name)) {
             return $this->events[$name];
         }
-        
+
         return false;
     }
 
@@ -135,7 +135,7 @@ class IDS_Report implements Countable, IteratorAggregate {
                 array_unique($this->tags)
             );
         }
-        
+
         return $this->tags;
     }
 
@@ -212,7 +212,7 @@ class IDS_Report implements Countable, IteratorAggregate {
         $this->impact = 0;
         $this->tags = array();
     }
-    
+
     /**
      * Directly outputs all available information
      *
@@ -221,21 +221,21 @@ class IDS_Report implements Countable, IteratorAggregate {
     public function __toString() {
         if (!$this->isEmpty()) {
             $output = '';
-            
+
             $output .= 'Total impact: ' . $this->getImpact() . "<br/>\n";
             $output .= 'Affected tags: ' . join(', ', $this->getTags()) . "<br/>\n";
-            
+
             foreach ($this->events as $event) {
                 $output .= "<br/>\nVariable: " . htmlspecialchars($event->getName()) . ' | Value: ' . htmlspecialchars($event->getValue()) . "<br/>\n";
                 $output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' . join(', ', $event->getTags()) . "<br/>\n";
-                
+
                 foreach ($event as $filter) {
                     $output .= 'Description: ' . $filter->getDescription() . ' | ';
                     $output .= 'Tags: ' . join(', ', $filter->getTags()) . "<br/>\n";
                 }
             }
         }
-        
+
         return isset($output) ? $output : false;
     }
 }

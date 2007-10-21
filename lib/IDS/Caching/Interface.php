@@ -20,7 +20,7 @@
 
 /**
  * Caching wrapper interface
- * 
+ *
  * @author        .mario <mario.heiderich@gmail.com>
  *
  * @package        PHPIDS

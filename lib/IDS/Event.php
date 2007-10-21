@@ -145,7 +145,7 @@ class IDS_Event implements Countable, IteratorAggregate {
                 $this->impact += $filter->getImpact();
             }
         }
-    
+
         return $this->impact;
     }
 
@@ -167,7 +167,7 @@ class IDS_Event implements Countable, IteratorAggregate {
         $this->tags = array_values(
             array_unique($this->tags)
         );
-        
+
         return $this->tags;
     }
 

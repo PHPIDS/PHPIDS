@@ -27,9 +27,9 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
 	public function setUp() {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
-        $this->init = IDS_Init::init($this->path);  
+        $this->init = IDS_Init::init($this->path);
 	}
-		
+
 	public function testObjectConstruction()
 	{
 		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 12);
@@ -45,7 +45,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
 		$filter = new IDS_Filter('^te.st$', 'My description', array('tag1', 'tag2'), 1);
 
-		// Default must be 
+		// Default must be
 		// ... case-insensitive
 		$this->assertTrue($filter->match('TE1ST'));
 		// ... dot all (\n is matched by .)
@@ -78,11 +78,11 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testFilterSetFilterSet() {
-        
+
         $this->init->config['General']['filter_type'] = 'xml';
-        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';		
+        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
 		$this->storage = new IDS_Filter_Storage($this->init);
         $filter = new IDS_Filter('test', 'test2', array(), 1);
 	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
-	}	
+	}
 }
