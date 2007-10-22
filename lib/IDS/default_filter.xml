@@ -36,7 +36,7 @@
         <impact>4</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s])|(?:{[^:]+:[^}]+})]]></rule>
+        <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])|(?:{[^:]+:[^}]+})]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -140,7 +140,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|createRange|createContextualFragment|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|createRange|createContextualFragment|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -151,7 +151,7 @@
         <impact>6</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|expression|urn|eval|exec|toString|Execute|window|unescape|navigate)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -162,7 +162,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:hash|host|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:hash|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -173,7 +173,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:join|pop|push|reverse|shift|slice|splice|sort|unshift)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:join|pop|push|reverse|shift|slice|splice|sort|unshift)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -184,7 +184,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:atob|btoa|charat|charcodeat|concat|crypto|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:atob|btoa|charat|charcodeat|concat|crypto|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -195,7 +195,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:globalStorage|sessionStorage|callee|constructor|content|prototype|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:globalStorage|sessionStorage|callee|constructor|content|prototype|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -206,7 +206,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(?:(?:document\s*\.)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(?:(?:document\s*\.)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -570,7 +570,7 @@
         <impact>7</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*(?:define|eval|file_get_contents|include|require|require_once|set|shell_exec|phpinfo|system|passthru|preg_\w+|execute))]]></rule>
+        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*(?:define|eval|file_get_contents|include|require|require_once|set|shell_exec|phpinfo|system|passthru|preg_\w+|execute)\s*["(@])]]></rule>
         <description>Detects code injection attempts 2/3</description>
         <tags>
             <tag>id</tag>
