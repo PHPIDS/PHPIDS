@@ -254,7 +254,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(499, $result->getImpact());
+        $this->assertEquals(541, $result->getImpact());
 
     }
 
@@ -475,7 +475,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(384, $result->getImpact());
+        $this->assertEquals(390, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -614,9 +614,31 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(443, $result->getImpact());
+        $this->assertEquals(461, $result->getImpact());
     }
 
+    public function testSQLIList5() {
+
+        $exploits = array();
+
+        $exploits[] = "aa'/1 DIV 1 or+1=+'1 ";
+        $exploits[] = "aa'&0+1='aa";
+        $exploits[] = "aa' like(0) + 1-- -a ";
+        $exploits[] = "aa'^0+0='0";
+        $exploits[] = "aa'^0+0+1-1=(0)-- -a";
+        $exploits[] = "aa'<3+1 or+1=+'1";
+        $exploits[] = "aa'%1+0='0";
+        $exploits[] = "'/1/1='";
+
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(48, $result->getImpact());
+    }    
+    
     public function testDTList(){
 
         $test1 = '../../etc/passwd';
