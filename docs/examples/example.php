@@ -95,11 +95,9 @@ try {
             IDS_Log_Email::getInstance($init),
             IDS_Log_Database::getInstance($init)
         );
-        */
+        $compositeLog->execute($result);
+        **/
 
-        if (!$result->isEmpty()) {
-            $compositeLog->execute($result);
-        }
     } else {
         echo '<a href="?test=%22>XXX<script>alert(1)</script>">No attack detected - click for an example attack</a>';
     }
