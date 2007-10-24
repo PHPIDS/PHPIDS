@@ -35,7 +35,7 @@ try {
     * It's pretty easy to get the PHPIDS running
     * 1. Define what to scan
     */
-    $request = array('_GET' => $_GET, '_POST' => $_POST, '_SESSION' => $_SESSION);
+    $request = array_merge($_GET, $_POST, $_SESSION);
     $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');
 
     /**
@@ -95,8 +95,9 @@ try {
             IDS_Log_Email::getInstance($init),
             IDS_Log_Database::getInstance($init)
         );
+        */
         $compositeLog->execute($result);
-        **/
+        
 
     } else {
         echo '<a href="?test=%22>XXX<script>alert(1)</script>">No attack detected - click for an example attack</a>';

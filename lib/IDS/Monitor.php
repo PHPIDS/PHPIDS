@@ -15,7 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * @package	PHPIDS
  */
 /**
  * Monitoring engine
@@ -24,14 +24,14 @@
  * and provides functions to scan incoming data for malicious appearing script
  * fragments.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- * @author        christ1an <ch0012@gmail.com>
- * @author        Lars Strojny <lstrojny@neu.de>
+ * @author		.mario <mario.heiderich@gmail.com>
+ * @author		christ1an <ch0012@gmail.com>
+ * @author		Lars Strojny <lstrojny@neu.de>
  *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Monitor.php 517 2007-09-15 15:04:13Z mario $
- * @link        http://php-ids.org/
+ * @package		PHPIDS
+ * @copyright	2007 The PHPIDS Group
+ * @version		SVN: $Id:Monitor.php 517 2007-09-15 15:04:13Z mario $
+ * @link		http://php-ids.org/
  */
 class IDS_Monitor {
 
@@ -98,17 +98,17 @@ class IDS_Monitor {
     /**
      * Constructor
      *
-     * @param    array    $request    array to scan
-     * @param    object    $init       instance of IDS_Init
-     * @param    array    $tags       optional list of tags to which filters should be applied
-     * @return     void
+     * @param	array	$request	array to scan
+     * @param	object	$init		instance of IDS_Init
+     * @param	array	$tags		optional list of tags to which filters should be applied
+     * @return	void
      */
-    public function __construct(array $request, IDS_Init $init, array $tags = NULL) {
+    public function __construct(Array $request, IDS_Init $init, Array $tags = NULL) {
 
         if (!empty($request)) {
-            $this->storage     = new IDS_Filter_Storage($init);
-            $this->request     = $request;
-            $this->tags            = $tags;
+            $this->storage	= new IDS_Filter_Storage($init);
+            $this->request	= $request;
+            $this->tags		= $tags;
 
             if ($init) {
                 $this->scanKeys    = $init->config['General']['scan_keys'];
@@ -145,11 +145,12 @@ class IDS_Monitor {
      * Iterates through given data and delegates it to IDS_Monitor::detect() in
      * order to check for malicious appearing fragments
      *
-     * @param    mixed   $key
-     * @param    mixed   $value
-     * @return     void
+     * @param	mixed   $key
+     * @param	mixed   $value
+     * @return	void
      */
     private function iterate($key, $value) {
+
         if (!is_array($value)) {
             if (is_string($value)) {
 
@@ -228,7 +229,7 @@ class IDS_Monitor {
      * @param    mixed    $key
      * @param    mixed    $value
      * @param    object    $filter
-     * @return    boolean
+     * @return   boolean
      */
     private function match($key, $value, $filter) {
         if ($this->scanKeys) {

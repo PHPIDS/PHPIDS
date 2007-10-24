@@ -81,8 +81,8 @@ class IDS_Report implements Countable, IteratorAggregate {
     /**
      * Adds an IDS_Event object to the report
      *
-     * @param    object  $event    IDS_Event
-     * @return    object    $this
+     * @param	object	$event	IDS_Event
+     * @return	object	$this
      */
     public function addEvent(IDS_Event $event) {
         $this->clear();
@@ -97,9 +97,9 @@ class IDS_Report implements Countable, IteratorAggregate {
      * In most cases an event is identified by the key of the variable that contained
      * maliciously appearing content
      *
-     * @param   scalar    $name
-     * @throws    InvalidArgumentException
-     * @return    mixed    IDS_Event object or false if the event does not exist
+     * @param	scalar	$name
+     * @throws	InvalidArgumentException
+     * @return	mixed	IDS_Event object or false if the event does not exist
      */
     public function getEvent($name) {
         if (!is_scalar($name)) {
