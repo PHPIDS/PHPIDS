@@ -27,7 +27,7 @@ require_once 'IDS/Filter/Storage.php';
 class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
-    	$path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
         $this->init = IDS_Init::init($path);
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
         $this->init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
@@ -102,8 +102,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testListWithJsonFilters()
     {
 
-    	$this->init->config['General']['filter_type'] = 'json';
-    	$this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.json';
+        $this->init->config['General']['filter_type'] = 'json';
+        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.json';
 
         $test = new IDS_Monitor(
             array(
@@ -235,16 +235,16 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "{z= (1.==4.)?here:{z: (1.!=5.)?'':be}}{y= (9.==2.)?dragons:{y: 'l'+z.z}}{x= (6.==5.)?3:{x: 'a'+y.y}}{w= (5.==8.)?9:{w: 'ev'+x.x}}{v= (7.==9.)?3:{v: 'tr(2.)'+z.z}}{u= (3.==8.)?4:{u: 'sh.subs'+v.v}}{t= (6.==2.)?6:{t: y.y+'ocation.ha'+u.u}}{s= (4.==3.)?3:{s: (8.!=3.)?(2.)[w.w]:z}}{r= s.s(t.t)}{s.s(r)+z.z}";
         $exploits[] = "a=1==1?1==1.?'':x:x;b=1==1?'val'+a:x;b=1==1?'e'+b:x;c=1==1?'str(1)'+a:x;c=1==1?'sh.sub'+c:x;c=1==1?'ion.ha'+c:x;c=1==1?'locat'+c:x;d=1==1?1==1.?0.[b]:x:x;d(d(c))";
         $exploits[] = "{z =(1)?\"\":a}{y =(1)?{y: 'l'+z}:{y: 'l'+z.z}}x=''+z+'eva'+y.y;n=.1[x];{};;
-							o=''+z+\"aler\"+z+\"t(x)\";
-							n(o);";
+                            o=''+z+\"aler\"+z+\"t(x)\";
+                            n(o);";
         $exploits[] = ";{z =(1)?\"\":a}{y =(1)?{y: 'eva'+z}:{y: 'l'+z.z}}x=''+z+{}+{}+{};
-							{};;
-							{v =(0)?z:z}v={_$:z+'aler'+z};
-							{k =(0)?z:z}k={_$$:v._$+'t(x)'+z};
-							x=''+y.y+'l';{};
+                            {};;
+                            {v =(0)?z:z}v={_$:z+'aler'+z};
+                            {k =(0)?z:z}k={_$$:v._$+'t(x)'+z};
+                            x=''+y.y+'l';{};
 
-							n=.1[x];
-							n(k._$$)";
+                            n=.1[x];
+                            n(k._$$)";
         $exploits[] = "ä=/ä/!=/ä/?'': 0;b=(ä+'eva'+ä);b=(b+'l'+ä);d=(ä+'XSS'+ä);c=(ä+'aler'+ä);c=(c+'t(d)'+ä);$=.0[b];a=$;a(c)";
 
 
@@ -254,7 +254,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(541, $result->getImpact());
+        $this->assertEquals(547, $result->getImpact());
 
     }
 
@@ -263,81 +263,81 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits[] = "ä=/ä/?'': 0;b=(ä+'eva'+ä);b=(b+'l'+ä);d=(ä+'XSS'+ä);c=(ä+'aler'+ä);c=(c+'t(d)'+ä);ä=.0[b];ä(c)";
         $exploits[] = "b = (x());
-						$ = .0[b];a=$;
-						a( h() );
-						function x () { return 'eva' + p(); };
-						function p() { return 'l' ; };
-						function h() { return 'aler' + i(); };
-						function i() { return 't (123456)' ; };";
+                        $ = .0[b];a=$;
+                        a( h() );
+                        function x () { return 'eva' + p(); };
+                        function p() { return 'l' ; };
+                        function h() { return 'aler' + i(); };
+                        function i() { return 't (123456)' ; };";
         $exploits[] = "s=function test2() {return 'aalert(1)a';1,1}();
-						void(a = {} );
-						a.a1=function xyz() {return s[1] }();
-						a.a2=function xyz() {return s[2] }();
-						a.a3=function xyz() {return s[3] }();
-						a.a4=function xyz() {return s[4] }();
-						a.a5=function xyz() {return s[5] }();
-						a.a6=function xyz() {return s[6] }();
-						a.a7=function xyz() {return s[7] }();
-						a.a8=function xyz() {return s[8] }();
-						$=function xyz() {return a.a1 + a.a2 + a.a3 +a.a4 +a.a5 + a.a6 + a.a7
-						+a.a8 }();
-						new Function($)();";
+                        void(a = {} );
+                        a.a1=function xyz() {return s[1] }();
+                        a.a2=function xyz() {return s[2] }();
+                        a.a3=function xyz() {return s[3] }();
+                        a.a4=function xyz() {return s[4] }();
+                        a.a5=function xyz() {return s[5] }();
+                        a.a6=function xyz() {return s[6] }();
+                        a.a7=function xyz() {return s[7] }();
+                        a.a8=function xyz() {return s[8] }();
+                        $=function xyz() {return a.a1 + a.a2 + a.a3 +a.a4 +a.a5 + a.a6 + a.a7
+                        +a.a8 }();
+                        new Function($)();";
         $exploits[] = "x = localName.toLowerCase() + 'lert(1),' + 0x00;new Function(x)()";
         $exploits[] = "txt = java.lang.Character (49) ;rb = java.lang.Character (41) ;lb =
-						java.lang.Character (40) ;a = java./**/lang.Character (97) ;l =
-						java.lang.Character (108) ;e = java.//
+                        java.lang.Character (40) ;a = java./**/lang.Character (97) ;l =
+                        java.lang.Character (108) ;e = java.//
                         lang.Character (101) ;r =
-						java.lang.Character (114) ;t = java . lang.Character (116) ; v =
-						java.lang.Character (118) ;f = as( ) ; function msg () { return lb+
-						txt+ rb }; function as () { return a+ l+ e+ r+ t+ msg() }; function
-						ask () { return e+ v+ a+ l };g = ask ( ) ; (0[g])(f) ";
+                        java.lang.Character (114) ;t = java . lang.Character (116) ; v =
+                        java.lang.Character (118) ;f = as( ) ; function msg () { return lb+
+                        txt+ rb }; function as () { return a+ l+ e+ r+ t+ msg() }; function
+                        ask () { return e+ v+ a+ l };g = ask ( ) ; (0[g])(f) ";
         $exploits[] =  "s=new String;
-							e = /aeavaala/+s;
-							e = new String + e[ 2 ] + e[ 4 ] + e[ 5 ] + e[ 7 ];
-							a = /aablaecrdt(1)a/+s;
-							a = new String + a[ 2]+a[ 4 ] + a[ 6 ] + a[ 8 ] + a[ 10 ] + a[ 11 ]
-							+ a[ 12 ] + a[ 13 ],
-							e=new Date() [e];";
+                            e = /aeavaala/+s;
+                            e = new String + e[ 2 ] + e[ 4 ] + e[ 5 ] + e[ 7 ];
+                            a = /aablaecrdt(1)a/+s;
+                            a = new String + a[ 2]+a[ 4 ] + a[ 6 ] + a[ 8 ] + a[ 10 ] + a[ 11 ]
+                            + a[ 12 ] + a[ 13 ],
+                            e=new Date() [e];";
         $exploits[] = '$a= !false?"ev":1
-						$b= !false? "al":1
-						$a= !false?$a+$b:1
-						$a= !false?0[$a]:1
-						$b= !false?"locat":1
-						$c= !false?"ion.h":1
-						$d= !false?"ash":1
-						$b= !false?$b+$c+$d:1
-						$a setter=$a,$a=$a=$b';
+                        $b= !false? "al":1
+                        $a= !false?$a+$b:1
+                        $a= !false?0[$a]:1
+                        $b= !false?"locat":1
+                        $c= !false?"ion.h":1
+                        $d= !false?"ash":1
+                        $b= !false?$b+$c+$d:1
+                        $a setter=$a,$a=$a=$b';
         $exploits[] = "$1 = /e1v1a1l/+''
-						$2 = []
-						$2 += $1[1]
-						$2 += $1[3]
-						$2 += $1[5]
-						$2 += $1[7]
-						$2 = $1[ $2 ]
-						$3 = /a1l1e1r1t1(1)1/+''
-						$4 = []
-						$4 += $3[1]
-						$4 += $3[3]
-						$4 += $3[5]
-						$4 += $3[7]
-						$4 += $3[9]
-						$4 += $3[11]
-						$4 += $3[12]
-						$4 += $3[13]
-						$2_ = $2
-						$4_ = $4
-						$2_ ( $4_ )";
+                        $2 = []
+                        $2 += $1[1]
+                        $2 += $1[3]
+                        $2 += $1[5]
+                        $2 += $1[7]
+                        $2 = $1[ $2 ]
+                        $3 = /a1l1e1r1t1(1)1/+''
+                        $4 = []
+                        $4 += $3[1]
+                        $4 += $3[3]
+                        $4 += $3[5]
+                        $4 += $3[7]
+                        $4 += $3[9]
+                        $4 += $3[11]
+                        $4 += $3[12]
+                        $4 += $3[13]
+                        $2_ = $2
+                        $4_ = $4
+                        $2_ ( $4_ )";
         $exploits[] = 'x=![]?\'42\':0
-						$a= !x?\'ev\':0
-						$b= !x?\'al\':0
-						$a= !x?$a+$b:0
-						$a setter = !x?0[$a]:0
-						$b= !x?\'locat\':0
-						$c= !x?\'ion.h\':0
-						$d= !x?\'ash\':0
-						$b= !x?$b+$c+$d:0
-						$msg= !x?\'i love ternary operators\':0
-						$a=$a=$b';
+                        $a= !x?\'ev\':0
+                        $b= !x?\'al\':0
+                        $a= !x?$a+$b:0
+                        $a setter = !x?0[$a]:0
+                        $b= !x?\'locat\':0
+                        $c= !x?\'ion.h\':0
+                        $d= !x?\'ash\':0
+                        $b= !x?$b+$c+$d:0
+                        $msg= !x?\'i love ternary operators\':0
+                        $a=$a=$b';
         $exploits[] = "123[''+<_>ev</_>+<_>al</_>](''+<_>aler</_>+<_>t</_>+<_>(1)</_>);";
 
         $test = new IDS_Monitor(
@@ -347,17 +347,17 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(197, $result->getImpact());
+        $this->assertEquals(221, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
 
         $exploits = array();
         $exploits[] = "a=<r>loca<v>e</v>tion.has<v>va</v>h.subs<v>l</v>tr(1)</r>
-						{b=0e0[a.v.text()
-						]}http='';b(b(http+a.text()
-						))
-						";
+                        {b=0e0[a.v.text()
+                        ]}http='';b(b(http+a.text()
+                        ))
+                        ";
         $exploits[] = 'y=<a>alert</a>;content[y](123)';
         $exploits[] = "s1=<s>evalalerta(1)a</s>; s2=<s></s>+''; s3=s1+s2; e1=/s1/?s3[0]:s1; e2=/s1/?s3[1]:s1; e3=/s1/?s3[2]:s1; e4=/s1/?s3[3]:s1; e=/s1/?.0[e1+e2+e3+e4]:s1; a1=/s1/?s3[4]:s1; a2=/s1/?s3[5]:s1; a3=/s1/?s3[6]:s1; a4=/s1/?s3[7]:s1; a5=/s1/?s3[8]:s1; a6=/s1/?s3[10]:s1; a7=/s1/?s3[11]:s1; a8=/s1/?s3[12]:s1; a=a1+a2+a3+a4+a5+a6+a7+a8;e(a)";
 
@@ -382,8 +382,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                       _(1)';
         $exploits[] = 'alert(1)';
         $exploits[] = "b=/a/,
-						d=alert
-						d(";
+                        d=alert
+                        d(";
         $exploits[] = "1
                         alert(1)";
         $exploits[] = "crypto [ [ 'aler' , 't' ] [ 'join' ] ( [] ) ] (1) ";
@@ -427,7 +427,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(320, $result->getImpact());
+        $this->assertEquals(332, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -463,11 +463,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "asd' =- (-'asd') -- -a";
         $exploits[] = 'aa"in+ ("aa") or -1 != "0';
         $exploits[] = 'aa" =+ - "0  ';
-		$exploits[] = "aa' LIKE 0 -- -a";
-		$exploits[] = "aa' LIKE md5(1) or '1";
-		$exploits[] = "aa' REGEXP- md5(1) or '1";
-		$exploits[] = "aa' DIV@1 = 0 or '1";
-		$exploits[] = "aa' XOR- column != -'0";
+        $exploits[] = "aa' LIKE 0 -- -a";
+        $exploits[] = "aa' LIKE md5(1) or '1";
+        $exploits[] = "aa' REGEXP- md5(1) or '1";
+        $exploits[] = "aa' DIV@1 = 0 or '1";
+        $exploits[] = "aa' XOR- column != -'0";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -475,37 +475,37 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(390, $result->getImpact());
+        $this->assertEquals(408, $result->getImpact());
     }
 
     public function testSQLIList2() {
 
         $exploits = array();
-		$exploits[] = 'asd"or-1="-1';
-		$exploits[] = 'asd"or!1="!1';
-		$exploits[] = 'asd"or!(1)="1';
-		$exploits[] = 'asd"or@1="@1';
-		$exploits[] = 'asd"or-1 XOR"0';
-		$exploits[] = 'asd" or ascii(1)="49';
-		$exploits[] = 'asd" or md5(1)^"1';
-		$exploits[] = 'asd" or table.column^"1';
-		$exploits[] = 'asd" or @@version^"0';
-		$exploits[] = 'asd" or @@global.hot_cache.key_buffer_size^"1';
-		$exploits[] = 'asd" or!(selec79t name from users limit 1)="1';
-		$exploits[] = '1"OR!"a';
-		$exploits[] = '1"OR!"0';
-		$exploits[] = '1"OR-"1';
-		$exploits[] = '1"OR@"1" IS NULL #1 ! (with unfiltered comment by tx ;)';
-		$exploits[] = '1"OR!(false) #1 !';
-		$exploits[] = '1"OR-(true) #a !';
-		$exploits[] = '1" INTO OUTFILE "C:/webserver/www/readme.php';
-		$exploits[] = "asd' or md5(5)^'1 ";
-		$exploits[] = "asd' or column^'-1 ";
-		$exploits[] = "asd' or true -- a";
-		$exploits[] = '\"asd" or 1="1';
-		$exploits[] = "a 1' or if(-1=-1,true,false)#!";
-		$exploits[] = "aa\\\\\"aaa' or '1";
-		$exploits[] = "' or id= 1 having 1 #1 !";
+        $exploits[] = 'asd"or-1="-1';
+        $exploits[] = 'asd"or!1="!1';
+        $exploits[] = 'asd"or!(1)="1';
+        $exploits[] = 'asd"or@1="@1';
+        $exploits[] = 'asd"or-1 XOR"0';
+        $exploits[] = 'asd" or ascii(1)="49';
+        $exploits[] = 'asd" or md5(1)^"1';
+        $exploits[] = 'asd" or table.column^"1';
+        $exploits[] = 'asd" or @@version^"0';
+        $exploits[] = 'asd" or @@global.hot_cache.key_buffer_size^"1';
+        $exploits[] = 'asd" or!(selec79t name from users limit 1)="1';
+        $exploits[] = '1"OR!"a';
+        $exploits[] = '1"OR!"0';
+        $exploits[] = '1"OR-"1';
+        $exploits[] = '1"OR@"1" IS NULL #1 ! (with unfiltered comment by tx ;)';
+        $exploits[] = '1"OR!(false) #1 !';
+        $exploits[] = '1"OR-(true) #a !';
+        $exploits[] = '1" INTO OUTFILE "C:/webserver/www/readme.php';
+        $exploits[] = "asd' or md5(5)^'1 ";
+        $exploits[] = "asd' or column^'-1 ";
+        $exploits[] = "asd' or true -- a";
+        $exploits[] = '\"asd" or 1="1';
+        $exploits[] = "a 1' or if(-1=-1,true,false)#!";
+        $exploits[] = "aa\\\\\"aaa' or '1";
+        $exploits[] = "' or id= 1 having 1 #1 !";
         $exploits[] = "' or id= 2-1 having 1 #1 !";
         $exploits[] = "aa'or null is null #(";
         $exploits[] = "aa'or current_user!=' 1";
@@ -533,28 +533,28 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1' union (select password from users) -- -a";
         $exploits[] = "1' union (select'1','2',password from users) -- -a";
         $exploits[] = "1' union all (select'1',password from users) -- -a";
-		$exploits[] = "aa'!='1";
-		$exploits[] = "aa'!=~'1";
-		$exploits[] = "aa'=('aa')#(";
-		$exploits[] = "aa'|+'1";
-		$exploits[] = "aa'|!'aa";
-		$exploits[] = "aa'^!'aa ";
-		$exploits[] = "abc' = !!'0";
-		$exploits[] = "abc' = !!!!'0";
-		$exploits[] = "abc' = !!!!!!!!!!!!!!'0";
-		$exploits[] = "abc' = !0 = !!'0";
-		$exploits[] = "abc' = !0 != !!!'0";
-		$exploits[] = "abc' = !+0 != !'0 ";
-		$exploits[] = "aa'=+'1";
-		$exploits[] = "';if 1=1 drop database test-- -a";
-		$exploits[] = "';if 1=1 drop table users-- -a";
-		$exploits[] = "';if 1=1 shutdown-- -a";
-		$exploits[] = "'; while 1=1 shutdown-- -a";
-		$exploits[] = "'; begin shutdown end-- -a ";
-		$exploits[] = "'+COALESCE('admin') and 1 = !1 div 1+'";
-		$exploits[] = "'+COALESCE('admin') and @@version = !1 div 1+'";
-		$exploits[] = "'+COALESCE('admin') and @@version = !@@version div @@version+'";
-		$exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
+        $exploits[] = "aa'!='1";
+        $exploits[] = "aa'!=~'1";
+        $exploits[] = "aa'=('aa')#(";
+        $exploits[] = "aa'|+'1";
+        $exploits[] = "aa'|!'aa";
+        $exploits[] = "aa'^!'aa ";
+        $exploits[] = "abc' = !!'0";
+        $exploits[] = "abc' = !!!!'0";
+        $exploits[] = "abc' = !!!!!!!!!!!!!!'0";
+        $exploits[] = "abc' = !0 = !!'0";
+        $exploits[] = "abc' = !0 != !!!'0";
+        $exploits[] = "abc' = !+0 != !'0 ";
+        $exploits[] = "aa'=+'1";
+        $exploits[] = "';if 1=1 drop database test-- -a";
+        $exploits[] = "';if 1=1 drop table users-- -a";
+        $exploits[] = "';if 1=1 shutdown-- -a";
+        $exploits[] = "'; while 1=1 shutdown-- -a";
+        $exploits[] = "'; begin shutdown end-- -a ";
+        $exploits[] = "'+COALESCE('admin') and 1 = !1 div 1+'";
+        $exploits[] = "'+COALESCE('admin') and @@version = !1 div 1+'";
+        $exploits[] = "'+COALESCE('admin') and @@version = !@@version div @@version+'";
+        $exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
 
 
         $test = new IDS_Monitor(
@@ -563,7 +563,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(296, $result->getImpact());
+        $this->assertEquals(302, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -594,19 +594,19 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "-1'=-'+1";
         $exploits[] = "'=+'";
         $exploits[] = "aa' or stringcolumn= +!1 #1 ";
-		$exploits[] = "aa' or anycolumn ^ -'1";
-		$exploits[] = "aa' or intcolumn && '1";
-		$exploits[] = "asd' or column&&'1";
-		$exploits[] = "asd' or column= !1 and+1='1";
-		$exploits[] = "aa' or column=+!1 #1";
-		$exploits[] = "aa'IS NOT NULL or+1^+'0";
-		$exploits[] = "aa'IS NOT NULL or +1-1 xor'0";
-		$exploits[] = "aa'IS NOT NULL or+2-1-1-1 !='0";
-		$exploits[] = "aa'|1+1=(2)Or(1)='1";
-		$exploits[] = "aa'|3!='4";
-		$exploits[] = "aa'|ascii(1)+1!='1";
-		$exploits[] = "aa'|LOCALTIME*0!='1 ";
-		$exploits[] = "asd' |1 != (1)#aa";
+        $exploits[] = "aa' or anycolumn ^ -'1";
+        $exploits[] = "aa' or intcolumn && '1";
+        $exploits[] = "asd' or column&&'1";
+        $exploits[] = "asd' or column= !1 and+1='1";
+        $exploits[] = "aa' or column=+!1 #1";
+        $exploits[] = "aa'IS NOT NULL or+1^+'0";
+        $exploits[] = "aa'IS NOT NULL or +1-1 xor'0";
+        $exploits[] = "aa'IS NOT NULL or+2-1-1-1 !='0";
+        $exploits[] = "aa'|1+1=(2)Or(1)='1";
+        $exploits[] = "aa'|3!='4";
+        $exploits[] = "aa'|ascii(1)+1!='1";
+        $exploits[] = "aa'|LOCALTIME*0!='1 ";
+        $exploits[] = "asd' |1 != (1)#aa";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -614,7 +614,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(461, $result->getImpact());
+        $this->assertEquals(509, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -629,14 +629,31 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa'<3+1 or+1=+'1";
         $exploits[] = "aa'%1+0='0";
         $exploits[] = "'/1/1='";
-
+        $exploits[] = " aa'/1 or '1";
+        $exploits[] = " aa'/1 regexp '0";
+        $exploits[] = " ' / 1 / 1 ='";
+        $exploits[] = " '/1='";
+        $exploits[] = " aa'&0+1 = 'aa";
+        $exploits[] = " aa'&+1='aa";
+        $exploits[] = " aa'&(1)='aa";
+        $exploits[] = " aa'^0+0 = '0";
+        $exploits[] = " aa'^0+0+1-1 = (0)-- -a";
+        $exploits[] = " aa'^+-3 or'1";
+        $exploits[] = " aa'^0!='1";
+        $exploits[] = " aa'^(0)='0";
+        $exploits[] = " aa' < (3) or '1";
+        $exploits[] = " aa' <<3 or'1";
+        $exploits[] = " aa'-+!1 or '1";
+        $exploits[] = " aa'-!1 like'0";
+        $exploits[] = " aa' % 1 or '1";
+         
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(48, $result->getImpact());
+        $this->assertEquals(150, $result->getImpact());
     }    
     
     public function testDTList(){
@@ -720,36 +737,36 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '; rm -rf /\0';
         $exploits[] = '"; $_a=(! \'a\') . "php"; $_a.=(! \'a\') . "info"; $_a(1); $b="';
         $exploits[] = '";
-						define ( _a, "0008avwga000934mm40re8n5n3aahgqvaga0a303") ;
-						if  ( !0) $c = USXWATKXACICMVYEIkw71cLTLnHZHXOTAYADOCXC ^ _a;
-						if  ( !0) system($c) ;//';
+                        define ( _a, "0008avwga000934mm40re8n5n3aahgqvaga0a303") ;
+                        if  ( !0) $c = USXWATKXACICMVYEIkw71cLTLnHZHXOTAYADOCXC ^ _a;
+                        if  ( !0) system($c) ;//';
         $exploits[] = '" ; //
-						if (!0) $_a ="". str_rot13(\'cevags\'); //
-						$_b = HTTP_USER_AGENT; //
-						$_c="". $_SERVER[$_b]; //
-						$_a( `$_c` );//';
+                        if (!0) $_a ="". str_rot13(\'cevags\'); //
+                        $_b = HTTP_USER_AGENT; //
+                        $_c="". $_SERVER[$_b]; //
+                        $_a( `$_c` );//';
         $exploits[] = '"; //
-						$_c = "" . $_a($b);
-						$_b(`$_c`);//';
+                        $_c = "" . $_a($b);
+                        $_b(`$_c`);//';
         $exploits[] = '" ; //
-						if  (!0) $_a = base64_decode ;
-						if  (!0) $_b = parse_str ; //
-						$_c = "" . strrev("ftnirp");
-						if  (!0)  $_d = QUERY_STRING; //
-						$_e= "" . $_SERVER[$_d];
-						$_b($_e); //
-						$_f = "" . $_a($b);
-						$_c(`$_f`);//';
+                        if  (!0) $_a = base64_decode ;
+                        if  (!0) $_b = parse_str ; //
+                        $_c = "" . strrev("ftnirp");
+                        if  (!0)  $_d = QUERY_STRING; //
+                        $_e= "" . $_SERVER[$_d];
+                        $_b($_e); //
+                        $_f = "" . $_a($b);
+                        $_c(`$_f`);//';
         $exploits[] = '" ; //
-						$_y = "" . strrev("ftnirp");
-						if  (!0)    $_a = base64_decode ;
-						if  (!0)    $_b="" . $_a(\'cHdk\');
-						if (!0) $_y(`$_b`);//';
+                        $_y = "" . strrev("ftnirp");
+                        if  (!0)    $_a = base64_decode ;
+                        if  (!0)    $_b="" . $_a(\'cHdk\');
+                        if (!0) $_y(`$_b`);//';
         $exploits[] = '";{ if (true) $_a  = "" . str_replace(\'!\',\'\',\'s!y!s!t!e!m!\');
                         $_a( "dir"); } //';
         $exploits[] = '";{ if (true) $_a  = "" . strtolower("pass");
-						if   (1) $_a.= "" . strtolower("thru");
-						$_a( "dir"); } //';
+                        if   (1) $_a.= "" . strtolower("thru");
+                        $_a( "dir"); } //';
 
         $test = new IDS_Monitor(
             $exploits,
@@ -800,7 +817,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function testHexCCConverter() {
         $test1 = '&#x6a&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3a&#x61&#x6c&#x65&#x72&#x74&#x28&#x31&#x29';
-    	$test2 = ';&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x22;&#x3e;&#x20;&#x0a;&#x2f;&#x2f;&#x20;&#x43;&#x72;&#x65;&#x61;&#x6d;&#x6f;&#x73;&#x20;&#x6c;&#x61;&#x20;&#x63;&#x6c;&#x61;&#x73;&#x65;&#x20;&#x0a;&#x66;&#x75;&#x6e;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x20;&#x29;&#x20;&#x7b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#xfa;&#x62;&#x6c;&#x69;&#x63;&#x6f;&#x20;&#x69;&#x6e;&#x69;&#x63;&#x69;&#x61;&#x6c;&#x69;&#x7a;&#x61;&#x64;&#x6f;&#x20;&#x61;&#x20;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x20;&#x0a;&#x20;&#x74;&#x68;&#x69;&#x73;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x27;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#x72;&#x69;&#x76;&#x61;&#x64;&#x6f;&#x20;&#x70;&#x61;&#x72;&#x61;&#x20;&#x65;&#x6c;&#x20;&#x6f;&#x62;&#x6a;&#x65;&#x74;&#x6f;&#x20;&#x77;&#x69;&#x6e;&#x64;&#x6f;&#x77;&#x20;&#x0a;&#x20;&#x76;&#x61;&#x72;&#x20;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x75;&#x6c;&#x6c;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x2e;&#x2e;&#x2e;&#x20;&#x0a;&#x7d;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x29;&#x3b;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x68;&#x74;&#x74;&#x70;&#x3a;&#x2f;&#x2f;&#x77;&#x77;&#x77;&#x2e;&#x70;&#x72;&#x6f;&#x67;&#x72;&#x61;&#x6d;&#x61;&#x63;&#x69;&#x6f;&#x6e;&#x77;&#x65;&#x62;&#x2e;&#x6e;&#x65;&#x74;&#x2f;&#x27;&#x3b;&#x20;&#x0a;&#x3c;&#x2f;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3e;&#x20;&#x0a;&#x20;';
+        $test2 = ';&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x22;&#x3e;&#x20;&#x0a;&#x2f;&#x2f;&#x20;&#x43;&#x72;&#x65;&#x61;&#x6d;&#x6f;&#x73;&#x20;&#x6c;&#x61;&#x20;&#x63;&#x6c;&#x61;&#x73;&#x65;&#x20;&#x0a;&#x66;&#x75;&#x6e;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x20;&#x29;&#x20;&#x7b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#xfa;&#x62;&#x6c;&#x69;&#x63;&#x6f;&#x20;&#x69;&#x6e;&#x69;&#x63;&#x69;&#x61;&#x6c;&#x69;&#x7a;&#x61;&#x64;&#x6f;&#x20;&#x61;&#x20;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x20;&#x0a;&#x20;&#x74;&#x68;&#x69;&#x73;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x27;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#x72;&#x69;&#x76;&#x61;&#x64;&#x6f;&#x20;&#x70;&#x61;&#x72;&#x61;&#x20;&#x65;&#x6c;&#x20;&#x6f;&#x62;&#x6a;&#x65;&#x74;&#x6f;&#x20;&#x77;&#x69;&#x6e;&#x64;&#x6f;&#x77;&#x20;&#x0a;&#x20;&#x76;&#x61;&#x72;&#x20;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x75;&#x6c;&#x6c;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x2e;&#x2e;&#x2e;&#x20;&#x0a;&#x7d;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x29;&#x3b;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x68;&#x74;&#x74;&#x70;&#x3a;&#x2f;&#x2f;&#x77;&#x77;&#x77;&#x2e;&#x70;&#x72;&#x6f;&#x67;&#x72;&#x61;&#x6d;&#x61;&#x63;&#x69;&#x6f;&#x6e;&#x77;&#x65;&#x62;&#x2e;&#x6e;&#x65;&#x74;&#x2f;&#x27;&#x3b;&#x20;&#x0a;&#x3c;&#x2f;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3e;&#x20;&#x0a;&#x20;';
         $test3 = '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e';
         $test4 = 'x=&#x65&#x76&#x61&#x6c,y=&#x61&#x6c&#x65&#x72&#x74&#x28&#x31&#x29
                     x(y)';
@@ -845,41 +862,41 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function testForFalseAlerts() {
 
-    	$exploits = array();
+        $exploits = array();
         $exploits[] = 'war bereits als Gastgeber automatisch für das Turnier qualifiziert. Die restlichen 15 Endrundenplätze wurden zwischen Juni
                         2005 und Mai 2007 ermittelt. Hierbei waren mit Ausnahme der UEFA-Zone die jeweiligen Kontinentalmeisterschaften gleichzeitig
                         das Qualifikationsturnier für die Weltmeisterschaft. Die UEFA stellt bei der Endrunde fünf Mannschaften. Die Teilnehmer wurden in
-						einer Qualifikationsphase ermittelt, die am 9. Juli 2005 startete und am 30. September 2006 endete. Hierbei wurden die 25 Mannschaften der Kategorie A in fünf
-						Gruppen zu je 5 Mannschaften eingeteilt, wobei sich die fünf Gruppensieger für die Endrunde qualifizierten. Das erste europäische Ticket löste Norwegen am 27.
-						August 2006. Am 24. September folgte Schweden, drei Tage später konnten sich auch der amtierende Weltmeister Deutschland und Dänemark für die Endrunde qualifizieren.
-						England sicherte sich am 30. September 2006 das letzte Ticket gegen Frankreich. Die Mannschaften der Kategorie B spielten lediglich um den Aufstieg in die A-Kategorie.
-						Dem südamerikanischen Fußballverband CONMEBOL standen zwei Startpätze zu. Sie wurden bei der Sudamericano Femenino 2006, welche vom 10. bis 26. November 2006
-						im argentinischen Mar del Plata ausgetragen wurde, vergeben. Argentinien gewann das Turnier überraschend vor Brasilien. Beide Mannschaften qualifizierten sich
-						für die Endrunde. Die zwei nordamerikanischen Teilnehmer wurden beim CONCACAF Women\'s Gold Cup 2006 in den Vereinigten Staaten ermittelt. Das Turnier fand in
-						der Zeit vom 19. bis zum 30. November 2006 in Carson und Miami statt. Sieger wurde das US-amerikanische Team vor Kanada. Die drittplatzierten Mexikanerinnen
-						spielten gegen den Asien-Vierten Japan um einen weiteren Startplatz, scheiterten aber in den Play-Off-Spielen. Die Afrikameisterschaft der Frauen wurde vom 28.
-						Oktober bis zum 11. November 2006 in Nigeria ausgetragen. Die Mannschaft der Gastgeber setzte sich im Finale gegen Ghana durch. Beide Mannschaften werden den
-						afrikanischen Fußballverband bei der WM vertreten. Die Asienmeisterschaft der Frauen fand im Juli 2006 in Australien statt. Neben den Chinesinnen, die sich mit
-						einem Sieg über den Gastgeber den Titel sicherten, qualifizierten sich zudem die Australierinnen sowie die drittplatzierten Nordkoreanerinnen für die Endrunde.
-						Japan setzte sich wie 2003 in den Play-Off-Spielen gegen Mexiko (2:0 und 1:2) durch. Ozeanien hat einen direkten Startplatz,
-						der bei der Ozeanischen Frauenfußballmeisterschaft im April 2007 vergeben wurde. Neuseeland bezwang Papua-Neuguinea mit 7:0 und sicherte sich damit
-						das Ticket für die Weltmeisterschaft.';
+                        einer Qualifikationsphase ermittelt, die am 9. Juli 2005 startete und am 30. September 2006 endete. Hierbei wurden die 25 Mannschaften der Kategorie A in fünf
+                        Gruppen zu je 5 Mannschaften eingeteilt, wobei sich die fünf Gruppensieger für die Endrunde qualifizierten. Das erste europäische Ticket löste Norwegen am 27.
+                        August 2006. Am 24. September folgte Schweden, drei Tage später konnten sich auch der amtierende Weltmeister Deutschland und Dänemark für die Endrunde qualifizieren.
+                        England sicherte sich am 30. September 2006 das letzte Ticket gegen Frankreich. Die Mannschaften der Kategorie B spielten lediglich um den Aufstieg in die A-Kategorie.
+                        Dem südamerikanischen Fußballverband CONMEBOL standen zwei Startpätze zu. Sie wurden bei der Sudamericano Femenino 2006, welche vom 10. bis 26. November 2006
+                        im argentinischen Mar del Plata ausgetragen wurde, vergeben. Argentinien gewann das Turnier überraschend vor Brasilien. Beide Mannschaften qualifizierten sich
+                        für die Endrunde. Die zwei nordamerikanischen Teilnehmer wurden beim CONCACAF Women\'s Gold Cup 2006 in den Vereinigten Staaten ermittelt. Das Turnier fand in
+                        der Zeit vom 19. bis zum 30. November 2006 in Carson und Miami statt. Sieger wurde das US-amerikanische Team vor Kanada. Die drittplatzierten Mexikanerinnen
+                        spielten gegen den Asien-Vierten Japan um einen weiteren Startplatz, scheiterten aber in den Play-Off-Spielen. Die Afrikameisterschaft der Frauen wurde vom 28.
+                        Oktober bis zum 11. November 2006 in Nigeria ausgetragen. Die Mannschaft der Gastgeber setzte sich im Finale gegen Ghana durch. Beide Mannschaften werden den
+                        afrikanischen Fußballverband bei der WM vertreten. Die Asienmeisterschaft der Frauen fand im Juli 2006 in Australien statt. Neben den Chinesinnen, die sich mit
+                        einem Sieg über den Gastgeber den Titel sicherten, qualifizierten sich zudem die Australierinnen sowie die drittplatzierten Nordkoreanerinnen für die Endrunde.
+                        Japan setzte sich wie 2003 in den Play-Off-Spielen gegen Mexiko (2:0 und 1:2) durch. Ozeanien hat einen direkten Startplatz,
+                        der bei der Ozeanischen Frauenfußballmeisterschaft im April 2007 vergeben wurde. Neuseeland bezwang Papua-Neuguinea mit 7:0 und sicherte sich damit
+                        das Ticket für die Weltmeisterschaft.';
         $exploits[] = 'Thatcher föddes som Margaret Hilda Roberts i staden Grantham i Lincolnshire, England. Hennes far var Alfred Roberts, som ägde en speceriaffär i
-						staden, var aktiv i lokalpolitiken (och hade ämbetet alderman), samt var metodistisk lekmannapredikant. Roberts kom från en liberal familj men kandiderade?som då var
-						praxis i lokalpolitik?som oberoende. Han förlorade sin post som Alderman 1952 efter att Labourpartiet fick sin första majoritet i Grantham Council 1950. Hennes mor var
-						Beatrice Roberts, född Stephenson, och hon hade en syster, Muriel (1921-2004). Thatcher uppfostrades som metodist och har förblivit kristen under hela sitt liv.[1]
-						Thatcher fick bra resultat i skolan. Hon gick i en grammar school för flickor (Kesteven) och kom sedan till Somerville College, Oxfords universitet 1944 för att studera
-						Xylonite och sedan J. Lyons and Co., där hon medverkade till att ta fram metoder för att bevara glass. Hon ingick i den grupp som utvecklade den första frysta mjukglassen.
-						 Hon var också medlem av Association of Scientific Workers. Politisk karriär mellan 1950 och 1970 [redigera] Vid valen 1950 och 1951 ställde Margaret Roberts upp i v
-						alkretsen Dartford, som var en säker valkrets för Labour. Hon var då den yngsta kvinnliga konservativa kandidaten någonsin. Medan hon var aktiv i det konservativa pa
-						ficerad som barrister 1953. Samma år föddes hennes tvillingbarn Carol och Mark. Som advokat specialiserade hon sig på skatterätt. Thatcher började sedan leta efter en
-						för Finchley i april 1958. Hon invaldes med god marginal i valet 1959 och tog säte i underhuset. Hennes jungfrutal var till stöd för hennes eget förslag om att tvinga
-						kommunala församlingar att hålla möten offentligt, vilket blev antaget. 1961 gick hon emot partilinjen genom att rösta för återinförande av bestraffning med ris. Hon
-						befordrades tidigt till regeringen som underordnad minister (Parliamentary Secretary) i ministeriet för pensioner och socialförsäktingar (Ministry of Pensions and
-						National Insurance) i september 1961. Hon behöll denna post tills de konservativa förlorade makten i valet 1964. När Sir Alec Douglas-Home avgick röstade Thatcher för
-						Edward Heath i valet av partiledare 1965. När Heath hade segrat belönades hon med att bli de konservativas talesman i bostads- och markfrågor. Hon antog den politik
-						som hade utvecklats av hennes kollega James Allason, att sälja kommunägda bostäder till deras hyresgäster. Detta blev populärt i senare val[2]. Hon flyttade till
-						skuggfinansgruppen efter 1966..';
+                        staden, var aktiv i lokalpolitiken (och hade ämbetet alderman), samt var metodistisk lekmannapredikant. Roberts kom från en liberal familj men kandiderade?som då var
+                        praxis i lokalpolitik?som oberoende. Han förlorade sin post som Alderman 1952 efter att Labourpartiet fick sin första majoritet i Grantham Council 1950. Hennes mor var
+                        Beatrice Roberts, född Stephenson, och hon hade en syster, Muriel (1921-2004). Thatcher uppfostrades som metodist och har förblivit kristen under hela sitt liv.[1]
+                        Thatcher fick bra resultat i skolan. Hon gick i en grammar school för flickor (Kesteven) och kom sedan till Somerville College, Oxfords universitet 1944 för att studera
+                        Xylonite och sedan J. Lyons and Co., där hon medverkade till att ta fram metoder för att bevara glass. Hon ingick i den grupp som utvecklade den första frysta mjukglassen.
+                         Hon var också medlem av Association of Scientific Workers. Politisk karriär mellan 1950 och 1970 [redigera] Vid valen 1950 och 1951 ställde Margaret Roberts upp i v
+                        alkretsen Dartford, som var en säker valkrets för Labour. Hon var då den yngsta kvinnliga konservativa kandidaten någonsin. Medan hon var aktiv i det konservativa pa
+                        ficerad som barrister 1953. Samma år föddes hennes tvillingbarn Carol och Mark. Som advokat specialiserade hon sig på skatterätt. Thatcher började sedan leta efter en
+                        för Finchley i april 1958. Hon invaldes med god marginal i valet 1959 och tog säte i underhuset. Hennes jungfrutal var till stöd för hennes eget förslag om att tvinga
+                        kommunala församlingar att hålla möten offentligt, vilket blev antaget. 1961 gick hon emot partilinjen genom att rösta för återinförande av bestraffning med ris. Hon
+                        befordrades tidigt till regeringen som underordnad minister (Parliamentary Secretary) i ministeriet för pensioner och socialförsäktingar (Ministry of Pensions and
+                        National Insurance) i september 1961. Hon behöll denna post tills de konservativa förlorade makten i valet 1964. När Sir Alec Douglas-Home avgick röstade Thatcher för
+                        Edward Heath i valet av partiledare 1965. När Heath hade segrat belönades hon med att bli de konservativas talesman i bostads- och markfrågor. Hon antog den politik
+                        som hade utvecklats av hennes kollega James Allason, att sälja kommunägda bostäder till deras hyresgäster. Detta blev populärt i senare val[2]. Hon flyttade till
+                        skuggfinansgruppen efter 1966..';
         $exploits[] = "Results are 'true' or 'false'.";
         $exploits[] = "Choose between \"red\" and \"green\". ";
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
