@@ -430,7 +430,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:.*(?:#|--)[^\w\s]*$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+[\s(]*\d\s*\W.*(?:"|--|#))]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:.*(?:#|--)[^\w\s]*$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])]]></rule>
         <description>Detects classic SQL injection probings</description>
         <tags>
             <tag>sqli</tag>
