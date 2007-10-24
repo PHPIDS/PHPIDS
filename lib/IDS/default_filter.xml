@@ -430,15 +430,25 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:.*(?:#|--)[^\w\s]*$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])]]></rule>
-        <description>Detects classic SQL injection probings</description>
+        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:.*(?:#|--)[^\w\s]*$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])]]></rule>
+        <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter>   
+    </filter>  
+    <filter>
+        <rule><![CDATA[(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))]]></rule>
+        <description>Detects classic SQL injection probings 2/2</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+            <tag>lfi</tag>
+        </tags>
+        <impact>6</impact>
+    </filter> 
     <filter>
         <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+[\d"(])|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/2</description>
@@ -542,8 +552,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)]]></rule>
-        <description>Detects MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
+        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)|(?:MATCH\s*\([^)]+\)\s*AGAINST)]]></rule>
+        <description>Detects MATCH AGAINST, MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
