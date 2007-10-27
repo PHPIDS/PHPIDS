@@ -100,12 +100,22 @@ class IDS_Caching_File implements IDS_Caching_Interface {
      * Writes cache data into the file
      *
      * @param   array   $data
+     * @throws   Exception
      * @return  object  $this
      */
     public function setCache(array $data) {
 
+        if(!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, $this->path))) {
+            throw new Exception("Temp directory seems not writable");
+        }    	
+        
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > $this->config['expiration_time'])) {
-            $handle = fopen($this->path , 'w');
+            $handle = @fopen($this->path , 'w+');
+            
+            if(!$handle) {
+                throw new Exception("Cache file couldn't be created");
+            }
+            
             fwrite($handle, serialize($data));
             fclose($handle);
         }
