@@ -244,7 +244,7 @@ class IDS_Converter {
         $pattern = array('/(?:IS\s+NULL)|(LIKE\s+NULL)|(?:(?:IN)[+\s]*\([^)]+\))/ims');
         $value = preg_replace($pattern, '=0', $value);
 
-        $pattern = array('/\sNULL|TRUE|FALSE|LOCALTIME(?:STAMP)?|CURRENT_TIME|CURRENT_TIMESTAMP|BINARY|CURRENT_USER|(?:(?:ASCII|SOUNDEX|REGEXP|MD5|LIKE)[+\s]*\([^)]+\))/ims');
+        $pattern = array('/\sNULL|TRUE|FALSE|LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|(?:(?:ASCII|SOUNDEX|REGEXP|MD5|LIKE)[+\s]*\([^)]+\))/ims');
         $value = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|<>|RLIKE(?:\s+BINARY)?|REGEXP(?:\s+BINARY)?|SOUNDS\s+LIKE/ims');
@@ -325,8 +325,8 @@ class IDS_Converter {
             }
         }
 
-        if (preg_match('/(?:%E2%80%(?:A|8)\w|%EF%BB%BF)/i', urlencode($value))) {
-            return urldecode(preg_replace('/(?:%E2%80%(?:A|8)\w|%EF%BB%BF)/i', NULL, urlencode($value))) . "\n%00";
+        if (preg_match('/(?:%E2%8(?:0|1)%(?:A|8)\w|%EF%BB%BF)/i', urlencode($value))) {
+            return urldecode(preg_replace('/(?:%E2%8(?:0|1)%(?:A|8)\w|%EF%BB%BF)/i', NULL, urlencode($value))) . "\n%00";
         }
 
         return $value;
