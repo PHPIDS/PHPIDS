@@ -262,6 +262,11 @@ class IDS_Converter {
      */
     public static function convertConcatenations($value) {
 
+        //normalize remaining backslashes
+        if($value != preg_replace('/(\w)\\\/', "$1", $value)) {
+            $value .= preg_replace('/(\w)\\\/', "$1", $value);
+        }    	
+    	
         $compare = stripslashes($value);
 
         $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
@@ -282,7 +287,7 @@ class IDS_Converter {
         if ($compare != $converted) {
             $value .= "\n" . $converted;
         }
-
+        
         return $value;
     }
 
@@ -325,6 +330,7 @@ class IDS_Converter {
             }
         }
         
+        //take care for malicious unicode characters
         if (preg_match('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)/i', urlencode($value))) {
             return urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)/i', NULL, urlencode($value))) . "\n%00";
         }
