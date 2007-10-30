@@ -450,8 +450,8 @@
         <impact>6</impact>
     </filter> 
     <filter>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+[\d"(])|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
-        <description>Detects basic SQL authentication bypass attempts 1/2</description>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+[\d"(])]]></rule>
+        <description>Detects basic SQL authentication bypass attempts 1/3</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -460,8 +460,18 @@
         <impact>7</impact>
     </filter> 
     <filter>
-        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))]]></rule>
-        <description>Detects basic SQL authentication bypass attempts 2/2</description>
+        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
+        <description>Detects basic SQL authentication bypass attempts 2/3</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+            <tag>lfi</tag>
+        </tags>
+        <impact>7</impact>
+    </filter>
+     <filter>
+        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"\d)]]></rule>
+        <description>Detects basic SQL authentication bypass attempts 3/3</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
@@ -552,7 +562,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)|(?:MATCH\s*\([^)]+\)\s*AGAINST)]]></rule>
+        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)|(?:MATCH\s*[\w(),+-]+\s*AGAINST\s*\()]]></rule>
         <description>Detects MATCH AGAINST, MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
         <tags>
             <tag>sqli</tag>
