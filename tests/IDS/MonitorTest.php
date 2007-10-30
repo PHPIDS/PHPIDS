@@ -661,6 +661,25 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "aa'or column*0 like'0";
 		$exploits[] = "aa'or column*0='0";
 		$exploits[] = "aa'or current_date*0";
+		$exploits[] = "1'/column is not null - ' ";
+		$exploits[] = "1'*column is not \N - ' ";
+		$exploits[] = "1'^column is not null - ' ";
+		$exploits[] = "'is\N - '1";
+		$exploits[] = "aa' is \N or '1";
+		$exploits[] = "' or MATCH username AGAINST ('+admin -a' IN BOOLEAN MODE); -- -a";
+		$exploits[] = "' or MATCH username AGAINST ('a* -) -+ ' IN BOOLEAN MODE); -- -a";
+		$exploits[] = "1'*@a or '1";
+		$exploits[] = "1'*null or '1";
+		$exploits[] = "1'*UTC_TIME or '1";
+		$exploits[] = "1'*null is null - '";
+		$exploits[] = "1'*@a is null - '";
+		$exploits[] = "1'*@@version*-0%20=%20'0";
+		$exploits[] = "1'*current_date rlike'0";
+		$exploits[] = "aa'/current_date in (0) -- -a";
+		$exploits[] = "aa' / current_date regexp '0";
+		$exploits[] = "aa' / current_date != '1";
+		$exploits[] = "1' or current_date*-0 rlike'1";
+		$exploits[] = "0' / current_date XOR '1";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -668,7 +687,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(246, $result->getImpact());
+        $this->assertEquals(359, $result->getImpact());
     }    
     
     public function testDTList(){
