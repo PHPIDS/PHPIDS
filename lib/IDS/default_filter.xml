@@ -162,7 +162,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|frames|forms|images|links|cookie|innerhtml|innertext|outerhtml)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|port|protocol|search|replace|back|forward|go|document|window|self|this|parent|cookie|innerhtml|innertext|outerhtml)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
