@@ -331,10 +331,14 @@ class IDS_Converter {
         }
         
         //take care for malicious unicode characters
-        if (preg_match('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)/i', urlencode($value))) {
-            return urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)/i', NULL, urlencode($value))) . "\n%00";
+        if (preg_match('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', urlencode($value))) {
+            return urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', NULL, urlencode($value))) . "\n%00";
         }
 
+        if (preg_match('/(?:&#(?:65|8)\d{3};?)/i', $value)) {
+            return urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)/i', NULL, $value)) . "\n%00";
+        }        
+        
         return $value;
     }
 
