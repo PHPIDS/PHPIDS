@@ -335,8 +335,8 @@ class IDS_Converter {
             return urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', NULL, urlencode($value))) . "\n%00";
         }
 
-        if (preg_match('/(?:&#(?:65|8)\d{3};?)/i', $value)) {
-            return urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)/i', NULL, $value)) . "\n%00";
+        if (preg_match('/(?:&#(?:65|8)\d{3};?)|(?:&#x(?:fe|20)\w{2};?)/i', $value)) {
+            return urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)|(?:&#x(?:fe|20)\w{2};?)/i', NULL, $value)) . "\n%00";
         }        
         
         return $value;
