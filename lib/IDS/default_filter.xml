@@ -262,7 +262,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:data:(?:.)*,)|(?:\w+\s*=\W*(?!https?)\w+:)]]></rule>
+        <rule><![CDATA[(?:data:(?:.)*,)|(?:\w+\s*=\W*(?!https?)\w+:)|(jar:\w+:\/\/.*!)]]></rule>
         <description>Detects data: URL injections and common URI schemes</description>
         <tags>
             <tag>xss</tag>
@@ -648,8 +648,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
-        <description>Detects basic dos attempts</description>
+        <rule><![CDATA[(?:groups=\d+\(\w+\))|(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
+        <description>Detects basic DoS attempts and Apache scoreboard shared memory attacks</description>
         <tags>
             <tag>rfe</tag>
             <tag>dos</tag>
