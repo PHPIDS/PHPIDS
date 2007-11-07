@@ -247,7 +247,7 @@ class IDS_Converter {
         $pattern = array('/\WNULL|\\\N|@[\w-+]+|TRUE|FALSE|UTC_TIME|LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|(?:(?:ASCII|SOUNDEX|REGEXP|MD5|LIKE)[+\s]*\([^)]+\))/ims');
         $value = preg_replace($pattern, 0, $value);
 
-        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|<>|RLIKE(?:\s+BINARY)?|REGEXP(?:\s+BINARY)?|SOUNDS\s+LIKE/ims');
+        $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|XOR|DIV|NOT|<>|RLIKE(?:\s+BINARY)?|REGEXP(?:\s+BINARY)?|SOUNDS\s+LIKE/ims');
         $value = preg_replace($pattern, '=', $value);
 
         return $value;

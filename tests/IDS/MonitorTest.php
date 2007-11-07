@@ -690,6 +690,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "aa' / current_date != '1";
 		$exploits[] = "1' or current_date*-0 rlike'1";
 		$exploits[] = "0' / current_date XOR '1";
+		$exploits[] = "'or not'";
+		$exploits[] = "'or not false #aa";
         
         $test = new IDS_Monitor(
             $exploits,
@@ -697,7 +699,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(359, $result->getImpact());
+        $this->assertEquals(403, $result->getImpact());
     }    
     
     public function testDTList(){
