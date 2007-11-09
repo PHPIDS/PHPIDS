@@ -835,7 +835,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(66, $result->getImpact());
+        $this->assertEquals(71, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
@@ -867,12 +867,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test3 = '\x0000003c\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e\x0000061\x000006c\x0000065\x0000072\x0000074\x0000028\x0000032\x0000029\x000003c\x000002f\x0000073\x0000063\x0000072\x0000069\x0000070\x0000074\x000003e';
         $test4 = 'x=&#x65&#x76&#x61&#x6c,y=&#x61&#x6c&#x65&#x72&#x74&#x28&#x31&#x29
                     x(y)';
+        $test5 = 'j&#97vascrip&#x74&#58ale&#x72&#x74&#x28&#x2F&#x58&#x53&#x53&#x20&#x50&#x55&#x4E&#x43&#x48&#x21&#x2F&#x29';
 
         if (get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
             $test2 = addslashes($test2);
             $test3 = addslashes($test3);
             $test4 = addslashes($test4);
+            $test5 = addslashes($test5);
         }
 
         $exploits = array();
@@ -880,6 +882,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = $test2;
         $exploits[] = $test3;
         $exploits[] = $test4;
+        $exploits[] = $test5;
 
         $test = new IDS_Monitor(
             $exploits,
@@ -887,7 +890,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(112, $result->getImpact());
+        $this->assertEquals(121, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
