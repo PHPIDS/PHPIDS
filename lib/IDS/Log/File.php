@@ -163,7 +163,7 @@ class IDS_Log_File implements IDS_Log_Interface {
                     if (is_writable($this->logfile)) {
 
                         $handle = fopen($this->logfile, 'a');
-                        fwrite($handle, $data . "\n");
+                        fwrite($handle, trim($data) . "\n");
                         fclose($handle);
 
                     } else {
