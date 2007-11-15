@@ -184,7 +184,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|concat|crypto|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|replace|search|slice|split|substr|substring|escape)(?(1)[^\w"]|(?:\s*[^\s\w",.+-]))]]></rule>
         <description>Detects JavaScript script string properties and methods</description>
         <tags>
             <tag>xss</tag>
