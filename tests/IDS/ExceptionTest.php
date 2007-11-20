@@ -29,7 +29,7 @@ require_once 'IDS/Filter.php';
 require_once 'IDS/Monitor.php';
 require_once 'IDS/Filter/Storage.php';
 
-class IDS_ExceptionTest extends PHPUnit_Extensions_ExceptionTestCase
+class IDS_ExceptionTest extends PHPUnit_Framework_TestCase
 {
     public function setUp() {
         $this->report = new IDS_Report(array(

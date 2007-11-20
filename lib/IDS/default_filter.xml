@@ -470,7 +470,7 @@
         <impact>7</impact>
     </filter>
      <filter>
-        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s]+")]]></rule>
+        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s]+")|(?:"\s*is\s*\w\s*\W.+")]]></rule>
         <description>Detects basic SQL authentication bypass attempts 3/3</description>
         <tags>
             <tag>sqli</tag>
