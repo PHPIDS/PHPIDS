@@ -181,7 +181,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits[] = '" style ="';
         $exploits[] = '"src=xxx a="';
-        $exploits[] = '"\' type=\'1';
+        $exploits[] = '"\' onerror = alert(1) ';
         $exploits[] = '" a "" b="x"';
 
         $test = new IDS_Monitor(
@@ -191,7 +191,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(20, $result->getImpact());
+        $this->assertEquals(28, $result->getImpact());
     }
 
     public function testCommentList() {
@@ -254,7 +254,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(601, $result->getImpact());
+        $this->assertEquals(649, $result->getImpact());
 
     }
 
@@ -353,7 +353,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(270, $result->getImpact());
+        $this->assertEquals(274, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -402,7 +402,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(167, $result->getImpact());
+        $this->assertEquals(171, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -434,7 +434,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(346, $result->getImpact());
+        $this->assertEquals(350, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -627,7 +627,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(586, $result->getImpact());
+        $this->assertEquals(582, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -702,7 +702,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(417, $result->getImpact());
+        $this->assertEquals(441, $result->getImpact());
     }    
     
     public function testDTList(){

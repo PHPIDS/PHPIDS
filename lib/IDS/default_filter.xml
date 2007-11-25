@@ -27,7 +27,7 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\w+-;]\s+[\w\/\\\*]+\s*=)]]></rule>
+        <rule><![CDATA[(?:(\W|^)[\s\/"]+[-\w\/\\\*]+\s*=.+[([\/"])]]></rule>
         <description>finds attribute breaking injections including obfuscated attributes</description>
         <tags>
             <tag>xss</tag>
