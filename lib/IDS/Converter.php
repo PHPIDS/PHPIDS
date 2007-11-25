@@ -362,23 +362,6 @@ class IDS_Converter {
     }
 
     /**
-     * Basic approach to fight attacks using common parser bugs
-     *
-     * @param   string  $value
-     * @static
-     * @return  string
-     */
-    public static function convertParserBugs($value) {
-
-        $search = array('\a', '\l');
-        $replace = array('a', 'l');
-
-        $value = str_replace($search, $replace, $value);
-
-        return $value;
-    }
-
-    /**
      * Strip XML patterns
      *
      * @param   string  $value

@@ -300,14 +300,14 @@
         <impact>3</impact>
     </filter>    
     <filter>
-        <rule><![CDATA[(?:binding\s?=|moz-binding|behavior\s?=)]]></rule>
+        <rule><![CDATA[(?:binding\s?=|moz-binding|behavior\s?=)|(?:[\s\/]style\s*=\s*[-\\])]]></rule>
         <description>Detects bindings and behavior injections</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
             <tag>rfe</tag>
         </tags>
-        <impact>2</impact>
+        <impact>4</impact>
     </filter>
     <filter>
         <rule><![CDATA[(?:=\s*\[s*\])|(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:\d\s*\]\s*[;+])|(?:"\s*[&|]+\s*")]]></rule>
