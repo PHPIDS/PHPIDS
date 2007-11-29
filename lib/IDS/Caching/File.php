@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -25,70 +34,79 @@ require_once 'IDS/Caching/Interface.php';
  *
  * This class inhabits functionality to get and set cache via a static flatfile.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:File.php 517 2007-09-15 15:04:13Z mario $
- * @since       Version 0.4
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:File.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
+ * @since     Version 0.4
  */
-class IDS_Caching_File implements IDS_Caching_Interface {
+class IDS_Caching_File implements IDS_Caching_Interface
+{
 
     /**
      * Caching type
      *
      * @var string
      */
-    private $type = NULL;
+    private $type = null;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;
+    private $config = null;
 
     /**
      * Path to cache file
      *
      * @var string
      */
-    private $path = NULL;
+    private $path = null;
 
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = NULL;
+    private static $cachingInstance = null;
 
     /**
      * Constructor
      *
-     * @param   string  $type   caching type
-     * @param   array   $config caching configuration
-     * @return  void
+     * @param string $type   caching type
+     * @param array  $config caching configuration
+     * 
+     * @return void
      */
-    public function __construct($type, $config) {
+    public function __construct($type, $config)
+    {
 
-        $this->type = $type;
+        $this->type   = $type;
         $this->config = $config;
-        $this->path = $this->config['path'];
+        $this->path   = $this->config['path'];
 
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp are writeable!');
+            throw new Exception('Make sure all files in IDS/tmp ' . 
+                'are writeable!');
         }
     }
 
     /**
      * Returns an instance of this class
      *
-     * @param   string  $type   caching type
-     * @param   array   $config caching configuration
-     * @return  object  $this
+     * @param string $type   caching type
+     * @param array  $config caching configuration
+     * 
+     * @return object $this
      */
-    public static function getInstance($type, $config) {
+    public static function getInstance($type, $config)
+    {
         if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_File($type, $config);
         }
@@ -99,20 +117,24 @@ class IDS_Caching_File implements IDS_Caching_Interface {
     /**
      * Writes cache data into the file
      *
-     * @param   array   $data
-     * @throws   Exception
-     * @return  object  $this
+     * @param array $data the cache data
+     * 
+     * @throws Exception if cache file couldn't be created
+     * @return object $this
      */
-    public function setCache(array $data) {
+    public function setCache(array $data) 
+    {
 
-        if(!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, $this->path))) {
+        if (!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, 
+            $this->path))) {
             throw new Exception("Temp directory seems not writable");
         }    	
         
-        if ((!file_exists($this->path) || (time()-filectime($this->path)) > $this->config['expiration_time'])) {
-            $handle = @fopen($this->path , 'w+');
+        if ((!file_exists($this->path) || (time()-filectime($this->path)) > 
+            $this->config['expiration_time'])) {
+            $handle = @fopen($this->path, 'w+');
             
-            if(!$handle) {
+            if (!$handle) {
                 throw new Exception("Cache file couldn't be created");
             }
             
@@ -126,14 +148,17 @@ class IDS_Caching_File implements IDS_Caching_Interface {
     /**
      * Returns the cached data
      *
-     * Note that this method returns false if either type or file cache is not set
-     *
-     * @return  mixed   cache data or false
+     * Note that this method returns false if either type or file cache is 
+     * not set
+     * 
+     * @return mixed cache data or false
      */
-    public function getCache() {
+    public function getCache() 
+    {
 
         // make sure filters are parsed again if cache expired
-        if (file_exists($this->path) && (time()-filectime($this->path)) < $this->config['expiration_time']) {
+        if (file_exists($this->path) && (time()-filectime($this->path)) < 
+            $this->config['expiration_time']) {
             $data = unserialize(file_get_contents($this->path));
               return $data;
         }

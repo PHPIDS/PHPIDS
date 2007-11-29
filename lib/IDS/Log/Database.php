@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -23,16 +32,17 @@ require_once 'IDS/Log/Interface.php';
 /*
  * Needed SQL:
  *
-    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER 
+        SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `intrusions`;
     CREATE TABLE IF NOT EXISTS `intrusions` (
-      `id` int(11) unsigned NOT NULL auto_increment,
-      `name` varchar(128) NOT NULL,
-      `value` text NOT NULL,
-      `page` varchar(255) NOT NULL,
-      `ip` varchar(15) NOT NULL,
-      `impact` int(11) unsigned NOT NULL,
-      `created` datetime NOT NULL,
+      `id` int(11) unsigned NOT null auto_increment,
+      `name` varchar(128) NOT null,
+      `value` text NOT null,
+      `page` varchar(255) NOT null,
+      `ip` varchar(15) NOT null,
+      `impact` int(11) unsigned NOT null,
+      `created` datetime NOT null,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM ;
  *
@@ -43,59 +53,64 @@ require_once 'IDS/Log/Interface.php';
 /**
  * Database logging wrapper
  *
- * The database wrapper is designed to store reports into an sql database. It implements the
- * singleton pattern and is based in PDO, supporting different database types.
+ * The database wrapper is designed to store reports into an sql database. It 
+ * implements the singleton pattern and is based in PDO, supporting 
+ * different database types.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
  */
-class IDS_Log_Database implements IDS_Log_Interface {
+class IDS_Log_Database implements IDS_Log_Interface
+{
 
     /**
      * Database wrapper
      *
      * @var string
      */
-    private $wrapper = NULL;
+    private $wrapper = null;
 
     /**
      * Database user
      *
      * @var string
      */
-    private $user = NULL;
+    private $user = null;
 
     /**
      * Database password
      *
      * @var string
      */
-    private $password = NULL;
+    private $password = null;
 
     /**
      * Database table
      *
      * @var string
      */
-    private $table = NULL;
+    private $table = null;
 
     /**
      * Database handle
      *
      * @var object  PDO instance
      */
-    private $handle    = NULL;
+    private $handle    = null;
 
     /**
      * Prepared SQL statement
      *
      * @var string
      */
-    private $statement = NULL;
+    private $statement = null;
 
     /**
      * Holds current remote address
@@ -119,22 +134,24 @@ class IDS_Log_Database implements IDS_Log_Interface {
      *
      * Prepares the SQL statement
      *
-     * @param   mixed   $config IDS_Init instance | array
-     * @return  void
+     * @param mixed $config IDS_Init instance | array
+     * 
+     * @return void
      */
-    protected function __construct($config) {
+    protected function __construct($config) 
+    {
 
         if ($config instanceof IDS_Init) {
-            $this->wrapper    = $config->config['Logging']['wrapper'];
-            $this->user        = $config->config['Logging']['user'];
+            $this->wrapper  = $config->config['Logging']['wrapper'];
+            $this->user     = $config->config['Logging']['user'];
             $this->password = $config->config['Logging']['password'];
-            $this->table     = $config->config['Logging']['table'];
+            $this->table    = $config->config['Logging']['table'];
 
         } elseif (is_array($config)) {
-            $this->wrapper    = $config['wrapper'];
-            $this->user        = $config['user'];
+            $this->wrapper  = $config['wrapper'];
+            $this->user     = $config['user'];
             $this->password = $config['password'];
-            $this->table     = $config['table'];
+            $this->table    = $config['table'];
         }
 
         // determine correct IP address
@@ -181,10 +198,12 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * This method allows the passed argument to be either an instance of IDS_Init or
      * an array.
      *
-     * @param   mixed   $config IDS_Init | array
-     * @return  object  $this
+     * @param mixed $config IDS_Init | array
+     * 
+     * @return object $this
      */
-    public static function getInstance($config) {
+    public static function getInstance($config)
+    {
         if ($config instanceof IDS_Init) {
             $wrapper = $config->config['Logging']['wrapper'];
         } elseif (is_array($config)) {
@@ -202,21 +221,27 @@ class IDS_Log_Database implements IDS_Log_Interface {
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
+     * 
+     * @return void
      */
-    private function __clone() { }
+    private function __clone() 
+    { 
+    }
 
     /**
      * Stores given data into the database
      *
-     * @param   object  $data   IDS_Report instance
-     * @throws  Exception
-     * @return  boolean
+     * @param object $data IDS_Report instance
+     * 
+     * @throws Exception if db error occurred
+     * @return boolean
      */
-    public function execute(IDS_Report $data) {
+    public function execute(IDS_Report $data) 
+    {
 
         foreach ($data as $event) {
-            $page    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-            $ip        = $this->ip;
+            $page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+            $ip   = $this->ip;
 
             $this->statement->bindParam('name', $event->getName());
             $this->statement->bindParam('value', $event->getValue());
@@ -235,7 +260,6 @@ class IDS_Log_Database implements IDS_Log_Interface {
 
         return true;
     }
-
 }
 
 /*

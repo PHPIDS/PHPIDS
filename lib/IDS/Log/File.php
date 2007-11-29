@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -26,27 +35,31 @@ require_once 'IDS/Log/Interface.php';
  * The file wrapper is designed to store data into a flatfile. It implements the
  * singleton pattern.
  *
- * @author        christ1an <ch0012@gmail.com>
- *
- * @package        PHPIDS
- * @copyright    2007 The PHPIDS Group
- * @version        SVN: $Id:File.php 517 2007-09-15 15:04:13Z mario $
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:File.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
  */
-class IDS_Log_File implements IDS_Log_Interface {
+class IDS_Log_File implements IDS_Log_Interface
+{
 
     /**
      * Path to the log file
      *
      * @var string
      */
-    private $logfile = NULL;
+    private $logfile = null;
 
     /**
      * Instance container
      *
-     * Due to the singleton pattern this class allows to initiate only one instance
-     * for each file.
+     * Due to the singleton pattern this class allows to initiate only one 
+     * instance for each file.
      *
      * @var array
      */
@@ -62,10 +75,12 @@ class IDS_Log_File implements IDS_Log_Interface {
     /**
      * Constructor
      *
-     * @param   string  $logfile    path to the log file
-     * @return  void
+     * @param string $logfile path to the log file
+     * 
+     * @return void
      */
-    protected function __construct($logfile) {
+    protected function __construct($logfile) 
+    {
 
         // determine correct IP address
         if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
@@ -80,14 +95,16 @@ class IDS_Log_File implements IDS_Log_Interface {
     /**
      * Returns an instance of this class
      *
-     * This method allows the passed argument to be either an instance of IDS_Init or
-     * a path to a log file. Due to the singleton pattern only one instance for each file
-     * can be initiated.
+     * This method allows the passed argument to be either an instance of 
+     * IDS_Init or a path to a log file. Due to the singleton pattern only one 
+     * instance for each file can be initiated.
      *
-     * @param   mixed   $config IDS_Init or path to a file
-     * @return  object  $this
+     * @param mixed $config IDS_Init or path to a file
+     * 
+     * @return object $this
      */
-    public static function getInstance($config) {
+    public static function getInstance($config) 
+    {
         if ($config instanceof IDS_Init) {
             $logfile = $config->config['Logging']['path'];
         } elseif (is_string($config)) {
@@ -105,36 +122,41 @@ class IDS_Log_File implements IDS_Log_Interface {
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
+     * 
+     * @return void
      */
-    private function __clone() { }
+    private function __clone() 
+    { 
+    }
 
     /**
      * Prepares data
      *
-     * Converts given data into a format that can be stored into a file. You might
-     * edit this method to your requirements.
+     * Converts given data into a format that can be stored into a file. 
+     * You might edit this method to your requirements.
      *
-     * @param   mixed   $data
-     * @return  string
+     * @param mixed $data incoming report data
+     * 
+     * @return string
      */
-    protected function prepareData($data) {
+    protected function prepareData($data) 
+    {
 
         $format = '"%s",%s,%d,"%s","%s","%s"';
 
         $attackedParameters = '';
         foreach ($data as $event) {
-            $attackedParameters .= $event->getName() . '=' . rawurlencode($event->getValue()) . ' ';
+            $attackedParameters .= $event->getName() . '=' .
+                rawurlencode($event->getValue()) . ' ';
         }
 
-        $dataString = sprintf(
-            $format,
-            $this->ip,
-            date('c'),
-            $data->getImpact(),
-            join(' ', $data->getTags()),
-            trim($attackedParameters),
-            urlencode($_SERVER['REQUEST_URI'])
-        );
+        $dataString = sprintf($format,
+                              $this->ip,
+                              date('c'),
+                              $data->getImpact(),
+                              join(' ', $data->getTags()),
+                              trim($attackedParameters),
+                              urlencode($_SERVER['REQUEST_URI']));
 
         return $dataString;
     }
@@ -142,15 +164,18 @@ class IDS_Log_File implements IDS_Log_Interface {
     /**
      * Stores given data into a file
      *
-     * @param   object  $data   IDS_Report
-     * @throws  Exception
-     * @return  mixed
+     * @param object $data IDS_Report
+     * 
+     * @throws Exception if the logfile isn't writeable
+     * @return mixed
      */
-    public function execute(IDS_Report $data) {
+    public function execute(IDS_Report $data) 
+    {
 
         /*
-         * In case the data has been modified before it might  be necessary to convert
-         * it to string since we can't store array or object into a file
+         * In case the data has been modified before it might  be necessary 
+         * to convert it to string since we can't store array or object 
+         * into a file
          */
         $data = $this->prepareData($data);
 
@@ -168,7 +193,8 @@ class IDS_Log_File implements IDS_Log_Interface {
 
                     } else {
                         throw new Exception(
-                            'Please make sure that ' . $this->logfile . ' is writeable.'
+                            'Please make sure that ' . $this->logfile . 
+                                ' is writeable.'
                         );
                     }
                 }
@@ -187,7 +213,6 @@ class IDS_Log_File implements IDS_Log_Interface {
 
         return true;
     }
-
 }
 
 /*

@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,8 +16,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
+
 /**
  * Monitoring engine
  *
@@ -24,16 +34,18 @@
  * and provides functions to scan incoming data for malicious appearing script
  * fragments.
  *
- * @author		.mario <mario.heiderich@gmail.com>
- * @author		christ1an <ch0012@gmail.com>
- * @author		Lars Strojny <lstrojny@neu.de>
- *
- * @package		PHPIDS
- * @copyright	2007 The PHPIDS Group
- * @version		SVN: $Id:Monitor.php 517 2007-09-15 15:04:13Z mario $
- * @link		http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:Monitor.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
  */
-class IDS_Monitor {
+class IDS_Monitor
+{
 
     /**
      * Tags to define what to search for
@@ -42,7 +54,7 @@ class IDS_Monitor {
      *
      * @var array
      */
-    private $tags = NULL;
+    private $tags = null;
 
     /**
      * Request array
@@ -51,7 +63,7 @@ class IDS_Monitor {
      *
      * @var array
      */
-    private $request = NULL;
+    private $request = null;
 
     /**
      * Container for filter rules
@@ -60,7 +72,7 @@ class IDS_Monitor {
      *
      * @var object
      */
-    private $storage = NULL;
+    private $storage = null;
 
     /**
      * Results
@@ -70,7 +82,7 @@ class IDS_Monitor {
      *
      * @var object
      */
-    private $report = NULL;
+    private $report = null;
 
     /**
      * Scan keys switch
@@ -98,21 +110,24 @@ class IDS_Monitor {
     /**
      * Constructor
      *
-     * @param	array	$request	array to scan
-     * @param	object	$init		instance of IDS_Init
-     * @param	array	$tags		optional list of tags to which filters should be applied
-     * @return	void
+     * @param array  $request array to scan
+     * @param object $init    instance of IDS_Init
+     * @param array  $tags    list of tags to which filters should be applied
+     * 
+     * @return void
      */
-    public function __construct(Array $request, IDS_Init $init, Array $tags = NULL) {
+    public function __construct(array $request, IDS_Init $init, 
+        array $tags = null) 
+    {
 
         if (!empty($request)) {
-            $this->storage	= new IDS_Filter_Storage($init);
-            $this->request	= $request;
-            $this->tags		= $tags;
+            $this->storage = new IDS_Filter_Storage($init);
+            $this->request = $request;
+            $this->tags    = $tags;
 
             if ($init) {
-                $this->scanKeys    = $init->config['General']['scan_keys'];
-                $this->exceptions  = $init->config['General']['exceptions'];
+                $this->scanKeys   = $init->config['General']['scan_keys'];
+                $this->exceptions = $init->config['General']['exceptions'];
             }
         }
 
@@ -122,19 +137,20 @@ class IDS_Monitor {
             );
         }
 
-        require_once 'IDS/Report.php';
+        include_once 'IDS/Report.php';
         $this->report = new IDS_Report;
     }
 
     /**
      * Starts the scan mechanism
      *
-     * @return  object  IDS_Report
+     * @return object IDS_Report
      */
-    public function run() {
+    public function run()
+    {
         if (!empty($this->request)) {
             foreach ($this->request as $key => $value) {
-                $this->iterate($key, $value);
+                $this->_iterate($key, $value);
             }
         }
 
@@ -142,34 +158,30 @@ class IDS_Monitor {
     }
 
     /**
-     * Iterates through given data and delegates it to IDS_Monitor::detect() in
+     * Iterates through given data and delegates it to IDS_Monitor::_detect() in
      * order to check for malicious appearing fragments
      *
-     * @param	mixed   $key
-     * @param	mixed   $value
-     * @return	void
+     * @param mixed $key   the former array key
+     * @param mixed $value the former array value
+     * 
+     * @return void
      */
-    private function iterate($key, $value) {
+    private function _iterate($key, $value) 
+    {
 
         if (!is_array($value)) {
             if (is_string($value)) {
 
-                if ($filter = $this->detect($key, $value)) {
-                    require_once 'IDS/Event.php';
-                    $this->report->addEvent(
-                        new IDS_Event(
-                            $key,
-                            $value,
-                            $filter
-                        )
-                    );
+                if ($filter = $this->_detect($key, $value)) {
+                    include_once 'IDS/Event.php';
+                    $this->report->addEvent(new IDS_Event($key,
+                                                          $value,
+                                                           $filter));
                 }
             }
         } else {
             foreach ($value as $subKey => $subValue) {
-                $this->iterate(
-                    $key . '.' . $subKey, $subValue
-                );
+                $this->_iterate($key . '.' . $subKey, $subValue);
             }
         }
     }
@@ -177,13 +189,18 @@ class IDS_Monitor {
     /**
      * Checks whether given value matches any of the supplied filter patterns
      *
-     * @param    mixed    $key
-     * @param    mixed    $value
-     * @return    bool|array  false or array of filter(s) that matched the value
+     * @param mixed $key   the key of the value to scan
+     * @param mixed $value the value to scan
+     * 
+     * @return bool|array false or array of filter(s) that matched the value
      */
-    private function detect($key, $value) {
+    private function _detect($key, $value) 
+    {
 
-        // to increase performance, only start detection if value isn't alphanumeric
+        /*
+         * to increase performance, only start detection if value
+         * isn't alphanumeric 
+         */ 
         if (preg_match('/[^\w\s\/]+/ims', $value) && !empty($value)) {
 
             if (in_array($key, $this->exceptions, true)) {
@@ -194,26 +211,26 @@ class IDS_Monitor {
             $value = get_magic_quotes_gpc() ? stripslashes($value) : $value;
 
             // use the converter
-            require_once 'IDS/Converter.php';
-            $value    = IDS_Converter::runAll($value);
-            $key     = $this->scanKeys ? IDS_Converter::runAll($key) : $key;
-
-            $filters    = array();
-            $filterSet    = $this->storage->getFilterSet();
+            include_once 'IDS/Converter.php';
+            $value     = IDS_Converter::runAll($value);
+            $key       = $this->scanKeys ? IDS_Converter::runAll($key) : $key;
+            $filters   = array();
+            $filterSet = $this->storage->getFilterSet();
             foreach ($filterSet as $filter) {
-
-                // in case we have a tag array specified the IDS will only
-                // use those filters that are meant to detect any of the defined tags
+            
+                /*
+                 * in case we have a tag array specified the IDS will only
+                 * use those filters that are meant to detect any of the 
+                 * defined tags
+                 */
                 if (is_array($this->tags)) {
                     if (array_intersect($this->tags, $filter->getTags())) {
-                        if ($this->match($key, $value, $filter)) {
+                        if ($this->_match($key, $value, $filter)) {
                             $filters[] = $filter;
                         }
                     }
-
-                // make use of all filters available
                 } else {
-                    if ($this->match($key, $value, $filter)) {
+                    if ($this->_match($key, $value, $filter)) {
                         $filters[] = $filter;
                     }
                 }
@@ -226,19 +243,21 @@ class IDS_Monitor {
     /**
      * Matches given value and/or key against given filter
      *
-     * @param    mixed    $key
-     * @param    mixed    $value
-     * @param    object    $filter
-     * @return   boolean
+     * @param mixed  $key    the key to optionally scan
+     * @param mixed  $value  the value to scan
+     * @param object $filter the filter object
+     * 
+     * @return boolean
      */
-    private function match($key, $value, $filter) {
+    private function _match($key, $value, $filter) 
+    {
         if ($this->scanKeys) {
-            if ($filter->match($key)) {
+            if ($filter->_match($key)) {
                 return true;
             }
         }
 
-        if ($filter->match($value)) {
+        if ($filter->_match($value)) {
             return true;
         }
 
@@ -248,10 +267,12 @@ class IDS_Monitor {
     /**
      * Sets exception array
      *
-     * @param    mixed   $exceptions
-     * @return    void
+     * @param mixed $exceptions the thrown exceptions
+     * 
+     * @return void
      */
-    public function setExceptions($exceptions) {
+    public function setExceptions($exceptions) 
+    {
         if (!is_array($exceptions)) {
             $exceptions = array($exceptions);
         }
@@ -262,21 +283,23 @@ class IDS_Monitor {
     /**
      * Returns exception array
      *
-     * @return  array
+     * @return array
      */
-    public function getExceptions() {
+    public function getExceptions() 
+    {
         return $this->exceptions;
     }
 
     /**
-     * Returns report object providing various functions to work with detected results
+     * Returns report object providing various functions to work with 
+     * detected results
      *
-     * @return    object    IDS_Report
+     * @return object IDS_Report
      */
-    public function getReport() {
+    public function getReport() 
+    {
         return $this->report;
     }
-
 }
 
 /*

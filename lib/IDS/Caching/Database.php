@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 require_once 'IDS/Caching/Interface.php';
@@ -24,13 +33,14 @@ require_once 'IDS/Caching/Interface.php';
  * Needed SQL:
  *
 
-    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER 
+        SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `cache`;
     CREATE TABLE `cache` (
-        `type` VARCHAR( 32 ) NOT NULL ,
-        `data` TEXT NOT NULL ,
-        `created` DATETIME NOT NULL ,
-        `modified` DATETIME NOT NULL
+        `type` VARCHAR( 32 ) NOT null ,
+        `data` TEXT NOT null ,
+        `created` DATETIME NOT null ,
+        `modified` DATETIME NOT null
     ) ENGINE = MYISAM ;
  */
 
@@ -39,94 +49,107 @@ require_once 'IDS/Caching/Interface.php';
  *
  * This class inhabits functionality to get and set cache via a database.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
- * @since       Version 0.4
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Groupup
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:Database.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
+ * @since     Version 0.4
  */
-class IDS_Caching_Database implements IDS_Caching_Interface {
+class IDS_Caching_Database implements IDS_Caching_Interface
+{
 
     /**
      * Caching type
      *
      * @var string
      */
-    private $type = NULL;
+    private $type = null;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = NULL;
+    private $config = null;
 
     /**
      * DBH
      *
      * @var object
      */
-    private $handle = NULL;
+    private $handle = null;
 
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = NULL;
+    private static $cachingInstance = null;
 
     /**
      * Constructor
      *
      * Connects to database.
      *
-     * @param   string  $type   caching type
-     * @param   array   $config caching configuration
-     * @return  void
+     * @param string $type   caching type
+     * @param array  $config caching configuration
+     * 
+     * @return void
      */
-    public function __construct($type, $config) {
+    public function __construct($type, $config) 
+    {
 
-        $this->type = $type;
+        $this->type   = $type;
         $this->config = $config;
-        $this->handle = $this->connect();
+        $this->handle = $this->_connect();
     }
 
     /**
      * Returns an instance of this class
      *
-     * @param   string  $type   caching type
-     * @param   array   $config caching configuration
-     * @return  object  $this
+     * @param string $type   caching type
+     * @param array  $config caching configuration
+     * 
+     * @return object $this
      */
-    public static function getInstance($type, $config) {
+    public static function getInstance($type, $config)
+    {
 
         if (!self::$cachingInstance) {
             self::$cachingInstance = new IDS_Caching_Database($type, $config);
         }
-
         return self::$cachingInstance;
     }
 
     /**
      * Writes cache data into the database
      *
-     * @param   array   $data
-     * @throws  PDOException
-     * @return  object  $this
+     * @param array $data the caching data
+     * 
+     * @throws PDOException if a db error occurred
+     * @return object $this
      */
-    public function setCache(array $data) {
+    public function setCache(array $data) 
+    {
 
         $handle = $this->handle;
 
-        foreach ($handle->query('SELECT created FROM `'.mysql_escape_string($this->config['table']).'`') as $row) {
-            if ((time()-strtotime($row['created'])) > $this->config['expiration_time']) {
+        foreach ($handle->query('SELECT created FROM `' . 
+            mysql_escape_string($this->config['table']).'`') as $row) {
+            if ((time()-strtotime($row['created'])) > 
+                $this->config['expiration_time']) {
 
                 try {
-                    $handle->query('TRUNCATE '.mysql_escape_string($this->config['table']).'');
+                    $handle->query('TRUNCATE ' . 
+                        mysql_escape_string($this->config['table']).'');
                     $statement = $handle->prepare('
-                        INSERT INTO `'.mysql_escape_string($this->config['table']).'` (
+                        INSERT INTO `' . 
+                        mysql_escape_string($this->config['table']).'` (
                             type,
                             data,
                             created,
@@ -140,7 +163,8 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
                         )
                     ');
 
-                    $statement->bindParam('type', mysql_escape_string($this->type));
+                    $statement->bindParam('type', 
+                        mysql_escape_string($this->type));
                     $statement->bindParam('data', serialize($data));
 
                     if (!$statement->execute()) {
@@ -152,26 +176,26 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
                 }
             }
         }
-
         return $this;
     }
 
     /**
      * Returns the cached data
      *
-     * Note that this method returns false if either type or file cache is not set
+     * Note that this method returns false if either type or file cache is 
+     * not set
      *
-     * @throws  PDOException
-     * @return  mixed   cache data or false
+     * @throws PDOException if a db error occurred
+     * @return mixed cache data or false
      */
-    public function getCache() {
+    public function getCache() 
+    {
 
         try{
             $handle = $this->handle;
-            $result = $handle->prepare(
-                'SELECT * FROM '.mysql_escape_string($this->config['table'])
-                . ' where type=?'
-            );
+            $result = $handle->prepare('SELECT * FROM ' . 
+                mysql_escape_string($this->config['table']) . 
+                ' where type=?');
             $result->execute(array($this->type));
 
             foreach ($result as $row) {
@@ -181,17 +205,17 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
         } catch (PDOException $e) {
             die('PDOException: ' . $e->getMessage());
         }
-
         return false;
     }
 
     /**
      * Connect to database and return a handle
      *
-     * @return  object  dbh
-     * @throws  PDOException
+     * @return object dbh
+     * @throws PDOException if a db error occurred
      */
-    private function connect() {
+    private function _connect() 
+    {
 
         // validate connection parameters
         if (!$this->config['wrapper']
@@ -215,7 +239,6 @@ class IDS_Caching_Database implements IDS_Caching_Interface {
         } catch (PDOException $e) {
             die('PDOException: ' . $e->getMessage());
         }
-
         return $handle;
     }
 }

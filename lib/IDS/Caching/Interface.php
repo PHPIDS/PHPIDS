@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,22 +16,47 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 /**
  * Caching wrapper interface
  *
- * @author        .mario <mario.heiderich@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Interface.php 517 2007-09-15 15:04:13Z mario $
- * @since       Version 0.4
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @version   SVN: $Id:Interface.php 517 2007-09-15 15:04:13Z mario $
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @since     Version 0.4
+ * @link      http://php-ids.org/
  */
-interface IDS_Caching_Interface {
+interface IDS_Caching_Interface
+{
+    /**
+     * Interface method
+     *
+     * @param array $data the cache data
+     * 
+     * @return void
+     */
     public function setCache(array $data);
+    
+    /**
+     * Interface method
+     *
+     * @return void
+     */
     public function getCache();
 }
 

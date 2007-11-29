@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 /**
@@ -24,23 +33,26 @@
  * This class is used for the purpose to initiate the framework and inhabits
  * functionality to parse the needed configuration file.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- * @author        christ1an <ch0012@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Init.php 517 2007-09-15 15:04:13Z mario $
- * @since       Version 0.4
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Groupup
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:Init.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
+ * @since     Version 0.4
  */
-class IDS_Init {
+class IDS_Init
+{
 
     /**
      * Holds config settings
      *
      * @var array
      */
-    public $config = NULL;
+    public $config = null;
 
     /**
      * Instance of this class depending on the supplied config file
@@ -55,20 +67,22 @@ class IDS_Init {
      *
      * @var string
      */
-    private $configPath = NULL;
+    private $configPath = null;
 
     /**
      * Constructor
      *
      * Includes needed classes and parses the configuration file
      *
-     * @return  object  $this
-     * @throws  Exception
+     * @param string $configPath the path to the config file
+     * 
+     * @return object $this
      */
-    private function __construct($configPath) {
+    private function __construct($configPath) 
+    {
 
-        require_once 'IDS/Monitor.php';
-        require_once 'IDS/Filter/Storage.php';
+        include_once 'IDS/Monitor.php';
+        include_once 'IDS/Filter/Storage.php';
 
         $this->setConfigPath($configPath);
         $this->config = parse_ini_file($this->configPath, true);
@@ -80,16 +94,22 @@ class IDS_Init {
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
+     * 
+     * @return void
      */
-    public final function __clone() {}
+    public final function __clone() 
+    {
+    }
 
     /**
      * Returns an instance of this class
      *
-     * @param   string  $configPath
-     * @return  object
+     * @param string $configPath the path to the config file
+     * 
+     * @return object
      */
-    public static function init($configPath) {
+    public static function init($configPath) 
+    {
         if (!isset(self::$instances[$configPath])) {
             self::$instances[$configPath] = new IDS_Init($configPath);
         }
@@ -100,11 +120,13 @@ class IDS_Init {
     /**
      * Sets the path to the configuration file
      *
-     * @param   string  $path
-     * @throws  Exception
-     * @return  void
+     * @param string $path the path to the config
+     * 
+     * @throws Exception if file not found
+     * @return void
      */
-    public function setConfigPath($path) {
+    public function setConfigPath($path) 
+    {
         if (file_exists($path)) {
             $this->configPath = $path;
         } else {
@@ -117,25 +139,28 @@ class IDS_Init {
     /**
      * Returns path to configuration file
      *
-     * @return  string
+     * @return string
      */
-    public function getConfigPath() {
+    public function getConfigPath() 
+    {
         return $this->configPath;
     }
 
     /**
      * Merges new settings into the exsiting ones or overwrites them
      *
-     * @param    array    $config
-     * @param    boolean    $overwrite
-     * @return    void
+     * @param array   $config    the config array
+     * @param boolean $overwrite config overwrite flag
+     * 
+     * @return void
      */
-    public function setConfig(array $config, $overwrite = false) {
+    public function setConfig(array $config, $overwrite = false) 
+    {
 
         if ($overwrite) {
-           $this->config = array_merge($this->config, $config);
+            $this->config = array_merge($this->config, $config);
         } else {
-           $this->config = array_merge($config, $this->config);
+            $this->config = array_merge($config, $this->config);
         }
     }
 
@@ -144,7 +169,8 @@ class IDS_Init {
      *
      * @return array the config array
      */
-    public function getConfig() {
+    public function getConfig() 
+    {
 
         return $this->config;
     }

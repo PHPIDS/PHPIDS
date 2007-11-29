@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 require_once 'IDS/Log/Interface.php';
@@ -26,14 +35,18 @@ require_once 'IDS/Log/Interface.php';
  * This class implements the composite pattern to allow to work with multiple
  * logging wrappers at once.
  *
- * @author        christ1an <ch0012@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Composite.php 517 2007-09-15 15:04:13Z mario $
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL 
+ * @version   Release: $Id:Composite.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
  */
-class IDS_Log_Composite {
+class IDS_Log_Composite
+{
 
     /**
      * Holds registered logging wrapper
@@ -45,10 +58,12 @@ class IDS_Log_Composite {
     /**
      * Iterates through registered loggers and executes them
      *
-     * @param   object  $data   IDS_Report object
-     * @return  void
+     * @param object $data IDS_Report object
+     * 
+     * @return void
      */
-    public function execute(IDS_Report $data) {
+    public function execute(IDS_Report $data) 
+    {
         foreach ($this->loggers as $logger) {
             $logger->execute($data);
         }
@@ -57,28 +72,33 @@ class IDS_Log_Composite {
     /**
      * Registers a new logging wrapper
      *
-     * Only valid IDS_Log_Interface instances passed to this function will be registered
+     * Only valid IDS_Log_Interface instances passed to this function will be 
+     * registered
      *
-     * @return  void
+     * @return void
      */
-    public function addLogger() {
+    public function addLogger() 
+    {
 
         $args = func_get_args();
 
         foreach ($args as $class) {
-            if (!in_array($class, $this->loggers) && ($class instanceof IDS_Log_Interface)) {
+            if (!in_array($class, $this->loggers) && 
+                ($class instanceof IDS_Log_Interface)) {
                 $this->loggers[] = $class;
             }
         }
     }
 
     /**
-    * Removes a logger
-    *
-    * @param    object  $logger IDS_Log_Interface object
-    * @return   boolean
-    */
-    public function removeLogger(IDS_Log_Interface $logger) {
+     * Removes a logger
+     *
+     * @param object $logger IDS_Log_Interface object
+     * 
+     * @return boolean
+     */
+    public function removeLogger(IDS_Log_Interface $logger) 
+    {
         $key = array_search($logger, $this->loggers);
 
         if (isset($this->loggers[$key])) {

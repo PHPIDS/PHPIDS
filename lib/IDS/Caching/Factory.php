@@ -2,6 +2,7 @@
 
 /**
  * PHPIDS
+ * 
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -15,7 +16,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package    PHPIDS
+ * PHP version 5.11.6+
+ * 
+ * @category Security
+ * @package  PHPIDS
+ * @author   Mario Heiderich <mario.heiderich@gmail.com>
+ * @author   Christian Matthies <ch0012@gmail.com>
+ * @author   Lars Strojny <lars@strojny.net>
+ * @license  http://www.gnu.org/licenses/lgpl.html LGPL
+ * @link     http://code.google.com/p/csrfx/
  */
 
 /**
@@ -24,35 +33,42 @@
  * This class is used as a factory to load the correct concrete caching
  * implementation.
  *
- * @author        .mario <mario.heiderich@gmail.com>
- * @author        christ1an <ch0012@gmail.com>
- *
- * @package        PHPIDS
- * @copyright   2007 The PHPIDS Group
- * @version        SVN: $Id:Factory.php 517 2007-09-15 15:04:13Z mario $
- * @since       Version 0.4
- * @link        http://php-ids.org/
+ * @category  Security
+ * @package   PHPIDS
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
+ * @copyright 2007 The PHPIDS Group
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
+ * @version   Release: $Id:Factory.php 517 2007-09-15 15:04:13Z mario $
+ * @link      http://php-ids.org/
+ * @since     Version 0.4
  */
-class IDS_Caching {
+class IDS_Caching
+{
 
     /**
      * Factory method
      *
-     * @param   array   $config
-     * @param   string  $type
+     * @param array  $config the config array
+     * @param string $type   the caching type
+     * 
+     * @return object the caching facility
      */
-    public static function factory($config, $type) {
-        $object = false;
-
-        $wrapper    = ucfirst($config['caching']);
-        $class      = 'IDS_Caching_' . escapeshellcmd($wrapper);
-        $path       = dirname(__FILE__) . DIRECTORY_SEPARATOR . escapeshellcmd($wrapper) . '.php';
+    public static function factory($config, $type) 
+    {
+        $object  = false;
+        $wrapper = ucfirst($config['caching']);
+        $class   = 'IDS_Caching_' . escapeshellcmd($wrapper);
+        $path    = dirname(__FILE__) . DIRECTORY_SEPARATOR . 
+            escapeshellcmd($wrapper) . '.php';
 
         if (file_exists($path)) {
-            require_once $path;
+            include_once $path;
 
             if (class_exists($class)) {
-                $object = call_user_func(array($class, 'getInstance'), $type, $config);
+                $object = call_user_func(array($class, 'getInstance'), 
+                    $type, $config);
             }
         }
 
