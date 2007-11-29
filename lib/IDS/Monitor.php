@@ -252,12 +252,12 @@ class IDS_Monitor
     private function _match($key, $value, $filter) 
     {
         if ($this->scanKeys) {
-            if ($filter->_match($key)) {
+            if ($filter->match($key)) {
                 return true;
             }
         }
 
-        if ($filter->_match($value)) {
+        if ($filter->match($value)) {
             return true;
         }
 
