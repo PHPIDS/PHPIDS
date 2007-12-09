@@ -279,9 +279,9 @@ class IDS_Converter
         $value   = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|' . 
-                         'XOR|DIV|NOT|<>|RLIKE(?:\s+BINARY)?|' . 
-                         'REGEXP(?:\s+BINARY)?|' . 
-                         'SOUNDS\s+LIKE/ims');
+                         '(?:XOR|DIV|NOT\W|<>|RLIKE(?:\s+BINARY)?)|' . 
+                         '(?:REGEXP(?:\s+BINARY)?)|' . 
+                         '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '=', $value);
 
         return $value;
@@ -340,7 +340,7 @@ class IDS_Converter
 
         $converted = null;
         if (preg_match('/&#x?[\w]+/ms', $value)) {
-            $converted = preg_replace('/(&#x?[\w]+);?/ms', '$1;', $value);
+            $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
             $converted = html_entity_decode($converted);
             $value    .= "\n" . str_replace(';', null, $converted);
         }
@@ -402,7 +402,7 @@ class IDS_Converter
                 $value = str_replace($item, 'U', $value);
             }
         }
-
+        
         return $value;
     }
 
@@ -425,6 +425,28 @@ class IDS_Converter
         return $value;
     }
 
+    /**
+     * This method converts JS unicode code points to 
+     * regular characters
+     * 
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertFromJSUnicode($value)
+    {
+        $matches = array();
+        
+        preg_match_all('/\\\u\d{4}/ims', $value, $matches);
+
+        foreach($matches[0] as $match) {
+            $value = str_replace($match, chr(hexdec(substr($match, 2, 4))), $value);
+        }
+        
+        return $value;
+    }    
+    
     /**
      * This method is the centrifuge prototype
      *
