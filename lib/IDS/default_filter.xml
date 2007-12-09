@@ -129,7 +129,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+script:|@import[^\w]|;base64)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
+        <rule><![CDATA[(?:\w+script:|@import[^\w]|;base64|base64,)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
         <description>Detects possible includes and packed functions</description>
         <tags>
             <tag>xss</tag>
