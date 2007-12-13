@@ -206,7 +206,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
+        <rule><![CDATA[(?::\s*eval\s*,)|([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -321,7 +321,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\/:[\w.]+,)|(?:!?=\s*\w.?\d*\s*(?:[^\s\w.;&\/)-]|(?:\/[\w\s]\?)))|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*(!=|==)=?\s*\w+)|(?:!\s*0\s*\?)]]></rule>
+        <rule><![CDATA[(?:!\d+\.\d*\?")|(?:\/:[\w.]+,)|(?:!?=\s*\w.?\d*\s*(?:[^\s\w.;&\/)-]|(?:\/[\w\s]\?)))|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*(!=|==)=?\s*\w+)|(?:!\s*0\s*\?)]]></rule>
         <description>Detects common concatenation patterns 2/2</description>
         <tags>
             <tag>xss</tag>
