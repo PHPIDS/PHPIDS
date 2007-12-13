@@ -310,7 +310,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:=\s*\[s*\])|(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")]]></rule>
+        <rule><![CDATA[(?:=\s*\[s*\])|(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:\/\s*\?\s*")]]></rule>
         <description>Detects common concatenation patterns 1/2</description>
         <tags>
             <tag>xss</tag>
@@ -321,7 +321,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:!?=\s*\w.?\d*\s*(?:[^\s\w.;&\/)-]|(?:\/[\w\s]\?)))|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*(!=|==)=?\s*\w+)|(?:!\s*0\s*\?)]]></rule>
+        <rule><![CDATA[(?:\/:[\w.]+,)|(?:!?=\s*\w.?\d*\s*(?:[^\s\w.;&\/)-]|(?:\/[\w\s]\?)))|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)|(?:\w+\s*(!=|==)=?\s*\w+)|(?:!\s*0\s*\?)]]></rule>
         <description>Detects common concatenation patterns 2/2</description>
         <tags>
             <tag>xss</tag>
