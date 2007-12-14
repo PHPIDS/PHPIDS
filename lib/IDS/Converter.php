@@ -24,7 +24,7 @@
  * @author   Christian Matthies <ch0012@gmail.com>
  * @author   Lars Strojny <lars@strojny.net>
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
- * @link     http://code.google.com/p/csrfx/
+ * @link     http://php-ids.org/
  */
 
 /**
@@ -440,7 +440,7 @@ class IDS_Converter
         
         preg_match_all('/\\\u\d{4}/ims', $value, $matches);
 
-        foreach($matches[0] as $match) {
+        foreach ($matches[0] as $match) {
             $value = str_replace($match, chr(hexdec(substr($match, 2, 4))), $value);
         }
         

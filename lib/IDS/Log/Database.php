@@ -24,7 +24,7 @@
  * @author   Christian Matthies <ch0012@gmail.com>
  * @author   Lars Strojny <lars@strojny.net>
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
- * @link     http://code.google.com/p/csrfx/
+ * @link     http://php-ids.org/
  */
 
 require_once 'IDS/Log/Interface.php';
