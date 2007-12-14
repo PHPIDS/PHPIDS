@@ -246,7 +246,21 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                             n=.1[x];
                             n(k._$$)";
         $exploits[] = "ä=/ä/!=/ä/?'': 0;b=(ä+'eva'+ä);b=(b+'l'+ä);d=(ä+'XSS'+ä);c=(ä+'aler'+ä);c=(c+'t(d)'+ä);$=.0[b];a=$;a(c)";
-
+        $exploits[] = 'x=/x/
+							$x=!!1?\'ash\':xx
+							$x=!!1?\'ation.h\'+$x:xx
+							$x=!!1?\'loc\'+$x:xx
+							x.x=\'\'. eval,
+							x.x(x.x($x)
+							)';
+        $exploits[] = 'a=/x/
+							$b=!!1e1?\'ash\':a
+							$b=!!1e1?\'ion.h\'+$b:a
+							$b=!!1e1?\'locat\'+$b:a
+							$a=!1e1?!1e1:eval
+							a.a=$a
+							$b=a.a($b)
+							$b=a.a($b)';
 
         $test = new IDS_Monitor(
             $exploits,
@@ -254,7 +268,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(652, $result->getImpact());
+        $this->assertEquals(672, $result->getImpact());
 
     }
 
@@ -353,7 +367,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(274, $result->getImpact());
+        $this->assertEquals(278, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
