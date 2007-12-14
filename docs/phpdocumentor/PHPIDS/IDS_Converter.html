@@ -24,14 +24,16 @@
 <p class="short-description">PHPIDS specific utility class to convert charsets manually</p>
 <p class="description"><p>Note that if you make use of IDS_Converter::runAll(), existing class  methods will be executed in the same order as they are implemented in the  class tree!</p></p>
 	<ul class="tags">
-				<li><span class="field">author:</span> .mario &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
-				<li><span class="field">author:</span> christ1an &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> SVN: $Id:Converter.php 517 2007-09-15 15:04:13Z mario $</li>
+				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lars@strojny.net">lars@strojny.net</a>&gt;</li>
+				<li><span class="field">author:</span> Christian Matthies &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
+				<li><span class="field">author:</span> Mario Heiderich &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
+				<li><span class="field">version:</span> Release: $Id:Converter.php 517 2007-09-15 15:04:13Z mario $</li>
 				<li><span class="field">copyright:</span> 2007 The PHPIDS Group</li>
 				<li><span class="field">link:</span> <a href="http://php-ids.org/">http://php-ids.org/</a></li>
+				<li><span class="field">license:</span> <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_Converter.php.html">/Converter.php</a> (line <span class="field">36</span>)
+			Located in <a class="field" href="_Converter.php.html">/Converter.php</a> (line <span class="field">47</span>)
 		</p>
 		
 				
@@ -84,6 +86,11 @@
 									</div>
 																<div class="method-definition">
 					static 						<span class="method-result">string</span>
+										<a href="#convertFromJSUnicode" title="details" class="method-name">convertFromJSUnicode</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result">string</span>
 										<a href="#convertFromNewLines" title="details" class="method-name">convertFromNewLines</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
 									</div>
@@ -94,17 +101,17 @@
 									</div>
 																<div class="method-definition">
 					static 						<span class="method-result">string</span>
-										<a href="#convertFromUTF7" title="details" class="method-name">convertFromUTF7</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$data</span>)
-									</div>
-																<div class="method-definition">
-					static 						<span class="method-result">string</span>
-										<a href="#convertFromXML" title="details" class="method-name">convertFromXML</a>
+										<a href="#convertFromSQLKeywords" title="details" class="method-name">convertFromSQLKeywords</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
 									</div>
 																<div class="method-definition">
 					static 						<span class="method-result">string</span>
-										<a href="#convertParserBugs" title="details" class="method-name">convertParserBugs</a>
+										<a href="#convertFromUTF7" title="details" class="method-name">convertFromUTF7</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+					static 						<span class="method-result">string</span>
+										<a href="#convertFromXML" title="details" class="method-name">convertFromXML</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
 									</div>
 																<div class="method-definition">
@@ -118,7 +125,7 @@
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
 									</div>
 								
-																																																																																																												</div>
+																																																																																																																				</div>
 		</div>
 	</div>		
 
@@ -137,7 +144,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertConcatenations</span> (line <span class="line-number">242</span>)
+		<span class="method-title">static method convertConcatenations</span> (line <span class="line-number">298</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -158,7 +165,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -167,7 +174,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertEntities</span> (line <span class="line-number">276</span>)
+		<span class="method-title">static method convertEntities</span> (line <span class="line-number">338</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -188,7 +195,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -197,13 +204,12 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromCentrifuge</span> (line <span class="line-number">373</span>)
+		<span class="method-title">static method convertFromCentrifuge</span> (line <span class="line-number">458</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This method is the centrifuge prototype</p>
 	<ul class="tags">
-				<li><span class="field">return:</span> //TODO: Test and optimize</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -219,7 +225,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -228,7 +234,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromCommented</span> (line <span class="line-number">81</span>)
+		<span class="method-title">static method convertFromCommented</span> (line <span class="line-number">98</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -249,7 +255,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -258,7 +264,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromControlChars</span> (line <span class="line-number">296</span>)
+		<span class="method-title">static method convertFromControlChars</span> (line <span class="line-number">359</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -279,7 +285,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -288,7 +294,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromJSCharcode</span> (line <span class="line-number">145</span>)
+		<span class="method-title">static method convertFromJSCharcode</span> (line <span class="line-number">168</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -309,16 +315,46 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodconvertFromJSUnicode" id="convertFromJSUnicode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method convertFromJSUnicode</span> (line <span class="line-number">437</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method converts JS unicode code points to  regular characters</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			convertFromJSUnicode
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodconvertFromNewLines" id="convertFromNewLines"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromNewLines</span> (line <span class="line-number">69</span>)
+		<span class="method-title">static method convertFromNewLines</span> (line <span class="line-number">84</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -339,16 +375,16 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodconvertFromOutOfRangeChars" id="convertFromOutOfRangeChars"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromOutOfRangeChars</span> (line <span class="line-number">319</span>)
+		<span class="method-title">static method convertFromOutOfRangeChars</span> (line <span class="line-number">396</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -369,7 +405,37 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodconvertFromSQLKeywords" id="convertFromSQLKeywords"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">static method convertFromSQLKeywords</span> (line <span class="line-number">268</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Converts basic SQL keywords and obfuscations</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+	    static
+		<span class="method-result">string</span>
+		<span class="method-name">
+			convertFromSQLKeywords
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -378,7 +444,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromUTF7</span> (line <span class="line-number">107</span>)
+		<span class="method-title">static method convertFromUTF7</span> (line <span class="line-number">127</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -393,13 +459,13 @@
 		<span class="method-name">
 			convertFromUTF7
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$data</span>)
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$data</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -408,7 +474,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertFromXML</span> (line <span class="line-number">355</span>)
+		<span class="method-title">static method convertFromXML</span> (line <span class="line-number">417</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -429,46 +495,16 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="methodconvertParserBugs" id="convertParserBugs"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">static method convertParserBugs</span> (line <span class="line-number">338</span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Basic approach to fight attacks using common parser bugs</p>
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-	    static
-		<span class="method-result">string</span>
-		<span class="method-name">
-			convertParserBugs
-		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodconvertQuotes" id="convertQuotes"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method convertQuotes</span> (line <span class="line-number">225</span>)
+		<span class="method-title">static method convertQuotes</span> (line <span class="line-number">250</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -489,16 +525,16 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodrunAll" id="runAll"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method runAll</span> (line <span class="line-number">49</span>)
+		<span class="method-title">static method runAll</span> (line <span class="line-number">62</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -520,7 +556,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$value</span>			</li>
+				<span class="var-name">$value</span><span class="var-description">: the value to convert</span>			</li>
 				</ul>
 		
 			
@@ -532,7 +568,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 24 Sep 2007 20:06:50 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
+		Documentation generated on Fri, 14 Dec 2007 16:12:53 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
 	</p>
 	</div></body>
 </html>

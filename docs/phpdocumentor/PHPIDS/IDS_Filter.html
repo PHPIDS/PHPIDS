@@ -23,16 +23,19 @@
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">PHPIDS Filter object</p>
-<p class="description"><p>Each object of this class serves as a container for a specific filter. The object  provides methods to get information about this particular filter and also to match  an arbitrary string against it.</p></p>
+<p class="description"><p>Each object of this class serves as a container for a specific filter. The  object provides methods to get information about this particular filter and  also to match an arbitrary string against it.</p></p>
 	<ul class="tags">
-				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lstrojny@neu.de">lstrojny@neu.de</a>&gt;</li>
-				<li><span class="field">author:</span> christ1an &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> SVN: $Id:Filter.php 517 2007-09-15 15:04:13Z mario $</li>
+				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lars@strojny.net">lars@strojny.net</a>&gt;</li>
+				<li><span class="field">author:</span> Christian Matthies &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
+				<li><span class="field">author:</span> Mario Heiderich &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
+				<li><span class="field">version:</span> Release: $Id:Filter.php 517 2007-09-15 15:04:13Z mario $</li>
 				<li><span class="field">copyright:</span> 2007 The PHPIDS Group</li>
 				<li><span class="field">link:</span> <a href="http://php-ids.org/">http://php-ids.org/</a></li>
+				<li><span class="field">since:</span> Version 0.4</li>
+				<li><span class="field">license:</span> <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_Filter---Filter.php.html">/Filter/Filter.php</a> (line <span class="field">36</span>)
+			Located in <a class="field" href="_Filter.php.html">/Filter.php</a> (line <span class="field">48</span>)
 		</p>
 		
 				
@@ -89,7 +92,7 @@
 			<div class="method-summary">
 																																																				
 												<div class="method-definition">
-											<span class="method-result">IDS_Filter</span>
+											<span class="method-result">void</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
 											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$rule</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$description</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$tags</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$impact</span>)
 									</div>
@@ -136,13 +139,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$description" id="$description"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$description</span>
-			 = <span class="var-default"> NULL</span>			(line <span class="line-number">64</span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number">77</span>)
 		</span>
 	</div>
 
@@ -158,13 +161,13 @@
 
 </div>
 <a name="var$impact" id="$impact"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$impact</span>
-			 = <span class="var-default"> 0</span>			(line <span class="line-number">57</span>)
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">70</span>)
 		</span>
 	</div>
 
@@ -180,13 +183,13 @@
 
 </div>
 <a name="var$rule" id="$rule"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">string</span>
 			<span class="var-name">$rule</span>
-						(line <span class="line-number">43</span>)
+						(line <span class="line-number">56</span>)
 		</span>
 	</div>
 
@@ -202,13 +205,13 @@
 
 </div>
 <a name="var$tags" id="$tags"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$tags</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">50</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">63</span>)
 		</span>
 	</div>
 
@@ -240,10 +243,10 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">74</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">89</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -253,7 +256,7 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">IDS_Filter</span>
+		<span class="method-result">void</span>
 		<span class="method-name">
 			__construct
 		</span>
@@ -278,10 +281,10 @@
 			
 	</div>
 <a name="methodgetDescription" id="getDescription"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getDescription</span> (line <span class="line-number">106</span>)
+		<span class="method-title">getDescription</span> (line <span class="line-number">124</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -302,10 +305,10 @@
 			
 	</div>
 <a name="methodgetImpact" id="getImpact"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getImpact</span> (line <span class="line-number">136</span>)
+		<span class="method-title">getImpact</span> (line <span class="line-number">157</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -326,10 +329,10 @@
 			
 	</div>
 <a name="methodgetRule" id="getRule"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getRule</span> (line <span class="line-number">127</span>)
+		<span class="method-title">getRule</span> (line <span class="line-number">147</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -350,15 +353,15 @@
 			
 	</div>
 <a name="methodgetTags" id="getTags"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTags</span> (line <span class="line-number">118</span>)
+		<span class="method-title">getTags</span> (line <span class="line-number">137</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Return list of affected tags</p>
-<p class="description"><p>Each filter rule is concerned with a certain kind of attack vectors. This method  returns those affected kinds.</p></p>
+<p class="description"><p>Each filter rule is concerned with a certain kind of attack vectors.  This method returns those affected kinds.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -375,17 +378,17 @@
 			
 	</div>
 <a name="methodmatch" id="match"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">match</span> (line <span class="line-number">91</span>)
+		<span class="method-title">match</span> (line <span class="line-number">108</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Matches a string against current filter</p>
 <p class="description"><p>Matches given string against the filter rule the specific object of this  class represents</p></p>
 	<ul class="tags">
-				<li><span class="field">throws:</span> InvalidArgumentException</li>
+				<li><span class="field">throws:</span> InvalidArgumentException if argument is no string</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -400,7 +403,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$string</span>			</li>
+				<span class="var-name">$string</span><span class="var-description">: the string to match</span>			</li>
 				</ul>
 		
 			
@@ -411,7 +414,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 24 Sep 2007 20:06:51 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
+		Documentation generated on Fri, 14 Dec 2007 16:12:54 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
 	</p>
 	</div></body>
 </html>

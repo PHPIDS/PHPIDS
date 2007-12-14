@@ -29,13 +29,16 @@
 <p class="short-description">File logging wrapper</p>
 <p class="description"><p>The file wrapper is designed to store data into a flatfile. It implements the  singleton pattern.</p></p>
 	<ul class="tags">
-				<li><span class="field">author:</span> christ1an &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
-				<li><span class="field">version:</span> SVN: $Id:File.php 517 2007-09-15 15:04:13Z mario $</li>
+				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lars@strojny.net">lars@strojny.net</a>&gt;</li>
+				<li><span class="field">author:</span> Christian Matthies &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
+				<li><span class="field">author:</span> Mario Heiderich &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
+				<li><span class="field">version:</span> Release: $Id:File.php 517 2007-09-15 15:04:13Z mario $</li>
 				<li><span class="field">copyright:</span> 2007 The PHPIDS Group</li>
 				<li><span class="field">link:</span> <a href="http://php-ids.org/">http://php-ids.org/</a></li>
+				<li><span class="field">license:</span> <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_Log---File.php.html">/Log/File.php</a> (line <span class="field">36</span>)
+			Located in <a class="field" href="_Log---File.php.html">/Log/File.php</a> (line <span class="field">48</span>)
 		</p>
 		
 				
@@ -93,15 +96,15 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 <a name="methodgetInstance" id="getInstance"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">static method getInstance</span> (line <span class="line-number">90</span>)
+		<span class="method-title">static method getInstance</span> (line <span class="line-number">106</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Returns an instance of this class</p>
-<p class="description"><p>This method allows the passed argument to be either an instance of IDS_Init or  a path to a log file. Due to the singleton pattern only one instance for each file  can be initiated.</p></p>
+<p class="description"><p>This method allows the passed argument to be either an instance of  IDS_Init or a path to a log file. Due to the singleton pattern only one  instance for each file can be initiated.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -125,10 +128,10 @@
 	</div>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">68</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">82</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -154,16 +157,16 @@
 			
 	</div>
 <a name="methodexecute" id="execute"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">execute</span> (line <span class="line-number">149</span>)
+		<span class="method-title">execute</span> (line <span class="line-number">172</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Stores given data into a file</p>
 	<ul class="tags">
-				<li><span class="field">throws:</span> Exception</li>
+				<li><span class="field">throws:</span> Exception if the logfile isn't writeable</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -185,19 +188,20 @@
 		<div class="notes">Implementation of:</div>
 			<dl>
 			<dt><a href="../PHPIDS/IDS_Log_Interface.html#methodexecute">IDS_Log_Interface::execute()</a></dt>
+						<dd>Interface method</dd>
 					</dl>
 			
 	</div>
 <a name="methodprepareData" id="prepareData"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">prepareData</span> (line <span class="line-number">120</span>)
+		<span class="method-title">prepareData</span> (line <span class="line-number">142</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Prepares data</p>
-<p class="description"><p>Converts given data into a format that can be stored into a file. You might  edit this method to your requirements.</p></p>
+<p class="description"><p>Converts given data into a format that can be stored into a file.  You might edit this method to your requirements.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> protected</li>
 			</ul>
@@ -213,7 +217,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">mixed</span>
-				<span class="var-name">$data</span>			</li>
+				<span class="var-name">$data</span><span class="var-description">: incoming report data</span>			</li>
 				</ul>
 		
 			
@@ -224,7 +228,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 24 Sep 2007 20:06:51 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
+		Documentation generated on Fri, 14 Dec 2007 16:12:53 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
 	</p>
 	</div></body>
 </html>

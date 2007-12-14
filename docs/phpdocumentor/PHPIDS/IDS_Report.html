@@ -28,16 +28,18 @@
         </p>
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">PHPIDS report object</p>
-<p class="description"><p>The report objects collects a number of events and thereby presents the detected results.  It provides a convenient API to work with the results.</p><p>Note that this class implements Countable, IteratorAggregate and a __toString() method</p></p>
+<p class="description"><p>The report objects collects a number of events and thereby presents the  detected results. It provides a convenient API to work with the results.</p><p>Note that this class implements Countable, IteratorAggregate and  a __toString() method</p></p>
 	<ul class="tags">
-				<li><span class="field">author:</span> christ1an &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
-				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lstrojny@neu.de">lstrojny@neu.de</a>&gt;</li>
-				<li><span class="field">version:</span> SVN: $Id:Report.php 517 2007-09-15 15:04:13Z mario $</li>
+				<li><span class="field">author:</span> Lars Strojny &lt;<a href="mailto:lars@strojny.net">lars@strojny.net</a>&gt;</li>
+				<li><span class="field">author:</span> Christian Matthies &lt;<a href="mailto:ch0012@gmail.com">ch0012@gmail.com</a>&gt;</li>
+				<li><span class="field">author:</span> Mario Heiderich &lt;<a href="mailto:mario.heiderich@gmail.com">mario.heiderich@gmail.com</a>&gt;</li>
+				<li><span class="field">version:</span> Release: $Id:Report.php 517 2007-09-15 15:04:13Z mario $</li>
 				<li><span class="field">copyright:</span> 2007 The PHPIDS Group</li>
 				<li><span class="field">link:</span> <a href="http://php-ids.org/">http://php-ids.org/</a></li>
+				<li><span class="field">license:</span> <a href="http://www.gnu.org/licenses/lgpl.html">LGPL</a></li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_Report.php.html">/Report.php</a> (line <span class="field">37</span>)
+			Located in <a class="field" href="_Report.php.html">/Report.php</a> (line <span class="field">49</span>)
 		</p>
 		
 				
@@ -92,7 +94,7 @@
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
-											([<span class="var-type"></span>&nbsp;<span class="var-name">$events</span> = <span class="var-default">NULL</span>])
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$events</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">object</span>
@@ -168,7 +170,7 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$events</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">44</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">57</span>)
 		</span>
 	</div>
 
@@ -190,7 +192,7 @@
 		<span class="var-title">
 			<span class="var-type">integer</span>
 			<span class="var-name">$impact</span>
-			 = <span class="var-default"> 0</span>			(line <span class="line-number">64</span>)
+			 = <span class="var-default"> 0</span>			(line <span class="line-number">77</span>)
 		</span>
 	</div>
 
@@ -213,13 +215,13 @@
 		<span class="var-title">
 			<span class="var-type">array</span>
 			<span class="var-name">$tags</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number">54</span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number">67</span>)
 		</span>
 	</div>
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">List of affected tags</p>
-<p class="description"><p>This list of tags is collected from the collected event objects on demand when  IDS_Report-&gt;getTags() is called</p></p>
+<p class="description"><p>This list of tags is collected from the collected event objects on  demand when IDS_Report-&gt;getTags() is called</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> protected</li>
 			</ul>
@@ -249,7 +251,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number">73</span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">86</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -263,13 +265,13 @@
 		<span class="method-name">
 			__construct
 		</span>
-					([<span class="var-type"></span>&nbsp;<span class="var-name">$events</span> = <span class="var-default">NULL</span>])
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$events</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">array</span>
-				<span class="var-name">$events</span>			</li>
+				<span class="var-name">$events</span><span class="var-description">: the events the report should include</span>			</li>
 				</ul>
 		
 			
@@ -278,7 +280,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addEvent</span> (line <span class="line-number">87</span>)
+		<span class="method-title">addEvent</span> (line <span class="line-number">102</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -307,7 +309,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear</span> (line <span class="line-number">211</span>)
+		<span class="method-title">clear</span> (line <span class="line-number">232</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -331,7 +333,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">count</span> (line <span class="line-number">180</span>)
+		<span class="method-title">count</span> (line <span class="line-number">198</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -360,15 +362,15 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getEvent</span> (line <span class="line-number">104</span>)
+		<span class="method-title">getEvent</span> (line <span class="line-number">121</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Get event by name</p>
-<p class="description"><p>In most cases an event is identified by the key of the variable that contained  maliciously appearing content</p></p>
+<p class="description"><p>In most cases an event is identified by the key of the variable that  contained maliciously appearing content</p></p>
 	<ul class="tags">
 				<li><span class="field">return:</span> IDS_Event object or false if the event does not exist</li>
-				<li><span class="field">throws:</span> InvalidArgumentException</li>
+				<li><span class="field">throws:</span> InvalidArgumentException if argument is invalid</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
@@ -383,7 +385,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">scalar</span>
-				<span class="var-name">$name</span>			</li>
+				<span class="var-name">$name</span><span class="var-description">: the event name</span>			</li>
 				</ul>
 		
 			
@@ -392,12 +394,12 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getImpact</span> (line <span class="line-number">150</span>)
+		<span class="method-title">getImpact</span> (line <span class="line-number">165</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Returns total impact</p>
-<p class="description"><p>Each stored IDS_Event object and its IDS_Filter sub-object are called to calculate  the overall impact level of this request</p></p>
+<p class="description"><p>Each stored IDS_Event object and its IDS_Filter sub-object are called  to calculate the overall impact level of this request</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -417,12 +419,12 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">getIterator</span> (line <span class="line-number">193</span>)
+		<span class="method-title">getIterator</span> (line <span class="line-number">212</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Return iterator object</p>
-<p class="description"><p>In order to provide the possibility to directly iterate over the IDS_Event object  the IteratorAggregate is implemented. One can easily use foreach() to iterate through  all stored IDS_Event objects.</p></p>
+<p class="description"><p>In order to provide the possibility to directly iterate over the  IDS_Event object the IteratorAggregate is implemented. One can easily  use foreach() to iterate through all stored IDS_Event objects.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -447,7 +449,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">getTags</span> (line <span class="line-number">123</span>)
+		<span class="method-title">getTags</span> (line <span class="line-number">141</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -471,7 +473,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">hasEvent</span> (line <span class="line-number">167</span>)
+		<span class="method-title">hasEvent</span> (line <span class="line-number">184</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -491,7 +493,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">scalar</span>
-				<span class="var-name">$name</span>			</li>
+				<span class="var-name">$name</span><span class="var-description">: the event name</span>			</li>
 				</ul>
 		
 			
@@ -500,7 +502,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">isEmpty</span> (line <span class="line-number">202</span>)
+		<span class="method-title">isEmpty</span> (line <span class="line-number">222</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -524,7 +526,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">__toString</span> (line <span class="line-number">221</span>)
+		<span class="method-title">__toString</span> (line <span class="line-number">243</span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -550,7 +552,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 24 Sep 2007 20:06:51 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
+		Documentation generated on Fri, 14 Dec 2007 16:12:54 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.0</a>
 	</p>
 	</div></body>
 </html>
