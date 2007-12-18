@@ -580,7 +580,7 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:<[?%](?:php)?.*(?:[?%]>)?)|(?:;\s*\$\w+\s*=)|(?:\$\w+\s*=(?:(?:\s*\$?\w+\s*[(;])|\s*".*"))]]></rule>
+        <rule><![CDATA[(?:<[?%](?:php)?.*(?:[?%]>)?)|(?:;\s*\$\w+\s*=)|(?:\$\w+\s*=(?:(?:\s*\$?\w+\s*[(;])|\s*".*"))|(?:;\s*\{\W*\w+\s*\()]]></rule>
         <description>Detects code injection attempts 1/3</description>
         <tags>
             <tag>id</tag>
@@ -600,7 +600,7 @@
         <impact>7</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*[^\w](?:echo|print|print_r|var_dump|fopen|popen))|(?:;\s*rm\s+-\w+\s+)|(?:;.*{.*\$\w+\s*=)]]></rule>
+        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*[^\w](?:echo|print|print_r|var_dump|fopen|popen))|(?:;\s*rm\s+-\w+\s+)|(?:;.*{.*\$\w+\s*=)|(?:\$\w+\s*\[\]\s*=\s*)]]></rule>
         <description>Detects code injection attempts 3/3</description>
         <tags>
             <tag>id</tag>

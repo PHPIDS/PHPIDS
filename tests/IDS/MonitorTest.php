@@ -832,14 +832,18 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '";{ if (true) $_a  = "" . strtolower("pass");
                         if   (1) $_a.= "" . strtolower("thru");
                         $_a( "dir"); } //';
-
+        $exploits[] = '";{if (!($_b[]++%1)) $_a[]  = system;
+                        $_a[0]( "ls"); } //';
+        $exploits[] = '";{if (pi) $_a[]  = system;
+                        $_a[0]( "ls");  } //';
+        
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(243, $result->getImpact());
+        $this->assertEquals(276, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {
