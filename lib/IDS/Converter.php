@@ -310,16 +310,19 @@ class IDS_Converter
             '/(?:"?"\+\w+\+")/s',
             '/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/s',
             '/(?:"\s*(?:;|\+).{8,18}:\s*")/s',
-            '/(";\w+=)|(!""&&")|(?:~)/s',
+            '/(?:";\w+=)|(?:!""&&")|(?:~)/s',
             '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/s',
-            '/("\s*[\W]+\s*\n*")/s',
-            '/(";\w\s*+=\s*\w?\s*\n*")/s',
-            '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/s',
-            '/(";\s*\w+\W+\w*\s*[|&]*")/s',
-            '/"\s*"\s*\./s');
+            '/(?:"\s*[\W]+\s*\n*")/s',
+            '/(?:";\w\s*+=\s*\w?\s*\n*")/s',
+            '/(?:"[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/s',
+            '/(?:";\s*\w+\W+\w*\s*[|&]*")/s',
+            '/(?:"\s*"\s*\.)/s');
 
         // strip out concatenations
         $converted = preg_replace($pattern, null, $compare);
+        
+        //strip object traversal
+        $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
         if ($compare != $converted) {
             $value .= "\n" . $converted;
@@ -475,7 +478,8 @@ class IDS_Converter
                 '|' => '+',
                 '*' => '+',
                 '%' => '+',
-                '&' => '+'
+                '&' => '+',
+                '/' => '+'
             );
 
             $converted = implode($array);
@@ -495,7 +499,7 @@ class IDS_Converter
                 return $value . "\n" . $converted;
             }
         }
-
+        
         return $value;
     }
 }
