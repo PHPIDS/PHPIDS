@@ -206,7 +206,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:[^\w\s]\s*:\s*\w+)|(?::\s*eval\s*[^\s])|([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
+        <rule><![CDATA[(?:=.*:\s*\w+\s)|(?::\s*eval\s*[^\s])|([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>

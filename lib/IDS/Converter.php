@@ -315,7 +315,8 @@ class IDS_Converter
             '/("\s*[\W]+\s*\n*")/s',
             '/(";\w\s*+=\s*\w?\s*\n*")/s',
             '/("[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/s',
-            '/(";\s*\w+\W+\w*\s*[|&]*")/s');
+            '/(";\s*\w+\W+\w*\s*[|&]*")/s',
+            '/"\s*"\s*\./s');
 
         // strip out concatenations
         $converted = preg_replace($pattern, null, $compare);
