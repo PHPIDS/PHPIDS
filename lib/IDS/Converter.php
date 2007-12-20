@@ -402,7 +402,7 @@ class IDS_Converter
 
         $values = str_split($value);
         foreach ($values as $item) {
-            if (ord($item) >= 128) {
+            if (ord($item) >= 127) {
                 $value = str_replace($item, 'U', $value);
             }
         }
@@ -444,8 +444,11 @@ class IDS_Converter
         
         preg_match_all('/\\\u\d{4}/ims', $value, $matches);
 
-        foreach ($matches[0] as $match) {
-            $value = str_replace($match, chr(hexdec(substr($match, 2, 4))), $value);
+        if(!empty($matches[0])) {
+            foreach ($matches[0] as $match) {
+                $value = str_replace($match, chr(hexdec(substr($match, 2, 4))), $value);
+            }
+            $value .= "\n\u0001";
         }
         
         return $value;
