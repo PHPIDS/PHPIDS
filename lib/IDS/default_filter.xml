@@ -54,7 +54,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()|(?:(?:do|while|for)\s*\([^)]*\)\s*\{)|(?:\/\s*\[\W*\d)]]></rule>
+        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()|(?:(?:do|while|for)\s*\([^)]*\)\s*\{)|(?:\/[\w\s]*\[\W*\d)]]></rule>
         <description>Detects self contained xss via with(), common loops and the regexp to string pattern</description>
         <tags>
             <tag>xss</tag>
@@ -235,17 +235,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+\[("\w+"|\w+\|\|))|(?:[^|]\|\|[^|]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])]]></rule>
+        <rule><![CDATA[(?:\w+\[("\w+"|\w+\|\|))|(?:[^|]\|\|[^|]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()]]></rule>
         <description>Detects obfuscated JavaScript script injections</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>
-    <filter>
-        <rule><![CDATA[(?:(\$\$?\s*\w?|ext[\s.]+\w+|cssquery|dojo[\s.]+\w+)\s*\(|__gwt_)]]></rule>
-        <description>Detects library based JavaScript injections (covers jQuery, Prototype, Ext, cssQuery, GWT and dojo)</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -358,7 +349,7 @@
         <impact>3</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)|(?:"\s*;\s*\/\/)]]></rule>
+        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)|(?:"\s*;+\s*\/\/)]]></rule>
         <description>Detects common comment types</description>
         <tags>
             <tag>xss</tag>
@@ -580,7 +571,7 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:]\s*\(\s*"\s*\w)|(?:<[?%](?:php)?.*(?:[?%]>)?)|(?:;\s*\$\w+\s*=)|(?:\$\w+\s*=(?:(?:\s*\$?\w+\s*[(;])|\s*".*"))|(?:;\s*\{\W*\w+\s*\()]]></rule>
+        <rule><![CDATA[(?:]\s*\(\s*["!]\s*\w)|(?:<[?%](?:php)?.*(?:[?%]>)?)|(?:;\s*\$\w+\s*=)|(?:\$\w+\s*=(?:(?:\s*\$?\w+\s*[(;])|\s*".*"))|(?:;\s*\{\W*\w+\s*\()]]></rule>
         <description>Detects code injection attempts 1/3</description>
         <tags>
             <tag>id</tag>
