@@ -54,8 +54,8 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()|(?:(?:do|while|for)\s*\([^)]*\)\s*\{)|(?:\/[\w\s]*\[\W*\d)]]></rule>
-        <description>Detects self contained xss via with(), common loops and the regexp to string pattern</description>
+        <rule><![CDATA[(?:with\s*\(\s*.+\s*\)\s*\w+\s*\()|(?:(?:do|while|for)\s*\([^)]*\)\s*\{)|(?:\/[\w\s]*\[\W*\w)]]></rule>
+        <description>Detects self contained xss via with(), common loops and regex to string conversion</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -72,7 +72,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?<!(?:Mozilla\/\d\.\d\s))\([^)[]+\[[^\]]+\][^)]*\))|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])]\s*[}\])])|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
+        <rule><![CDATA[(?:(?<!(?:Mozilla\/\d\.\d\s))\([^)[]+\[[^\]]+\][^)]*\))|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])][\s+"]*[}\])])|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
