@@ -499,16 +499,17 @@ class IDS_Converter
             $converted = implode($array);
             $converted = str_replace(array_keys($schemes), 
                 array_values($schemes), $converted);
+            $converted = preg_replace('/[+-]\s*\d+/', '+', $converted);    
             $converted = preg_replace('/[()[\]{}]/', '(', $converted);
             $converted = preg_replace('/[!?,.:=]/', ':', $converted);
             $converted = preg_replace('/[^:(+]/', null, stripslashes($converted));
 
+            
+            
             // Sort again and implode
             $array = str_split($converted);
             asort($array);
             $converted = implode($array);
-
-           
             
             if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' . 
                 '(?:\({3,}\++:{2,})/', $converted)) {
