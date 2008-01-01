@@ -464,8 +464,19 @@ class IDS_Converter
      */
     public static function convertFromCentrifuge($value) 
     {
+        if (strlen($value) > 60) {
 
-        if (strlen($value) > 80) {
+            // Check for the attack char ratio
+            $stripped_length = strlen(preg_replace('/[\w\s.,]*/ms', null, $value));
+            $overall_length  = strlen($value);
+            if($stripped_length == 0) {
+                $stripped_length = 1;
+            }
+            
+            if($overall_length/$stripped_length <= 3.5) {
+                $value .= "\n#[!!!]";            
+            }              
+            
             // Replace all non-special chars
             $converted =  preg_replace('/[\w\s\p{L}]/', null, $value);
 
@@ -497,6 +508,8 @@ class IDS_Converter
             asort($array);
             $converted = implode($array);
 
+           
+            
             if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' . 
                 '(?:\({3,}\++:{2,})/', $converted)) {
                 return $value . "\n" . $converted;
