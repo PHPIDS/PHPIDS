@@ -474,7 +474,7 @@ class IDS_Converter
             }
             
             if($overall_length/$stripped_length <= 3.5) {
-                $value .= "\n#[!!!]";            
+                $value .= "\n§[!!!]";            
             }              
             
             // Replace all non-special chars
