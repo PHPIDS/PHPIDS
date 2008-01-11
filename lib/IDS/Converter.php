@@ -272,7 +272,7 @@ class IDS_Converter
             '(?:(?:IN)[+\s]*\([^)]+\))/ims');
         $value   = preg_replace($pattern, '=0', $value);
 
-        $pattern = array('/\Wnull|\\\N|@[\w-+]+|TRUE|FALSE|UTC_TIME|' . 
+        $pattern = array('/\Wnull|\\\N|TRUE|FALSE|UTC_TIME|' . 
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' . 
                          '(?:(?:ASCII|SOUNDEX|' . 
                          'REGEXP|MD5|LIKE)[+\s]*\([^)]+\))/ims');

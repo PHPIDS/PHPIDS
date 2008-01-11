@@ -510,7 +510,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(457, $result->getImpact());
+        $this->assertEquals(451, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -558,7 +558,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(455, $result->getImpact());
+        $this->assertEquals(443, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -730,7 +730,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(428, $result->getImpact());
+        $this->assertEquals(416, $result->getImpact());
     }    
     
     public function testDTList(){
@@ -800,13 +800,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(123, $result->getImpact());
+        $this->assertEquals(128, $result->getImpact());
     }
 
     public function testRFEList() {
 
         $exploits = array();
         $exploits[] = ';phpinfo()';
+        $exploits[] = '@phpinfo()';
         $exploits[] = '"; <?php exec("rm -rf /"); ?>';
         $exploits[] = '; file_get_contents(\'/usr/local/apache2/conf/httpd.conf\');';
         $exploits[] = ';echo file_get_contents(implode(DIRECTORY_SEPARATOR, array("usr","local","apache2","conf","httpd.conf"))';
@@ -859,7 +860,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(348, $result->getImpact());
+        $this->assertEquals(355, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {
