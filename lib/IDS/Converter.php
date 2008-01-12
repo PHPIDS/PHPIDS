@@ -324,6 +324,9 @@ class IDS_Converter
         //strip object traversal
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
+        //convert JS special numbers
+        $converted = preg_replace('/\d\.e\d+/', 1, $converted);
+        
         if ($compare != $converted) {
             $value .= "\n" . $converted;
         }
