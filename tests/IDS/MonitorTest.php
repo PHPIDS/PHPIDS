@@ -261,6 +261,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 							a.a=$a
 							$b=a.a($b)
 							$b=a.a($b)';
+        $exploits[] = 'y=name,null
+                            $x=eval,null
+                            $x(y)';
 
         $test = new IDS_Monitor(
             $exploits,
@@ -268,7 +271,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(797, $result->getImpact());
+        $this->assertEquals(819, $result->getImpact());
 
     }
 
