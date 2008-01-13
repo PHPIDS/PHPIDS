@@ -325,7 +325,7 @@ class IDS_Converter
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
         //convert JS special numbers
-        $converted = preg_replace('/\d\.e\d+/', 1, $converted);
+        $converted = preg_replace('/(?:\d\.e?\d*)/', 1, $converted);
         
         if ($compare != $converted) {
             $value .= "\n" . $converted;
@@ -467,7 +467,7 @@ class IDS_Converter
      */
     public static function convertFromCentrifuge($value) 
     {
-        if (strlen($value) > 60) {
+        if (strlen($value) > 50) {
 
             // Check for the attack char ratio
             $stripped_length = strlen(preg_replace('/[\w\s.,]*/ms', null, $value));

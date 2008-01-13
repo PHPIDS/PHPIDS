@@ -271,7 +271,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(819, $result->getImpact());
+        $this->assertEquals(827, $result->getImpact());
 
     }
 
@@ -382,7 +382,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(380, $result->getImpact());
+        $this->assertEquals(391, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -403,7 +403,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(65, $result->getImpact());
+        $this->assertEquals(76, $result->getImpact());
     }
 
     public function testXSSList() {
@@ -428,6 +428,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "RegExp(/a/,alert(1))";
         $exploits[] = "x=[/&/,alert,/&/][1],x(1)";
         $exploits[] = "[1,alert,1][1](1)";
+        $exploits[] = "throw alert(1)";
+        $exploits[] = "delete alert(1)";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -436,7 +438,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(220, $result->getImpact());
+        $this->assertEquals(238, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -468,7 +470,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(383, $result->getImpact());
+        $this->assertEquals(387, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -1002,7 +1004,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "Results are 'true' or 'false'.";
         $exploits[] = "Choose between \"red\" and \"green\". ";
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
-        $exploits[] = "msnbot/1.0 ([+*]+http://search.msn.com/msnbot.htm)";
         $exploits[] = "select *something* from the menu";
 
         $test = new IDS_Monitor(

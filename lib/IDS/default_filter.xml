@@ -301,7 +301,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:!+\s*[\d.,]+\w?\d*\s*\?)|(?:=\s*\[s*\])|(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:\/\s*\?\s*")|(?:\/\s*\)\s*\[)|(?:\d\?.+:\d)|(?:]\s*\[\W*\w)]]></rule>
+        <rule><![CDATA[(?:!+\s*[\d.,]+\w?\d*\s*\?)|(?:=\s*\[s*\])|(?:;[^q\s]+=)|(?:\s*==\s*\w)|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:\/\s*\?\s*")|(?:\/\s*\)\s*\[)|(?:\d\?.+:\d)|(?:]\s*\[\W*\w)|(?:[^\s]\s*=\s*\/)]]></rule>
         <description>Detects common XSS concatenation patterns 1/2</description>
         <tags>
             <tag>xss</tag>
@@ -611,8 +611,8 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:function[^(]*\([^)]*\))|(?:new\s*\w+\s*[([])|([)\]]\s*\.\s*\w+\s*=)]]></rule>
-        <description>Detects common function declarations</description>
+        <rule><![CDATA[(?:function[^(]*\([^)]*\))|(?:(?:delete|void|throw|new|typeof)\s*\w+\s*[([])|([)\]]\s*\.\s*\w+\s*=)]]></rule>
+        <description>Detects common function declarations and special JS operators</description>
         <tags>
             <tag>id</tag>
             <tag>rfe</tag>
