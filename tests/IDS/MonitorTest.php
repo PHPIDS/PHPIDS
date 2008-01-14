@@ -518,7 +518,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(459, $result->getImpact());
+        $this->assertEquals(453, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -686,7 +686,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa'%1+0='0";
         $exploits[] = "'/1/1='";
         $exploits[] = " aa'/1 or '1";
-        $exploits[] = " aa'/1 regexp '0";
+        $exploits[] = " aa1' * @a or '1 '/1 regexp '0";
         $exploits[] = " ' / 1 / 1 ='";
         $exploits[] = " '/1='";
         $exploits[] = " aa'&0+1 = 'aa";
@@ -745,7 +745,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(426, $result->getImpact());
+        $this->assertEquals(432, $result->getImpact());
     }    
     
     public function testDTList(){
@@ -1011,6 +1011,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
+        
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());
     }

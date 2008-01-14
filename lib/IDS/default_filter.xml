@@ -431,7 +431,7 @@
         <impact>6</impact>
     </filter>  
     <filter>
-        <rule><![CDATA[(?:(?:OR|id)[^\w\s]?"\d)|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:".*\*\s*\d)|(?:"\s*or\s[\w-]+[\s=*])]]></rule>
+        <rule><![CDATA[(?:"\s*\*.+(?:OR|ID)\W*"\d)|(?:\^")|(?:^[\w\s-"]+(?<=AND|OR|XOR|NAND|NOT|\|\||\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:".*\*\s*\d)|(?:"\s*or\s[\w-]+[\s=*])]]></rule>
         <description>Detects classic SQL injection probings 2/2</description>
         <tags>
             <tag>sqli</tag>
