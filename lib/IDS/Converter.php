@@ -46,7 +46,6 @@
  */
 class IDS_Converter
 {
-
     /**
      * Runs all converter functions
      *
@@ -83,7 +82,6 @@ class IDS_Converter
      */
     public static function convertFromNewLines($value) 
     {
-
         return preg_replace('/(?:\n|\r)/m', ' ', $value);
     }
 
@@ -97,7 +95,6 @@ class IDS_Converter
      */
     public static function convertFromCommented($value) 
     {
-
         // check for existing comments
         if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|' . 
             '(?:--[^-]*-)/ms', $value)) {
@@ -126,7 +123,6 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value) 
     {
-
         $schemes = array(
             '+AFwAIg'  => '"',
             '+ADw-'     => '<',
@@ -167,7 +163,6 @@ class IDS_Converter
      */
     public static function convertFromJSCharcode($value) 
     {
-
         $matches = array();
 
         // check if value matches typical charCode pattern
@@ -181,10 +176,10 @@ class IDS_Converter
             $charcode  = explode(',', $string);
 
             foreach ($charcode as $char) {
-                $char = preg_replace('/[\W]0/s', '', $char);
+                $char = preg_replace('/\W0/s', '', $char);
 
                 if (preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)) {
-                    $match = preg_split('/([\W]?\d+)/',
+                    $match = preg_split('/(\W?\d+)/',
                                         (implode('', $matches[0])),
                                         null,
                                         PREG_SPLIT_DELIM_CAPTURE);
@@ -249,7 +244,6 @@ class IDS_Converter
      */
     public static function convertQuotes($value) 
     {
-
         // normalize different quotes to "
         $pattern = array('\'', '`', '´', '’', '‘', '&quot', '&apos');
         $value   = str_replace($pattern, '"', $value);
@@ -267,7 +261,6 @@ class IDS_Converter
      */
     public static function convertFromSQLKeywords($value) 
     {
-
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' . 
             '(?:IN[+\s]*\([^()]+\))/ims');
         $value   = preg_replace($pattern, '=0', $value);
@@ -297,7 +290,6 @@ class IDS_Converter
      */
     public static function convertConcatenations($value) 
     {
-
         //normalize remaining backslashes
         if ($value != preg_replace('/(\w)\\\/', "$1", $value)) {
             $value .= preg_replace('/(\w)\\\/', "$1", $value);
@@ -312,9 +304,9 @@ class IDS_Converter
             '/(?:"\s*(?:;|\+).{8,18}:\s*")/s',
             '/(?:";\w+=)|(?:!""&&")|(?:~)/s',
             '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/s',
-            '/(?:"\s*[\W]+\s*\n*")/s',
-            '/(?:";\w\s*+=\s*\w?\s*\n*")/s',
-            '/(?:"[|&;]+\s*[^|&\n]*[|&]+\s*\n*"?)/s',
+            '/(?:"\s*\W+")/s',
+            '/(?:";\w\s*+=\s*\w?\s*")/s',
+            '/(?:"[|&;]+\s*[^|&\n]*[|&]+\s*"?)/s',
             '/(?:";\s*\w+\W+\w*\s*[|&]*")/s',
             '/(?:"\s*"\s*\.)/s');
 
@@ -344,7 +336,6 @@ class IDS_Converter
      */
     public static function convertEntities($value) 
     {
-
         $converted = null;
         if (preg_match('/&#x?[\w]+/ms', $value)) {
             $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
@@ -365,7 +356,6 @@ class IDS_Converter
      */
     public static function convertFromControlChars($value) 
     {
-
         // critical ctrl values
         $search = array(chr(0), chr(1), chr(2),
                         chr(3), chr(4), chr(5),
@@ -402,7 +392,6 @@ class IDS_Converter
      */
     public static function convertFromOutOfRangeChars($value) 
     {
-
         $values = str_split($value);
         foreach ($values as $item) {
             if (ord($item) >= 127) {
@@ -423,7 +412,6 @@ class IDS_Converter
      */
     public static function convertFromXML($value)
     {
-
         $converted = strip_tags($value);
 
         if ($converted != $value) {

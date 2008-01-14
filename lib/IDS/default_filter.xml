@@ -401,7 +401,7 @@
         <impact>5</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*\w+\()]]></rule>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*\w+\()]]></rule>
         <description>Detects MySQL comments, conditions and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
@@ -421,7 +421,7 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s+]*[\d"[+&!-@])]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[\d"[+&!-@])]]></rule>
         <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -451,7 +451,7 @@
         <impact>7</impact>
     </filter> 
     <filter>
-        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*[\w]+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
+        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s[\w-]+\s*[=&^].*["\d])]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -544,7 +544,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\WIIF\s*\()|(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE[\s+]*")]]></rule>
+        <rule><![CDATA[(?:\WIIF\s*\()|(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
