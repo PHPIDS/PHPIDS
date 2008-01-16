@@ -317,7 +317,7 @@ class IDS_Converter
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
         //convert JS special numbers
-        $converted = preg_replace('/(?:\d*e\d+)|(?:\d\.e?\d*)|(?:\.\d+)|(?:NaN)/ms', 1, $converted);
+        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)|(?:NaN|Infinity)/ims', 1, $converted);
         
         if ($compare != $converted) {
             $value .= "\n" . $converted;
