@@ -16,7 +16,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * PHP version 5.11.6+
+ * PHP version 5.1.6+
  * 
  * @category Security
  * @package  PHPIDS
