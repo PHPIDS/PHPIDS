@@ -455,7 +455,7 @@ class IDS_Converter
      */
     public static function convertFromCentrifuge($value) 
     {
-        if (strlen($value) > 50) {
+        if (strlen($value) > 40) {
 
             // Check for the attack char ratio
             $stripped_length = strlen(preg_replace('/[\w\s.,]*/ms', null, $value));
