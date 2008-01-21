@@ -666,7 +666,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})|(?:§\[!!!\])]]></rule>
+        <rule><![CDATA[(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|(?:\({3,}\++:{2,})|(?:\$\[!!!\])]]></rule>
         <description>Detects unknown attack vectors based on PHPIDS Centrifuge detection</description>
         <tags>
             <tag>xss</tag>
