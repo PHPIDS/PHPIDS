@@ -73,19 +73,6 @@ class IDS_Converter
     }
 
     /**
-     * Strip newlines
-     *
-     * @param string $value the value to convert
-     * 
-     * @static
-     * @return string
-     */
-    public static function convertFromNewLines($value) 
-    {
-        return preg_replace('/(?:\n|\r)/m', ' ', $value);
-    }
-
-    /**
      * Check for comments and erases them if available
      *
      * @param string $value the value to convert
@@ -106,11 +93,24 @@ class IDS_Converter
             );
 
             $converted = preg_replace($pattern, null, $value);
-
             $value .= "\n" . $converted;
         }
-
+        $value = preg_replace('/\/\/.*$/m', ';', $value);
+        
         return $value;
+    }    
+    
+    /**
+     * Strip newlines
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertFromNewLines($value) 
+    {
+        return preg_replace('/(?:\n|\r)/m', ' ', $value);
     }
 
     /**
