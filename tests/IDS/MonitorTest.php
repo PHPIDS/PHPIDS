@@ -439,7 +439,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "$=.7.eval,$(//
 						name
 						,1)";
-
+        $exploits[] = "$=.7.eval,$($('\rname'),1)";
+        
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -447,7 +448,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(303, $result->getImpact());
+        $this->assertEquals(308, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
