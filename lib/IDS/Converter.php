@@ -111,7 +111,7 @@ class IDS_Converter
     public static function convertFromNewLines($value) 
     {
         $search = array('\r', '\n', '\f', '\t');
-        $value = str_replace($search, null, $value);
+        $value = str_replace($search, ';', $value);
     
         return preg_replace('/(?:\n|\r)/m', ' ', $value);
     }
