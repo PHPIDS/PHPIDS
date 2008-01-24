@@ -440,6 +440,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						name
 						,1)";
         $exploits[] = "$=.7.eval,$($('\rname'),1)";
+        $exploits[] = "e=1..eval
+                        e(e(\"\u200fname\"),e)";
         
         $test = new IDS_Monitor(
             $exploits,

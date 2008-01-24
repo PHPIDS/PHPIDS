@@ -436,7 +436,7 @@ class IDS_Converter
     {
         $matches = array();
         
-        preg_match_all('/\\\u\d{4}/ims', $value, $matches);
+        preg_match_all('/\\\u[0-9a-f]{4}/ims', $value, $matches);
 
         if(!empty($matches[0])) {
             foreach ($matches[0] as $match) {
