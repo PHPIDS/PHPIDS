@@ -210,7 +210,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(15, $result->getImpact());
+        $this->assertEquals(22, $result->getImpact());
     }
 
     public function testConcatenatedXSSList() {
@@ -450,7 +450,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(323, $result->getImpact());
+        $this->assertEquals(328, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -482,7 +482,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(424, $result->getImpact());
+        $this->assertEquals(431, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -530,7 +530,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(458, $result->getImpact());
+        $this->assertEquals(465, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -629,7 +629,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(491, $result->getImpact());
+        $this->assertEquals(502, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -967,6 +967,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "%2A%28%7C%28mail%3D%2A%29%29";
         $exploits[] = "*(|(objectclass=*))";
         $exploits[] = "*)(uid=*))(|(uid=*";
+        $exploits[] = "*))));";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -974,7 +975,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(15, $result->getImpact());
+        $this->assertEquals(27, $result->getImpact());
     }
 
     public function testForFalseAlerts() {
