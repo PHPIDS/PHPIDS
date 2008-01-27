@@ -92,7 +92,7 @@ class IDS_Converter
                 '/(?:--[^-]*-)/ms'
             );
 
-            $converted = preg_replace($pattern, null, $value);
+            $converted = preg_replace($pattern, ';', $value);
             $value .= "\n" . $converted;
         }
         $value = preg_replace('/\/\/.*$/m', ';', $value);

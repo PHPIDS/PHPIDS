@@ -199,7 +199,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits[] = '<![test';
         $exploits[] = 'test/**/blafasel';
-        $exploits[] = 'test{test';
         $exploits[] = 'test#';
         $exploits[] = '<!-- test -->';
 
@@ -210,7 +209,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(22, $result->getImpact());
+        $this->assertEquals(20, $result->getImpact());
     }
 
     public function testConcatenatedXSSList() {
@@ -530,7 +529,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(465, $result->getImpact());
+        $this->assertEquals(460, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -759,7 +758,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(477, $result->getImpact());
+        $this->assertEquals(495, $result->getImpact());
     }    
     
     public function testDTList(){
