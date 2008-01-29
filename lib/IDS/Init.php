@@ -102,7 +102,8 @@ class IDS_Init
     }
 
     /**
-     * Returns an instance of this class
+     * Returns an instance of this class. Also a PHP version check 
+     * is being performed to avoid compatibility problems with PHP < 5.1.6
      *
      * @param string $configPath the path to the config file
      * 
@@ -110,6 +111,13 @@ class IDS_Init
      */
     public static function init($configPath) 
     {
+        if(!function_exists('phpversion') || phpversion() < '5.1.6') {
+            throw new Exception(
+                'PHP version has to be equal or higher than 5.1.6 or 
+                PHP version couldn\'t be determined'
+            );	        
+        }
+        
         if (!isset(self::$instances[$configPath])) {
             self::$instances[$configPath] = new IDS_Init($configPath);
         }
