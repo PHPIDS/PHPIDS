@@ -463,7 +463,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
+        <rule><![CDATA[(?:\d\s+GROUP\s+BY.+\()|(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
         <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
