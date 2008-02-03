@@ -95,7 +95,7 @@ class IDS_Converter
             $converted = preg_replace($pattern, ';', $value);
             $value .= "\n" . $converted;
         }
-        $value = preg_replace('/\/\/.*$/m', ';', $value);
+        $value = preg_replace('/[^\\\]\/\/.*$/m', '/**/', $value);
         
         return $value;
     }    
