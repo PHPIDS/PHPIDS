@@ -95,7 +95,7 @@ class IDS_Converter
             $converted = preg_replace($pattern, ';', $value);
             $value .= "\n" . $converted;
         }
-        $value = preg_replace('/(<\w+)\/+(\w+=)/m', '$1/$2', $value);
+        $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\]\/\/.*$/m', '/**/', $value);
         
         return $value;
@@ -113,7 +113,7 @@ class IDS_Converter
     {
         $search = array('\r', '\n', '\f', '\t');
         $value = str_replace($search, ';', $value);
-    
+        
         return preg_replace('/(?:\n|\r)/m', ' ', $value);
     }
 
@@ -239,6 +239,21 @@ class IDS_Converter
     }
 
     /**
+     * Eliminate JS regex modifiers
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertJSRegexModifiers($value) 
+    {
+        $value   = preg_replace('/\/[gim]/', '/', $value);
+
+        return $value;
+    }    
+    
+    /**
      * Normalize quotes
      *
      * @param string $value the value to convert
@@ -297,7 +312,7 @@ class IDS_Converter
         //normalize remaining backslashes
         if ($value != preg_replace('/(\w)\\\/', "$1", $value)) {
             $value .= preg_replace('/(\w)\\\/', "$1", $value);
-        }    	
+        }       
         
         $compare = stripslashes($value);
 
@@ -319,6 +334,7 @@ class IDS_Converter
         
         //strip object traversal
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
+        
 
         //convert JS special numbers
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)|(?:NaN|Infinity)/ims', 1, $converted);
@@ -459,7 +475,7 @@ class IDS_Converter
      */
     public static function convertFromCentrifuge($value) 
     {
-    	if (strlen($value) > 25) {
+        if (strlen($value) > 25) {
             // Check for the attack char ratio
             $stripped_length = strlen(preg_replace('/[\w\s.,]*/ms', null, $value));
             $overall_length  = strlen(
@@ -471,10 +487,10 @@ class IDS_Converter
             
             if($overall_length/$stripped_length <= 3.5) {
                 $value .= "\n$[!!!]";            
-            }     	
-    	}
-    	
-    	if (strlen($value) > 40) {
+            }       
+        }
+        
+        if (strlen($value) > 40) {
             // Replace all non-special chars
             $converted =  preg_replace('/[\w\s\p{L}]/', null, $value);
 
