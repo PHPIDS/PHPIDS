@@ -95,6 +95,7 @@ class IDS_Converter
             $converted = preg_replace($pattern, ';', $value);
             $value .= "\n" . $converted;
         }
+        //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\]\/\/(.*)$/m', '/**/$1', $value);
         
@@ -111,9 +112,11 @@ class IDS_Converter
      */
     public static function convertFromNewLines($value) 
     {
+        //check for inline linebreaks
         $search = array('\r', '\n', '\f', '\t');
         $value = str_replace($search, ';', $value);
         
+        //convert real linebreaks
         return preg_replace('/(?:\n|\r)/m', ' ', $value);
     }
 
@@ -127,6 +130,7 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value) 
     {
+        //list of all critical UTF7 codepoints
         $schemes = array(
             '+AFwAIg'  => '"',
             '+ADw-'     => '<',
@@ -214,7 +218,6 @@ class IDS_Converter
                     }
                 }
             }
-
             $value .= "\n" . $converted;
         }
 
