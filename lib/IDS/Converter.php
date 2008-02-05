@@ -477,7 +477,7 @@ class IDS_Converter
     {
         if (strlen($value) > 25) {
             // Check for the attack char ratio
-            $stripped_length = strlen(preg_replace('/[\w\s.,]*/ms', null, $value));
+            $stripped_length = strlen(preg_replace('/[\w\s.,\/]*/ms', null, $value));
             $overall_length  = strlen(
                 preg_replace('/\w{3,}/', 'aaa', 
                     preg_replace('/\s{2,}/ms', null, $value)));
