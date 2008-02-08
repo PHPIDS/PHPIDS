@@ -97,7 +97,7 @@ class IDS_Converter
         }
         //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
-        $value = preg_replace('/[^\\\]\/\/(.*)$/m', '/**/$1', $value);
+        $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
         
         return $value;
     }    
@@ -484,7 +484,7 @@ class IDS_Converter
             $stripped_length = strlen(
                 preg_replace('/[\w\s\p{L}.,\/]*/ms', null, $value));
             $overall_length  = strlen(
-                preg_replace('/\w{3,}/', 'aaa', 
+                preg_replace('/\w{3,}/', '123', 
                     preg_replace('/\s{2,}/ms', null, $value)));
 
             if($stripped_length != 0 && $overall_length/$stripped_length <= 3.5) {
