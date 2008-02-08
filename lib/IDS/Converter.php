@@ -480,18 +480,18 @@ class IDS_Converter
     {
         if (strlen($value) > 25) {
             // Check for the attack char ratio
-            $stripped_length = strlen(preg_replace('/[\w\s.,\/]*/ms', null, $value));
+
+            $stripped_length = strlen(
+                preg_replace('/[\w\s\p{L}.,\/]*/ms', null, $value));
             $overall_length  = strlen(
                 preg_replace('/\w{3,}/', 'aaa', 
                     preg_replace('/\s{2,}/ms', null, $value)));
-            if($stripped_length == 0) {
-                $stripped_length = 1;
+
+            if($stripped_length != 0 && $overall_length/$stripped_length <= 3.5) {
+                $value .= "\n$[!!!]";
             }
-            
-            if($overall_length/$stripped_length <= 3.5) {
-                $value .= "\n$[!!!]";            
-            }       
         }
+
         
         if (strlen($value) > 40) {
             // Replace all non-special chars
@@ -527,7 +527,7 @@ class IDS_Converter
             $array = str_split($converted);
             asort($array);
             $converted = implode($array);
-            
+
             if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' . 
                 '(?:\({3,}\++:{2,})/', $converted)) {
                 return $value . "\n" . $converted;
