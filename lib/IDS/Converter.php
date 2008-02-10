@@ -133,8 +133,8 @@ class IDS_Converter
         //list of all critical UTF7 codepoints
         $schemes = array(
             '+AFwAIg'  => '"',
-            '+ADw-'     => '<',
-            '+AD4-'     => '>',
+            '+ADw-'    => '<',
+            '+AD4-'    => '>',
             '+AFs'     => '[',
             '+AF0'     => ']',
             '+AHs'     => '{',
