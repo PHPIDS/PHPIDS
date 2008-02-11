@@ -121,47 +121,6 @@ class IDS_Converter
     }
 
     /**
-     * Converts relevant UTF-7 tags to UTF-8
-     *
-     * @param string $value the value to convert
-     * 
-     * @static
-     * @return string
-     */
-    public static function convertFromUTF7($value) 
-    {
-        //list of all critical UTF7 codepoints
-        $schemes = array(
-            '+AFwAIg'  => '"',
-            '+ADw-'    => '<',
-            '+AD4-'    => '>',
-            '+AFs'     => '[',
-            '+AF0'     => ']',
-            '+AHs'     => '{',
-            '+AH0'     => '}',
-            '+AFw'     => '\\',
-            '+ADs'     => ';',
-            '+ACM'     => '#',
-            '+ACY'     => '&',
-            '+ACU'     => '%',
-            '+ACQ'     => '$',
-            '+AD0'     => '=',
-            '+AGA'     => '`',
-            '+ALQ'     => '"',
-            '+IBg'     => '"',
-            '+IBk'     => '"',
-            '+AHw'     => '|',
-            '+ACo'     => '*',
-            '+AF4'     => '^'
-        );
-
-        $data = str_ireplace(array_keys($schemes), 
-            array_values($schemes), $value);
-
-        return $value;
-    }
-
-    /**
      * Checks for common charcode pattern and decodes them
      *
      * @param string $value the value to convert
@@ -480,7 +439,7 @@ class IDS_Converter
     public static function convertFromNestedBase64($value) 
     {
     	$matches = array();
-    	preg_match_all('/(?:^|,)\s*([a-z0-9]{30,}=*)\W|$/im', $value, $matches);
+    	preg_match_all('/(?:^|,)\s*([a-z0-9]{30,}=*)(?:\W|$)/im', $value, $matches);
     	foreach($matches as $match) {
     		foreach($match as $item) {
 	            if(isset($item)) {
@@ -490,6 +449,48 @@ class IDS_Converter
         }
     	return $value;
     }
+
+    /**
+     * Converts relevant UTF-7 tags to UTF-8
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertFromUTF7($value) 
+    {
+    	//list of all critical UTF7 codepoints
+        $schemes = array(
+            '+ACI-'   => '"',
+            '+ADw-'   => '<',
+            '+AD4-'   => '>',
+            '+AFs-'   => '[',
+            '+AF0-'   => ']',
+            '+AHs-'   => '{',
+            '+AH0-'   => '}',
+            '+AFw-'   => '\\',
+            '+ADs-'   => ';',
+            '+ACM-'   => '#',
+            '+ACY-'   => '&',
+            '+ACU-'   => '%',
+            '+ACQ-'   => '$',
+            '+AD0-'   => '=',
+            '+AGA-'   => '`',
+            '+ALQ-'   => '"',
+            '+IBg-'   => '"',
+            '+IBk-'   => '"',
+            '+AHw-'   => '|',
+            '+ACo-'   => '*',
+            '+AF4-'   => '^',
+            '+ACIAPg' => '">'
+        );
+
+        $data = str_ireplace(array_keys($schemes), 
+            array_values($schemes), $value);
+
+        return $value;
+    }    
     
     /**
      * This method is the centrifuge prototype
