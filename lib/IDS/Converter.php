@@ -467,6 +467,29 @@ class IDS_Converter
         
         return $value;
     }    
+
+    /**
+     * This method matches and translates base64 strings and fragments 
+     * used in data URIs
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertFromNestedBase64($value) 
+    {
+    	$matches = array();
+    	preg_match_all('/(?:^|,)\s*([a-z0-9]{30,}=*)\W|$/im', $value, $matches);
+    	foreach($matches as $match) {
+    		foreach($match as $item) {
+	            if(isset($item)) {
+	                $value .= base64_decode($item);
+	            }
+    		}
+        }
+    	return $value;
+    }
     
     /**
      * This method is the centrifuge prototype

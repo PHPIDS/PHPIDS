@@ -893,6 +893,22 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(455, $result->getImpact());
     }
 
+    public function testBase64CCConverter() {
+
+        $exploits = array();
+        $exploits[] = 'PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4==';
+        $exploits[] = '<a href=dat&#x61&#x3atext&#x2fhtml&#x3b&#59base64a&#x2cPHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>Test</a>';
+        $exploits[] = '<iframe src=data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>';
+
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(89, $result->getImpact());
+    }    
+    
     public function testDecimalCCConverter() {
 
         $exploits = array();
