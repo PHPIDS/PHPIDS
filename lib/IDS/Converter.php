@@ -355,6 +355,12 @@ class IDS_Converter
                     urlencode($value))) . "\n%00";
         }
 
+        if (preg_match('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', $value)) {
+            return urldecode(
+                preg_replace('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', null, 
+                    $value)) . "\n%00";
+        }        
+        
         if (preg_match('/(?:&#(?:65|8)\d{3};?)|(?:&#x(?:fe|20)\w{2};?)/i', 
             $value)) {
             return urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)|' . 

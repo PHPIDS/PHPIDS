@@ -379,6 +379,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "0[('ev')+status+(z=('al'),z)](z+'ert(0),'+/x/)";
         $exploits[] = "0[('ev')+(n='')+(z=('al'),z)](z+'ert(0),'+/x/)";
         $exploits[] = "$={}.eval,$($('na'+navigator.vendor+('me,')+/x/))";
+        $exploits[] = "ale&zwnj;rt(1)";
+        $exploits[] = "ale&#x200d;rt(1)";
+        $exploits[] = "ale&#8206;rt(1)";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -387,7 +390,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(525, $result->getImpact());
+        $this->assertEquals(564, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -811,7 +814,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(126, $result->getImpact());
+        $this->assertEquals(136, $result->getImpact());
     }
 
     public function testURIList(){
