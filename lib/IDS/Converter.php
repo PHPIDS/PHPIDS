@@ -466,35 +466,38 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value) 
     {
-    	//list of all critical UTF7 codepoints
-        $schemes = array(
-            '+ACI-'   => '"',
-            '+ADw-'   => '<',
-            '+AD4-'   => '>',
-            '+AFs-'   => '[',
-            '+AF0-'   => ']',
-            '+AHs-'   => '{',
-            '+AH0-'   => '}',
-            '+AFw-'   => '\\',
-            '+ADs-'   => ';',
-            '+ACM-'   => '#',
-            '+ACY-'   => '&',
-            '+ACU-'   => '%',
-            '+ACQ-'   => '$',
-            '+AD0-'   => '=',
-            '+AGA-'   => '`',
-            '+ALQ-'   => '"',
-            '+IBg-'   => '"',
-            '+IBk-'   => '"',
-            '+AHw-'   => '|',
-            '+ACo-'   => '*',
-            '+AF4-'   => '^',
-            '+ACIAPg' => '">'
-        );
-
-        $data = str_ireplace(array_keys($schemes), 
-            array_values($schemes), $value);
-
+    	if(function_exists('mb_convert_encoding')) {
+            $value = mb_convert_encoding($value, 'UTF-8', 'UTF-7');	
+    	} else {
+	        //list of all critical UTF7 codepoints
+	        $schemes = array(
+	            '+ACI-'      => '"',
+	            '+ADw-'      => '<',
+	            '+AD4-'      => '>',
+	            '+AFs-'      => '[',
+	            '+AF0-'      => ']',
+	            '+AHs-'      => '{',
+	            '+AH0-'      => '}',
+	            '+AFw-'      => '\\',
+	            '+ADs-'      => ';',
+	            '+ACM-'      => '#',
+	            '+ACY-'      => '&',
+	            '+ACU-'      => '%',
+	            '+ACQ-'      => '$',
+	            '+AD0-'      => '=',
+	            '+AGA-'      => '`',
+	            '+ALQ-'      => '"',
+	            '+IBg-'      => '"',
+	            '+IBk-'      => '"',
+	            '+AHw-'      => '|',
+	            '+ACo-'      => '*',
+	            '+AF4-'      => '^',
+	            '+ACIAPg-'   => '">',
+	            '+ACIAPgA8-' => '">'
+	        );
+	        $data = str_ireplace(array_keys($schemes), 
+	            array_values($schemes), $value);    		
+    	}
         return $value;
     }    
     
