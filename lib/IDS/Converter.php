@@ -466,7 +466,8 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value) 
     {
-    	if(function_exists('mb_convert_encoding')) {
+    	if(function_exists('mb_convert_encoding') 
+    	   && preg_match('/\+\w+-/m', $value)) {
             $value = mb_convert_encoding($value, 'UTF-8', 'UTF-7');	
     	} else {
 	        //list of all critical UTF7 codepoints
