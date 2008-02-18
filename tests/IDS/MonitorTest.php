@@ -687,7 +687,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(665, $result->getImpact());
+        $this->assertEquals(652, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -896,6 +896,22 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(455, $result->getImpact());
     }
 
+    public function testUTF7List() {
+
+        $exploits = array();
+        $exploits[] = '+alert(1)';
+        $exploits[] = 'ACM=1,1+eval(1+name+(+ACM-1),ACM)';
+        $exploits[] = '1+eval(1+name+(+1-1),-1)';
+
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertTrue($result->hasEvent(1));
+        $this->assertEquals(45, $result->getImpact());
+    }    
+    
     public function testBase64CCConverter() {
 
         $exploits = array();
