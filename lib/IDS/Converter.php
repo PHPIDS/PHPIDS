@@ -249,7 +249,7 @@ class IDS_Converter
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' . 
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' . 
                          '(?:(?:ASCII|SOUNDEX|' . 
-                         'MD5|LIKE)[+\s]*\([^()]+\))/ims');
+                         'MD5|R?LIKE)[+\s]*\([^()]+\))/ims');
         $value   = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|' . 

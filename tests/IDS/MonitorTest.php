@@ -590,7 +590,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(505, $result->getImpact());
+        $this->assertEquals(517, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -680,6 +680,12 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "asd' |1 != (1)#aa";
         $exploits[] = "' is \N - ! '";
         $exploits[] = "' is \N = '";
+        $exploits[] = "1'*column-0-'0";
+        $exploits[] = "1'-@a or'1";
+        $exploits[] = "a'-@a=@a or'1";
+        $exploits[] = "aa' *@var or 1 SOUNDS LIKE (1)|'1";
+        $exploits[] = "aa' *@var or 1 RLIKE (1)|'1 ";
+        $exploits[] = "a' or~column like ~1|'1";
 
         $test = new IDS_Monitor(
             $exploits,
@@ -687,7 +693,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(652, $result->getImpact());
+        $this->assertEquals(688, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -764,7 +770,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(503, $result->getImpact());
+        $this->assertEquals(533, $result->getImpact());
     }    
     
     public function testDTList(){
