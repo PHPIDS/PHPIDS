@@ -119,6 +119,17 @@ class IDS_Monitor
     public function __construct(array $request, IDS_Init $init, 
         array $tags = null) 
     {
+    
+        $version = isset($init->config['General']['min_php_version']) ? 
+            $init->config['General']['min_php_version'] : '5.1.6';
+            
+        if(!function_exists('phpversion') || phpversion() < $version) {
+            throw new Exception(
+                'PHP version has to be equal or higher than ' . $version . ' or 
+                PHP version couldn\'t be determined'
+            );          
+        }     
+    
 
         if (!empty($request)) {
             $this->storage = new IDS_Filter_Storage($init);
