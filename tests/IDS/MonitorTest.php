@@ -390,7 +390,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(612, $result->getImpact());
+        $this->assertEquals(587, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -820,7 +820,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(136, $result->getImpact());
+        $this->assertEquals(126, $result->getImpact());
     }
 
     public function testURIList(){

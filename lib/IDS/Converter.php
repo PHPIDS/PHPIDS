@@ -341,34 +341,27 @@ class IDS_Converter
     public static function convertFromControlChars($value) 
     {
         // critical ctrl values
-        $search = array(chr(0), chr(1), chr(2),
-                        chr(3), chr(4), chr(5),
-                        chr(6), chr(7), chr(8),
-                        chr(11), chr(12), chr(14),
-                        chr(15), chr(16), chr(17),
-                        chr(18), chr(19));
-        $value  = str_replace($search, '%00', $value);
+        $search     = array(chr(0), chr(1), chr(2),
+                            chr(3), chr(4), chr(5),
+                            chr(6), chr(7), chr(8),
+                            chr(11), chr(12), chr(14),
+                            chr(15), chr(16), chr(17),
+                            chr(18), chr(19));
+        $value      = str_replace($search, '%00', $value);
+        $urlencoded = urlencode($value);
         
         //take care for malicious unicode characters
-        if (preg_match('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)\w|%EF%BB%BF)|' . 
-            '(?:&#(?:65|8)\d{3};?)/i', urlencode($value))) {
-            return urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' . 
-                '\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', null, 
-                    urlencode($value))) . "\n%00";
-        }
+        $value = urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' . 
+            '\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', null, 
+                $urlencoded));
+                
+        $value = urldecode(preg_replace('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', null, 
+                $urlencoded));
 
-        if (preg_match('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', $value)) {
-            return urldecode(
-                preg_replace('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', null, 
-                    $value)) . "\n%00";
-        }        
-        
-        if (preg_match('/(?:&#(?:65|8)\d{3};?)|(?:&#x(?:fe|20)\w{2};?)/i', 
-            $value)) {
-            return urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)|' . 
-                '(?:&#x(?:fe|20)\w{2};?)/i', null, $value)) . "\n%00";
-        }        
-        
+        $value = urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)|' . 
+                '(?:&#x(?:fe|20)\w{2};?)/i', null, 
+                $urlencoded));                
+
         return $value;
     }
 
