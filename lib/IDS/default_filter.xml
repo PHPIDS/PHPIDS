@@ -314,7 +314,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<\w*:?s(?:[^\>]*)t(?!rong))|(?:\<scri)|(<\w+:\w+)]]></rule>
+        <rule><![CDATA[(?:\<\w*:?\s(?:[^\>]*)t(?!rong))|(?:\<scri)|(<\w+:\w+)]]></rule>
         <description>Detects obfuscated script tags and XML wrapped HTML</description>
         <tags>
             <tag>xss</tag>
