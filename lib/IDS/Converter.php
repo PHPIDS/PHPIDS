@@ -117,7 +117,7 @@ class IDS_Converter
         $value = str_replace($search, ';', $value);
         
         //convert real linebreaks
-        return preg_replace('/(?:\n|\r)/m', ' ', $value);
+        return preg_replace('/(?:\n|\r)/m', '  ', $value);
     }
 
     /**
