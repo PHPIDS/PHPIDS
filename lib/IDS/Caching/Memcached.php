@@ -98,7 +98,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
 
         $this->type     = $type;
         $this->config   = $config;
-        $this->memcache = $this->_connect();
+        
+        $this->_connect();
 
         if (file_exists($this->path) && !is_writable($this->path)) {
             throw new Exception('Make sure all files in IDS/tmp' . 
