@@ -149,7 +149,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
             
         if($rows->rowCount() === 0) {
         
-            $this->_write($handle);             
+            $this->_write($handle, $data);             
         } else {
 
             foreach ($rows as $row) {
@@ -157,7 +157,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
                 if ((time()-strtotime($row['created'])) > 
                   $this->config['expiration_time']) {
                   
-                    $this->_write($handle);  
+                    $this->_write($handle, $data);  
                 }
             }        
         }
@@ -231,10 +231,13 @@ class IDS_Caching_Database implements IDS_Caching_Interface
     /**
      * Write the cache data to the table
      * 
+     * @param object $handle the database handle
+     * @param array $data the caching data
+     * 
      * @return object dbh
      * @throws PDOException if a db error occurred
      */    
-    private function _write($handle) {
+    private function _write($handle, $data) {
         
         try {
             $handle->query('TRUNCATE ' . 
