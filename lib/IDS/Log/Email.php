@@ -145,12 +145,10 @@ class IDS_Log_Email implements IDS_Log_Interface
             $this->additionalHeaders = $config['header'];
         }
 
-        // determine correct IP address
-        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
+        // determine correct IP address and concat them if necessary
+        $this->ip = $_SERVER['REMOTE_ADDR'] . 
+            (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? 
+            ' (' . $_SERVER['HTTP_X_FORWARDED_FOR'] . ')' : '');
     }
 
     /**
