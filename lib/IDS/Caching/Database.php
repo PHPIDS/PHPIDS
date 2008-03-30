@@ -33,9 +33,14 @@ require_once 'IDS/Caching/Interface.php';
  * Needed SQL:
  *
 
+    #create the database
+
     CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER 
         SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `cache`;
+
+    #now select the created datbase and create the table
+
     CREATE TABLE `cache` (
         `type` VARCHAR( 32 ) NOT null ,
         `data` TEXT NOT null ,
@@ -103,7 +108,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      */
     public function __construct($type, $config) 
     {
-
+    
         $this->type   = $type;
         $this->config = $config;
         $this->handle = $this->_connect();
@@ -138,44 +143,25 @@ class IDS_Caching_Database implements IDS_Caching_Interface
     {
 
         $handle = $this->handle;
+        
+        $rows = $handle->query('SELECT created FROM `' . 
+            mysql_escape_string($this->config['table']).'`');
+            
+        if($rows->rowCount() === 0) {
+        
+            $this->_write($handle);             
+        } else {
 
-        foreach ($handle->query('SELECT created FROM `' . 
-            mysql_escape_string($this->config['table']).'`') as $row) {
-            if ((time()-strtotime($row['created'])) > 
-                $this->config['expiration_time']) {
-
-                try {
-                    $handle->query('TRUNCATE ' . 
-                        mysql_escape_string($this->config['table']).'');
-                    $statement = $handle->prepare('
-                        INSERT INTO `' . 
-                        mysql_escape_string($this->config['table']).'` (
-                            type,
-                            data,
-                            created,
-                            modified
-                        )
-                        VALUES (
-                            :type,
-                            :data,
-                            now(),
-                            now()
-                        )
-                    ');
-
-                    $statement->bindParam('type', 
-                        mysql_escape_string($this->type));
-                    $statement->bindParam('data', serialize($data));
-
-                    if (!$statement->execute()) {
-                        throw new PDOException($statement->errorCode());
-                    }
-
-                } catch (PDOException $e) {
-                    die('PDOException: ' . $e->getMessage());
+            foreach ($rows as $row) {
+                
+                if ((time()-strtotime($row['created'])) > 
+                  $this->config['expiration_time']) {
+                  
+                    $this->_write($handle);  
                 }
-            }
+            }        
         }
+
         return $this;
     }
 
@@ -240,6 +226,46 @@ class IDS_Caching_Database implements IDS_Caching_Interface
             die('PDOException: ' . $e->getMessage());
         }
         return $handle;
+    }
+    
+    /**
+     * Write the cache data to the table
+     * 
+     * @return object dbh
+     * @throws PDOException if a db error occurred
+     */    
+    private function _write($handle) {
+        
+        try {
+            $handle->query('TRUNCATE ' . 
+                mysql_escape_string($this->config['table']).'');
+            $statement = $handle->prepare('
+                INSERT INTO `' . 
+                mysql_escape_string($this->config['table']).'` (
+                    type,
+                    data,
+                    created,
+                    modified
+                )
+                VALUES (
+                    :type,
+                    :data,
+                    now(),
+                    now()
+                )
+            ');
+    
+            $statement->bindParam('type', 
+                mysql_escape_string($this->type));
+            $statement->bindParam('data', serialize($data));
+    
+            if (!$statement->execute()) {
+                throw new PDOException($statement->errorCode());
+            }
+    
+        } catch (PDOException $e) {
+            die('PDOException: ' . $e->getMessage());
+        }    
     }
 }
 

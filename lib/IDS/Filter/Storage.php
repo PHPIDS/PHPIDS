@@ -98,6 +98,7 @@ class IDS_Filter_Storage
                 include_once 'IDS/Caching/Factory.php';
                 $this->cache = IDS_Caching::factory($this->cacheSettings,
                                                     'storage');
+
             }
 
             switch ($type) {
@@ -162,6 +163,7 @@ class IDS_Filter_Storage
         $filters = false;
 
         if ($this->cacheSettings) {
+        
             if ($this->cache) {
                 $filters = $this->cache->getCache();
             }
@@ -253,6 +255,7 @@ class IDS_Filter_Storage
              * If caching is enabled, the fetched data will be cached
              */
             if ($this->cacheSettings) {
+
                 $this->cache->setCache($data);
             }
 
