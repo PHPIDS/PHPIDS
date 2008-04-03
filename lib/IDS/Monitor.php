@@ -219,7 +219,10 @@ class IDS_Monitor
             }
 
             // check for magic quotes and remove them if necessary
-            $value = get_magic_quotes_gpc() ? stripslashes($value) : $value;
+            $value =
+				(function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc())
+				? stripslashes($value)
+				: $value;
 
             // use the converter
             include_once 'IDS/Converter.php';

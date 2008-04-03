@@ -60,13 +60,11 @@ class IDS_Converter
      */
     public static function runAll($value) 
     {
-        $methods = get_class_methods(__CLASS__);
-
-        $key = array_search('runAll', $methods);
-        unset($methods[$key]);
-
-        foreach ($methods as $key => $func) {
-            $value = self::$func($value);
+        foreach (get_class_methods(__CLASS__) as $method) {
+			if ($method === 'runAll') {
+				continue;
+			}
+            $value = self::$method($value);
         }
 
         return $value;
