@@ -455,7 +455,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
 
-        $this->assertEquals(414, $result->getImpact());
+        $this->assertEquals(402, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -535,7 +535,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(503, $result->getImpact());
+        $this->assertEquals(489, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -593,7 +593,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(609, $result->getImpact());
+        $this->assertEquals(574, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -637,7 +637,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(687, $result->getImpact());
+        $this->assertEquals(666, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -696,7 +696,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(908, $result->getImpact());
+        $this->assertEquals(831, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -773,7 +773,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(904, $result->getImpact());
+        $this->assertEquals(897, $result->getImpact());
     }    
     
     public function testDTList(){
@@ -842,7 +842,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertTrue($result->hasEvent(1));
-        $this->assertEquals(154, $result->getImpact());
+        $this->assertEquals(147, $result->getImpact());
     }
 
     public function testRFEList() {

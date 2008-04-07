@@ -251,7 +251,7 @@ class IDS_Converter
         $value   = preg_replace($pattern, 0, $value);
 
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|' . 
-                         '(?:XOR|DIV|NOT\W|<>|RLIKE(?:\s+BINARY)?)|' . 
+                         '(?:XOR|\WDIV\W|\WNOT\W|<>|RLIKE(?:\s+BINARY)?)|' . 
                          '(?:REGEXP\s+BINARY)|' . 
                          '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '=', $value);
