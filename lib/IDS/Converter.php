@@ -355,12 +355,12 @@ class IDS_Converter
             '\w|%EF%BB%BF)|(?:&#(?:65|8)\d{3};?)/i', null, 
                 $urlencoded));
                 
-        $value = urldecode(preg_replace('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', null, 
-                $urlencoded));
+        $value = preg_replace('/(?:&[#x]*(200|820|[jlmnrwz]+)\w?;?)/i', null, 
+                $value);
 
-        $value = urldecode(preg_replace('/(?:&#(?:65|8)\d{3};?)|' . 
+        $value = preg_replace('/(?:&#(?:65|8)\d{3};?)|' . 
                 '(?:&#x(?:fe|20)\w{2};?)/i', null, 
-                $urlencoded));                
+                $value);                
 
         return $value;
     }
