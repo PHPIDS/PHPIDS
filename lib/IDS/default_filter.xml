@@ -140,7 +140,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:create(?:Element|Attribute|TextNode)|\w+Events?|getElement\w+|appendChild|createRange|createContextualFragment|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:create(?:Element|Attribute|TextNode)|[a-z]+Events?|getElement\w+|appendChild|createRange|createContextualFragment|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
