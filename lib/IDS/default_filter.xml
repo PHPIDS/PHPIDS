@@ -1,6 +1,6 @@
 <filters>
     <filter>
-        <rule><![CDATA[(?:"+.*>)|(?:\s?\/>)|(?:>")]]></rule>
+        <rule><![CDATA[(?:"+.*>)|(?:[^\w\s]\s*\/>)|(?:>")]]></rule>
         <description>finds html breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
