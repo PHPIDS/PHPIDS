@@ -446,6 +446,16 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "<x///style=-moz-\&#x362inding:url(//businessinfo.co.uk/labs/xbl/xbl.xml#xss)>";
         $exploits[] = "a//a'\u000aeval(name)";
         $exploits[] = "a//a';eval(name)";
+        $exploits[] = "(x) setter=0?0.:alert,x=0";
+        $exploits[] = "y=('na') + new Array +'me'
+						y
+						(x)getter=0?0+0:eval,x=y
+						'foo bar foo bar f'";
+        $exploits[] = "'foo bar foo bar foo bar foo bar foo bar foo bar foo bar foo'
+						y$=('na') +new Array+'me'
+						x$=('ev') +new Array+'al'
+						x$=0[x$]
+						x$(x$(y$)+y$)";
         
         $this->_testForPlainEvent($exploits);
         
@@ -454,7 +464,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(402, $result->getImpact());
+        $this->assertEquals(437, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -536,7 +546,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(489, $result->getImpact());
+        $this->assertEquals(500, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -595,7 +605,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(574, $result->getImpact());
+        $this->assertEquals(585, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -777,7 +787,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(834, $result->getImpact());
+        $this->assertEquals(841, $result->getImpact());
     }    
     
     public function testDTList(){
