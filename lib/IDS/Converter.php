@@ -377,10 +377,10 @@ class IDS_Converter
     public static function convertFromNestedBase64($value) 
     {
         $matches = array();
-        preg_match_all('/(?:^|,)\s*([a-z0-9]{30,}=*)(?:\W|$)/im', $value, $matches);
+        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{30,}=*)(?:\W|$)/im', $value, $matches);
         foreach($matches as $match) {
             foreach($match as $item) {
-                if(isset($item)) {
+                if(isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
                     $value .= base64_decode($item);
                 }
             }
@@ -510,12 +510,13 @@ class IDS_Converter
     {
         if (strlen($value) > 25) {
             // Check for the attack char ratio
-
+            $tmp_value = $value;
+            $tmp_value = preg_replace('/([.!?+-])\1{1,}/', '$1', $tmp_value);
             $stripped_length = strlen(
-                preg_replace('/[\w\s\p{L}.,\/]*/ms', null, $value));
+                preg_replace('/[\w\s\p{L}.,\/]*/ms', null, $tmp_value));
             $overall_length  = strlen(
                 preg_replace('/\w{3,}\s*/', '123', 
-                    preg_replace('/\s{2,}/ms', null, $value)));
+                    preg_replace('/\s{2,}/ms', null, $tmp_value)));
 
             if($stripped_length != 0 && $overall_length/$stripped_length <= 3.5) {
                 $value .= "\n$[!!!]";

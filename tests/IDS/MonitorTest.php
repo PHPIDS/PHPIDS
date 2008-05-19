@@ -272,7 +272,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1142, $result->getImpact());
+        $this->assertEquals(1134, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -649,7 +649,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(666, $result->getImpact());
+        $this->assertEquals(655, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -838,7 +838,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(129, $result->getImpact());
+        $this->assertEquals(136, $result->getImpact());
     }
 
     public function testURIList(){
@@ -919,7 +919,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(560, $result->getImpact());
+        $this->assertEquals(553, $result->getImpact());
     }
 
     public function testUTF7List() {
@@ -953,7 +953,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(90, $result->getImpact());
+        $this->assertEquals(82, $result->getImpact());
     }    
     
     public function testDecimalCCConverter() {
