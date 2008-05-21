@@ -111,11 +111,11 @@ class IDS_Converter
     public static function convertFromNewLines($value) 
     {
         //check for inline linebreaks
-        $search = array('\r', '\n', '\f', '\t');
+        $search = array('\r', '\n', '\f', '\t', '\v');
         $value = str_replace($search, ';', $value);
         
         //convert real linebreaks
-        return preg_replace('/(?:\n|\r)/m', '  ', $value);
+        return preg_replace('/(?:\n|\r|\v)/m', '  ', $value);
     }
 
     /**

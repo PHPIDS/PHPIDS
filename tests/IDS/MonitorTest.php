@@ -456,6 +456,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						x$=('ev') +new Array+'al'
 						x$=0[x$]
 						x$(x$(y$)+y$)";
+        $exploits[] = "<applet/src=http://businessinfo.co.uk/labs/xss.html
+                        type=text/html>";
         
         $this->_testForPlainEvent($exploits);
         
@@ -464,7 +466,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(437, $result->getImpact());
+        $this->assertEquals(446, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -945,6 +947,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4==';
         $exploits[] = '<a href=dat&#x61&#x3atext&#x2fhtml&#x3b&#59base64a&#x2cPHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>Test</a>';
         $exploits[] = '<iframe src=data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>';
+        $exploits[] = '<applet src="data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4" type=text/html>';
 
         $this->_testForPlainEvent($exploits);
         
@@ -953,7 +956,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(82, $result->getImpact());
+        $this->assertEquals(121, $result->getImpact());
     }    
     
     public function testDecimalCCConverter() {

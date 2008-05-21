@@ -9,7 +9,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:"+.*[<=]\s*"[^"]+")|(?:"\w+\s*=)|(?:>\w=\/)|(?:#.+\)["\s]*>)|(?:"\s*(?:style|on\w+)\s*=\s*")]]></rule>
+        <rule><![CDATA[(?:"+.*[<=]\s*"[^"]+")|(?:"\w+\s*=)|(?:>\w=\/)|(?:#.+\)["\s]*>)|(?:"\s*(?:src|style|on\w+)\s*=\s*")]]></rule>
         <description>finds attribute breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -246,7 +246,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\w+\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()]]></rule>
+        <rule><![CDATA[(?:src\s*=s*(?:\w+:|\/\/))|(?:\w+\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()]]></rule>
         <description>Detects obfuscated JavaScript script injections</description>
         <tags>
             <tag>xss</tag>
@@ -372,7 +372,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|script|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xmp|image|im(?:g|port)))]]></rule>
+        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|applet|script|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xmp|image|im(?:g|port)))]]></rule>
         <description>Detects possibly malicious html elements including some attributes</description>
         <tags>
             <tag>xss</tag>
