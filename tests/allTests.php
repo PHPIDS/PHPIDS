@@ -18,10 +18,16 @@
  * @package	PHPIDS tests
  * @version	SVN: $Id:allTests.php 515 2007-09-15 13:43:40Z christ1an $
  */
-
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_ALL | E_STRICT | @E_DEPRECATED);
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
+
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+	define('PHPUnit_MAIN_METHOD', 'allTests');
+}
+
+
 class allTests
 {
 	public static function main()
@@ -32,36 +38,24 @@ class allTests
 	public static function suite()
 	{
         $suite = new PHPUnit_Framework_TestSuite('PHPIDS');
-
-        /**
-        $files = scandir(dirname(__FILE__) . '/IDS');
-        foreach ($files as $file) {
-            if (is_file('IDS/' . $file)) {
-                require_once 'IDS/' . $file;
-
-                $class = substr($file, 0, (strlen($file) - 4));
-                $class = 'IDS_' . $class;
-                $suite->addTestSuite($class);
-            }
-        }*/
-
         require_once 'IDS/MonitorTest.php';
-        require_once 'IDS/ReportTest.php';
-        require_once 'IDS/InitTest.php';
-        require_once 'IDS/ExceptionTest.php';
-        require_once 'IDS/FilterTest.php';
-        require_once 'IDS/CachingTest.php';
-        require_once 'IDS/EventTest.php';
-
         $suite->addTestSuite('IDS_MonitorTest');
+        require_once 'IDS/ReportTest.php';
         $suite->addTestSuite('IDS_ReportTest');
+        require_once 'IDS/InitTest.php';
         $suite->addTestSuite('IDS_InitTest');
+        require_once 'IDS/ExceptionTest.php';
         $suite->addTestSuite('IDS_ExceptionTest');
+        require_once 'IDS/FilterTest.php';
         $suite->addTestSuite('IDS_FilterTest');
+        require_once 'IDS/CachingTest.php';
         $suite->addTestSuite('IDS_CachingTest');
+        require_once 'IDS/EventTest.php';
         $suite->addTestSuite('IDS_EventTest');
-
         return $suite;
-
 	}
+}
+
+if (PHPUnit_MAIN_METHOD == 'allTests') {
+	allTests::main();
 }
