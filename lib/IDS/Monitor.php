@@ -226,7 +226,7 @@ class IDS_Monitor
 
             // use the converter
             include_once 'IDS/Converter.php';
-            $value     = IDS_Converter::runAll($value, $this);
+            $value     = IDS_Converter::runAll($value);
             $value     = IDS_Converter::runCentrifuge($value, $this);
             
             // scan keys if activated via config

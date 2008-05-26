@@ -254,7 +254,8 @@ class IDS_Report implements Countable, IteratorAggregate
      */
     public function getCentrifuge() 
     {
-        return (count($this->centrifuge) > 0) ? $this->centrifuge : null;
+        return ($this->centrifuge && count($this->centrifuge) > 0) 
+            ? $this->centrifuge : null;
     }
     
     /**

@@ -574,8 +574,6 @@ class IDS_Converter
             }
         }
         
-        $monitor->centrifuge = array();
-        
         return $value;
     }
 }
