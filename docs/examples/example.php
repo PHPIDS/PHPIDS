@@ -38,7 +38,7 @@ try {
     * Please keep in mind what array_merge does and how this might interfer 
     * with your variables_order settings
     */
-    $request = array_merge(
+    $request = array(
         'REQUEST' => $_REQUEST, 
         'GET' => $_GET, 
         'POST' => $_POST, 

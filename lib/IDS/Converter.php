@@ -387,8 +387,8 @@ class IDS_Converter
             }
         }
         return $value;
-    }    
-    
+    }  
+
     /**
      * Detects nullbytes and controls chars via ord()
      *
@@ -464,7 +464,7 @@ class IDS_Converter
     public static function convertFromUTF7($value) 
     {
     	if(function_exists('mb_convert_encoding') 
-    	   && preg_match('/\+\Aw{2,}-/m', $value)) {
+    	   && preg_match('/\+A\w+-/m', $value)) {
             $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');	
     	} else {
 	        //list of all critical UTF7 codepoints

@@ -930,6 +930,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '+alert(1)';
         $exploits[] = 'ACM=1,1+eval(1+name+(+ACM-1),ACM)';
         $exploits[] = '1+eval(1+name+(+1-1),-1)';
+        $exploits[] = 'XSS without being noticed<a/href=da&#x74&#97:text/html&#59&#x63harset=UTF-7&#44+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4->test';
 
         $this->_testForPlainEvent($exploits);
         
@@ -938,7 +939,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(54, $result->getImpact());
+        $this->assertEquals(91, $result->getImpact());
     }    
     
     public function testBase64CCConverter() {
