@@ -61,7 +61,8 @@ class IDS_Converter
     public static function runAll($value) 
     {
         foreach (get_class_methods(__CLASS__) as $method) {
-			if ($method === 'runAll') {
+			
+        	if (strpos($method, 'run') === 0) {
 				continue;
 			}
             $value = self::$method($value);
@@ -506,8 +507,10 @@ class IDS_Converter
      * @static
      * @return string
      */
-    public static function convertFromCentrifuge($value) 
+    public static function runCentrifuge($value, $monitor = null) 
     {
+    	$threshold = 3.5;
+    	
         if (strlen($value) > 25) {
             // Check for the attack char ratio
             $tmp_value = $value;
@@ -518,11 +521,15 @@ class IDS_Converter
                 preg_replace('/\w{3,}\s*/', '123', 
                     preg_replace('/\s{2,}/ms', null, $tmp_value)));
 
-            if($stripped_length != 0 && $overall_length/$stripped_length <= 3.5) {
-                $value .= "\n$[!!!]";
+            if ($stripped_length != 0 
+                && $overall_length/$stripped_length <= $threshold) {
+                
+                $monitor->centrifuge['ratio']     = $overall_length/$stripped_length;
+                $monitor->centrifuge['threshold'] = $threshold;
+                
+                $value .= "\n$[!!!]";  
             }
         }
-
         
         if (strlen($value) > 40) {
             // Replace all non-special chars
@@ -551,19 +558,23 @@ class IDS_Converter
             $converted = preg_replace('/[()[\]{}]/', '(', $converted);
             $converted = preg_replace('/[!?,.:=]/', ':', $converted);
             $converted = preg_replace('/[^:(+]/', null, stripslashes($converted));
-
-            
             
             // Sort again and implode
             $array = str_split($converted);
             asort($array);
+
             $converted = implode($array);
 
             if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' . 
                 '(?:\({3,}\++:{2,})/', $converted)) {
+            
+                $monitor->centrifuge['converted'] = $converted; 
+                
                 return $value . "\n" . $converted;
             }
         }
+        
+        $monitor->centrifuge = array();
         
         return $value;
     }

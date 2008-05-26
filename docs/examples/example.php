@@ -108,7 +108,7 @@ try {
         
 
     } else {
-        echo '<a href="?test=%22>XXX<script>alert(1)</script>">No attack detected - click for an example attack</a>';
+        echo '<a href="?test=%22><script>alert(1);eval(window.name);//</script>">No attack detected - click for an example attack</a>';
     }
 } catch (Exception $e) {
     /*

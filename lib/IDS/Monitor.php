@@ -226,8 +226,15 @@ class IDS_Monitor
 
             // use the converter
             include_once 'IDS/Converter.php';
-            $value     = IDS_Converter::runAll($value);
-            $key       = $this->scanKeys ? IDS_Converter::runAll($key) : $key;
+            $value     = IDS_Converter::runAll($value, $this);
+            $value     = IDS_Converter::runCentrifuge($value, $this);
+            
+            // scan keys if activated via config
+            $key       = $this->scanKeys 
+                ? IDS_Converter::runAll($key) : $key;
+            $key       = $this->scanKeys 
+                ? IDS_Converter::runCentrifuge($key, $this) : $key;
+            
             $filters   = array();
             $filterSet = $this->storage->getFilterSet();
             foreach ($filterSet as $filter) {
@@ -306,12 +313,17 @@ class IDS_Monitor
 
     /**
      * Returns report object providing various functions to work with 
-     * detected results
+     * detected results. Also the centrifuge data is being set as property 
+     * of the report object.
      *
      * @return object IDS_Report
      */
     public function getReport() 
     {
+    	if(isset($this->centrifuge) && $this->centrifuge) {
+    	   $this->report->setCentrifuge($this->centrifuge);
+    	}
+    	
         return $this->report;
     }
 }
