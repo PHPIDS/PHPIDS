@@ -265,53 +265,6 @@ class IDS_Converter
     }
 
     /**
-     * Converts basic concatenations
-     *
-     * @param string $value the value to convert
-     * 
-     * @static
-     * @return string
-     */
-    public static function convertConcatenations($value) 
-    {
-        //normalize remaining backslashes
-        if ($value != preg_replace('/(\w)\\\/', "$1", $value)) {
-            $value .= preg_replace('/(\w)\\\/', "$1", $value);
-        }       
-        
-        $compare = stripslashes($value);
-
-        $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
-            '/(?:":\d+[^"[]+")/s',
-            '/(?:"?"\+\w+\+")/s',
-            '/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/s',
-            '/(?:"\s*(?:;|\+).{8,18}:\s*")/s',
-            '/(?:";\w+=)|(?:!""&&")|(?:~)/s',
-            '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/s',
-            '/(?:"\s*\W+")/s',
-            '/(?:";\w\s*+=\s*\w?\s*")/s',
-            '/(?:"[|&;]+\s*[^|&\n]*[|&]+\s*"?)/s',
-            '/(?:";\s*\w+\W+\w*\s*[|&]*")/s',
-            '/(?:"\s*"\s*\.)/s');
-
-        // strip out concatenations
-        $converted = preg_replace($pattern, null, $compare);
-        
-        //strip object traversal
-        $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
-        
-
-        //convert JS special numbers
-        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)|(?:NaN|Infinity)/ims', 1, $converted);
-        
-        if ($compare != $converted) {
-            $value .= "\n" . $converted;
-        }
-        
-        return $value;
-    }
-
-    /**
      * Converts from hex/dec entities
      *
      * @param string $value the value to convert
@@ -496,6 +449,54 @@ class IDS_Converter
 	        $value = str_ireplace(array_keys($schemes), 
 	            array_values($schemes), $value);    		
     	}
+        return $value;
+    }    
+
+    /**
+     * Converts basic concatenations
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertConcatenations($value) 
+    {
+        //normalize remaining backslashes
+        if ($value != preg_replace('/(\w)\\\/', "$1", $value)) {
+            $value .= preg_replace('/(\w)\\\/', "$1", $value);
+        }       
+        
+        $compare = stripslashes($value);
+
+        $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
+            '/(?:":\d+[^"[]+")/s',
+            '/(?:"?"\+\w+\+")/s',
+            '/(?:"\s*;[^"]+")|(?:";[^"]+:\s*")/s',
+            '/(?:"\s*(?:;|\+).{8,18}:\s*")/s',
+            '/(?:";\w+=)|(?:!""&&")|(?:~)/s',
+            '/(?:"?"\+""?\+?"?)|(?:;\w+=")|(?:"[|&]{2,})/s',
+            '/(?:"\s*\W+")/s',
+            '/(?:";\w\s*+=\s*\w?\s*")/s',
+            '/(?:"[|&;]+\s*[^|&\n]*[|&]+\s*"?)/s',
+            '/(?:";\s*\w+\W+\w*\s*[|&]*")/s',
+            '/(?:"\s*"\s*\.)/s',
+            '/(?:(?:^|\s+)do\s+)/');
+
+        // strip out concatenations
+        $converted = preg_replace($pattern, null, $compare);
+        
+        //strip object traversal
+        $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
+        
+
+        //convert JS special numbers
+        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)|(?:NaN|Infinity)/ims', 1, $converted);
+        
+        if ($compare != $converted) {
+            $value .= "\n" . $converted;
+        }
+        
         return $value;
     }    
     
