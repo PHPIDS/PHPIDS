@@ -388,7 +388,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(718, $result->getImpact());
+        $this->assertEquals(723, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -458,6 +458,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						x$(x$(y$)+y$)";
         $exploits[] = "<applet/src=http://businessinfo.co.uk/labs/xss.html
                         type=text/html>";
+        $exploits[] = "onabort=onblur=onchange=onclick=ondblclick=onerror=onfocus=onkeydown=onkeypress=onkeyup=onload=onmousedown=onmousemove=onmouseout=onmouseover=onmouseup=onreset=onresize=onselect=onsubmit=onunload=alert";
         
         $this->_testForPlainEvent($exploits);
         
@@ -466,7 +467,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(446, $result->getImpact());
+        $this->assertEquals(481, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -491,6 +492,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'a=eval,b= [ referrer ] ;a(b)';
         $exploits[] = "URL = ! isNaN(1) ? 'javascriptz:zalertz(1)z' [/replace/ [ 'source' ] ]
                         (/z/g, [] ) : 0";
+        $exploits[] = "if(0){} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
+                        'foo bar foo bar foo'";
+        $exploits[] = "switch('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
 
         $this->_testForPlainEvent($exploits);
         
@@ -499,7 +503,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(451, $result->getImpact());
+        $this->assertEquals(505, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -651,7 +655,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(655, $result->getImpact());
+        $this->assertEquals(667, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -921,7 +925,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(537, $result->getImpact());
+        $this->assertEquals(573, $result->getImpact());
     }
 
     public function testUTF7List() {

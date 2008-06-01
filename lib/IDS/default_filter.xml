@@ -195,7 +195,7 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:globalStorage|sessionStorage|postMessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s|[a-z\/_@-])(\s*return\s*)?(?:globalStorage|sessionStorage|postMessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -632,7 +632,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <rule><![CDATA[(?:groups=\d+\(\w+\))|(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
+        <rule><![CDATA[(?:on\w+\s*=\s*on\w+)|(?:groups=\d+\(\w+\))|(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
         <description>Detects basic DoS attempts and Apache scoreboard shared memory attacks</description>
         <tags>
             <tag>rfe</tag>
