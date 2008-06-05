@@ -47,285 +47,345 @@
 class IDS_Monitor
 {
 
-    /**
-     * Tags to define what to search for
-     *
-     * Accepted values are xss, csrf, sqli, dt, id, lfi, rfe, spam, dos
-     *
-     * @var array
-     */
-    private $tags = null;
+	/**
+	 * Tags to define what to search for
+	 *
+	 * Accepted values are xss, csrf, sqli, dt, id, lfi, rfe, spam, dos
+	 *
+	 * @var array
+	 */
+	private $tags = null;
 
-    /**
-     * Request array
-     *
-     * Array containing raw data to search in
-     *
-     * @var array
-     */
-    private $request = null;
+	/**
+	 * Request array
+	 *
+	 * Array containing raw data to search in
+	 *
+	 * @var array
+	 */
+	private $request = null;
 
-    /**
-     * Container for filter rules
-     *
-     * Holds an instance of IDS_Filter_Storage
-     *
-     * @var object
-     */
-    private $storage = null;
+	/**
+	 * Container for filter rules
+	 *
+	 * Holds an instance of IDS_Filter_Storage
+	 *
+	 * @var object
+	 */
+	private $storage = null;
 
-    /**
-     * Results
-     *
-     * Holds an instance of IDS_Report which itself provides an API to
-     * access the detected results
-     *
-     * @var object
-     */
-    private $report = null;
+	/**
+	 * Results
+	 *
+	 * Holds an instance of IDS_Report which itself provides an API to
+	 * access the detected results
+	 *
+	 * @var object
+	 */
+	private $report = null;
 
-    /**
-     * Scan keys switch
-     *
-     * Enabling this property will cause the monitor to scan both the key and
-     * the value of variables
-     *
-     * @var boolean
-     */
-    public $scanKeys = false;
+	/**
+	 * Scan keys switch
+	 *
+	 * Enabling this property will cause the monitor to scan both the key and
+	 * the value of variables
+	 *
+	 * @var boolean
+	 */
+	public $scanKeys = false;
 
-    /**
-     * Exception container
-     *
-     * Using this array it is possible to define variables that must not be
-     * scanned. Per default, utmz google analytics parameters are permitted.
-     *
-     * @var array
-     */
-    private $exceptions = array(
-        '__utmz',
-        '__utmc'
-    );
+	/**
+	 * Exception container
+	 *
+	 * Using this array it is possible to define variables that must not be
+	 * scanned. Per default, utmz google analytics parameters are permitted.
+	 *
+	 * @var array
+	 */
+	private $exceptions = array();
 
-    /**
-     * Constructor
-     *
-     * @param array  $request array to scan
-     * @param object $init    instance of IDS_Init
-     * @param array  $tags    list of tags to which filters should be applied
-     * 
-     * @return void
-     */
-    public function __construct(array $request, IDS_Init $init, 
-        array $tags = null) 
-    {
-    
-        $version = isset($init->config['General']['min_php_version']) ? 
-            $init->config['General']['min_php_version'] : '5.1.6';
-            
-        if(!function_exists('phpversion') || phpversion() < $version) {
-            throw new Exception(
-                'PHP version has to be equal or higher than ' . $version . ' or 
-                PHP version couldn\'t be determined'
-            );          
-        }     
-    
+	/**
+	 * Html container
+	 *
+	 * Using this array it is possible to define variables that legally 
+	 * contain html and have to be prepared before hitting the rules to 
+	 * avoid too many false alerts
+	 *
+	 * @var array
+	 */
+	private $html = array();
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @var unknown_type
+	 */
+	private $htmlpurifier = false;
+	
+	
+	/**
+	 * Constructor
+	 *
+	 * @param array  $request array to scan
+	 * @param object $init    instance of IDS_Init
+	 * @param array  $tags    list of tags to which filters should be applied
+	 * 
+	 * @return void
+	 */
+	public function __construct(array $request, IDS_Init $init, 
+		array $tags = null) 
+	{
+	
+		$version = isset($init->config['General']['min_php_version']) ? 
+			$init->config['General']['min_php_version'] : '5.1.6';
+			
+		if(!function_exists('phpversion') || phpversion() < $version) {
+			throw new Exception(
+				'PHP version has to be equal or higher than ' . $version . ' or 
+				PHP version couldn\'t be determined'
+			);          
+		}     
+	
 
-        if (!empty($request)) {
-            $this->storage = new IDS_Filter_Storage($init);
-            $this->request = $request;
-            $this->tags    = $tags;
+		if (!empty($request)) {
+			$this->storage = new IDS_Filter_Storage($init);
+			$this->request = $request;
+			$this->tags    = $tags;
 
-            if ($init) {
-                $this->scanKeys   = $init->config['General']['scan_keys'];
-                $this->exceptions = $init->config['General']['exceptions'];
-            }
-        }
+			if ($init) {
+				$this->scanKeys   = $init->config['General']['scan_keys'];
+				$this->exceptions = $init->config['General']['exceptions'];
+				$this->html       = $init->config['General']['html'];
+				
+				if($this->html) {
+					
+					include_once 'IDS/vendors/htmlpurifier/library/HTMLPurifier.auto.php';
+					
+					if (!is_writeable(
+						dirname(__FILE__) . 
+							'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+							'DefinitionCache/Serializer')
+					) {
+						throw new Exception(
+							dirname(__FILE__) . 
+								'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+								'DefinitionCache/Serializer must be writeable'                       	   
+						);
+					}
+					
+					if (class_exists('HTMLPurifier')) {
+						$this->htmlpurifier = new HTMLPurifier();
+					} else {
+						throw new Exception(
+							'HTMLPurifier class could not be found - make' . 
+							' sure the purifier files are valid and' .
+							' the path is correct'
+						);
+					}
+				}
+			}
+		}
 
-        if (!is_writeable($init->config['General']['tmp_path'])) {
-            throw new Exception(
-                'Please make sure the IDS/tmp folder is writable'
-            );
-        }
+		if (!is_writeable($init->config['General']['tmp_path'])) {
+			throw new Exception(
+				'Please make sure the IDS/tmp folder is writable'
+			);
+		}
 
-        include_once 'IDS/Report.php';
-        $this->report = new IDS_Report;
-    }
+		include_once 'IDS/Report.php';
+		$this->report = new IDS_Report;
+	}
 
-    /**
-     * Starts the scan mechanism
-     *
-     * @return object IDS_Report
-     */
-    public function run()
-    {
-        if (!empty($this->request)) {
-            foreach ($this->request as $key => $value) {
-                $this->_iterate($key, $value);
-            }
-        }
+	/**
+	 * Starts the scan mechanism
+	 *
+	 * @return object IDS_Report
+	 */
+	public function run()
+	{
+		if (!empty($this->request)) {
+			foreach ($this->request as $key => $value) {
+				$this->_iterate($key, $value);
+			}
+		}
 
-        return $this->getReport();
-    }
+		return $this->getReport();
+	}
 
-    /**
-     * Iterates through given data and delegates it to IDS_Monitor::_detect() in
-     * order to check for malicious appearing fragments
-     *
-     * @param mixed $key   the former array key
-     * @param mixed $value the former array value
-     * 
-     * @return void
-     */
-    private function _iterate($key, $value) 
-    {
+	/**
+	 * Iterates through given data and delegates it to IDS_Monitor::_detect() in
+	 * order to check for malicious appearing fragments
+	 *
+	 * @param mixed $key   the former array key
+	 * @param mixed $value the former array value
+	 * 
+	 * @return void
+	 */
+	private function _iterate($key, $value) 
+	{
 
-        if (!is_array($value)) {
-            if (is_string($value)) {
+		if (!is_array($value)) {
+			if (is_string($value)) {
 
-                if ($filter = $this->_detect($key, $value)) {
-                    include_once 'IDS/Event.php';
-                    $this->report->addEvent(new IDS_Event($key,
-                                                          $value,
-                                                           $filter));
-                }
-            }
-        } else {
-            foreach ($value as $subKey => $subValue) {
-                $this->_iterate($key . '.' . $subKey, $subValue);
-            }
-        }
-    }
+				if ($filter = $this->_detect($key, $value)) {
+					include_once 'IDS/Event.php';
+					$this->report->addEvent(new IDS_Event(
+						$key,
+						$value,
+						$filter
+					));
+				}
+			}
+		} else {
+			foreach ($value as $subKey => $subValue) {
+				$this->_iterate($key . '.' . $subKey, $subValue);
+			}
+		}
+	}
 
-    /**
-     * Checks whether given value matches any of the supplied filter patterns
-     *
-     * @param mixed $key   the key of the value to scan
-     * @param mixed $value the value to scan
-     * 
-     * @return bool|array false or array of filter(s) that matched the value
-     */
-    private function _detect($key, $value) 
-    {
+	/**
+	 * Checks whether given value matches any of the supplied filter patterns
+	 *
+	 * @param mixed $key   the key of the value to scan
+	 * @param mixed $value the value to scan
+	 * 
+	 * @return bool|array false or array of filter(s) that matched the value
+	 */
+	private function _detect($key, $value) 
+	{
 
-        /*
-         * to increase performance, only start detection if value
-         * isn't alphanumeric 
-         */ 
-        if (preg_match('/[^\w\s\/]+/ims', $value) && !empty($value)) {
+		/*
+		 * to increase performance, only start detection if value
+		 * isn't alphanumeric 
+		 */ 
+		if (preg_match('/[^\w\s\/@]+/ims', $value) && !empty($value)) {
 
-            if (in_array($key, $this->exceptions, true)) {
-                return false;
-            }
+			if (is_array($this->exceptions) 
+				&& in_array($key, $this->exceptions, true)) {
+				return false;
+			}
 
-            // check for magic quotes and remove them if necessary
-            $value =
+			if (is_array($this->html) 
+				&& in_array($key, $this->html, true)) {
+				
+				$tmp_value = $this->htmlpurifier->purify($value);
+				$tmp_key   = $this->htmlpurifier->purify($key);
+				
+				var_dump(str_split($tmp_value));
+				var_dump(str_split($value));
+				var_dump(array_diff(str_split($value), str_split($tmp_value)));
+
+			}
+			
+		   
+			// check for magic quotes and remove them if necessary
+			$value =
 				(function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc())
 				? stripslashes($value)
 				: $value;
 
-            // use the converter
-            include_once 'IDS/Converter.php';
-            $value     = IDS_Converter::runAll($value);
-            $value     = IDS_Converter::runCentrifuge($value, $this);
-            
-            // scan keys if activated via config
-            $key       = $this->scanKeys 
-                ? IDS_Converter::runAll($key) : $key;
-            $key       = $this->scanKeys 
-                ? IDS_Converter::runCentrifuge($key, $this) : $key;
-            
-            $filters   = array();
-            $filterSet = $this->storage->getFilterSet();
-            foreach ($filterSet as $filter) {
-            
-                /*
-                 * in case we have a tag array specified the IDS will only
-                 * use those filters that are meant to detect any of the 
-                 * defined tags
-                 */
-                if (is_array($this->tags)) {
-                    if (array_intersect($this->tags, $filter->getTags())) {
-                        if ($this->_match($key, $value, $filter)) {
-                            $filters[] = $filter;
-                        }
-                    }
-                } else {
-                    if ($this->_match($key, $value, $filter)) {
-                        $filters[] = $filter;
-                    }
-                }
-            }
+			// use the converter
+			include_once 'IDS/Converter.php';
+			$value     = IDS_Converter::runAll($value);
+			$value     = IDS_Converter::runCentrifuge($value, $this);
+			
+			// scan keys if activated via config
+			$key       = $this->scanKeys 
+				? IDS_Converter::runAll($key) : $key;
+			$key       = $this->scanKeys 
+				? IDS_Converter::runCentrifuge($key, $this) : $key;
+			
+			$filters   = array();
+			$filterSet = $this->storage->getFilterSet();
+			foreach ($filterSet as $filter) {
+			
+				/*
+				 * in case we have a tag array specified the IDS will only
+				 * use those filters that are meant to detect any of the 
+				 * defined tags
+				 */
+				if (is_array($this->tags)) {
+					if (array_intersect($this->tags, $filter->getTags())) {
+						if ($this->_match($key, $value, $filter)) {
+							$filters[] = $filter;
+						}
+					}
+				} else {
+					if ($this->_match($key, $value, $filter)) {
+						$filters[] = $filter;
+					}
+				}
+			}
 
-            return empty($filters) ? false : $filters;
-        }
-    }
+			return empty($filters) ? false : $filters;
+		}
+	}
 
-    /**
-     * Matches given value and/or key against given filter
-     *
-     * @param mixed  $key    the key to optionally scan
-     * @param mixed  $value  the value to scan
-     * @param object $filter the filter object
-     * 
-     * @return boolean
-     */
-    private function _match($key, $value, $filter) 
-    {
-        if ($this->scanKeys) {
-            if ($filter->match($key)) {
-                return true;
-            }
-        }
+	/**
+	 * Matches given value and/or key against given filter
+	 *
+	 * @param mixed  $key    the key to optionally scan
+	 * @param mixed  $value  the value to scan
+	 * @param object $filter the filter object
+	 * 
+	 * @return boolean
+	 */
+	private function _match($key, $value, $filter) 
+	{
+		if ($this->scanKeys) {
+			if ($filter->match($key)) {
+				return true;
+			}
+		}
 
-        if ($filter->match($value)) {
-            return true;
-        }
+		if ($filter->match($value)) {
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * Sets exception array
-     *
-     * @param mixed $exceptions the thrown exceptions
-     * 
-     * @return void
-     */
-    public function setExceptions($exceptions) 
-    {
-        if (!is_array($exceptions)) {
-            $exceptions = array($exceptions);
-        }
+	/**
+	 * Sets exception array
+	 *
+	 * @param mixed $exceptions the thrown exceptions
+	 * 
+	 * @return void
+	 */
+	public function setExceptions($exceptions) 
+	{
+		if (!is_array($exceptions)) {
+			$exceptions = array($exceptions);
+		}
 
-        $this->exceptions = $exceptions;
-    }
+		$this->exceptions = $exceptions;
+	}
 
-    /**
-     * Returns exception array
-     *
-     * @return array
-     */
-    public function getExceptions() 
-    {
-        return $this->exceptions;
-    }
+	/**
+	 * Returns exception array
+	 *
+	 * @return array
+	 */
+	public function getExceptions() 
+	{
+		return $this->exceptions;
+	}
 
-    /**
-     * Returns report object providing various functions to work with 
-     * detected results. Also the centrifuge data is being set as property 
-     * of the report object.
-     *
-     * @return object IDS_Report
-     */
-    public function getReport() 
-    {
-    	if(isset($this->centrifuge) && $this->centrifuge) {
-    	   $this->report->setCentrifuge($this->centrifuge);
-    	}
-    	
-        return $this->report;
-    }
+	/**
+	 * Returns report object providing various functions to work with 
+	 * detected results. Also the centrifuge data is being set as property 
+	 * of the report object.
+	 *
+	 * @return object IDS_Report
+	 */
+	public function getReport() 
+	{
+		if(isset($this->centrifuge) && $this->centrifuge) {
+		   $this->report->setCentrifuge($this->centrifuge);
+		}
+		
+		return $this->report;
+	}
 }
 
 /*
