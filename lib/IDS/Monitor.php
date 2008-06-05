@@ -154,8 +154,10 @@ class IDS_Monitor
 
 			if ($init) {
 				$this->scanKeys   = $init->config['General']['scan_keys'];
-				$this->exceptions = $init->config['General']['exceptions'];
-				$this->html       = $init->config['General']['html'];
+				$this->exceptions = isset($init->config['General']['exceptions'])
+				    ? $init->config['General']['exceptions'] : false;
+				$this->html       = isset($init->config['General']['html']) 
+				    ? $init->config['General']['html'] : false;
 				
 				if($this->html) {
 					
