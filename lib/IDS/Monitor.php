@@ -328,19 +328,26 @@ class IDS_Monitor
 	}
 
 	/**
-	 * Enter description here...
+	 * This method calculates the difference between the original 
+	 * and the purified markup strings.
 	 *
-	 * @param unknown_type $original
-	 * @param unknown_type $purified
-	 * @return unknown
+	 * @param string $original the original markup
+	 * @param string $purified the purified markup
+	 * 
+	 * @return string the difference between the strings
 	 */
 	private function _diff($original, $purified) {
 		
-		/*
-		 * Calculate the difference between the original html input 
-		 * and the purified string.
-		 */
+        # check which string is longer - has to happen initially
 		$length = strlen($original) - strlen($purified);
+
+        # deal with over-sensitive alt-attribute addition of the purifier
+        $purified = preg_replace('/\salt="[^"]+"/m', null, $purified);
+		
+        /*
+         * Calculate the difference between the original html input 
+         * and the purified string.
+         */		
 		if($length > 0) {
 			$array_2 = str_split($original);
 			$array_1 = str_split($purified);
@@ -364,12 +371,19 @@ class IDS_Monitor
             )))
         );
         
+        # clean up spaces between tag delimiters
         $diff = preg_replace('/>\s*</m', '><', $diff); 
+        
+        # correct over-sensitively stripped bad html elements
         $diff = preg_replace(
             '/[^<](iframe|script|embed|object|applet|base|img|style)/m', 
             '<$1', 
             $diff
         );
+        
+        if ($original==$purified) {
+        	return null;
+        }
         
         return $diff;
 	}
