@@ -38,12 +38,7 @@ try {
     * Please keep in mind what array_merge does and how this might interfer 
     * with your variables_order settings
     */
-    $request = array(
-        'REQUEST' => $_REQUEST, 
-        'GET' => $_GET, 
-        'POST' => $_POST, 
-        'COOKIE' => $_COOKIE
-    );
+    $request = array_merge($_REQUEST, $_GET, $_POST, $_COOKIE);
     $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');
 
     /**
@@ -108,7 +103,7 @@ try {
         
 
     } else {
-        echo '<a href="?test=%22><script>alert(1);eval(window.name);//</script>">No attack detected - click for an example attack</a>';
+        echo '<a href="?test=%22><script>eval(window.name)</script>">No attack detected - click for an example attack</a>';
     }
 } catch (Exception $e) {
     /*

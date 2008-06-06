@@ -155,36 +155,9 @@ class IDS_Monitor
 			if ($init) {
 				$this->scanKeys   = $init->config['General']['scan_keys'];
 				$this->exceptions = isset($init->config['General']['exceptions'])
-				    ? $init->config['General']['exceptions'] : false;
+					? $init->config['General']['exceptions'] : false;
 				$this->html       = isset($init->config['General']['html']) 
-				    ? $init->config['General']['html'] : false;
-				
-				if($this->html) {
-					
-					include_once 'IDS/vendors/htmlpurifier/library/HTMLPurifier.auto.php';
-					
-					if (!is_writeable(
-						dirname(__FILE__) . 
-							'/vendors/htmlpurifier/library/HTMLPurifier/' . 
-							'DefinitionCache/Serializer')
-					) {
-						throw new Exception(
-							dirname(__FILE__) . 
-								'/vendors/htmlpurifier/library/HTMLPurifier/' . 
-								'DefinitionCache/Serializer must be writeable'                       	   
-						);
-					}
-					
-					if (class_exists('HTMLPurifier')) {
-						$this->htmlpurifier = new HTMLPurifier();
-					} else {
-						throw new Exception(
-							'HTMLPurifier class could not be found - make' . 
-							' sure the purifier files are valid and' .
-							' the path is correct'
-						);
-					}
-				}
+					? $init->config['General']['html'] : false;
 			}
 		}
 
@@ -262,30 +235,61 @@ class IDS_Monitor
 		 */ 
 		if (preg_match('/[^\w\s\/@]+/ims', $value) && !empty($value)) {
 
+			// check if this field is part of the exceptions
 			if (is_array($this->exceptions) 
 				&& in_array($key, $this->exceptions, true)) {
 				return false;
 			}
-
-			if (is_array($this->html) 
-				&& in_array($key, $this->html, true)) {
-				
-				$tmp_value = $this->htmlpurifier->purify($value);
-				$tmp_key   = $this->htmlpurifier->purify($key);
-				
-				var_dump(str_split($tmp_value));
-				var_dump(str_split($value));
-				var_dump(array_diff(str_split($value), str_split($tmp_value)));
-
-			}
 			
-		   
 			// check for magic quotes and remove them if necessary
 			$value =
 				(function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc())
 				? stripslashes($value)
-				: $value;
+				: $value;			
 
+			// if html monitoring is enabled for this field - then do it!
+			if (is_array($this->html) 
+				&& in_array($key, $this->html, true)) {
+					
+				include_once 'IDS/vendors/htmlpurifier/library/HTMLPurifier.auto.php';
+					
+				if (!is_writeable(
+					dirname(__FILE__) . 
+						'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+						'DefinitionCache/Serializer')
+				) {
+					throw new Exception(
+						dirname(__FILE__) . 
+							'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+							'DefinitionCache/Serializer must be writeable'                             
+					);
+				}
+				
+				if (class_exists('HTMLPurifier')) {
+					$this->htmlpurifier = new HTMLPurifier();
+				} else {
+					throw new Exception(
+						'HTMLPurifier class could not be found - make' . 
+						' sure the purifier files are valid and' .
+						' the path is correct'
+					);
+				}					
+				
+				$purified_value = $this->htmlpurifier->purify($value);
+				$purified_key   = $this->htmlpurifier->purify($key);
+				
+				if($value != $purified_value) {
+					$value = $this->_diff($value, $purified_value);
+				} else {
+					$value = null;
+				}
+				if($key != $purified_key) {
+					$key = $this->_diff($key, $purified_key);
+				} else {
+					$key = null;
+				}
+			}
+		   
 			// use the converter
 			include_once 'IDS/Converter.php';
 			$value     = IDS_Converter::runAll($value);
@@ -321,6 +325,53 @@ class IDS_Monitor
 
 			return empty($filters) ? false : $filters;
 		}
+	}
+
+	/**
+	 * Enter description here...
+	 *
+	 * @param unknown_type $original
+	 * @param unknown_type $purified
+	 * @return unknown
+	 */
+	private function _diff($original, $purified) {
+		
+		/*
+		 * Calculate the difference between the original html input 
+		 * and the purified string.
+		 */
+		$length = strlen($original) - strlen($purified);
+		if($length > 0) {
+			$array_2 = str_split($original);
+			$array_1 = str_split($purified);
+		} else {
+			$array_1 = str_split($original);
+			$array_2 = str_split($purified);
+		}
+		foreach($array_2 as $key => $value) {
+			if($value !== $array_1[$key]) {
+				$array_1 = array_reverse($array_1);
+				$array_1[] = $value;
+				$array_1 = array_reverse($array_1);
+			}
+		}
+        /*
+         * return the diff - ready to hit the converter and the rules
+         */
+        $diff = trim(
+            join('', array_reverse((
+                array_slice($array_1, 0, $length)
+            )))
+        );
+        
+        $diff = preg_replace('/>\s*</m', '><', $diff); 
+        $diff = preg_replace(
+            '/[^<](iframe|script|embed|object|applet|base|img|style)/m', 
+            '<$1', 
+            $diff
+        );
+        
+        return $diff;
 	}
 
 	/**
@@ -373,6 +424,32 @@ class IDS_Monitor
 		return $this->exceptions;
 	}
 
+	/**
+	 * Sets html array
+	 *
+	 * @param mixed $html the fields not to monitor
+	 * 
+	 * @return void
+	 */
+	public function setHtml($html) 
+	{
+		if (!is_array($html)) {
+			$html = array($html);
+		}
+
+		$this->html = $html;
+	}
+
+	/**
+	 * Returns exception array
+	 *
+	 * @return array the fields that contain allowed html
+	 */
+	public function getHtml() 
+	{
+		return $this->html;
+	}	
+	
 	/**
 	 * Returns report object providing various functions to work with 
 	 * detected results. Also the centrifuge data is being set as property 
