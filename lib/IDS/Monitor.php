@@ -251,16 +251,16 @@ class IDS_Monitor
 			if (is_array($this->html) 
 				&& in_array($key, $this->html, true)) {
 					
-				include_once 'IDS/vendors/htmlpurifier/library/HTMLPurifier.auto.php';
+				include_once 'IDS/vendors/htmlpurifier/HTMLPurifier.auto.php';
 					
 				if (!is_writeable(
 					dirname(__FILE__) . 
-						'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+						'/vendors/htmlpurifier/HTMLPurifier/' . 
 						'DefinitionCache/Serializer')
 				) {
 					throw new Exception(
 						dirname(__FILE__) . 
-							'/vendors/htmlpurifier/library/HTMLPurifier/' . 
+							'/vendors/htmlpurifier/HTMLPurifier/' . 
 							'DefinitionCache/Serializer must be writeable'                             
 					);
 				}
