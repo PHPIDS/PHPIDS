@@ -429,8 +429,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						alert(1)";
 		$exploits[] = "crypto [ [ 'aler' , 't' ] [ 'join' ] ( [] ) ] (1) ";
 		$exploits[] = "<div/style=\-\mo\z\-b\i\nd\in\g:\url(//business\i\nfo.co.uk\/labs\/xbl\/xbl\.xml\#xss)>";
-		$exploits[] = '
-						\u0061lert(1)';
 		$exploits[] = "_content/alert(1)";
 		$exploits[] = "RegExp(/a/,alert(1))";
 		$exploits[] = "x=[/&/,alert,/&/][1],x(1)";
@@ -467,7 +465,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 			$this->init
 		);
 		$result = $test->run();
-		$this->assertEquals(474, $result->getImpact());
+		$this->assertEquals(460, $result->getImpact());
 	}
 
 	public function testSelfContainedXSSList() {
@@ -1123,7 +1121,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 			$exploits,
 			$this->init
 		);
-		$test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5'));
+		$test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5', 'html_6'));
 		$result = $test->run();
 		$this->assertFalse($result->hasEvent(1));
 		$this->assertEquals(0, $result->getImpact());   
