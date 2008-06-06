@@ -266,7 +266,9 @@ class IDS_Monitor
 				}
 				
 				if (class_exists('HTMLPurifier')) {
-					$this->htmlpurifier = new HTMLPurifier();
+                    $config = HTMLPurifier_Config::createDefault();
+                    $config->set('Attr', 'EnableID', true);
+                    $this->htmlpurifier = new HTMLPurifier($config);
 				} else {
 					throw new Exception(
 						'HTMLPurifier class could not be found - make' . 
