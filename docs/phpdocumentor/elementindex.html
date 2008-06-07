@@ -8,7 +8,7 @@
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
 		<body>
-						<a name="top"></a>
+						<a name="top"></a>
 <h2>Full index</h2>
 <h3>Package indexes</h3>
 <ul>
@@ -86,6 +86,13 @@
 							<div class="index-item-description">Holds caching settings</div>
 					</dd>
 			<dt class="field">
+						<span class="var-title">$centrifuge</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#var$centrifuge">IDS_Report::$centrifuge</a> in Report.php</div>
+							<div class="index-item-description">Centrifuge data</div>
+					</dd>
+			<dt class="field">
 						<span class="var-title">$config</span>
 					</dt>
 		<dd class="index-item-body">
@@ -120,13 +127,6 @@
 			<div class="index-item-details"><a href="PHPIDS/_Converter.php.html">Converter.php</a> in Converter.php</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">convertFromCentrifuge</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodconvertFromCentrifuge">IDS_Converter::convertFromCentrifuge()</a> in Converter.php</div>
-							<div class="index-item-description">This method is the centrifuge prototype</div>
-					</dd>
-			<dt class="field">
 						<span class="method-title">convertFromCommented</span>
 					</dt>
 		<dd class="index-item-body">
@@ -153,6 +153,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodconvertFromJSUnicode">IDS_Converter::convertFromJSUnicode()</a> in Converter.php</div>
 							<div class="index-item-description">This method converts JS unicode code points to  regular characters</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">convertFromNestedBase64</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodconvertFromNestedBase64">IDS_Converter::convertFromNestedBase64()</a> in Converter.php</div>
+							<div class="index-item-description">This method matches and translates base64 strings and fragments  used in data URIs</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">convertFromNewLines</span>
@@ -190,6 +197,13 @@
 							<div class="index-item-description">Strip XML patterns</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">convertJSRegexModifiers</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodconvertJSRegexModifiers">IDS_Converter::convertJSRegexModifiers()</a> in Converter.php</div>
+							<div class="index-item-description">Eliminate JS regex modifiers</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">convertQuotes</span>
 					</dt>
 		<dd class="index-item-body">
@@ -200,15 +214,15 @@
 						<span class="method-title">count</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Event.html#methodcount">IDS_Event::count()</a> in Event.php</div>
-							<div class="index-item-description">Returns number of filters</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodcount">IDS_Report::count()</a> in Report.php</div>
+							<div class="index-item-description">Returns total amount of events</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">count</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodcount">IDS_Report::count()</a> in Report.php</div>
-							<div class="index-item-description">Returns total amount of events</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Event.html#methodcount">IDS_Event::count()</a> in Event.php</div>
+							<div class="index-item-description">Returns number of filters</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">Composite.php</span>
@@ -377,7 +391,7 @@
 						<span class="method-title">getCache</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#methodgetCache">IDS_Caching_File::getCache()</a> in File.php</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Memcached.html#methodgetCache">IDS_Caching_Memcached::getCache()</a> in Memcached.php</div>
 							<div class="index-item-description">Returns the cached data</div>
 					</dd>
 			<dt class="field">
@@ -398,8 +412,15 @@
 						<span class="method-title">getCache</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Memcached.html#methodgetCache">IDS_Caching_Memcached::getCache()</a> in Memcached.php</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#methodgetCache">IDS_Caching_File::getCache()</a> in File.php</div>
 							<div class="index-item-description">Returns the cached data</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getCentrifuge</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodgetCentrifuge">IDS_Report::getCentrifuge()</a> in Report.php</div>
+							<div class="index-item-description">This method returns the centrifuge property or null if not  filled with data</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getConfig</span>
@@ -465,11 +486,11 @@
 							<div class="index-item-description">Returns registered filters</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">getImpact</span>
+						<span class="method-title">getHtml</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodgetImpact">IDS_Report::getImpact()</a> in Report.php</div>
-							<div class="index-item-description">Returns total impact</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Monitor.html#methodgetHtml">IDS_Monitor::getHtml()</a> in Monitor.php</div>
+							<div class="index-item-description">Returns exception array</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getImpact</span>
@@ -482,6 +503,13 @@
 						<span class="method-title">getImpact</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodgetImpact">IDS_Report::getImpact()</a> in Report.php</div>
+							<div class="index-item-description">Returns total impact</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getImpact</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Event.html#methodgetImpact">IDS_Event::getImpact()</a> in Event.php</div>
 							<div class="index-item-description">Returns calculated impact</div>
 					</dd>
@@ -489,7 +517,7 @@
 						<span class="method-title">getInstance</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Log_Database.html#methodgetInstance">IDS_Log_Database::getInstance()</a> in Database.php</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Log_File.html#methodgetInstance">IDS_Log_File::getInstance()</a> in File.php</div>
 							<div class="index-item-description">Returns an instance of this class</div>
 					</dd>
 			<dt class="field">
@@ -510,6 +538,20 @@
 						<span class="method-title">getInstance</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Session.html#methodgetInstance">IDS_Caching_Session::getInstance()</a> in Session.php</div>
+							<div class="index-item-description">Returns an instance of this class</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getInstance</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Log_Database.html#methodgetInstance">IDS_Log_Database::getInstance()</a> in Database.php</div>
+							<div class="index-item-description">Returns an instance of this class</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getInstance</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#methodgetInstance">IDS_Caching_File::getInstance()</a> in File.php</div>
 							<div class="index-item-description">Returns an instance of this class</div>
 					</dd>
@@ -518,20 +560,6 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Database.html#methodgetInstance">IDS_Caching_Database::getInstance()</a> in Database.php</div>
-							<div class="index-item-description">Returns an instance of this class</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getInstance</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Session.html#methodgetInstance">IDS_Caching_Session::getInstance()</a> in Session.php</div>
-							<div class="index-item-description">Returns an instance of this class</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getInstance</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Log_File.html#methodgetInstance">IDS_Log_File::getInstance()</a> in File.php</div>
 							<div class="index-item-description">Returns an instance of this class</div>
 					</dd>
 			<dt class="field">
@@ -560,7 +588,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Monitor.html#methodgetReport">IDS_Monitor::getReport()</a> in Monitor.php</div>
-							<div class="index-item-description">Returns report object providing various functions to work with  detected results</div>
+							<div class="index-item-description">Returns report object providing various functions to work with  detected results. Also the centrifuge data is being set as property  of the report object.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getRule</span>
@@ -568,6 +596,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Filter.html#methodgetRule">IDS_Filter::getRule()</a> in Filter.php</div>
 							<div class="index-item-description">Returns filter rule</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">getTags</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Event.html#methodgetTags">IDS_Event::getTags()</a> in Event.php</div>
+							<div class="index-item-description">Returns affected tags</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getTags</span>
@@ -582,13 +617,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodgetTags">IDS_Report::getTags()</a> in Report.php</div>
 							<div class="index-item-description">Returns list of affected tags</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">getTags</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Event.html#methodgetTags">IDS_Event::getTags()</a> in Event.php</div>
-							<div class="index-item-description">Returns affected tags</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getValue</span>
@@ -927,6 +955,13 @@
 			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodrunAll">IDS_Converter::runAll()</a> in Converter.php</div>
 							<div class="index-item-description">Runs all converter functions</div>
 					</dd>
+			<dt class="field">
+						<span class="method-title">runCentrifuge</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Converter.html#methodrunCentrifuge">IDS_Converter::runCentrifuge()</a> in Converter.php</div>
+							<div class="index-item-description">This method is the centrifuge prototype</div>
+					</dd>
 		</dl>
 	<a name="s"></a>
 	<div class="index-letter-section">
@@ -979,6 +1014,13 @@
 						<span class="method-title">setCache</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Database.html#methodsetCache">IDS_Caching_Database::setCache()</a> in Database.php</div>
+							<div class="index-item-description">Writes cache data into the database</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">setCache</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Memcached.html#methodsetCache">IDS_Caching_Memcached::setCache()</a> in Memcached.php</div>
 							<div class="index-item-description">Writes cache data</div>
 					</dd>
@@ -986,8 +1028,8 @@
 						<span class="method-title">setCache</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_Database.html#methodsetCache">IDS_Caching_Database::setCache()</a> in Database.php</div>
-							<div class="index-item-description">Writes cache data into the database</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#methodsetCache">IDS_Caching_File::setCache()</a> in File.php</div>
+							<div class="index-item-description">Writes cache data into the file</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">setCache</span>
@@ -997,11 +1039,11 @@
 							<div class="index-item-description">Interface method</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">setCache</span>
+						<span class="method-title">setCentrifuge</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#methodsetCache">IDS_Caching_File::setCache()</a> in File.php</div>
-							<div class="index-item-description">Writes cache data into the file</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Report.html#methodsetCentrifuge">IDS_Report::setCentrifuge()</a> in Report.php</div>
+							<div class="index-item-description">This method sets the centrifuge property</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">setConfig</span>
@@ -1030,6 +1072,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="PHPIDS/IDS_Filter_Storage.html#methodsetFilterSet">IDS_Filter_Storage::setFilterSet()</a> in Storage.php</div>
 							<div class="index-item-description">Sets the filter array</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">setHtml</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="PHPIDS/IDS_Monitor.html#methodsetHtml">IDS_Monitor::setHtml()</a> in Monitor.php</div>
+							<div class="index-item-description">Sets html array</div>
 					</dd>
 		</dl>
 	<a name="t"></a>
@@ -1164,14 +1213,14 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Log_File.html#method__construct">IDS_Log_File::__construct()</a> in File.php</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#method__construct">IDS_Caching_File::__construct()</a> in File.php</div>
 							<div class="index-item-description">Constructor</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="PHPIDS/IDS_Caching_File.html#method__construct">IDS_Caching_File::__construct()</a> in File.php</div>
+			<div class="index-item-details"><a href="PHPIDS/IDS_Log_File.html#method__construct">IDS_Log_File::__construct()</a> in File.php</div>
 							<div class="index-item-description">Constructor</div>
 					</dd>
 			<dt class="field">
@@ -1201,5 +1250,5 @@
 	<a class="index-letter" href="elementindex.html#t">t</a>
 	<a class="index-letter" href="elementindex.html#v">v</a>
 	<a class="index-letter" href="elementindex.html#_">_</a>
-</div>	</body>
-</html>
+</div>	</body>
+</html>

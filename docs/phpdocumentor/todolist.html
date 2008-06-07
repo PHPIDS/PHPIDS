@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Todo List</title>
+			<link rel="stylesheet" href="media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+						<div align="center"><h1>Todo List</h1></div>
+<h2>default</h2>
+<h3><a href="default/HTMLPurifier_AttrDef_CSS_Composite.html#var$defs">HTMLPurifier_AttrDef_CSS_Composite::$defs</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_AttrDef_CSS_Multiple.html#var$max">HTMLPurifier_AttrDef_CSS_Multiple::$max</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_AttrDef_CSS_Multiple.html#var$single">HTMLPurifier_AttrDef_CSS_Multiple::$single</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_AttrDef_Enum.html#var$valid_values">HTMLPurifier_AttrDef_Enum::$valid_values</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Language.html#var$_loaded">HTMLPurifier_Language::$_loaded</a></h3>
+<ul>
+    <li>Make it private, fix usage in HTMLPurifier_LanguageTest</li>
+</ul>
+<h3><a href="default/HTMLPurifier_HTMLModule_Tidy.html#methodconstruct">HTMLPurifier_HTMLModule_Tidy::construct()</a></h3>
+<ul>
+    <li>Wildcard matching and error reporting when an added or        subtracted fix has no effect.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Generator.html#methodescape">HTMLPurifier_Generator::escape()</a></h3>
+<ul>
+    <li>This really ought to be protected, but until we have a facility        for properly generating HTML here w/o using tokens, it stays        public.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Lexer.html#methodextractBody">HTMLPurifier_Lexer::extractBody()</a></h3>
+<ul>
+    <li>Consider making protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Language.html#methodformatMessage">HTMLPurifier_Language::formatMessage()</a></h3>
+<ul>
+    <li>Implement conditionals? Right now, some messages make      reference to line numbers, but those aren't always available</li>
+</ul>
+<h3><a href="default/HTMLPurifier_DefinitionCache_Serializer.html#methodgenerateBaseDirectoryPath">HTMLPurifier_DefinitionCache_Serializer::generateBaseDirectoryPath()</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_DefinitionCache_Serializer.html#methodgenerateDirectoryPath">HTMLPurifier_DefinitionCache_Serializer::generateDirectoryPath()</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_DefinitionCache_Serializer.html#methodgenerateFilePath">HTMLPurifier_DefinitionCache_Serializer::generateFilePath()</a></h3>
+<ul>
+    <li>Make protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier.html">HTMLPurifier</a></h3>
+<ul>
+    <li>We need an easier way to inject strategies using the configuration        object.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_AttrDef_CSS_FontFamily.html">HTMLPurifier_AttrDef_CSS_FontFamily</a></h3>
+<ul>
+    <li>whitelisting allowed fonts would be nice</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Config.html">HTMLPurifier_Config</a></h3>
+<ul>
+    <li>Reconsider some of the public member variables</li>
+</ul>
+<h3><a href="default/HTMLPurifier_ContentSets.html">HTMLPurifier_ContentSets</a></h3>
+<ul>
+    <li>Unit test</li>
+</ul>
+<h3><a href="default/HTMLPurifier_DefinitionCache.html">HTMLPurifier_DefinitionCache</a></h3>
+<ul>
+    <li>Create a separate maintenance file advanced users can use to        cache their custom HTMLDefinition, which can be loaded        via a configuration directive</li>
+    <li>Implement memcached</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Generator.html">HTMLPurifier_Generator</a></h3>
+<ul>
+    <li>Make some of the more internal functions protected, and have        unit tests work around that</li>
+    <li>Refactor interface so that configuration/context is determined        upon instantiation, no need for messy generateFromTokens() calls</li>
+</ul>
+<h3><a href="default/HTMLPurifier_HTMLModule.html">HTMLPurifier_HTMLModule</a></h3>
+<ul>
+    <li>Consider making some member functions protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_HTMLModule_Tidy.html">HTMLPurifier_HTMLModule_Tidy</a></h3>
+<ul>
+    <li>Figure out how to protect some of these methods/properties</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Injector.html">HTMLPurifier_Injector</a></h3>
+<ul>
+    <li>Allow injectors to request a re-run on their output. This        would help if an operation is recursive.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_LanguageFactory.html">HTMLPurifier_LanguageFactory</a></h3>
+<ul>
+    <li>Serialized cache for languages</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Lexer_DirectLex.html">HTMLPurifier_Lexer_DirectLex</a></h3>
+<ul>
+    <li>Reread XML spec and document differences.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Lexer_PEARSax3.html">HTMLPurifier_Lexer_PEARSax3</a></h3>
+<ul>
+    <li>Generalize so that XML_HTMLSax is also supported.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Strategy_FixNesting.html">HTMLPurifier_Strategy_FixNesting</a></h3>
+<ul>
+    <li>Enable nodes to be bubbled out of the structure.</li>
+</ul>
+<h3><a href="default/HTMLPurifier_TokenFactory.html">HTMLPurifier_TokenFactory</a></h3>
+<ul>
+    <li>Port DirectLex to use this</li>
+</ul>
+<h3><a href="default/HTMLPurifier_URIScheme_mailto.html">HTMLPurifier_URIScheme_mailto</a></h3>
+<ul>
+    <li>Filter allowed query parameters</li>
+    <li>Validate the email address</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Printer_HTMLDefinition.html#methodlistifyObjectList">HTMLPurifier_Printer_HTMLDefinition::listifyObjectList()</a></h3>
+<ul>
+    <li>Also add information about internal state</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Lexer.html#methodnormalize">HTMLPurifier_Lexer::normalize()</a></h3>
+<ul>
+    <li>Consider making protected</li>
+</ul>
+<h3><a href="default/HTMLPurifier_HTMLDefinition.html#methodparseTinyMCEAllowedList">HTMLPurifier_HTMLDefinition::parseTinyMCEAllowedList()</a></h3>
+<ul>
+    <li>Give this its own class, probably static interface</li>
+</ul>
+<h3><a href="default/HTMLPurifier_Filter_ExtractStyleBlocks.html#methodpreFilter">HTMLPurifier_Filter_ExtractStyleBlocks::preFilter()</a></h3>
+<ul>
+    <li>Extend to indicate non-text/css style blocks</li>
+</ul>
+<h3><a href="default/HTMLPurifier_CSSDefinition.html#methodsetupConfigStuff">HTMLPurifier_CSSDefinition::setupConfigStuff()</a></h3>
+<ul>
+    <li>Refactor duplicate elements into common class (probably using        composition, not inheritance).</li>
+</ul>
+	<p class="notes" id="credit">
+		Documentation generated on Sat, 07 Jun 2008 15:25:39 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</p>
+	</body>
+</html>
