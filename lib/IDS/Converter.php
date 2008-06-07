@@ -61,10 +61,10 @@ class IDS_Converter
     public static function runAll($value) 
     {
         foreach (get_class_methods(__CLASS__) as $method) {
-			
-        	if (strpos($method, 'run') === 0) {
-				continue;
-			}
+            
+            if (strpos($method, 'run') === 0) {
+                continue;
+            }
             $value = self::$method($value);
         }
 
@@ -92,7 +92,7 @@ class IDS_Converter
             );
 
             $converted = preg_replace($pattern, ';', $value);
-            $value .= "\n" . $converted;
+            $value    .= "\n" . $converted;
         }
         //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
@@ -113,7 +113,7 @@ class IDS_Converter
     {
         //check for inline linebreaks
         $search = array('\r', '\n', '\f', '\t', '\v');
-        $value = str_replace($search, ';', $value);
+        $value  = str_replace($search, ';', $value);
         
         //convert real linebreaks
         return preg_replace('/(?:\n|\r|\v)/m', '  ', $value);
@@ -209,7 +209,7 @@ class IDS_Converter
      */
     public static function convertJSRegexModifiers($value) 
     {
-        $value   = preg_replace('/\/[gim]/', '/', $value);
+        $value = preg_replace('/\/[gim]/', '/', $value);
 
         return $value;
     }    
@@ -244,21 +244,17 @@ class IDS_Converter
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' . 
             '(?:IN[+\s]*\([^()]+\))/ims');
         $value   = preg_replace($pattern, '=0', $value);
-
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' . 
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' . 
                          '(?:(?:ASCII|SOUNDEX|' . 
                          'MD5|R?LIKE)[+\s]*\([^()]+\))|(?:-+\d)/ims');
         $value   = preg_replace($pattern, 0, $value);
-
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|' . 
                          '(?:XOR|\WDIV\W|\WNOT\W|<>|RLIKE(?:\s+BINARY)?)|' . 
                          '(?:REGEXP\s+BINARY)|' . 
                          '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '=', $value);
-        
         $value   = preg_replace('/"\s+\d/', '"', $value); 
-
         $value   = str_replace('~', '0', $value);
         
         return $value;
@@ -331,10 +327,12 @@ class IDS_Converter
     public static function convertFromNestedBase64($value) 
     {
         $matches = array();
-        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{30,}=*)(?:\W|$)/im', $value, $matches);
-        foreach($matches as $match) {
-            foreach($match as $item) {
-                if(isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
+        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{30,}=*)(?:\W|$)/im', 
+            $value, 
+            $matches);
+        foreach ($matches as $match) {
+            foreach ($match as $item) {
+                if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
                     $value .= base64_decode($item);
                 }
             }
@@ -395,9 +393,11 @@ class IDS_Converter
         
         preg_match_all('/\\\u[0-9a-f]{4}/ims', $value, $matches);
 
-        if(!empty($matches[0])) {
+        if (!empty($matches[0])) {
             foreach ($matches[0] as $match) {
-                $value = str_replace($match, chr(hexdec(substr($match, 2, 4))), $value);
+                $value = str_replace($match,
+                    chr(hexdec(substr($match, 2, 4))),
+                    $value);
             }
             $value .= "\n\u0001";
         }
@@ -416,39 +416,40 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value) 
     {
-    	if(function_exists('mb_convert_encoding') 
-    	   && preg_match('/\+A\w+-/m', $value)) {
+        if (function_exists('mb_convert_encoding') 
+           && preg_match('/\+A\w+-/m', $value)) {
             $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');	
-    	} else {
-	        //list of all critical UTF7 codepoints
-	        $schemes = array(
-	            '+ACI-'      => '"',
-	            '+ADw-'      => '<',
-	            '+AD4-'      => '>',
-	            '+AFs-'      => '[',
-	            '+AF0-'      => ']',
-	            '+AHs-'      => '{',
-	            '+AH0-'      => '}',
-	            '+AFw-'      => '\\',
-	            '+ADs-'      => ';',
-	            '+ACM-'      => '#',
-	            '+ACY-'      => '&',
-	            '+ACU-'      => '%',
-	            '+ACQ-'      => '$',
-	            '+AD0-'      => '=',
-	            '+AGA-'      => '`',
-	            '+ALQ-'      => '"',
-	            '+IBg-'      => '"',
-	            '+IBk-'      => '"',
-	            '+AHw-'      => '|',
-	            '+ACo-'      => '*',
-	            '+AF4-'      => '^',
-	            '+ACIAPg-'   => '">',
-	            '+ACIAPgA8-' => '">'
-	        );
-	        $value = str_ireplace(array_keys($schemes), 
-	            array_values($schemes), $value);    		
-    	}
+        } else {
+            //list of all critical UTF7 codepoints
+            $schemes = array(
+                '+ACI-'      => '"',
+                '+ADw-'      => '<',
+                '+AD4-'      => '>',
+                '+AFs-'      => '[',
+                '+AF0-'      => ']',
+                '+AHs-'      => '{',
+                '+AH0-'      => '}',
+                '+AFw-'      => '\\',
+                '+ADs-'      => ';',
+                '+ACM-'      => '#',
+                '+ACY-'      => '&',
+                '+ACU-'      => '%',
+                '+ACQ-'      => '$',
+                '+AD0-'      => '=',
+                '+AGA-'      => '`',
+                '+ALQ-'      => '"',
+                '+IBg-'      => '"',
+                '+IBk-'      => '"',
+                '+AHw-'      => '|',
+                '+ACo-'      => '*',
+                '+AF4-'      => '^',
+                '+ACIAPg-'   => '">',
+                '+ACIAPgA8-' => '">'
+            );
+            
+            $value = str_ireplace(array_keys($schemes), 
+                array_values($schemes), $value);    		
+        }
         return $value;
     }    
 
@@ -492,7 +493,8 @@ class IDS_Converter
         
 
         //convert JS special numbers
-        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)|(?:NaN|Infinity)/ims', 1, $converted);
+        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)' .
+            '|(?:NaN|Infinity)/ims', 1, $converted);
         
         if ($compare != $converted) {
             $value .= "\n" . $converted;
@@ -504,30 +506,33 @@ class IDS_Converter
     /**
      * This method is the centrifuge prototype
      *
-     * @param string $value the value to convert
+     * @param string      $value   the value to convert
+     * @param IDS_Monitor $monitor the monitor object
      * 
      * @static
      * @return string
      */
-    public static function runCentrifuge($value, $monitor = null) 
+    public static function runCentrifuge($value, IDS_Monitor $monitor = null) 
     {
-    	$threshold = 3.5;
-    	
+        $threshold = 3.5;
+        
         if (strlen($value) > 25) {
             // Check for the attack char ratio
             $tmp_value = $value;
             $tmp_value = preg_replace('/([.!?+-])\1{1,}/', '$1', $tmp_value);
-            $stripped_length = strlen(
-                preg_replace('/[\w\s\p{L}.,\/><]*/ms', null, $tmp_value));
-            $overall_length  = strlen(
-                preg_replace('/\w{3,}\s*/', '123', 
-                    preg_replace('/\s{2,}/ms', null, $tmp_value)));
+            
+            $stripped_length = strlen(preg_replace('/[\w\s\p{L}.,\/><]*/ms', 
+                null, $tmp_value));
+            $overall_length  = strlen(preg_replace('/\w{3,}\s*/', '123', 
+                preg_replace('/\s{2,}/ms', null, $tmp_value)));
 
             if ($stripped_length != 0 
                 && $overall_length/$stripped_length <= $threshold) {
                 
-                $monitor->centrifuge['ratio']     = $overall_length/$stripped_length;
-                $monitor->centrifuge['threshold'] = $threshold;
+                $monitor->centrifuge['ratio']     = 
+                    $overall_length/$stripped_length;
+                $monitor->centrifuge['threshold'] = 
+                    $threshold;
                 
                 $value .= "\n$[!!!]";  
             }

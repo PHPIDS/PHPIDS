@@ -147,7 +147,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         $rows = $handle->query('SELECT created FROM `' . 
             mysql_escape_string($this->config['table']).'`');
             
-        if($rows->rowCount() === 0) {
+        if ($rows->rowCount() === 0) {
         
             $this->_write($handle, $data);             
         } else {
@@ -232,12 +232,13 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      * Write the cache data to the table
      * 
      * @param object $handle the database handle
-     * @param array $data the caching data
+     * @param array  $data   the caching data
      * 
      * @return object dbh
      * @throws PDOException if a db error occurred
      */    
-    private function _write($handle, $data) {
+    private function _write($handle, $data) 
+    {
         
         try {
             $handle->query('TRUNCATE ' . 

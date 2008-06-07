@@ -96,8 +96,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     public function __construct($type, $config) 
     {
 
-        $this->type     = $type;
-        $this->config   = $config;
+        $this->type   = $type;
+        $this->config = $config;
         
         $this->_connect();
 
