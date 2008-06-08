@@ -1077,15 +1077,18 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_4'] = '<div style="-moz-binding:url(http://h4k.in/mozxss.xml#xss)">hello!</div>';
         $exploits['html_5'] = '<img src="javascript:alert(1)">';
         $exploits['html_6'] = '<script>alert(1)</script><h1>headline</h1><p>copytext</p>';
+        $exploits['html_7'] = '<img src src src src=x onerror=alert(1)>';
+        $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
+        $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
         
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
-        $test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5', 'html_6'));
+        $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(128, $result->getImpact());  	
+        $this->assertEquals(170, $result->getImpact());  	
     }
     
     public function testAllowedHTMLScanningNegative() {
@@ -1118,7 +1121,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $exploits,
             $this->init
         );
-        $test->setHtml(array('html_1', 'html_2', 'html_3', 'html_4', 'html_5', 'html_6'));
+        $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());   

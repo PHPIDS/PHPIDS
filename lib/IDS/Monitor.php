@@ -279,13 +279,18 @@ class IDS_Monitor
                 $purified_value = $this->htmlpurifier->purify($value);
                 $purified_key   = $this->htmlpurifier->purify($key);
                 
-                if ($value != $purified_value) {
-                    $value = $this->_diff($value, $purified_value);
+                $redux_value = strip_tags($value);
+                $redux_key   = strip_tags($key);
+                
+                if ($value != $purified_value || $redux_value) {
+                    $value = $this->_diff($value, 
+                        $purified_value, $redux_value);
                 } else {
                     $value = null;
                 }
                 if ($key != $purified_key) {
-                    $key = $this->_diff($key, $purified_key);
+                    $key = $this->_diff($key, 
+                        $purified_key, $redux_key);
                 } else {
                     $key = null;
                 }
@@ -334,18 +339,24 @@ class IDS_Monitor
      *
      * @param string $original the original markup
      * @param string $purified the purified markup
+     * @param string $redux    the string without html
      * 
      * @return string the difference between the strings
      */
-    private function _diff($original, $purified)
+    private function _diff($original, $purified, $redux)
     {
+        /*
+         * deal with over-sensitive alt-attribute addition of the purifier 
+         * and other common html formatting problems
+         */
+        $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
+        $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
         
-        // check which string is longer - has to happen initially
-        $length = strlen($original) - strlen($purified);
-
-        // deal with over-sensitive alt-attribute addition of the purifier
-        $purified = preg_replace('/\salt="[^"]+"/m', null, $purified);
+        $original = preg_replace('/=?\s*"\s*"/m', null, $original);
+        $original = preg_replace('/\s+alt=?/m', null, $original);
         
+        // check which string is longer
+        $length = (strlen($original) - strlen($purified));
         /*
          * Calculate the difference between the original html input 
          * and the purified string.
@@ -377,11 +388,11 @@ class IDS_Monitor
         $diff = preg_replace('/[^<](iframe|script|embed|object' . 
             '|applet|base|img|style)/m', '<$1', $diff);
         
-        if ($original==$purified) {
+        if ($original==$purified && !$redux) {
             return null;
         }
         
-        return $diff;
+        return $diff . $redux;
     }
 
     /**
