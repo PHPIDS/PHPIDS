@@ -231,6 +231,8 @@ class IDS_Filter_Storage
 
             foreach ($filters as $filter) {
 
+                $id          = $nocache ? (string) $filter->id : 
+                    $filter['id'];
                 $rule        = $nocache ? (string) $filter->rule : 
                     $filter['rule'];
                 $impact      = $nocache ? (string) $filter->impact : 
@@ -246,8 +248,9 @@ class IDS_Filter_Storage
                                                 (int) $impact));
 
                 $data[] = array(
+                    'id'          => $id, 
                     'rule'        => $rule,
-                    'impact'    => $impact,
+                    'impact'      => $impact,
                     'tags'        => $tags,
                     'description' => $description
                 );
@@ -322,6 +325,8 @@ class IDS_Filter_Storage
 
             foreach ($filters as $filter) {
 
+                $id          = $nocache ? (string) $filter->id : 
+                    $filter['id'];            	
                 $rule        = $nocache ? (string) $filter->rule : 
                     $filter['rule'];
                 $impact      = $nocache ? (string) $filter->impact : 
@@ -337,6 +342,7 @@ class IDS_Filter_Storage
                                                 (int) $impact));
 
                 $data[] = array(
+                    'id'        => $id,
                     'rule'      => $rule,
                     'impact'    => $impact,
                     'tags'      => $tags,
