@@ -458,6 +458,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "<applet/src=http://businessinfo.co.uk/labs/xss.html
                         type=text/html>";
         $exploits[] = "onabort=onblur=onchange=onclick=ondblclick=onerror=onfocus=onkeydown=onkeypress=onkeyup=onload=onmousedown=onmousemove=onmouseout=onmouseover=onmouseup=onreset=onresize=onselect=onsubmit=onunload=alert";
+        $exploits[] = 'onload=1&&alert';
         
         $this->_testForPlainEvent($exploits);
         
@@ -466,7 +467,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(438, $result->getImpact());
+        $this->assertEquals(443, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {

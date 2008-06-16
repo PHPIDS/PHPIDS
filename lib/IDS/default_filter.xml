@@ -698,7 +698,7 @@
     </filter>
     <filter>
         <id>65</id>
-        <rule><![CDATA[(?:on\w+\s*=\s*(?:on\w+|alert|eval))|(?:groups=\d+\(\w+\))|(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
+        <rule><![CDATA[(?:on\w+\s*=[\w\W]*(?:on\w+|alert|eval))|(?:groups=\d+\(\w+\))|(?:\w{256,}|\W{256,}|\s{256,}|\/.+\shttp\/\d.\d\s?\\+\w\\+\w|(?::..){4,}|\W\d+\/\d{20,})]]></rule>
         <description>Detects basic DoS attempts and Apache scoreboard shared memory attacks</description>
         <tags>
             <tag>rfe</tag>
