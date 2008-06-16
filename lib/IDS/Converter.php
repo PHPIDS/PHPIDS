@@ -504,6 +504,23 @@ class IDS_Converter
     }    
     
     /**
+     * This method collects and decodes proprietary encoding types
+     *
+     * @param string      $value   the value to convert
+     * @param IDS_Monitor $monitor the monitor object
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertFromProprietaryEncodings($value) {
+    	
+    	// eBay custom QEncoding
+    	$value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
+    	
+    	return $value;
+    }
+    
+    /**
      * This method is the centrifuge prototype
      *
      * @param string      $value   the value to convert
