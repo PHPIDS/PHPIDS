@@ -944,7 +944,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(82, $result->getImpact());
+        $this->assertEquals(90, $result->getImpact());
     }    
     
     public function testBase64CCConverter() {
@@ -962,7 +962,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(105, $result->getImpact());
+        $this->assertEquals(110, $result->getImpact());
     }    
     
     public function testDecimalCCConverter() {
@@ -978,7 +978,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(76, $result->getImpact());
+        $this->assertEquals(71, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
@@ -1035,7 +1035,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(136, $result->getImpact());
+        $this->assertEquals(135, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {

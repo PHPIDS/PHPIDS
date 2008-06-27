@@ -274,7 +274,7 @@ class IDS_Converter
         if (preg_match('/&#x?[\w]+/ms', $value)) {
             $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
             $converted = html_entity_decode($converted);
-            $value    .= "\n" . str_replace(';', null, $converted);
+            $value    .= "\n" . str_replace(';;', ';', $converted);
         }
 
         return $value;
