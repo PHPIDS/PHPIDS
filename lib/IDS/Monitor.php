@@ -170,8 +170,8 @@ class IDS_Monitor
 			$this->scanKeys   = $init->config['General']['scan_keys'];
 			$this->exceptions = isset($init->config['General']['exceptions']) ? $init->config['General']['exceptions'] : false;
 			$this->html       = isset($init->config['General']['html']) ? $init->config['General']['html'] : false;
-			$this->pathToHTMLPurifier	= $init->config['General']['HTMLPurifierPath'];
-			$this->HTMLPurifierCache	= dirname(__FILE__) . $init->config['General']['HTMLPurifierCache'];
+			$this->pathToHTMLPurifier	= $init->config['General']['HTML_Purifier_Path'];
+			$this->HTMLPurifierCache	= dirname(__FILE__) . $init->config['General']['HTML_Purifier_Cache'];
         }
 
         if (!is_writeable($init->config['General']['tmp_path'])) {
@@ -309,6 +309,7 @@ class IDS_Monitor
 	 *
      * @param	mixed	$key
      * @param	mixed	$value
+	 * @since	0.5
      * 
      * @return	array
      */
@@ -357,7 +358,8 @@ class IDS_Monitor
      * @param string $original the original markup
      * @param string $purified the purified markup
      * @param string $redux    the string without html
-     * 
+	 * @since 0.5
+	 *
      * @return string the difference between the strings
      */
     private function _diff($original, $purified, $redux)
@@ -464,7 +466,8 @@ class IDS_Monitor
      * Sets html array
      *
      * @param mixed $html the fields not to monitor
-     * 
+	 * @since 0.5
+	 *
      * @return void
      */
     public function setHtml($html) 
@@ -478,17 +481,21 @@ class IDS_Monitor
     
 	/**
      * Adds a value to the html array
-     * 
+	 *
+	 * @since 0.5
+	 *
      * @return void
      */
-    public function addHTML($value) 
+    public function addHtml($value) 
 	{
         $this->html[] = $value;
     }
 
     /**
      * Returns exception array
-     *
+	 *
+	 * @since 0.5
+	 *
      * @return array the fields that contain allowed html
      */
     public function getHtml() 
