@@ -978,7 +978,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(71, $result->getImpact());
+        $this->assertEquals(76, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
