@@ -1169,6 +1169,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "Choose between \"red\" and \"green\". ";
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
         $exploits[] = "select *something* from the menu";
+        $exploits[] = '<![CDATA[:??]]>';
 
         $test = new IDS_Monitor(
             $exploits,

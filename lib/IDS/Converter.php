@@ -517,6 +517,9 @@ class IDS_Converter
     	// eBay custom QEncoding
     	$value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
     	
+    	//Xajax error reportings
+    	$value = preg_replace('/<!\[CDATA\[:\?+\]\]>/', null, $value);
+    	
     	return $value;
     }
     
