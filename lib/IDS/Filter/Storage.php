@@ -242,7 +242,8 @@ class IDS_Filter_Storage
                 $description = $nocache ? (string) $filter->description : 
                     $filter['description'];
 
-                $this->addFilter(new IDS_Filter($rule,
+                $this->addFilter(new IDS_Filter($id,
+                                                $rule,
                                                 $description,
                                                 (array) $tags[0],
                                                 (int) $impact));
@@ -336,16 +337,17 @@ class IDS_Filter_Storage
                 $description = $nocache ? (string) $filter->description : 
                     $filter['description'];
 
-                $this->addFilter(new IDS_Filter($rule,
+                $this->addFilter(new IDS_Filter($id,
+                                                $rule,
                                                 $description,
                                                 (array) $tags[0],
                                                 (int) $impact));
 
                 $data[] = array(
-                    'id'        => $id,
-                    'rule'      => $rule,
-                    'impact'    => $impact,
-                    'tags'      => $tags,
+                    'id'          => $id,
+                    'rule'        => $rule,
+                    'impact'      => $impact,
+                    'tags'        => $tags,
                     'description' => $description
                 );
             }

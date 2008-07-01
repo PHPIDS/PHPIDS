@@ -86,8 +86,9 @@ class IDS_Filter
      * 
      * @return void
      */
-    public function __construct($rule, $description, array $tags, $impact) 
+    public function __construct($id, $rule, $description, array $tags, $impact) 
     {
+    	$this->id          = $id;
         $this->rule        = $rule;
         $this->tags        = $tags;
         $this->impact      = $impact;
@@ -157,6 +158,16 @@ class IDS_Filter
     public function getImpact() 
     {
         return $this->impact;
+    }
+    
+    /**
+     * Get filter ID
+     *
+     * @return integer
+     */
+    public function getId() 
+    {
+    	return $this->id;
     }
 }
 

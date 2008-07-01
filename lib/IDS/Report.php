@@ -301,7 +301,9 @@ class IDS_Report implements Countable, IteratorAggregate
                     $output .= 'Description: ' . $filter->getDescription() . 
                         ' | ';
                     $output .= 'Tags: ' . join(', ', $filter->getTags()) . 
-                        "<br/>\n";
+                        ' | ';
+                    $output .= 'ID: ' . $filter->getId() . 
+                        "<br/>\n";                    
                 }
             }
             

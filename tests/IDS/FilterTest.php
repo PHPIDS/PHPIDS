@@ -32,7 +32,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testObjectConstruction()
 	{
-		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 12);
+		$filter = new IDS_Filter(1, '^test$', 'My description', array('foo', 'bar'), 12);
 
 		$this->assertTrue($filter->match('test'));
 		$this->assertEquals("My description", $filter->getDescription(), "Should return description");
@@ -43,7 +43,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testModificator()
 	{
-		$filter = new IDS_Filter('^te.st$', 'My description', array('tag1', 'tag2'), 1);
+		$filter = new IDS_Filter(1, '^te.st$', 'My description', array('tag1', 'tag2'), 1);
 
 		// Default must be
 		// ... case-insensitive
@@ -57,7 +57,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testExceptions()
 	{
-		$filter = new IDS_Filter('^test$', 'My description', array('foo', 'bar'), 10);
+		$filter = new IDS_Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
 
 		try {
 			$filter->match(1);
@@ -66,12 +66,12 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 
 		try {
-			$filter = new IDS_Filter('^test$', 'my desc', array('foo'), 'test');
+			$filter = new IDS_Filter(1, '^test$', 'my desc', array('foo'), 'test');
 			$this->fail("Expected Exception");
 		} catch (Exception $e) {}
 
 		try {
-			$filter = new IDS_Filter(1, 'my desc', array("foo"), 'bla');
+			$filter = new IDS_Filter(1, 1, 'my desc', array("foo"), 'bla');
 			$this->fail("Excpected Exception");
 		} catch (Exception $e) {}
 
@@ -82,7 +82,8 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
 		$this->storage = new IDS_Filter_Storage($this->init);
-        $filter = new IDS_Filter('test', 'test2', array(), 1);
+        $filter = array();
+		$filter[] = new IDS_Filter(1, 'test', 'test2', array(), 1);
 	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
 	}
 }

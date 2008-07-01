@@ -30,8 +30,8 @@ class IDS_EventTest extends PHPUnit_Framework_TestCase
 	{
 		$this->event = new IDS_Event("handled_key", "my val",
 			array(
-				new IDS_Filter('^test$', 'my description', array('tag1', 'tag2'), 10),
-				new IDS_Filter('^test2$', 'my other desc', array('tag2', 'tag3'), 4)
+				new IDS_Filter(1, '^test$', 'my description', array('tag1', 'tag2'), 10),
+				new IDS_Filter(1, '^test2$', 'my other desc', array('tag2', 'tag3'), 4)
 			)
 		);
 	}
