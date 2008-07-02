@@ -381,6 +381,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "ale&zwnj;rt(1)";
         $exploits[] = "ale&#x200d;rt(1)";
         $exploits[] = "ale&#8206;rt(1)";
+        $exploits[] = 'al&#56325ert(1)';
+        $exploits[] = 'al&#xdfff;ert(1)';
+        $exploits[] = 'al�ert(1)';
 
         $this->_testForPlainEvent($exploits);
         
@@ -389,7 +392,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(634, $result->getImpact());
+        $this->assertEquals(658, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
