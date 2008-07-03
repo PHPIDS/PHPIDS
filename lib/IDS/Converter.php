@@ -163,7 +163,7 @@ class IDS_Converter
         }
 
         // check for octal charcode pattern
-        if (preg_match_all('/(?:(?:[\\\]+\d+\s*){8,})/ims', $value, $matches)) {
+        if (preg_match_all('/(?:(?:[\\\]+\d+[ \t]*){8,})/ims', $value, $matches)) {
 
             $converted = '';
             $charcode  = explode('\\', preg_replace('/\s/', '', implode(',', 
