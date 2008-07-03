@@ -308,7 +308,7 @@
             <tag>xss</tag>
             <tag>rfe</tag>
             <tag>lfi</tag>
-            <tag>xsrf</tag>
+            <tag>csrf</tag>
         </tags>
         <impact>5</impact>
     </filter>
