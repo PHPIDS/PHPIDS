@@ -18,7 +18,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         
         // local variables
         $result = array();
-        $generator = new HTMLPurifier_Generator();
+        $generator = new HTMLPurifier_Generator($config, $context);
         $escape_invalid_tags = $config->get('Core', 'EscapeInvalidTags');
         $e = $context->get('ErrorCollector', true);
         
@@ -38,12 +38,17 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $this->injectors = array();
         
         $injectors = $config->getBatch('AutoFormat');
+        $def_injectors = $definition->info_injector;
         $custom_injectors = $injectors['Custom'];
         unset($injectors['Custom']); // special case
         foreach ($injectors as $injector => $b) {
             $injector = "HTMLPurifier_Injector_$injector";
             if (!$b) continue;
             $this->injectors[] = new $injector;
+        }
+        foreach ($def_injectors as $injector) {
+            // assumed to be objects
+            $this->injectors[] = $injector;
         }
         foreach ($custom_injectors as $injector) {
             if (is_string($injector)) {
@@ -169,7 +174,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 if ($escape_invalid_tags) {
                     if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag to text');
                     $result[] = new HTMLPurifier_Token_Text(
-                        $generator->generateFromToken($token, $config, $context)
+                        $generator->generateFromToken($token)
                     );
                 } elseif ($e) {
                     $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag removed');
@@ -209,7 +214,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             if ($skipped_tags === false) {
                 if ($escape_invalid_tags) {
                     $result[] = new HTMLPurifier_Token_Text(
-                        $generator->generateFromToken($token, $config, $context)
+                        $generator->generateFromToken($token)
                     );
                     if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag to text');
                 } elseif ($e) {
