@@ -1086,6 +1086,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
         $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
         
+        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -1121,6 +1122,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                                 <div class="description"></div>
                                 </div></div><hr />';
         
+        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
             $exploits,
             $this->init
