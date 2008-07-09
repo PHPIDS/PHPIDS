@@ -175,9 +175,9 @@ class IDS_Monitor
                 ? $init->config['General']['html'] : false;
             if(isset($init->config['General']['HTML_Purifier_Path']) 
                 && isset($init->config['General']['HTML_Purifier_Cache'])) {
-                $this->pathToHTMLPurifier   = 
+                $this->pathToHTMLPurifier = 
                     $init->config['General']['HTML_Purifier_Path'];
-                $this->HTMLPurifierCache    = dirname(__FILE__) . 
+                $this->HTMLPurifierCache  = 
                     $init->config['General']['HTML_Purifier_Cache'];
             }
             
