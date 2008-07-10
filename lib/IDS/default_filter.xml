@@ -41,7 +41,7 @@
     </filter>    
     <filter>
         <id>4</id>
-        <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])|(?:{[^:]+:[^}]+})]]></rule>
+        <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -325,7 +325,7 @@
     </filter>
     <filter>
         <id>30</id>
-        <rule><![CDATA[(?:!+\s*[\d.,]+\w?\d*\s*\?)|(?:=\s*\[s*\])|(?:;[^q\s]+=[^\d])|(?:[\d\W]["\s]*:\s*")|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:\/\s*\?\s*")|(?:\/\s*\)\s*\[)|(?:\d\?.+:\d)|(?:]\s*\[\W*\w)|(?:[^\s]\s*=\s*\/)]]></rule>
+        <rule><![CDATA[(?:!+\s*[\d.,]+\w?\d*\s*\?)|(?:=\s*\[s*\])|(?:;[^q\s]+=[^\d])|(?:"\s*\+\s*")|(?:[^\s]\[\s*\d+\s*\]\s*[;+])|(?:"\s*[&|]+\s*")|(?:\/\s*\?\s*")|(?:\/\s*\)\s*\[)|(?:\d\?.+:\d)|(?:]\s*\[\W*\w)|(?:[^\s]\s*=\s*\/)]]></rule>
         <description>Detects common XSS concatenation patterns 1/2</description>
         <tags>
             <tag>xss</tag>
@@ -337,7 +337,7 @@
     </filter>
     <filter>
         <id>31</id>
-        <rule><![CDATA[(?:=\s*\d*\.\d*\?\d*\.\d*)|(?:[|&]{2,}\s*")|(?:!\d+\.\d*\?")|(?:\/:[\w.]+,)|(?:=[\d\W\s]*\[[^]]+\])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])|(?::\s*\d\s*;)]]></rule>
+        <rule><![CDATA[(?:=\s*\d*\.\d*\?\d*\.\d*)|(?:[|&]{2,}\s*")|(?:!\d+\.\d*\?")|(?:\/:[\w.]+,)|(?:=[\d\W\s]*\[[^]]+\])|(?:\?\w+:\w+)|(?:\W\+\s*\w+\s*[)}\]])]]></rule>
         <description>Detects common XSS concatenation patterns 2/2</description>
         <tags>
             <tag>xss</tag>
@@ -490,7 +490,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
+        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>

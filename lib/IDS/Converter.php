@@ -538,7 +538,13 @@ class IDS_Converter
     {
         $threshold = 3.5;
         
-        if (strlen($value) > 25) {
+        try {
+        	$unserialized = unserialize($value);
+        } catch (Exception $exception) {
+        	$unserialized = false;
+        }
+        
+        if (strlen($value) > 25 && !$unserialized) {
             // Check for the attack char ratio
             $tmp_value = $value;
             $tmp_value = preg_replace('/([.!?+-])\1{1,}/', '$1', $tmp_value);
@@ -593,7 +599,7 @@ class IDS_Converter
             asort($array);
 
             $converted = implode($array);
-
+            
             if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' . 
                 '(?:\({3,}\++:{2,})/', $converted)) {
             
