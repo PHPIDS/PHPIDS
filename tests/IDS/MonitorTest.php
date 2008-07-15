@@ -273,7 +273,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(985, $result->getImpact());
+        $this->assertEquals(981, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -947,7 +947,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(90, $result->getImpact());
+        $this->assertEquals(82, $result->getImpact());
     }    
     
     public function testBase64CCConverter() {
