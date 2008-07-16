@@ -435,7 +435,7 @@
     </filter>   
     <filter>
         <id>40</id>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(AND|OR|XOR|NAND|NOT)\s+|\|\||\&\&)\s*\w+\()]]></rule>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(N?AND|X?OR|NOT )\s+|\|\||\&\&)\s*\w+\()]]></rule>
         <description>Detects MySQL comments, conditions and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
@@ -457,7 +457,7 @@
     </filter>   
     <filter>
         <id>42</id>
-        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s*[\d"[+&!-@])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(AND|OR)\s*["\d]+)|(?:@[\w-]+\s(AND|OR)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:N?AND|X?OR|NOT |\|\||\&\&)\s*[\d"[+&!-@])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(AND|OR)\s*["\d]+)|(?:@[\w-]+\s(AND|OR)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
         <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -490,7 +490,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
+        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:N?AND|X?OR|NOT |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -501,7 +501,7 @@
     </filter>
      <filter>
         <id>46</id>
-        <rule><![CDATA[(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s.]+")|(?:"\s*is\s*[\d.]+\s*\W.*")]]></rule>
+        <rule><![CDATA[(?:(?:N?AND|X?OR|NOT |\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s.]+")|(?:"\s*is\s*[\d.]+\s*\W.*")]]></rule>
         <description>Detects basic SQL authentication bypass attempts 3/3</description>
         <tags>
             <tag>sqli</tag>
@@ -523,7 +523,7 @@
     </filter>
     <filter>
         <id>48</id>
-        <rule><![CDATA[(?:\d\s+GROUP\s+BY.+\()|(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:AND|OR|XOR|NAND|NOT|\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
+        <rule><![CDATA[(?:\d\s+GROUP\s+BY.+\()|(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:N?AND|X?OR|NOT |\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
         <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
