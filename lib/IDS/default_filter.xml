@@ -30,16 +30,6 @@
         <impact>2</impact>
     </filter>
     <filter>
-        <id>3</id>
-        <rule><![CDATA[(?:[\s\/"]+[-\w\/\\\*]+\s*=.+(?:\/\s*>))]]></rule>
-        <description>finds attribute breaking injections including obfuscated attributes</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>4</impact>
-    </filter>    
-    <filter>
         <id>4</id>
         <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
@@ -729,4 +719,14 @@
         </tags>
         <impact>7</impact>
     </filter>
+    <filter>
+        <id>68</id>
+        <rule><![CDATA[(?:[\s\/"]+[-\w\/\\\*]+\s*=.+(?:\/\s*>))]]></rule>
+        <description>finds attribute breaking injections including obfuscated attributes</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>  
 </filters>
