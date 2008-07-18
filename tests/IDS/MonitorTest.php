@@ -273,7 +273,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(981, $result->getImpact());
+        $this->assertEquals(953, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -392,7 +392,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(647, $result->getImpact());
+        $this->assertEquals(643, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -868,7 +868,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(136, $result->getImpact());
+        $this->assertEquals(132, $result->getImpact());
     }
 
     public function testRFEList() {
@@ -947,7 +947,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(82, $result->getImpact());
+        $this->assertEquals(78, $result->getImpact());
     }    
     
     public function testBase64CCConverter() {
@@ -1038,7 +1038,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(135, $result->getImpact());
+        $this->assertEquals(131, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
@@ -1174,6 +1174,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
         $exploits[] = "select *something* from the menu";
         $exploits[] = '<![CDATA[:??]]>';
+        $exploits[] = 'xing_link => /app/search?op=search;keywords=ingo%20bax;'; 
 
         $test = new IDS_Monitor(
             $exploits,
