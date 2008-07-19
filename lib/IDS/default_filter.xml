@@ -102,7 +102,7 @@
     </filter>
     <filter>
         <id>11</id>
-        <rule><![CDATA[(?:(?:\/|\\)+(bin|home|conf|usr|etc|proc|opt|sbin|local|dev|tmp|kern|boot|root|sys|system|windows|winnt|program|%[a-z_-]{3,}%)(?:\/|\\))|(?:(?:\/|\\)+inetpub|localstart\.asp|boot\.ini)]]></rule>
+        <rule><![CDATA[(?:(?:\/|\\)+(home|conf|usr|etc|proc|opt|s?bin|local|dev|tmp|kern|[br]oot|sys|system|windows|winnt|program|%[a-z_-]{3,}%)(?:\/|\\))|(?:(?:\/|\\)+inetpub|localstart\.asp|boot\.ini)]]></rule>
         <description>Detects specific directory and path traversal</description>
         <tags>
             <tag>dt</tag>
@@ -182,7 +182,7 @@
     </filter>
     <filter>
         <id>18</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:join|pop|push|reverse|shift|slice|splice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:join|pop|push|reverse|shift|sp?lice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -425,7 +425,7 @@
     </filter>   
     <filter>
         <id>40</id>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(N?AND|X?OR|NOT )\s+|\|\||\&\&)\s*\w+\()]]></rule>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(N?AND|X?OR|NOT)\s+|\|\||\&\&)\s*\w+\()]]></rule>
         <description>Detects MySQL comments, conditions and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
@@ -502,7 +502,7 @@
     </filter> 
     <filter>
         <id>47</id>
-        <rule><![CDATA[(?:^\s*[;>"]\s*(?:UNION|SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|CONCAT|LOAD_FILE|0x)\s?\(?)|(?:END\s*\);)|("\s+REGEXP\W)]]></rule>
+        <rule><![CDATA[(?:^\s*[;>"]\s*(?:UNION|SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|LOAD_FILE|0x)\s?\(?)|(?:END\s*\);)|("\s+REGEXP\W)]]></rule>
         <description>Detects concatenated basic SQL injection and SQLLFI attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -635,7 +635,7 @@
     </filter>
     <filter>
         <id>60</id>
-        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*[^\w](?:echo|print|print_r|var_dump|fopen|popen))|(?:;\s*rm\s+-\w+\s+)|(?:;.*{.*\$\w+\s*=)|(?:\$\w+\s*\[\]\s*=\s*)]]></rule>
+        <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*[^\w](?:echo|print|print_r|var_dump|[fp]open))|(?:;\s*rm\s+-\w+\s+)|(?:;.*{.*\$\w+\s*=)|(?:\$\w+\s*\[\]\s*=\s*)]]></rule>
         <description>Detects code injection attempts 3/3</description>
         <tags>
             <tag>id</tag>
@@ -646,7 +646,7 @@
     </filter>
     <filter>
         <id>61</id>
-        <rule><![CDATA[(?:\w+]?(?<!HREF)(?<!SRC)(?<!LONGDESC)(?<!ReturnURL)=(?:http|ftp|https):)]]></rule>
+        <rule><![CDATA[(?:\w+]?(?<!HREF)(?<!SRC)(?<!LONGDESC)(?<!ReturnURL)=(?:https?|ftp):)]]></rule>
         <description>Detects url injections and RFE attempts</description>
         <tags>
             <tag>id</tag>
