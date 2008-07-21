@@ -539,7 +539,7 @@ class IDS_Converter
         $threshold = 3.5;
         
         try {
-        	$unserialized = unserialize($value);
+        	$unserialized = @unserialize($value);
         } catch (Exception $exception) {
         	$unserialized = false;
         }
