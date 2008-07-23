@@ -114,7 +114,9 @@ class IDS_Filter
             );
         }
 
-        return (bool) preg_match('/' . $this->getRule() . '/ims', $string);
+        return (bool) preg_match(
+            '/' . $this->getRule() . '/ms', strtolower($string)
+        );
     }
 
     /**

@@ -31,7 +31,7 @@
     </filter>
     <filter>
         <id>4</id>
-        <rule><![CDATA[(?:;\W*URL\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])]]></rule>
+        <rule><![CDATA[(?:;\W*url\s*=)|(?:[^\w\s\/]\s*(?:location|referrer|name)\s*[^\w\s-])]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -71,7 +71,7 @@
     </filter>
     <filter>
         <id>8</id>
-        <rule><![CDATA[(?:(?<!(?:Mozilla\/\d\.\d\s))\([^)[]+\[[^\]]+\][^)]*\))|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])][\s+",\d]*[}\])])|(?:"\)?\]\W*\[)|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
+        <rule><![CDATA[(?:(?<!(?:mozilla\/\d\.\d\s))\([^)[]+\[[^\]]+\][^)]*\))|(?:[^\s][{([][^({[]+[{([][^}\])]+[}\])][\s+",\d]*[}\])])|(?:"\)?\]\W*\[)|(?:=\s*[^\s:;]+\s*[{([][^}\])]+[}\])];)]]></rule>
         <description>Detects self-executing JavaScript functions</description>
         <tags>
             <tag>xss</tag>
@@ -146,7 +146,7 @@
     </filter>
     <filter>
         <id>15</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:create(?:Element|Attribute|TextNode)|[a-z]+Events?|getElement\w+|appendChild|createRange|createContextualFragment|removeNode|parentNode|decodeURIComponent|\wetTimeout|userAgent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:create(?:element|attribute|textnode)|[a-z]+Events?|getelement\w+|appendchild|createrange|createcontextualfragment|removenode|parentnode|decodeuricomponent|\wettimeout|useragent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -158,7 +158,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|toString|Execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -194,7 +194,7 @@
     </filter>
     <filter>
         <id>19</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeURI\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeuri\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -206,7 +206,7 @@
     </filter>
     <filter>
         <id>20</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:globalStorage|sessionStorage|postMessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -230,7 +230,7 @@
     </filter>
     <filter>
         <id>22</id>
-        <rule><![CDATA[(?:[^\s]\s*=\s*Script)|(?:\.\s*constructor)]]></rule>
+        <rule><![CDATA[(?:[^\s]\s*=\s*script)|(?:\.\s*constructor)]]></rule>
         <description>Detects advanced XSS probings via Script() and constructors</description>
         <tags>
             <tag>xss</tag>
@@ -390,7 +390,7 @@
     </filter>
     <filter>
         <id>37</id>
-        <rule><![CDATA[(?:\<base\s+)|(?:<!(?:ELEMENT|ENTITY|\[CDATA))]]></rule>
+        <rule><![CDATA[(?:\<base\s+)|(?:<!(?:element|entity|\[CDATA))]]></rule>
         <description>Detects base href injections and XML entity injections</description>
         <tags>
             <tag>xss</tag>
@@ -425,7 +425,7 @@
     </filter>   
     <filter>
         <id>40</id>
-        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(N?AND|X?OR|NOT)\s+|\|\||\&\&)\s*\w+\()]]></rule>
+        <rule><![CDATA[(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(n?and|x?or|not)\s+|\|\||\&\&)\s*\w+\()]]></rule>
         <description>Detects MySQL comments, conditions and ch(a)r injections</description>
         <tags>
             <tag>sqli</tag>
@@ -436,7 +436,7 @@
     </filter>   
     <filter>
         <id>41</id>
-        <rule><![CDATA[(?:HAVING\s+[\d\w]\s?=)|(?:IF\s?\([\d\w]\s?=)]]></rule>
+        <rule><![CDATA[(?:having\s+[\d\w]\s?=)|(?:if\s?\([\d\w]\s?=)]]></rule>
         <description>Detects conditional SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -447,7 +447,7 @@
     </filter>   
     <filter>
         <id>42</id>
-        <rule><![CDATA[(?:\\x(?:23|27|3D))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:N?AND|X?OR|NOT |\|\||\&\&)\s*[\d"[+&!-@])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(AND|OR)\s*["\d]+)|(?:@[\w-]+\s(AND|OR)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not |\|\||\&\&)\s*[\d"[+&!-@])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
         <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -458,7 +458,7 @@
     </filter>  
     <filter>
         <id>43</id>
-        <rule><![CDATA[(?:"\s*\*.+(?:OR|ID)\W*"\d)|(?:\^")|(?:^[\w\s"-]+(?<=AND\s)(?<=OR\s)(?<=XOR\s)(?<=NAND\s)(?<=NOT\s)(?<=\|\|)(?<=\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s?]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:".*\*\s*\d)|(?:"\s*or\s[\w-]+[\s=*])|(?:[()*<>%+-][\w-]+[^\w\s]+"[^,])]]></rule>
+        <rule><![CDATA[(?:"\s*\*.+(?:or|id)\W*"\d)|(?:\^")|(?:^[\w\s"-]+(?<=and\s)(?<=or\s)(?<=xor\s)(?<=nand\s)(?<=not\s)(?<=\|\|)(?<=\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s?]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:".*\*\s*\d)|(?:"\s*or\s[\w-]+[\s=*])|(?:[()*<>%+-][\w-]+[^\w\s]+"[^,])]]></rule>
         <description>Detects classic SQL injection probings 2/2</description>
         <tags>
             <tag>sqli</tag>
@@ -469,7 +469,7 @@
     </filter> 
     <filter>
         <id>44</id>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*OR[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*LIKE[+-=\s]+[\d"(])|(?:\sis\s*0\W)]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like[+-=\s]+[\d"(])|(?:\sis\s*0\W)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/3</description>
         <tags>
             <tag>sqli</tag>
@@ -480,7 +480,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:UNION\s*(?:ALL)?\s*[([]\s*SELECT)|(?:LIKE\s*"\%)|(?:"\s*LIKE\W*["\d])|(?:"\s*(?:N?AND|X?OR|NOT |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*HAVING)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
+        <rule><![CDATA[(?:union\s*(?:all)?\s*[([]\s*select)|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -491,7 +491,7 @@
     </filter>
      <filter>
         <id>46</id>
-        <rule><![CDATA[(?:(?:N?AND|X?OR|NOT |\|\||\&\&)\s+[\s\w+]+(?:REGEXP\s*\(|SOUNDS\s+LIKE\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|OR))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s.]+")|(?:"\s*is\s*[\d.]+\s*\W.*")]]></rule>
+        <rule><![CDATA[(?:(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w+]+(?:regexp\s*\(|sounds\s+like\s*"|[=\d]+x))|("\s*\d\s*(?:--|#))|(?:"[%&<>^=]+\d\s*(=|or))|(?:"\W+[\w+-]+\s*=\s*\d\W+")|(?:"\s*is\s*\d.+"?\w)|(?:"\|?[\w-]{3,}[^\w\s.]+")|(?:"\s*is\s*[\d.]+\s*\W.*")]]></rule>
         <description>Detects basic SQL authentication bypass attempts 3/3</description>
         <tags>
             <tag>sqli</tag>
@@ -502,7 +502,7 @@
     </filter> 
     <filter>
         <id>47</id>
-        <rule><![CDATA[(?:^\s*[;>"]\s*(?:UNION|SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC))|(?:(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s+(?:CONCAT|CHAR|LOAD_FILE|0x)\s?\(?)|(?:END\s*\);)|("\s+REGEXP\W)]]></rule>
+        <rule><![CDATA[(?:^\s*[;>"]\s*(?:union|select|create|rename|truncate|load|alter|delete|update|insert|desc))|(?:(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s+(?:concat|char|load_file|0x)\s?\(?)|(?:end\s*\);)|("\s+regexp\W)]]></rule>
         <description>Detects concatenated basic SQL injection and SQLLFI attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -513,7 +513,7 @@
     </filter>
     <filter>
         <id>48</id>
-        <rule><![CDATA[(?:\d\s+GROUP\s+BY.+\()|(?:(?:;|#|--)\s*(?:DROP|ALTER))|(?:(?:;|#|--)\s*(?:UPDATE|INSERT)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:N?AND|X?OR|NOT |\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
+        <rule><![CDATA[(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
         <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -523,7 +523,7 @@
     </filter>
     <filter>
         <id>49</id>
-        <rule><![CDATA[(?:\*\/FROM)|(?:\w"\s*(?:[-+=|@]+\s*)+[\d(])|(?:COALESCE\s*\(|@@\w+\s*[^\w\s])|(?:\W!+"\w)|(?:";\s*(?:if|while|begin))|(?:"[\s\d]+=\s*\d)]]></rule>
+        <rule><![CDATA[(?:\*\/from)|(?:\w"\s*(?:[-+=|@]+\s*)+[\d(])|(?:coalesce\s*\(|@@\w+\s*[^\w\s])|(?:\W!+"\w)|(?:";\s*(?:if|while|begin))|(?:"[\s\d]+=\s*\d)]]></rule>
         <description>Detects chained SQL injection attempts 2/2</description>
         <tags>
             <tag>sqli</tag>
@@ -533,7 +533,7 @@
     </filter>
     <filter>
         <id>50</id>
-        <rule><![CDATA[(?:(SELECT|;)\s+(?:BENCHMARK|IF|SLEEP)\s?\(\s?\(?\s?\w+)]]></rule>
+        <rule><![CDATA[(?:(select|;)\s+(?:benchmark|if|sleep)\s?\(\s?\(?\s?\w+)]]></rule>
         <description>Detects SQL benchmark and sleep injection attempts including conditional queries</description>
         <tags>
             <tag>sqli</tag>
@@ -543,7 +543,7 @@
     </filter>
     <filter>
         <id>51</id>
-        <rule><![CDATA[(?:CREATE\s+function\s+\w+\s+returns)|(?:;\s*(?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\w{2,})]]></rule>
+        <rule><![CDATA[(?:create\s+function\s+\w+\s+returns)|(?:;\s*(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s*\w{2,})]]></rule>
         <description>Detects MySQL UDF injection and other data/structure manipulation attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -553,7 +553,7 @@
     </filter>
     <filter>
         <id>52</id>
-        <rule><![CDATA[(?:ALTER\s*\w+.*CHARACTER\s+SET\s+\w+)|(";\s*WAITFOR\s+TIME\s+")|(?:";.*:\s*GOTO)]]></rule>
+        <rule><![CDATA[(?:alter\s*\w+.*character\s+set\s+\w+)|(";\s*waitfor\s+time\s+")|(?:";.*:\s*goto)]]></rule>
         <description>Detects MySQL charset switch and MSSQL DoS attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -563,7 +563,7 @@
     </filter>
     <filter>
         <id>53</id>
-        <rule><![CDATA[(?:CREATE\s+(PROCEDURE|FUNCTION)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>
+        <rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>
         <description>Detects MySQL stored procedure/function injections</description>
         <tags>
             <tag>sqli</tag>
@@ -573,7 +573,7 @@
     </filter>
     <filter>
         <id>54</id>
-        <rule><![CDATA[(?:SELECT\s*pg_sleep)|(?:WAITFOR\s*DELAY\s?"+\s?\d)|(?:;\s*SHUTDOWN\s*(?:--|#|\/\*|{))]]></rule>
+        <rule><![CDATA[(?:select\s*pg_sleep)|(?:waitfor\s*delay\s?"+\s?\d)|(?:;\s*shutdown\s*(?:--|#|\/\*|{))]]></rule>
         <description>Detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -583,7 +583,7 @@
     </filter>
     <filter>
         <id>55</id>
-        <rule><![CDATA[(?:\WIIF\s*\()|(?:EXEC\s+master\.)|(?:UNION SELECT @)|(?:UNION\s*\w*\s*SELECT)|(?:SELECT.*\w?user\()|(?:INTO[\s+]+(?:DUMP|OUT)FILE\s*")]]></rule>
+        <rule><![CDATA[(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union\s*\w*\s*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -593,7 +593,7 @@
     </filter>
     <filter>
         <id>56</id>
-        <rule><![CDATA[(?:MERGE.*USING\s*\()|(EXECUTE\s*IMMEDIATE\s*")|(?:\W+\d\s+HAVING\s+\d)|(?:MATCH\s*[\w(),+-]+\s*AGAINST\s*\()]]></rule>
+        <rule><![CDATA[(?:merge.*using\s*\()|(execute\s*immediate\s*")|(?:\W+\d\s+having\s+\d)|(?:match\s*[\w(),+-]+\s*against\s*\()]]></rule>
         <description>Detects MATCH AGAINST, MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
         <tags>
             <tag>sqli</tag>
@@ -603,7 +603,7 @@
     </filter>
     <filter>
         <id>57</id>
-        <rule><![CDATA[(?:SELECT\s*\*\s*FROM)|((?:SELECT|CREATE|RENAME|TRUNCATE|LOAD|ALTER|DELETE|UPDATE|INSERT|DESC)\s*\(\s*SPACE\s*\()]]></rule>
+        <rule><![CDATA[(?:select\s*\*\s*from)|((?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s*\(\s*space\s*\()]]></rule>
         <description>Detects MySQL comment-/space-obfuscated injections</description>
         <tags>
             <tag>sqli</tag>
@@ -646,7 +646,7 @@
     </filter>
     <filter>
         <id>61</id>
-        <rule><![CDATA[(?:\w+]?(?<!HREF)(?<!SRC)(?<!LONGDESC)(?<!ReturnURL)=(?:https?|ftp):)]]></rule>
+        <rule><![CDATA[(?:\w+]?(?<!href)(?<!src)(?<!longdesc)(?<!returnurl)=(?:https?|ftp):)]]></rule>
         <description>Detects url injections and RFE attempts</description>
         <tags>
             <tag>id</tag>
