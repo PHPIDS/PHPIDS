@@ -213,6 +213,26 @@ class IDS_Converter
 
         return $value;
     }    
+
+    /**
+     * Converts from hex/dec entities
+     *
+     * @param string $value the value to convert
+     * 
+     * @static
+     * @return string
+     */
+    public static function convertEntities($value) 
+    {
+        $converted = null;
+        if (preg_match('/&#x?[\w]+/ms', $value)) {
+            $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
+            $converted = html_entity_decode($converted, ENT_QUOTES, 'UTF-8');
+            $value    .= "\n" . str_replace(';;', ';', $converted);
+        }
+
+        return $value;
+    }    
     
     /**
      * Normalize quotes
@@ -225,7 +245,7 @@ class IDS_Converter
     public static function convertQuotes($value) 
     {
         // normalize different quotes to "
-        $pattern = array('\'', '`', '´', '’', '‘', '&quot', '&apos');
+        $pattern = array('\'', '`', '´', '’', '‘');
         $value   = str_replace($pattern, '"', $value);
 
         return $value;
@@ -257,26 +277,6 @@ class IDS_Converter
         $value   = preg_replace('/"\s+\d/', '"', $value); 
         $value   = str_replace('~', '0', $value);
         
-        return $value;
-    }
-
-    /**
-     * Converts from hex/dec entities
-     *
-     * @param string $value the value to convert
-     * 
-     * @static
-     * @return string
-     */
-    public static function convertEntities($value) 
-    {
-        $converted = null;
-        if (preg_match('/&#x?[\w]+/ms', $value)) {
-            $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
-            $converted = html_entity_decode($converted, ENT_QUOTES, 'UTF-8');
-            $value    .= "\n" . str_replace(';;', ';', $converted);
-        }
-
         return $value;
     }
 

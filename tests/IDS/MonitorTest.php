@@ -848,7 +848,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(125, $result->getImpact());
+        $this->assertEquals(119, $result->getImpact());
     }
 
     public function testURIList(){
@@ -981,7 +981,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(71, $result->getImpact());
+        $this->assertEquals(75, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
