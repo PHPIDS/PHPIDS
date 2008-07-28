@@ -520,7 +520,7 @@ class IDS_Converter
     	$value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
     	
     	//Xajax error reportings
-    	$value = preg_replace('/<!\[CDATA\[:\?+\]\]>/', null, $value);
+    	$value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/', '$1', $value);
     	
     	return $value;
     }

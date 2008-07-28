@@ -1174,7 +1174,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "SQL Injection contest is coming in around '1 OR '2 weeks.";
         $exploits[] = "select *something* from the menu";
         $exploits[] = '<![CDATA[:??]]>';
-        $exploits[] = 'website_link => /app/search?op=search;keywords=peter%20testcase;'; 
+        $exploits[] = 'website_link => /app/search?op=search;keywords=peter%20testcase;';
+        $exploits[] = '<xjxobj><e><k>insert</k><v>insert</v></e><e><k>errorh</k><v>error</v></e><e><k>hostname</k><v>ab</v></e><e><k>ip</k><v>10.2.2.22</v></e><e><k>asset</k><v>2</v></e><e><k>thresholdc</k><v>30</v></e><e><k>thresholda</k><v>30</v></e><e><k>rrd_profile</k><v></v></e><e><k>nat</k><v></v></e><e><k>nsens</k><v>1</v></e><e><k>os</k><v>Unknown</v></e><e><k>mac</k><v></v></e><e><k>macvendor</k><v></v></e><e><k>descr</k><v><![CDATA[&]]></v></e></xjxobj>';
 
         $test = new IDS_Monitor(
             $exploits,
