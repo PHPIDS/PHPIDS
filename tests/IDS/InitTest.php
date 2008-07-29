@@ -15,8 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * @package	PHPIDS tests
- * @version	SVN: $Id:InitTest.php 517 2007-09-15 15:04:13Z mario $
+ * @package    PHPIDS tests
+ * @version    SVN: $Id:InitTest.php 517 2007-09-15 15:04:13Z mario $
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -25,18 +25,18 @@ require_once 'IDS/Init.php';
 
 class IDS_InitTest extends PHPUnit_Framework_TestCase {
 
-	public function setUp() {
+    public function setUp() {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
         $this->init = IDS_Init::init($this->path);
     }
 
     function testInit() {
-    	$this->assertTrue($this->init instanceof IDS_Init);
+        $this->assertTrue($this->init instanceof IDS_Init);
     }
 
     function testInitConfig() {
-    	$keys = array('General', 'Logging', 'Caching');
-    	$this->assertEquals($keys, array_keys($this->init->config));
+        $keys = array('General', 'Logging', 'Caching');
+        $this->assertEquals($keys, array_keys($this->init->config));
     }
 
     function testInitClone() {
@@ -51,15 +51,24 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
     function testInitSetConfigOverwrite() {
         $this->init->setConfig(array('General' => array('filter_type' => 'json')), true);
         $this->assertEquals($this->init->config['General']['filter_type'], 'json');
+
+        $this->init->setConfig(
+            array('General' => array('exceptions' => array('foo'))),
+            true
+        );
+        $this->assertSame(
+            array('foo', '__utmc'),
+            $this->init->config['General']['exceptions']
+        );
     }
 
-	function testInitSetConfigNoOverwrite() {
+    function testInitSetConfigNoOverwrite() {
         $this->init->setConfig(array('General' => array('filter_type' => 'xml')), true);
         $this->init->setConfig(array('General' => array('filter_type' => 'json')));
         $this->assertEquals($this->init->config['General']['filter_type'], 'xml');
     }
 
-	function testInitGetConfig() {
+    function testInitGetConfig() {
         $data = $this->init->getConfig();
         $this->assertEquals($this->init->config, $data);
     }

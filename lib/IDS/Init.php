@@ -159,11 +159,39 @@ class IDS_Init
     {
 
         if ($overwrite) {
-            $this->config = array_merge($this->config, $config);
+            $this->config = $this->_mergeConfig($this->config, $config);
         } else {
-            $this->config = array_merge($config, $this->config);
+            $this->config = $this->_mergeConfig($config, $this->config);
         }
     }
+
+	/**
+	 * Merge config hashes recursivly
+	 *
+	 * The algorithm merges configuration arrays recursively. If an element is
+	 * an array in both, the values will be appended. If it is a scalar in both,
+	 * the value will be replaced.
+	 *
+	 * @param array $current The legacy hash
+	 * @param array $successor The hash which values count more when in doubt
+	 * @return array Merged hash
+	 */
+	protected function _mergeConfig($current, $successor)
+	{
+		if (is_array($current) and is_array($successor)) {
+			foreach ($successor as $key => $value) {
+				if (isset($current[$key])
+					and is_array($value)
+					and is_array($current[$key])) {
+
+					$current[$key] = $this->_mergeConfig($current[$key], $value);
+				} else {
+					$current[$key] = $successor[$key];
+				}
+			}
+		}
+		return $current;
+	}
 
     /**
      * Returns the config array
@@ -172,7 +200,6 @@ class IDS_Init
      */
     public function getConfig() 
     {
-
         return $this->config;
     }
 }
