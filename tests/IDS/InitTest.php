@@ -72,4 +72,10 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
         $data = $this->init->getConfig();
         $this->assertEquals($this->init->config, $data);
     }
+
+    function testInstanciatingInitObjectWithoutPassingConfigFile()
+    {
+        $init = IDS_Init::init();
+        $this->assertType('IDS_Init', $init);
+    }
 }

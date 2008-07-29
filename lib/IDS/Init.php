@@ -52,7 +52,7 @@ class IDS_Init
      *
      * @var array
      */
-    public $config = null;
+    public $config = array();
 
     /**
      * Instance of this class depending on the supplied config file
@@ -78,16 +78,15 @@ class IDS_Init
      * 
      * @return object $this
      */
-    private function __construct($configPath) 
+    private function __construct($configPath = null) 
     {
-
         include_once 'IDS/Monitor.php';
         include_once 'IDS/Filter/Storage.php';
 
-        $this->setConfigPath($configPath);
-        $this->config = parse_ini_file($this->configPath, true);
-
-        return $this;
+        if ($configPath) {
+            $this->setConfigPath($configPath);
+            $this->config = parse_ini_file($this->configPath, true);
+        }
     }
 
     /**
@@ -109,12 +108,12 @@ class IDS_Init
      * 
      * @return object
      */
-    public static function init($configPath) 
+    public static function init($configPath = null)
     {
         if (!isset(self::$instances[$configPath])) {
             self::$instances[$configPath] = new IDS_Init($configPath);
         }
-        
+
         return self::$instances[$configPath];
     }
 
@@ -157,7 +156,6 @@ class IDS_Init
      */
     public function setConfig(array $config, $overwrite = false) 
     {
-
         if ($overwrite) {
             $this->config = $this->_mergeConfig($this->config, $config);
         } else {
@@ -165,33 +163,33 @@ class IDS_Init
         }
     }
 
-	/**
-	 * Merge config hashes recursivly
-	 *
-	 * The algorithm merges configuration arrays recursively. If an element is
-	 * an array in both, the values will be appended. If it is a scalar in both,
-	 * the value will be replaced.
-	 *
-	 * @param array $current The legacy hash
-	 * @param array $successor The hash which values count more when in doubt
-	 * @return array Merged hash
-	 */
-	protected function _mergeConfig($current, $successor)
-	{
-		if (is_array($current) and is_array($successor)) {
-			foreach ($successor as $key => $value) {
-				if (isset($current[$key])
-					and is_array($value)
-					and is_array($current[$key])) {
+    /**
+     * Merge config hashes recursivly
+     *
+     * The algorithm merges configuration arrays recursively. If an element is
+     * an array in both, the values will be appended. If it is a scalar in both,
+     * the value will be replaced.
+     *
+     * @param array $current The legacy hash
+     * @param array $successor The hash which values count more when in doubt
+     * @return array Merged hash
+     */
+    protected function _mergeConfig($current, $successor)
+    {
+        if (is_array($current) and is_array($successor)) {
+            foreach ($successor as $key => $value) {
+                if (isset($current[$key])
+                    and is_array($value)
+                    and is_array($current[$key])) {
 
-					$current[$key] = $this->_mergeConfig($current[$key], $value);
-				} else {
-					$current[$key] = $successor[$key];
-				}
-			}
-		}
-		return $current;
-	}
+                    $current[$key] = $this->_mergeConfig($current[$key], $value);
+                } else {
+                    $current[$key] = $successor[$key];
+                }
+            }
+        }
+        return $current;
+    }
 
     /**
      * Returns the config array
