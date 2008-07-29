@@ -77,5 +77,6 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
     {
         $init = IDS_Init::init();
         $this->assertType('IDS_Init', $init);
+        $this->assertSame($init, IDS_Init::init());
     }
 }
