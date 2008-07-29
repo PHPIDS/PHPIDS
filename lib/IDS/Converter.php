@@ -551,7 +551,7 @@ class IDS_Converter
             
             $stripped_length = strlen(preg_replace('/[\w\s\p{L}.,\/><]*/ms', 
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/(\w{3,}\s*)+/', 'aaa', 
+            $overall_length  = strlen(preg_replace('/([\w\s]{4,})+/', 'aaa', 
                 preg_replace('/\s{2,}/ms', null, $tmp_value)));
 
             if ($stripped_length != 0 

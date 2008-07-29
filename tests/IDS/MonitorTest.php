@@ -556,7 +556,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(456, $result->getImpact());
+        $this->assertEquals(477, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -615,7 +615,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(575, $result->getImpact());
+        $this->assertEquals(582, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -659,7 +659,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(592, $result->getImpact());
+        $this->assertEquals(620, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -719,7 +719,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(748, $result->getImpact());
+        $this->assertEquals(788, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -797,7 +797,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(812, $result->getImpact());
+        $this->assertEquals(819, $result->getImpact());
     }    
     
     public function testDTList(){
