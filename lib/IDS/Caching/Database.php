@@ -145,7 +145,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         $handle = $this->handle;
         
         $rows = $handle->query('SELECT created FROM `' . 
-            mysql_escape_string($this->config['table']).'`');
+            $handle->quote($this->config['table']).'`');
             
         if ($rows->rowCount() === 0) {
         
@@ -180,7 +180,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         try{
             $handle = $this->handle;
             $result = $handle->prepare('SELECT * FROM ' . 
-                mysql_escape_string($this->config['table']) . 
+                $handle->quote($this->config['table']) . 
                 ' where type=?');
             $result->execute(array($this->type));
 
@@ -242,10 +242,10 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         
         try {
             $handle->query('TRUNCATE ' . 
-                mysql_escape_string($this->config['table']).'');
+                $handle->quote($this->config['table']).'');
             $statement = $handle->prepare('
                 INSERT INTO `' . 
-                mysql_escape_string($this->config['table']).'` (
+                $handle->quote($this->config['table']).'` (
                     type,
                     data,
                     created,
@@ -260,7 +260,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
             ');
     
             $statement->bindParam('type', 
-                mysql_escape_string($this->type));
+                $handle->quote($this->type));
             $statement->bindParam('data', serialize($data));
     
             if (!$statement->execute()) {
