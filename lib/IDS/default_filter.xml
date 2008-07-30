@@ -146,7 +146,7 @@
     </filter>
     <filter>
         <id>15</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:create(?:element|attribute|textnode)|[a-z]+Events?|getelement\w+|appendchild|createrange|createcontextualfragment|removenode|parentnode|decodeuricomponent|\wettimeout|useragent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:create(?:element|attribute|textnode)|[a-z]+Events?|getelement\w+|appendchild|createrange|createcontextualfragment|removenode|parentnode|decodeuricomponent|\wettimeout|useragent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -158,7 +158,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -170,7 +170,7 @@
     </filter>
     <filter>
         <id>17</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|go|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|go|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -182,7 +182,7 @@
     </filter>
     <filter>
         <id>18</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:join|pop|push|reverse|shift|sp?lice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:join|pop|push|reverse|shift|sp?lice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -194,7 +194,7 @@
     </filter>
     <filter>
         <id>19</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeuri\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeuri\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -206,7 +206,7 @@
     </filter>
     <filter>
         <id>20</id>
-        <rule><![CDATA[([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@-])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -218,7 +218,7 @@
     </filter>
     <filter>
         <id>21</id>
-        <rule><![CDATA[(?:,\s*(?:alert|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.-\/?+]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
+        <rule><![CDATA[(?:,\s*(?:alert|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -447,7 +447,7 @@
     </filter>   
     <filter>
         <id>42</id>
-        <rule><![CDATA[(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not |\|\||\&\&)\s*[\d"[+&!-@])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not |\|\||\&\&)\s*[\d"[+&!@(),.-])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
         <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -469,7 +469,7 @@
     </filter> 
     <filter>
         <id>44</id>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+-<>=]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like[+-=\s]+[\d"(])|(?:\sis\s*0\W)|(?:where\s[\s\w\.,-]+\s=)]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+<>=(),-]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like[+=\s\.-]+[\d"(])|(?:\sis\s*0\W)|(?:where\s[\s\w\.,-]+\s=)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/3</description>
         <tags>
             <tag>sqli</tag>
@@ -646,7 +646,7 @@
     </filter>
     <filter>
         <id>61</id>
-        <rule><![CDATA[(?:\w+]?(?<!href)(?<!src)(?<!longdesc)(?<!returnurl)=(?:https?|ftp):)]]></rule>
+        <rule><![CDATA[(?:\w+]?(?<!href)(?<!src)(?<!longdesc)(?<!returnurl)=(?:https?|ftp):)|(?:\{\s*\$\s*\{)]]></rule>
         <description>Detects url injections and RFE attempts</description>
         <tags>
             <tag>id</tag>
@@ -690,16 +690,6 @@
         <id>65</id>
         <rule><![CDATA[(?:on\w+\s*=[\w\W]*(?:on\w+|alert|eval|print|confirm|prompt))|(?:groups=\d+\(\w+\))|(?:(.)\1{128,})]]></rule>
         <description>Detects basic XSS DoS attempts</description>
-        <tags>
-            <tag>rfe</tag>
-            <tag>dos</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>
-    <filter>
-        <id>66</id>
-        <rule><![CDATA[(?:info:\/)|(?:\w+\["@\w+)|(?:(?:view-source|about):\w+)]]></rule>
-        <description>Detects konqueror UXSS attacks, Gecko 1.9 threading directives and view-source attacks</description>
         <tags>
             <tag>rfe</tag>
             <tag>dos</tag>
