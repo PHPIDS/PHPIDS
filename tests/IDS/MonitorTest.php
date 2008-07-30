@@ -392,7 +392,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(643, $result->getImpact());
+        $this->assertEquals(638, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -471,7 +471,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(452, $result->getImpact());
+        $this->assertEquals(447, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -948,7 +948,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(78, $result->getImpact());
+        $this->assertEquals(73, $result->getImpact());
     }    
     
     public function testBase64CCConverter() {
@@ -1039,7 +1039,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(126, $result->getImpact());
+        $this->assertEquals(121, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
