@@ -332,13 +332,13 @@ class IDS_Converter
         preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{30,}=*)(?:\W|$)/im', 
             $value, 
             $matches);
-        foreach ($matches as $match) {
-            foreach ($match as $item) {
-                if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
-                    $value .= base64_decode($item);
-                }
+            
+        foreach ($matches[1] as $item) {
+            if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
+                $value .= base64_decode($item);
             }
         }
+        
         return $value;
     }  
 

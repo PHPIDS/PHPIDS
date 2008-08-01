@@ -966,7 +966,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(110, $result->getImpact());
+        $this->assertEquals(105, $result->getImpact());
     }    
     
     public function testDecimalCCConverter() {
