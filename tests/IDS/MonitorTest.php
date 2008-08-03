@@ -1,4 +1,4 @@
-<?php
+alt nur<?php
 
 /**
  * PHPIDS
@@ -384,6 +384,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'al&#56325ert(1)';
         $exploits[] = 'al&#xdfff;ert(1)';
         $exploits[] = 'al�ert(1)';
+        $exploits[] = '1[<t>__par{new Array}ent__</t>][<t>al{new Array}ert</t>](1) ';
 
         $this->_testForPlainEvent($exploits);
         
@@ -392,7 +393,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(638, $result->getImpact());
+        $this->assertEquals(655, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
