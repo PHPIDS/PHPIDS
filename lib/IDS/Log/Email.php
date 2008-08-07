@@ -135,7 +135,7 @@ class IDS_Log_Email implements IDS_Log_Interface
             $this->recipients   = $config->config['Logging']['recipients'];
             $this->subject      = $config->config['Logging']['subject'];
             $this->headers      = $config->config['Logging']['header'];
-            $this->envelope     = $config->config['General']['envelope'];
+            $this->envelope     = $config->config['Logging']['envelope'];
             $this->safemode     = $config->config['Logging']['safemode'];
             $this->allowed_rate = $config->config['Logging']['allowed_rate'];
             $this->tmp_path     = $config->config['General']['tmp_path'];
