@@ -2,7 +2,7 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -72,7 +72,7 @@ class IDS_Log_Email implements IDS_Log_Interface
     /**
      * Safemode switch
      *
-     * Using this switch it is possible to enable safemode, which is a spam 
+     * Using this switch it is possible to enable safemode, which is a spam
      * protection based on the alert frequency.
      *
      * @var boolean
@@ -82,8 +82,8 @@ class IDS_Log_Email implements IDS_Log_Interface
     /**
      * Send rate
      *
-     * If safemode is enabled, this property defines how often reports will be 
-     * sent out. Default value is 15, which means that a mail will be sent on 
+     * If safemode is enabled, this property defines how often reports will be
+     * sent out. Default value is 15, which means that a mail will be sent on
      * condition that the last email has not been sent earlier than 15 seconds ago.
      *
      * @var integer
@@ -93,7 +93,7 @@ class IDS_Log_Email implements IDS_Log_Interface
     /**
      * PHPIDS temp directory
      *
-     * When safemod is enabled, a path to a temp directory is needed to 
+     * When safemod is enabled, a path to a temp directory is needed to
      * store some information. Default is IDS/tmp/
      *
      * @var string
@@ -125,16 +125,17 @@ class IDS_Log_Email implements IDS_Log_Interface
      * Constructor
      *
      * @param mixed $config IDS_Init instance | array
-     * 
+     *
      * @return void
      */
-    protected function __construct($config) 
+    protected function __construct($config)
     {
 
         if ($config instanceof IDS_Init) {
             $this->recipients   = $config->config['Logging']['recipients'];
             $this->subject      = $config->config['Logging']['subject'];
             $this->headers      = $config->config['Logging']['header'];
+            $this->envelope     = $config->config['General']['envelope'];
             $this->safemode     = $config->config['Logging']['safemode'];
             $this->allowed_rate = $config->config['Logging']['allowed_rate'];
             $this->tmp_path     = $config->config['General']['tmp_path'];
@@ -146,22 +147,22 @@ class IDS_Log_Email implements IDS_Log_Interface
         }
 
         // determine correct IP address and concat them if necessary
-        $this->ip = $_SERVER['REMOTE_ADDR'] . 
-            (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? 
+        $this->ip = $_SERVER['REMOTE_ADDR'] .
+            (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
             ' (' . $_SERVER['HTTP_X_FORWARDED_FOR'] . ')' : '');
     }
 
     /**
      * Returns an instance of this class
      *
-     * This method allows the passed argument to be either an instance of 
+     * This method allows the passed argument to be either an instance of
      * IDS_Init or an array.
      *
      * @param mixed $config IDS_Init | array
-     * 
+     *
      * @return object $this
      */
-    public static function getInstance($config) 
+    public static function getInstance($config)
     {
         if (!self::$instance) {
             self::$instance = new IDS_Log_Email($config);
@@ -174,22 +175,22 @@ class IDS_Log_Email implements IDS_Log_Interface
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
-     * 
+     *
      * @return void
      */
-    private function __clone() 
-    { 
+    private function __clone()
+    {
     }
 
     /**
      * Detects spam attempts
      *
-     * To avoid mail spam through this logging class this function is used 
+     * To avoid mail spam through this logging class this function is used
      * to detect such attempts based on the alert frequency.
      *
      * @return boolean
      */
-    protected function isSpamAttempt() 
+    protected function isSpamAttempt()
     {
 
         /*
@@ -242,14 +243,14 @@ class IDS_Log_Email implements IDS_Log_Interface
     /**
      * Prepares data
      *
-     * Converts given data into a format that can be read in an email. 
+     * Converts given data into a format that can be read in an email.
      * You might edit this method to your requirements.
      *
      * @param mixed $data the report data
-     * 
+     *
      * @return string
      */
-    protected function prepareData($data) 
+    protected function prepareData($data)
     {
 
         $format  = "The following attack has been detected by PHPIDS\n\n";
@@ -260,7 +261,7 @@ class IDS_Log_Email implements IDS_Log_Interface
 
         $attackedParameters = '';
         foreach ($data as $event) {
-            $attackedParameters .= $event->getName() . '=' . 
+            $attackedParameters .= $event->getName() . '=' .
                 urlencode($event->getValue()) . ", ";
         }
 
@@ -280,11 +281,11 @@ class IDS_Log_Email implements IDS_Log_Interface
      * Sends the report to registered recipients
      *
      * @param object $data IDS_Report instance
-     * 
+     *
      * @throws Exception if data is no string
      * @return boolean
      */
-    public function execute(IDS_Report $data) 
+    public function execute(IDS_Report $data)
     {
 
         if ($this->safemode) {
@@ -316,10 +317,20 @@ class IDS_Log_Email implements IDS_Log_Interface
             if (!empty($this->recipients)) {
                 if (is_array($this->recipients)) {
                     foreach ($this->recipients as $address) {
-                        $this->send($address, $data, $headers);
+                        $this->send(
+                            $address,
+                            $data,
+                            $headers,
+                            $this->envelope
+                        );
                     }
                 } else {
-                    $this->send($this->recipients, $data, $headers);
+                    $this->send(
+                        $this->recipients,
+                        $data,
+                        $headers,
+                        $this->envelope
+                    );
                 }
             }
 
@@ -339,15 +350,16 @@ class IDS_Log_Email implements IDS_Log_Interface
      * @param string $address email address
      * @param string $data    the report data
      * @param string $headers the mail headers
-     * 
+     *
      * @return boolean
      */
-    protected function send($address, $data, $headers)
+    protected function send($address, $data, $headers, $envelope = null)
     {
         return mail($address,
                     $this->subject,
                     $data,
-                    $headers);
+                    $headers,
+                    '-f' . $envelope);
     }
 }
 
