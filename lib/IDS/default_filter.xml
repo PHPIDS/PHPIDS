@@ -1,7 +1,7 @@
 <filters>
     <filter>
         <id>1</id>
-        <rule><![CDATA[(?:"+.*>)|(?:[^\w\s]\s*\/>)|(?:>")]]></rule>
+        <rule><![CDATA[(?:"+.*[^- ]>)|(?:[^\w\s]\s*\/>)|(?:>")]]></rule>
         <description>finds html breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
@@ -31,7 +31,7 @@
     </filter>
     <filter>
         <id>4</id>
-        <rule><![CDATA[(?:;\W*url\s*=)|(?:[^\w\s\/>]\s*(?:location|referrer|name)\s*[^\w\s-])]]></rule>
+        <rule><![CDATA[(?:;\W*url\s*=)|(?:[^\w\s\/?:>]\s*(?:location|referrer|name)\s*[^\/\w\s-])]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -61,7 +61,7 @@
     </filter>
     <filter>
         <id>7</id>
-        <rule><![CDATA[(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+;)|(?:>\s*[,;.])]]></rule>
+        <rule><![CDATA[(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+;)]]></rule>
         <description>Detects JavaScript with(), ternary operators and XML predicate attacks</description>
         <tags>
             <tag>xss</tag>
@@ -170,7 +170,7 @@
     </filter>
     <filter>
         <id>17</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|go|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\/\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -379,7 +379,7 @@
     </filter>
     <filter>
         <id>36</id>
-        <rule><![CDATA[(?:--.*>)|(?:opera\s*\.\s*\w+\s*\()]]></rule>
+        <rule><![CDATA[(?:--.*[^-]>)|(?:opera\s*\.\s*\w+\s*\()]]></rule>
         <description>Detects comments to exploit firefox' faulty rendering and proprietary opera attacks</description>
         <tags>
             <tag>xss</tag>
@@ -447,7 +447,7 @@
     </filter>   
     <filter>
         <id>42</id>
-        <rule><![CDATA[(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not |\|\||\&\&)\s*[\d"[+&!@(),.-])|(?:\W\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
+        <rule><![CDATA[(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:^.*\\".+(?<!\\)")|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not |\|\||\&\&)\s*[\d"[+&!@(),.-])|(?:[^\w\s]\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s]\s*\d\W+[^\w\s]\s*".)]]></rule>
         <description>Detects classic SQL injection probings 1/2</description>
         <tags>
             <tag>sqli</tag>
@@ -480,7 +480,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:union\s*(?:all)?\s*[([]\s*select)|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)|(?:select\s[\s\w\.,-]+\sfrom)]]></rule>
+        <rule><![CDATA[(?:union\s*(?:all)?\s*[([]\s*select)|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)|(?:select\s[\s\w\.,-]+\sfrom)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>

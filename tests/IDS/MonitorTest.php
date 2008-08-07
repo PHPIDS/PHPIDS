@@ -208,7 +208,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(20, $result->getImpact());
+        $this->assertEquals(12, $result->getImpact());
     }
 
     public function testConcatenatedXSSList() {
@@ -414,7 +414,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(68, $result->getImpact());
+        $this->assertEquals(63, $result->getImpact());
     }
 
     public function testXSSList() {
@@ -472,7 +472,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(447, $result->getImpact());
+        $this->assertEquals(443, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -616,7 +616,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(596, $result->getImpact());
+        $this->assertEquals(590, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -660,7 +660,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(620, $result->getImpact());
+        $this->assertEquals(616, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -798,7 +798,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(821, $result->getImpact());
+        $this->assertEquals(815, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1040,7 +1040,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(121, $result->getImpact());
+        $this->assertEquals(116, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
