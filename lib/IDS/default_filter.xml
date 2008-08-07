@@ -523,7 +523,7 @@
     </filter>
     <filter>
         <id>49</id>
-        <rule><![CDATA[(?:\*\/from)|(?:\w"\s*(?:[-+=|@]+\s*)+[\d(])|(?:coalesce\s*\(|@@\w+\s*[^\w\s])|(?:\W!+"\w)|(?:";\s*(?:if|while|begin))|(?:"[\s\d]+=\s*\d)]]></rule>
+        <rule><![CDATA[(?:\*\/from)|(?:\+\s*\d+\s*\+\s*@)|(?:\w"\s*(?:[-+=|@]+\s*)+[\d(])|(?:coalesce\s*\(|@@\w+\s*[^\w\s])|(?:\W!+"\w)|(?:";\s*(?:if|while|begin))|(?:"[\s\d]+=\s*\d)]]></rule>
         <description>Detects chained SQL injection attempts 2/2</description>
         <tags>
             <tag>sqli</tag>
@@ -563,17 +563,17 @@
     </filter>
     <filter>
         <id>53</id>
-        <rule><![CDATA[(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>
-        <description>Detects MySQL stored procedure/function injections</description>
+        <rule><![CDATA[(?:;\s*(declare|open)\s+tablecursor)|(?:create\s+(procedure|function)\s*\w+\s*\(\s*\)\s*-)|(?:declare[^\w]+[@#]\s*\w+)|(exec\s*\(\s*@)]]></rule>
+        <description>Detects MySQL and PostgreSQL stored procedure/function injections</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
         </tags>
-        <impact>5</impact>
+        <impact>7</impact>
     </filter>
     <filter>
         <id>54</id>
-        <rule><![CDATA[(?:select\s*pg_sleep)|(?:waitfor\s*delay\s?"+\s?\d)|(?:;\s*shutdown\s*(?:--|#|\/\*|{))]]></rule>
+        <rule><![CDATA[(?:select\s*pg_sleep)|(?:waitfor\s*delay\s?"+\s?\d)|(?:;\s*shutdown\s*(?:;|--|#|\/\*|{))]]></rule>
         <description>Detects Postgres pg_sleep injection, waitfor delay attacks and database shutdown attempts</description>
         <tags>
             <tag>sqli</tag>

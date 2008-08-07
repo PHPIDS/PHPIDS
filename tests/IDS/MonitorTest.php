@@ -273,7 +273,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(953, $result->getImpact());
+        $this->assertEquals(960, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -557,7 +557,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(491, $result->getImpact());
+        $this->assertEquals(493, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -720,7 +720,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(781, $result->getImpact());
+        $this->assertEquals(795, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -799,6 +799,34 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         );
         $result = $test->run();
         $this->assertEquals(815, $result->getImpact());
+    }
+
+    public function testSQLIList6() {
+
+        $exploits = array();
+
+        $exploits[] = "asd'; shutdown; ";
+        $exploits[] = "asd'; select null,password,null from users; ";
+        $exploits[] = "aa aa'; DECLARE tablecursor CURSOR FOR select a.name as c,b.name as d,(null)from sysobjects a,syscolumns b where a.id=b.id and a.xtype = ( 'u' ) and current_user = current_user OPEN tablecursor ";
+        $exploits[] = "aa aa'; DECLARE tablecursor CURSOR FOR select a.name as c,b.name as d,(null)from sysobjects a,syscolumns b
+                        where a.id=b.id and a.xtype = ( 'u' ) and current_user = current_user
+                        OPEN tablecursor FETCH NEXT FROM tablecursor INTO @a,@b WHILE(@a != null)
+                        @query  = null+null+null+null+ ' UPDATE '+null+@a+null+ ' SET id=null,@b = @payload'
+                        BEGIN EXEC sp_executesql @query
+                        FETCH NEXT FROM tablecursor INTO @a,@b END
+                        CLOSE tablecursor DEALLOCATE tablecursor;
+                        and some text, to get pass the centrifuge; and some more text.";
+        $exploits[] = "@query  = null+null+null+ ' UPDATE '+null+@a+ ' SET[  '+null+@b+ ' ]  = @payload'";
+        $exploits[] = "asd' union distinct(select null,password,null from users)--a ";
+
+        $this->_testForPlainEvent($exploits);
+
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertEquals(40, $result->getImpact());
     }
 
     public function testDTList(){

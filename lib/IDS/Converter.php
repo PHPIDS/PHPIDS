@@ -264,6 +264,8 @@ class IDS_Converter
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' .
             '(?:IN[+\s]*\([^()]+\))/ims');
         $value   = preg_replace($pattern, '=0', $value);
+        $value   = preg_replace('/null,/ims', ',0', $value);
+        $value   = preg_replace('/,null/ims', ',0', $value);
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' .
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' .
                          '(?:(?:ASCII|SOUNDEX|' .
