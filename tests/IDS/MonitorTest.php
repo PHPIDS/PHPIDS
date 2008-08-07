@@ -180,6 +180,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testAttributeBreakerList() {
 
         $exploits = array();
+        $exploits[] = '">XXX';
         $exploits[] = '" style ="';
         $exploits[] = '"src=xxx a="';
         $exploits[] = '"\' onerror = alert(1) ';
@@ -191,7 +192,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(39, $result->getImpact());
+        $this->assertEquals(43, $result->getImpact());
     }
 
     public function testCommentList() {
@@ -406,6 +407,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         ";
         $exploits[] = 'y=<a>alert</a>;content[y](123)';
         $exploits[] = "s1=<s>evalalerta(1)a</s>; s2=<s></s>+''; s3=s1+s2; e1=/s1/?s3[0]:s1; e2=/s1/?s3[1]:s1; e3=/s1/?s3[2]:s1; e4=/s1/?s3[3]:s1; e=/s1/?.0[e1+e2+e3+e4]:s1; a1=/s1/?s3[4]:s1; a2=/s1/?s3[5]:s1; a3=/s1/?s3[6]:s1; a4=/s1/?s3[7]:s1; a5=/s1/?s3[8]:s1; a6=/s1/?s3[10]:s1; a7=/s1/?s3[11]:s1; a8=/s1/?s3[12]:s1; a=a1+a2+a3+a4+a5+a6+a7+a8;e(a)";
+        $exploits[] = "location=<text>javascr{new Array}ipt:aler{new Array}t(1)</text>";
 
         $this->_testForPlainEvent($exploits);
 
@@ -414,7 +416,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(63, $result->getImpact());
+        $this->assertEquals(102, $result->getImpact());
     }
 
     public function testXSSList() {
@@ -660,7 +662,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(616, $result->getImpact());
+        $this->assertEquals(620, $result->getImpact());
     }
 
     public function testSQLIList4() {
