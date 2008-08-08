@@ -820,6 +820,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         and some text, to get pass the centrifuge; and some more text.";
         $exploits[] = "@query  = null+null+null+ ' UPDATE '+null+@a+ ' SET[  '+null+@b+ ' ]  = @payload'";
         $exploits[] = "asd' union distinct(select null,password,null from users)--a ";
+        $exploits[] = "asd' union distinct ( select null,password,(null)from user )-- a ";
 
         $this->_testForPlainEvent($exploits);
 
@@ -828,7 +829,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(40, $result->getImpact());
+        $this->assertEquals(61, $result->getImpact());
     }
 
     public function testDTList(){
