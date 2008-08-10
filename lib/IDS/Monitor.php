@@ -2,7 +2,7 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2007 PHPIDS group (http://php-ids.org)
@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -107,14 +107,24 @@ class IDS_Monitor
     /**
      * Html container
      *
-     * Using this array it is possible to define variables that legally 
-     * contain html and have to be prepared before hitting the rules to 
+     * Using this array it is possible to define variables that legally
+     * contain html and have to be prepared before hitting the rules to
      * avoid too many false alerts
      *
      * @var array
      */
     private $html = array();
-    
+
+    /**
+     * JSON container
+     *
+     * Using this array it is possible to define variables that contain
+     * JSON data - and should be treated as such
+     *
+     * @var array
+     */
+    private $json = array();
+
     /**
      * Holds HTMLPurifier object
      *
@@ -126,42 +136,50 @@ class IDS_Monitor
      * Path to HTMLPurifier source
      *
      * This path might be changed in case one wishes to make use of a
-     * different HTMLPurifier source file e.g. if already used in the 
+     * different HTMLPurifier source file e.g. if already used in the
      * application PHPIDS is protecting
      *
      * @var string
      */
     private $pathToHTMLPurifier = '';
-    
+
     /**
      * HTMLPurifier cache directory
      *
      * @var string
      */
     private $HTMLPurifierCache = '';
-    
-    
+
+    /**
+     * This property holds the tmp JSON string from the
+     * _jsonDecodeValues() callback
+     *
+     * @var string
+     */
+    private $tmpJsonString = '';
+
+
     /**
      * Constructor
      *
      * @param array  $request array to scan
      * @param object $init    instance of IDS_Init
      * @param array  $tags    list of tags to which filters should be applied
-     * 
+     *
      * @return void
      */
-    public function __construct(array $request, IDS_Init $init, array $tags = null) 
+    public function __construct(array $request, IDS_Init $init, array $tags = null)
     {
-        $version = isset($init->config['General']['min_php_version']) 
+        $version = isset($init->config['General']['min_php_version'])
             ? $init->config['General']['min_php_version'] : '5.1.6';
-            
+
         if (version_compare(PHP_VERSION, $version, '<')) {
             throw new Exception(
-                'PHP version has to be equal or higher than ' . $version . ' or 
+                'PHP version has to be equal or higher than ' . $version . ' or
                 PHP version couldn\'t be determined'
-            );          
-        }     
-    
+            );
+        }
+
 
         if (!empty($request)) {
             $this->storage = new IDS_Filter_Storage($init);
@@ -169,18 +187,24 @@ class IDS_Monitor
             $this->tags    = $tags;
 
             $this->scanKeys   = $init->config['General']['scan_keys'];
-            $this->exceptions = isset($init->config['General']['exceptions']) 
+
+            $this->exceptions = isset($init->config['General']['exceptions'])
                 ? $init->config['General']['exceptions'] : false;
-            $this->html       = isset($init->config['General']['html']) 
+
+            $this->html       = isset($init->config['General']['html'])
                 ? $init->config['General']['html'] : false;
-            if(isset($init->config['General']['HTML_Purifier_Path']) 
+
+            $this->json       = isset($init->config['General']['json'])
+                ? $init->config['General']['json'] : false;
+
+            if(isset($init->config['General']['HTML_Purifier_Path'])
                 && isset($init->config['General']['HTML_Purifier_Cache'])) {
-                $this->pathToHTMLPurifier = 
+                $this->pathToHTMLPurifier =
                     $init->config['General']['HTML_Purifier_Path'];
-                $this->HTMLPurifierCache  = 
+                $this->HTMLPurifierCache  =
                     $init->config['General']['HTML_Purifier_Cache'];
             }
-            
+
         }
 
         if (!is_writeable($init->config['General']['tmp_path'])) {
@@ -215,10 +239,10 @@ class IDS_Monitor
      *
      * @param mixed $key   the former array key
      * @param mixed $value the former array value
-     * 
+     *
      * @return void
      */
-    private function _iterate($key, $value) 
+    private function _iterate($key, $value)
     {
 
         if (!is_array($value)) {
@@ -247,54 +271,59 @@ class IDS_Monitor
      *
      * @param mixed $key   the key of the value to scan
      * @param mixed $value the value to scan
-     * 
+     *
      * @return bool|array false or array of filter(s) that matched the value
      */
-    private function _detect($key, $value) 
+    private function _detect($key, $value)
     {
 
         // to increase performance, only start detection if value
-        // isn't alphanumeric 
-        if (!(preg_match('/[^\w\s\/@,!?]+/ims', $value) 
+        // isn't alphanumeric
+        if (!(preg_match('/[^\w\s\/@,!?]+/ims', $value)
             && !empty($value) || preg_match('/Q\d{2}/', $value))) {
             return false;
         }
 
         // check if this field is part of the exceptions
-        if (is_array($this->exceptions) 
+        if (is_array($this->exceptions)
             && in_array($key, $this->exceptions, true)) {
             return false;
         }
-        
+
         // check for magic quotes and remove them if necessary
-        if (function_exists('get_magic_quotes_gpc') 
+        if (function_exists('get_magic_quotes_gpc')
             && @get_magic_quotes_gpc()) {
             $value = stripslashes($value);
         }
-        
+
         // if html monitoring is enabled for this field - then do it!
         if (is_array($this->html) && in_array($key, $this->html, true)) {
             list($key, $value) = $this->_purifyValues($key, $value);
         }
-       
+
+        // check if json monitoring is enabled for this field
+        if (is_array($this->json) && in_array($key, $this->json, true)) {
+            list($key, $value) = $this->_jsonDecodeValues($key, $value);
+        }
+
         // use the converter
         include_once 'IDS/Converter.php';
         $value = IDS_Converter::runAll($value);
         $value = IDS_Converter::runCentrifuge($value, $this);
-        
+
         // scan keys if activated via config
-        $key = $this->scanKeys ? IDS_Converter::runAll($key) 
+        $key = $this->scanKeys ? IDS_Converter::runAll($key)
             : $key;
-        $key = $this->scanKeys ? IDS_Converter::runCentrifuge($key, $this) 
+        $key = $this->scanKeys ? IDS_Converter::runCentrifuge($key, $this)
             : $key;
-        
+
         $filters   = array();
         $filterSet = $this->storage->getFilterSet();
         foreach ($filterSet as $filter) {
-        
+
             /*
              * in case we have a tag array specified the IDS will only
-             * use those filters that are meant to detect any of the 
+             * use those filters that are meant to detect any of the
              * defined tags
              */
             if (is_array($this->tags)) {
@@ -312,8 +341,8 @@ class IDS_Monitor
 
         return empty($filters) ? false : $filters;
     }
-    
-    
+
+
     /**
      * Purifies given key and value variables using HTMLPurifier
      *
@@ -321,21 +350,21 @@ class IDS_Monitor
      * might be allowed like e.g. WYSIWYG post bodies. It will dectect malicious
      * code fragments and leaves harmless parts untouched.
      *
-     * @param   mixed   $key
-     * @param   mixed   $value
-     * @since   0.5
-     * 
-     * @return  array
+     * @param  mixed $key
+     * @param  mixed $value
+     * @since  0.5
+     *
+     * @return array
      */
     private function _purifyValues($key, $value) {
-    
+
         include_once $this->pathToHTMLPurifier;
-        
+
         if (!is_writeable($this->HTMLPurifierCache)) {
             throw new Exception(
                 $this->HTMLPurifierCache . ' must be writeable');
         }
-        
+
         if (class_exists('HTMLPurifier')) {
             $config = HTMLPurifier_Config::createDefault();
             $config->set('Attr', 'EnableID', true);
@@ -343,18 +372,18 @@ class IDS_Monitor
             $this->htmlpurifier = new HTMLPurifier($config);
         } else {
             throw new Exception(
-                'HTMLPurifier class could not be found - ' . 
+                'HTMLPurifier class could not be found - ' .
                 'make sure the purifier files are valid and' .
                 ' the path is correct'
             );
-        }                   
-        
+        }
+
         $purified_value = $this->htmlpurifier->purify($value);
         $purified_key   = $this->htmlpurifier->purify($key);
-        
+
         $redux_value = strip_tags($value);
         $redux_key   = strip_tags($key);
-        
+
         if ($value != $purified_value || $redux_value) {
             $value = $this->_diff($value, $purified_value, $redux_value);
         } else {
@@ -365,12 +394,12 @@ class IDS_Monitor
         } else {
             $key = NULL;
         }
-        
+
         return array($key, $value);
     }
 
     /**
-     * This method calculates the difference between the original 
+     * This method calculates the difference between the original
      * and the purified markup strings.
      *
      * @param string $original the original markup
@@ -383,21 +412,21 @@ class IDS_Monitor
     private function _diff($original, $purified, $redux)
     {
         /*
-         * deal with over-sensitive alt-attribute addition of the purifier 
+         * deal with over-sensitive alt-attribute addition of the purifier
          * and other common html formatting problems
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        
+
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
         $original = preg_replace('/\s+alt=?/m', null, $original);
-        
+
         // check which string is longer
         $length = (strlen($original) - strlen($purified));
         /*
-         * Calculate the difference between the original html input 
+         * Calculate the difference between the original html input
          * and the purified string.
-         */     
+         */
         if ($length > 0) {
             $array_2 = str_split($original);
             $array_1 = str_split($purified);
@@ -412,23 +441,67 @@ class IDS_Monitor
                 $array_1   = array_reverse($array_1);
             }
         }
-        
+
         // return the diff - ready to hit the converter and the rules
         $diff = trim(join('', array_reverse(
             (array_slice($array_1, 0, $length)))));
-        
+
         // clean up spaces between tag delimiters
-        $diff = preg_replace('/>\s*</m', '><', $diff); 
-        
+        $diff = preg_replace('/>\s*</m', '><', $diff);
+
         // correct over-sensitively stripped bad html elements
-        $diff = preg_replace('/[^<](iframe|script|embed|object' . 
+        $diff = preg_replace('/[^<](iframe|script|embed|object' .
             '|applet|base|img|style)/m', '<$1', $diff);
-        
+
         if ($original == $purified && !$redux) {
             return null;
         }
-        
+
         return $diff . $redux;
+    }
+
+    /**
+     * This method prepares incoming JSON data for the PHPIDS detection
+     * process. It utilizes _jsonConcatContents() as callback and returns a
+     * string version of the JSON data structures.
+     *
+     * @param  mixed $key
+     * @param  mixed $value
+     * @since  0.5.3
+     *
+     * @return array
+     */
+    private function _jsonDecodeValues($key, $value) {
+
+        $tmp_key   = json_decode($key);
+        $tmp_value = json_decode($value);
+
+        if($tmp_value && is_array($tmp_value) || is_object($tmp_value)) {
+            array_walk_recursive($tmp_value, array($this, '_jsonConcatContents'));
+            $value = $this->tmpJsonString;
+        }
+
+        if($tmp_key && is_array($tmp_key) || is_object($tmp_key)) {
+            array_walk_recursive($tmp_key, array($this, '_jsonConcatContents'));
+            $key = $this->tmpJsonString;
+        }
+
+        return array($key, $value);
+    }
+
+    /**
+     * This is the callback used in _jsonDecodeValues(). The method
+     * concatenates key and value and stores them in $this->tmpJsonString.
+     *
+     * @param  mixed $key
+     * @param  mixed $value
+     * @since  0.5.3
+     *
+     * @return void
+     */
+    private function _jsonConcatContents($key, $value) {
+
+        $this->tmpJsonString .=  $key . " " . $value . "\n";
     }
 
     /**
@@ -437,10 +510,10 @@ class IDS_Monitor
      * @param mixed  $key    the key to optionally scan
      * @param mixed  $value  the value to scan
      * @param object $filter the filter object
-     * 
+     *
      * @return boolean
      */
-    private function _match($key, $value, $filter) 
+    private function _match($key, $value, $filter)
     {
         if ($this->scanKeys) {
             if ($filter->match($key)) {
@@ -459,10 +532,10 @@ class IDS_Monitor
      * Sets exception array
      *
      * @param mixed $exceptions the thrown exceptions
-     * 
+     *
      * @return void
      */
-    public function setExceptions($exceptions) 
+    public function setExceptions($exceptions)
     {
         if (!is_array($exceptions)) {
             $exceptions = array($exceptions);
@@ -476,7 +549,7 @@ class IDS_Monitor
      *
      * @return array
      */
-    public function getExceptions() 
+    public function getExceptions()
     {
         return $this->exceptions;
     }
@@ -484,12 +557,12 @@ class IDS_Monitor
     /**
      * Sets html array
      *
-     * @param mixed $html the fields not to monitor
+     * @param mixed $html the fields containing html
      * @since 0.5
      *
      * @return void
      */
-    public function setHtml($html) 
+    public function setHtml($html)
     {
         if (!is_array($html)) {
             $html = array($html);
@@ -497,7 +570,7 @@ class IDS_Monitor
 
         $this->html = $html;
     }
-    
+
     /**
      * Adds a value to the html array
      *
@@ -505,39 +578,80 @@ class IDS_Monitor
      *
      * @return void
      */
-    public function addHtml($value) 
+    public function addHtml($value)
     {
         $this->html[] = $value;
     }
 
     /**
-     * Returns exception array
+     * Returns html array
      *
      * @since 0.5
      *
      * @return array the fields that contain allowed html
      */
-    public function getHtml() 
+    public function getHtml()
     {
         return $this->html;
-    }   
-    
+    }
+
     /**
-     * Returns report object providing various functions to work with 
-     * detected results. Also the centrifuge data is being set as property 
+     * Sets json array
+     *
+     * @param mixed $json the fields containing json
+     * @since 0.5.3
+     *
+     * @return void
+     */
+    public function setJson($json)
+    {
+        if (!is_array($json)) {
+            $json = array($json);
+        }
+
+        $this->json = $json;
+    }
+
+    /**
+     * Adds a value to the json array
+     *
+     * @since 0.5.3
+     *
+     * @return void
+     */
+    public function addJson($value)
+    {
+        $this->json[] = $value;
+    }
+
+    /**
+     * Returns json array
+     *
+     * @since 0.5.3
+     *
+     * @return array the fields that contain json
+     */
+    public function getJson()
+    {
+        return $this->json;
+    }
+
+    /**
+     * Returns report object providing various functions to work with
+     * detected results. Also the centrifuge data is being set as property
      * of the report object.
      *
      * @return object IDS_Report
      */
-    public function getReport() 
+    public function getReport()
     {
         if (isset($this->centrifuge) && $this->centrifuge) {
             $this->report->setCentrifuge($this->centrifuge);
         }
-        
+
         return $this->report;
     }
-    
+
 }
 
 /*

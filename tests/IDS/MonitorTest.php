@@ -1165,6 +1165,19 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $result->getImpact());
     }
 
+    public function testJSONScanning() {
+
+        $exploits = array();
+        $exploits['json_1'] = '{"a":"b","c":["><script>alert(1);</script>", 111, "eval(name)"]}';
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $test->setJson(array_keys($exploits));
+        $result = $test->run();
+        $this->assertEquals(32, $result->getImpact());
+    }
+
     public function testForFalseAlerts() {
 
         $exploits = array();
