@@ -292,7 +292,7 @@ class IDS_Monitor
 
         // check for magic quotes and remove them if necessary
         if (function_exists('get_magic_quotes_gpc')
-            && @get_magic_quotes_gpc()) {
+            && get_magic_quotes_gpc()) {
             $value = stripslashes($value);
         }
 
