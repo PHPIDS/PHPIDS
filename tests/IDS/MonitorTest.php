@@ -845,6 +845,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test9 = '/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/boot.ini';
         $test10 = '&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt;';
         $test11 = '../../../../../../../../conf/server.xml';
+        $test12 = '/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd';
 
         if (function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
@@ -858,6 +859,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $test9 = addslashes($test9);
             $test10 = addslashes($test10);
             $test11 = addslashes($test11);
+            $test12 = addslashes($test12);
         }
 
         $exploits = array();
@@ -872,6 +874,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = $test9;
         $exploits[] = $test10;
         $exploits[] = $test11;
+        $exploits[] = $test12;
 
         $this->_testForPlainEvent($exploits);
 
@@ -880,7 +883,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(119, $result->getImpact());
+        $this->assertEquals(132, $result->getImpact());
     }
 
     public function testURIList(){
