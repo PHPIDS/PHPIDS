@@ -523,10 +523,10 @@ class IDS_Converter
     	$value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
 
     	//Xajax error reportings
-    	$value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/', '$1', $value);
+    	$value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
         //strip emoticons
-        $value = preg_replace('/[:;]-[()\/PD]/', null, $value);
+        $value = preg_replace('/[:;]-[()\/PD]/m', null, $value);
 
     	return $value;
     }
