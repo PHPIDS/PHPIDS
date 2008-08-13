@@ -322,7 +322,7 @@ class IDS_Report implements Countable, IteratorAggregate
             }
         }
 
-        return isset($output) ? $output : false;
+        return isset($output) ? $output : '';
     }
 }
 

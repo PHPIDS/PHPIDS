@@ -100,7 +100,7 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
     public function testToStringEmpty()
     {
         $this->report = new IDS_Report();
-        $this->assertFalse($this->report->__toString());
+        $this->assertEquals('', $this->report->__toString());
     }
 
     public function testGetEvent() {
