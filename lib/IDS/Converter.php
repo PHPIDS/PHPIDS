@@ -499,7 +499,7 @@ class IDS_Converter
 
         //convert JS special numbers
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)' .
-            '|(?:NaN|Infinity)/ims', 1, $converted);
+            '|(?:NaN|Infinity)\W/ims', 1, $converted);
 
         if ($compare != $converted) {
             $value .= "\n" . $converted;
@@ -553,12 +553,13 @@ class IDS_Converter
         if (strlen($value) > 25 && !$unserialized) {
             // Check for the attack char ratio
             $tmp_value = $value;
-            $tmp_value = preg_replace('/([*.!?+-])\1{1,}/', '$1', $tmp_value);
+            $tmp_value = preg_replace('/([*.!?+-])\1{1,}/m', '$1', $tmp_value);
+            $tmp_value = preg_replace('/"[\p{L}\d\s]+"/m', null, $tmp_value);
 
-            $stripped_length = strlen(preg_replace('/[\w\s\p{L}.:,%\/><]*/ms',
+            $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><]+/m',
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/([\w\s]{4,})+/', 'aaa',
-                preg_replace('/\s{2,}/ms', null, $tmp_value)));
+            $overall_length  = strlen(preg_replace('/([\d\s\p{L}]{4,})+/m', 'aaa',
+                preg_replace('/\s{2,}/m', null, $tmp_value)));
 
             if ($stripped_length != 0
                 && $overall_length/$stripped_length <= $threshold) {

@@ -394,7 +394,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(648, $result->getImpact());
+        $this->assertEquals(655, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -474,7 +474,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(436, $result->getImpact());
+        $this->assertEquals(450, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -510,7 +510,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(439, $result->getImpact());
+        $this->assertEquals(446, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -662,7 +662,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(608, $result->getImpact());
+        $this->assertEquals(594, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -800,7 +800,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(815, $result->getImpact());
+        $this->assertEquals(808, $result->getImpact());
     }
 
     public function testSQLIList6() {
@@ -965,7 +965,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(495, $result->getImpact());
+        $this->assertEquals(488, $result->getImpact());
     }
 
     public function testUTF7List() {
@@ -1225,7 +1225,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '<![CDATA[:??]]>';
         $exploits[] = 'website_link => /app/search?op=search;keywords=peter%20testcase;';
         $exploits[] = '<xjxobj><e><k>insert</k><v>insert</v></e><e><k>errorh</k><v>error</v></e><e><k>hostname</k><v>ab</v></e><e><k>ip</k><v>10.2.2.22</v></e><e><k>asset</k><v>2</v></e><e><k>thresholdc</k><v>30</v></e><e><k>thresholda</k><v>30</v></e><e><k>rrd_profile</k><v></v></e><e><k>nat</k><v></v></e><e><k>nsens</k><v>1</v></e><e><k>os</k><v>Unknown</v></e><e><k>mac</k><v></v></e><e><k>macvendor</k><v></v></e><e><k>descr</k><v><![CDATA[&]]></v></e></xjxobj>';
-
+        $exploits[] = '"hi" said the mouse to the cat and \'showed off\' her options';
+        
         $test = new IDS_Monitor(
             $exploits,
             $this->init
