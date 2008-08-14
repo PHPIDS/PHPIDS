@@ -146,7 +146,7 @@
     </filter>
     <filter>
         <id>15</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:create(?:element|attribute|textnode)|[a-z]+Events?|getelement\w+|appendchild|createrange|createcontextualfragment|removenode|parentnode|decodeuricomponent|\wettimeout|useragent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:create(?:element|attribute|textnode)|[a-z]+Events?|getelement\w+|appendchild|createrange|createcontextualfragment|removenode|parentnode|decodeuricomponent|\wettimeout|useragent)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript DOM/miscellaneous properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -158,7 +158,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -170,7 +170,7 @@
     </filter>
     <filter>
         <id>17</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\/\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:hash|name|href|source|pathname|close|constructor|port|protocol|replace|back|forward|document|window|self|parent|frames|_?content|date|cookie|innerhtml|innertext|outerhtml|print|moveby|resizeto)(?(1)[^\w%"]|(?:\s*[^\/\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -182,7 +182,7 @@
     </filter>
     <filter>
         <id>18</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:join|pop|push|reverse|shift|sp?lice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:join|pop|push|reverse|shift|sp?lice|sort|unshift)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript array properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -194,7 +194,7 @@
     </filter>
     <filter>
         <id>19</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeuri\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:atob|btoa|charat|charcodeat|charset|concat|crypto|frames|fromcharcode|indexof|lastindexof|match|navigator|replace|regexp|slice|split|status|substr|substring|escape|\w+codeuri\w*)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript string properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -206,7 +206,7 @@
     </filter>
     <filter>
         <id>20</id>
-        <rule><![CDATA[([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|with|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|settimeout|setinterval|void)(?(1)[^\w%"]|(?:\s*[^\s\w%",.+-]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -218,7 +218,7 @@
     </filter>
     <filter>
         <id>21</id>
-        <rule><![CDATA[(?:,\s*(?:alert|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
+        <rule><![CDATA[(?:,\s*(?:alert|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.@+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -480,7 +480,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:union\s*(?:all|distinct)?\s*[([]\s*select)|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;\/)]+\s*[(@]*\s*\w+\W+\w)|(?:select\s[()\s\w\.,-]+from)]]></rule>
+        <rule><![CDATA[(?:union\s*(?:all|distinct)?\s*[([]\s*select)|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;\/)(]+\s*[(@]*\s*\w+\W+\w)|(?:select\s[()\s\w\.,-]+from)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -513,7 +513,7 @@
     </filter>
     <filter>
         <id>48</id>
-        <rule><![CDATA[(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)[\s\w]+[!=+]+[\s\d]*["=(])]]></rule>
+        <rule><![CDATA[(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)\s+\w+[!=+]+[\s\d]*["=(])]]></rule>
         <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>

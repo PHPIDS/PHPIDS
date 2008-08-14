@@ -530,7 +530,7 @@ class IDS_Converter
 
     	return $value;
     }
-
+    
     /**
      * This method is the centrifuge prototype
      *
@@ -553,9 +553,9 @@ class IDS_Converter
         if (strlen($value) > 25 && !$unserialized) {
             // Check for the attack char ratio
             $tmp_value = $value;
-            $tmp_value = preg_replace('/([.!?+-])\1{1,}/', '$1', $tmp_value);
+            $tmp_value = preg_replace('/([*.!?+-])\1{1,}/', '$1', $tmp_value);
 
-            $stripped_length = strlen(preg_replace('/[\w\s\p{L}.,\/><]*/ms',
+            $stripped_length = strlen(preg_replace('/[\w\s\p{L}.:,%\/><]*/ms',
                 null, $tmp_value));
             $overall_length  = strlen(preg_replace('/([\w\s]{4,})+/', 'aaa',
                 preg_replace('/\s{2,}/ms', null, $tmp_value)));

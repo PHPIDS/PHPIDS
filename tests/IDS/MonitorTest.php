@@ -394,7 +394,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(655, $result->getImpact());
+        $this->assertEquals(648, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -474,7 +474,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(443, $result->getImpact());
+        $this->assertEquals(436, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -510,7 +510,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(446, $result->getImpact());
+        $this->assertEquals(439, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -559,7 +559,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(493, $result->getImpact());
+        $this->assertEquals(466, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -618,7 +618,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(590, $result->getImpact());
+        $this->assertEquals(572, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -662,7 +662,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(620, $result->getImpact());
+        $this->assertEquals(608, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -722,7 +722,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(795, $result->getImpact());
+        $this->assertEquals(771, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -883,7 +883,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(132, $result->getImpact());
+        $this->assertEquals(125, $result->getImpact());
     }
 
     public function testURIList(){
