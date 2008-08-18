@@ -559,7 +559,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(466, $result->getImpact());
+        $this->assertEquals(463, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -618,7 +618,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(572, $result->getImpact());
+        $this->assertEquals(567, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -662,7 +662,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(594, $result->getImpact());
+        $this->assertEquals(565, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -722,7 +722,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(771, $result->getImpact());
+        $this->assertEquals(748, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -800,7 +800,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(808, $result->getImpact());
+        $this->assertEquals(810, $result->getImpact());
     }
 
     public function testSQLIList6() {

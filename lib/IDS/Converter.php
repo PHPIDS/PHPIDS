@@ -275,7 +275,7 @@ class IDS_Converter
                          '(?:XOR|\WDIV\W|\WNOT\W|<>|RLIKE(?:\s+BINARY)?)|' .
                          '(?:REGEXP\s+BINARY)|' .
                          '(?:SOUNDS\s+LIKE)/ims');
-        $value   = preg_replace($pattern, '=', $value);
+        $value   = preg_replace($pattern, '!', $value);
         $value   = preg_replace('/"\s+\d/', '"', $value);
         $value   = str_replace('~', '0', $value);
 
