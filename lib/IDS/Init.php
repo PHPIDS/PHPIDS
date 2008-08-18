@@ -139,7 +139,7 @@ class IDS_Init
     /**
      * Returns path to configuration file
      *
-     * @return string
+     * @return string the config path
      */
     public function getConfigPath() 
     {
@@ -147,8 +147,11 @@ class IDS_Init
     }
 
     /**
-     * Enter description here...
+     * This method checks if a base path is given and usage is set to true. 
+     * If all that tests succeed the base path will be returned as a string - 
+     * else null will be returned.
      *
+     * @return string the base path or null
      */
     public function getBasePath() {
     	
@@ -183,8 +186,8 @@ class IDS_Init
      * an array in both, the values will be appended. If it is a scalar in both,
      * the value will be replaced.
      *
-     * @param array $current The legacy hash
-     * @param array $successor The hash which values count more when in doubt
+     * @param  array $current The legacy hash
+     * @param  array $successor The hash which values count more when in doubt
      * @return array Merged hash
      */
     protected function _mergeConfig($current, $successor)
