@@ -93,14 +93,13 @@ class IDS_Filter_Storage
                 $init->config['Caching']['caching'] : 'none';
                 
             $type         = $init->config['General']['filter_type'];
-            $this->source = $init->config['General']['filter_path'];
+            $this->source = $init->getBasePath() 
+                . $init->config['General']['filter_path'];
 
             if ($caching && $caching != 'none') {
                 $this->cacheSettings = $init->config['Caching'];
                 include_once 'IDS/Caching/Factory.php';
-                $this->cache = IDS_Caching::factory($this->cacheSettings,
-                                                    'storage');
-
+                $this->cache = IDS_Caching::factory($init, 'storage');
             }
 
             switch ($type) {

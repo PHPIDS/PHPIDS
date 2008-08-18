@@ -147,6 +147,19 @@ class IDS_Init
     }
 
     /**
+     * Enter description here...
+     *
+     */
+    public function getBasePath() {
+    	
+    	return ((isset($this->config['General']['base_path']) 
+            && $this->config['General']['base_path'] 
+            && isset($this->config['General']['use_base_path']) 
+            && $this->config['General']['use_base_path']) 
+                ? $this->config['General']['base_path'] : null);
+    }
+    
+    /**
      * Merges new settings into the exsiting ones or overwrites them
      *
      * @param array   $config    the config array

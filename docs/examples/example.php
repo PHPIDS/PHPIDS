@@ -53,8 +53,9 @@ try {
      *
      * or you can access the config directly like here:
      */
-    $init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
-    $init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
+    
+    $init->config['General']['base_path'] = dirname(__FILE__) . '/../../lib/IDS/';
+    $init->config['General']['use_base_path'] = true;
     $init->config['Caching']['caching'] = 'none';
 
     // 2. Initiate the PHPIDS and fetch the results

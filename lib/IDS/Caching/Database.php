@@ -101,32 +101,32 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      *
      * Connects to database.
      *
-     * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param string $type caching type
+     * @param array  $init the IDS_Init object
      * 
      * @return void
      */
-    public function __construct($type, $config) 
+    public function __construct($type, $init) 
     {
     
         $this->type   = $type;
-        $this->config = $config;
+        $this->config = $init->config['Caching'];
         $this->handle = $this->_connect();
     }
 
     /**
      * Returns an instance of this class
      *
-     * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param string $type caching type
+     * @param array  $init the IDS_Init object
      * 
      * @return object $this
      */
-    public static function getInstance($type, $config)
+    public static function getInstance($type, $init)
     {
 
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Database($type, $config);
+            self::$cachingInstance = new IDS_Caching_Database($type, $init);
         }
         return self::$cachingInstance;
     }

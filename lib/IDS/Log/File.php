@@ -106,11 +106,11 @@ class IDS_Log_File implements IDS_Log_Interface
     public static function getInstance($config) 
     {
         if ($config instanceof IDS_Init) {
-            $logfile = $config->config['Logging']['path'];
+            $logfile = $config->getBasePath() . $config->config['Logging']['path'];
         } elseif (is_string($config)) {
             $logfile = $config;
         }
-
+        
         if (!isset(self::$instances[$logfile])) {
             self::$instances[$logfile] = new IDS_Log_File($logfile);
         }

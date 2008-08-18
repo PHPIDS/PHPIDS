@@ -72,30 +72,30 @@ class IDS_Caching_Session implements IDS_Caching_Interface
     /**
      * Constructor
      *
-     * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param string $type caching type
+     * @param array  $init the IDS_Init object
      * 
      * @return void
      */
-    public function __construct($type, $config) 
+    public function __construct($type, $init) 
     {
         $this->type   = $type;
-        $this->config = $config;
+        $this->config = $init->config['Caching'];
     }
 
     /**
      * Returns an instance of this class
      *
      * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param array  $init the IDS_Init object
      * 
      * @return object $this
      */
-    public static function getInstance($type, $config) 
+    public static function getInstance($type, $init) 
     {
 
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Session($type, $config);
+            self::$cachingInstance = new IDS_Caching_Session($type, $init);
         }
 
         return self::$cachingInstance;

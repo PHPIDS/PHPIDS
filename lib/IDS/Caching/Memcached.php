@@ -87,17 +87,18 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     /**
      * Constructor
      *
-     * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param string $type caching type
+     * @param array  $init the IDS_Init object
      * 
      * @throws Exception if necessary files aren't writeable
      * @return void
      */
-    public function __construct($type, $config) 
+    public function __construct($type, $init) 
     {
 
         $this->type   = $type;
-        $this->config = $config;
+        $this->config = $init->config['Caching'];
+        $this->path   = $init->getBasePath() . $this->config['path'];        
         
         $this->_connect();
 
@@ -110,16 +111,16 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     /**
      * Returns an instance of this class
      *
-     * @param string $type   caching type
-     * @param array  $config caching configuration
+     * @param string $type caching type
+     * @param array  $init the IDS_Init object
      * 
      * @return object $this
      */
-    public static function getInstance($type, $config) 
+    public static function getInstance($type, $init) 
     {
 
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Memcached($type, $config);
+            self::$cachingInstance = new IDS_Caching_Memcached($type, $init);
         }
 
         return self::$cachingInstance;
@@ -190,6 +191,14 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
             $this->memcache->pconnect($this->config['host'], 
                 $this->config['port']);
             $this->path = $this->config['tmp_path'];
+            
+            if(isset($init->config['General']['base_path']) 
+                && $init->config['General']['base_path'] 
+                && isset($init->config['General']['use_base_path']) 
+                && $init->config['General']['use_base_path']) {
+                $this->source = $init->config['General']['base_path'] . $this->path;
+            }            
+            
         } else {
             throw new Exception('Insufficient connection parameters');
         }

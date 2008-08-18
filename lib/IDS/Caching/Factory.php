@@ -50,15 +50,16 @@ class IDS_Caching
     /**
      * Factory method
      *
-     * @param array  $config the config array
-     * @param string $type   the caching type
+     * @param array  $init the IDS_Init object
+     * @param string $type the caching type
      * 
      * @return object the caching facility
      */
-    public static function factory($config, $type) 
+    public static function factory($init, $type) 
     {
-        $object  = false;
-        $wrapper = ucfirst($config['caching']);
+        
+    	$object  = false;
+        $wrapper = ucfirst($init->config['Caching']['caching']);
         $class   = 'IDS_Caching_' . escapeshellcmd($wrapper);
         $path    = dirname(__FILE__) . DIRECTORY_SEPARATOR . 
             escapeshellcmd($wrapper) . '.php';
@@ -68,7 +69,7 @@ class IDS_Caching
 
             if (class_exists($class)) {
                 $object = call_user_func(array($class, 'getInstance'), 
-                    $type, $config);
+                    $type, $init);
             }
         }
 
