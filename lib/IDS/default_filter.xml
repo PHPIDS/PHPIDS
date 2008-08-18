@@ -657,7 +657,7 @@
     </filter>   
     <filter>
         <id>62</id>
-        <rule><![CDATA[(?:function[^(]*\([^)]*\))|(?:(?:delete|void|throw|.*in\s+|instanceof|new|typeof)\s*\w+\s*[([])|([)\]]\s*\.\s*\w+\s*=)]]></rule>
+        <rule><![CDATA[(?:function[^(]*\([^)]*\))|(?:(?:delete|void|throw|instanceof|new|typeof)\s*\w+\s*[([])|([)\]]\s*\.\s*\w+\s*=)]]></rule>
         <description>Detects common function declarations and special JS operators</description>
         <tags>
             <tag>id</tag>
