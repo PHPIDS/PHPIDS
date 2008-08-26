@@ -81,7 +81,7 @@
     </filter>
     <filter>
         <id>9</id>
-        <rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(?:\\\d{2,3})|(?:\W?=\W?\s*0x\w+)]]></rule>
+        <rule><![CDATA[(?:\\u00[a-f0-9]{2})|(?:\\x0*[a-f0-9]{2})|(?:\\\d{2,3})]]></rule>
         <description>Detects the IE octal, hex and unicode entities</description>
         <tags>
             <tag>xss</tag>
@@ -414,7 +414,7 @@
     </filter>   
     <filter>
         <id>39</id>
-        <rule><![CDATA[(?:\\x[01FE]\w)|(?:%[01FE]\w)|(?:&#[01FE]\w)|(?:\\[01FE][0-9a-f])|(?:&#x[01FE]\w)|(?:0x[01FE])\w]]></rule>
+        <rule><![CDATA[(?:\\x[01FE]\w)|(?:%[01FE]\w)|(?:&#[01FE]\w)|(?:\\[01FE][0-9a-f])|(?:&#x[01FE]\w)]]></rule>
         <description>Detects nullbytes and HTTP response splitting</description>
         <tags>
             <tag>id</tag>
@@ -502,7 +502,7 @@
     </filter> 
     <filter>
         <id>47</id>
-        <rule><![CDATA[(?:^\s*[;>"]\s*(?:union|select|create|rename|truncate|load|alter|delete|update|insert|desc))|(?:(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s+(?:concat|char|load_file|0x)\s?\(?)|(?:end\s*\);)|("\s+regexp\W)]]></rule>
+        <rule><![CDATA[(?:^\s*[;>"]\s*(?:union|select|create|rename|truncate|load|alter|delete|update|insert|desc))|(?:(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s+(?:concat|char|load_file)\s?\(?)|(?:end\s*\);)|("\s+regexp\W)]]></rule>
         <description>Detects concatenated basic SQL injection and SQLLFI attempts</description>
         <tags>
             <tag>sqli</tag>

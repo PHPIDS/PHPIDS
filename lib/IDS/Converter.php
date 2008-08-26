@@ -250,6 +250,31 @@ class IDS_Converter
 
         return $value;
     }
+    
+    /**
+     * Converts SQLHEX to plain text
+     *
+     * @param string $value the value to convert
+     *
+     * @static
+     * @return string
+     */
+    public static function convertFromSQLHex($value)
+    {
+        $matches = array();
+        if(preg_match_all('/(?:0x[a-f\d]{2,}[a-f\d\s]*)+/im', $value, $matches)) {
+            foreach($matches[0] as $match) {
+                $converted = '';
+                foreach(str_split($match, 2) as $hex_index) {
+                    if(preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
+                      $converted .= chr(hexdec($hex_index));
+                    }
+                }
+                $value = str_replace($match, $converted, $value);
+            }
+        }
+        return $value;
+    }
 
     /**
      * Converts basic SQL keywords and obfuscations
@@ -519,11 +544,11 @@ class IDS_Converter
      */
     public static function convertFromProprietaryEncodings($value) {
 
-    	//eBay custom QEncoding
-    	$value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
+        //eBay custom QEncoding
+        $value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
 
-    	//Xajax error reportings
-    	$value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
+        //Xajax error reportings
+        $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
         //strip emoticons
         $value = preg_replace(
@@ -532,7 +557,7 @@ class IDS_Converter
             $value
         );
 
-    	return $value;
+        return $value;
     }
     
     /**
@@ -549,9 +574,9 @@ class IDS_Converter
         $threshold = 3.5;
 
         try {
-        	$unserialized = @unserialize($value);
+            $unserialized = @unserialize($value);
         } catch (Exception $exception) {
-        	$unserialized = false;
+            $unserialized = false;
         }
 
         if (strlen($value) > 25 && !$unserialized) {
