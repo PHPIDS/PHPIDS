@@ -903,7 +903,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(127, $result->getImpact());
+        $this->assertEquals(122, $result->getImpact());
     }
 
     public function testRFEList() {
