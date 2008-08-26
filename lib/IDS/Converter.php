@@ -526,7 +526,7 @@ class IDS_Converter
     	$value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
         //strip emoticons
-        $value = preg_replace('/[:;]-[()\/PD]/m', null, $value);
+        $value = preg_replace('/[:;]-[()\/PD]+/m', null, $value);
 
     	return $value;
     }
