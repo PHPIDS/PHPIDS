@@ -200,7 +200,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits[] = '<![test';
         $exploits[] = 'test/**/blafasel';
-        $exploits[] = 'test#';
+        $exploits[] = 'OR 1#';
         $exploits[] = '<!-- test -->';
         $this->_testForPlainEvent($exploits);
 
