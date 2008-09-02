@@ -368,7 +368,7 @@
     </filter>
     <filter>
         <id>35</id>
-        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:#|--|{)$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
+        <rule><![CDATA[(?:\<!-|-->)|(?:\/\*|\*\/)|(?:(?:[\W\d]#|--|{)$)|(?:\/{3,}.*$)|(?:<!\[)|(?:\]!>)]]></rule>
         <description>Detects common comment types</description>
         <tags>
             <tag>xss</tag>

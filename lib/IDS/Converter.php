@@ -250,7 +250,7 @@ class IDS_Converter
 
         return $value;
     }
-    
+
     /**
      * Converts SQLHEX to plain text
      *
@@ -552,14 +552,14 @@ class IDS_Converter
 
         //strip emoticons
         $value = preg_replace(
-            '/(?:[:;]-[()\/PD]+)|(?::[()PD]+)|-\.-|\^\^/m', 
-            null, 
+            '/(?:[:;]-[()\/PD]+)|(?:\s;[()PD]+)|(?::[()PD]+)|-\.-|\^\^/m',
+            null,
             $value
         );
 
         return $value;
     }
-    
+
     /**
      * This method is the centrifuge prototype
      *
