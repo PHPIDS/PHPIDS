@@ -550,6 +550,9 @@ class IDS_Converter
         //Xajax error reportings
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
+        //strip quotes within typical search patterns
+        $value = preg_match('/^"[^"=\\!>]+"$/', $value)?str_replace('"', null, $value):$value;
+
         //strip emoticons
         $value = preg_replace(
             '/(?:[:;]-[()\/PD]+)|(?:\s;[()PD]+)|(?::[()PD]+)|-\.-|\^\^/m',
