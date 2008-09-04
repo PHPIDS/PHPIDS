@@ -551,7 +551,7 @@ class IDS_Converter
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
         //strip quotes within typical search patterns
-        $value = preg_match('/^"[^"=\\!>]+"$/', $value)?str_replace('"', null, $value):$value;
+        $value = preg_replace('/^"([^"=\\!>]+)"$/', '$1', $value);
 
         //strip emoticons
         $value = preg_replace(
