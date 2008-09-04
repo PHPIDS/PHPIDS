@@ -574,7 +574,7 @@ class IDS_Converter
      */
     public static function runCentrifuge($value, IDS_Monitor $monitor = null)
     {
-        $threshold = 3.5;
+        $threshold = 3.49;
 
         try {
             $unserialized = @unserialize($value);

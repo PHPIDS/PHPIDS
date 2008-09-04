@@ -417,7 +417,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(102, $result->getImpact());
+        $this->assertEquals(95, $result->getImpact());
     }
 
     public function testXSSList() {
@@ -834,7 +834,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(173, $result->getImpact());
+        $this->assertEquals(166, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1235,6 +1235,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '"European Business School (ebs)"';
         $exploits[] = '"Deutsche Journalistenschule (DJS)"';
         $exploits[] = '"Cambridge First Certificate FCE (2000)"';
+        $exploits[] = 'Universität Karlsruhe (TH)';
 
         $test = new IDS_Monitor(
             $exploits,
