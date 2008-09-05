@@ -206,8 +206,8 @@ class IDS_Monitor
             }
 
         }
-        
-        if (!is_writeable($init->getBasePath() 
+
+        if (!is_writeable($init->getBasePath()
             . $init->config['General']['tmp_path'])) {
             throw new Exception(
                 'Please make sure the IDS/tmp folder is writable'
@@ -280,8 +280,7 @@ class IDS_Monitor
 
         // to increase performance, only start detection if value
         // isn't alphanumeric
-        if (!(preg_match('/[^\w\s\/@,!?]+/ims', $value)
-            && !empty($value) || preg_match('/Q\d{2}/', $value))) {
+        if (!(preg_match('/[^\w\s\/@,!?]+/ims', $value) && $value)) {
             return false;
         }
 
