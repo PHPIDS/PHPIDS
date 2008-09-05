@@ -395,7 +395,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(657, $result->getImpact());
+        $this->assertEquals(651, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -466,7 +466,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         type=text/html>";
         $exploits[] = "onabort=onblur=onchange=onclick=ondblclick=onerror=onfocus=onkeydown=onkeypress=onkeyup=onload=onmousedown=onmousemove=onmouseout=onmouseover=onmouseup=onreset=onresize=onselect=onsubmit=onunload=alert";
         $exploits[] = 'onload=1&&alert';
-        $exploits[] = 'Q27Q2balertQ28documentQ2ecookieQ29Q2bQ27';
 
         $this->_testForPlainEvent($exploits);
 
@@ -475,7 +474,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(458, $result->getImpact());
+        $this->assertEquals(434, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -1006,7 +1005,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(105, $result->getImpact());
+        $this->assertEquals(95, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {

@@ -362,7 +362,7 @@ class IDS_Converter
 
         foreach ($matches[1] as $item) {
             if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
-                $value .= base64_decode($item);
+                $value = str_replace($item, base64_decode($item), $value);
             }
         }
 
@@ -523,8 +523,8 @@ class IDS_Converter
 
 
         //convert JS special numbers
-        $converted = preg_replace('/(?:\(*[.\d]e[+-]*\d+\)*)' .
-            '|(?:NaN|Infinity)\W/ims', 1, $converted);
+        $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
+            '|(?:NaN|Infinity)\W/ms', 1, $converted);
 
         if ($compare != $converted) {
             $value .= "\n" . $converted;
@@ -543,9 +543,6 @@ class IDS_Converter
      * @return string
      */
     public static function convertFromProprietaryEncodings($value) {
-
-        //eBay custom QEncoding
-        $value = preg_replace('/Q([a-f0-9]{2})/me', 'urldecode("%$1")', $value);
 
         //Xajax error reportings
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
