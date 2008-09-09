@@ -618,7 +618,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(576, $result->getImpact());
+        $this->assertEquals(565, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -662,7 +662,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(589, $result->getImpact());
+        $this->assertEquals(554, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -800,7 +800,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(828, $result->getImpact());
+        $this->assertEquals(821, $result->getImpact());
     }
 
     public function testSQLIList6() {
@@ -887,7 +887,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(128, $result->getImpact());
+        $this->assertEquals(121, $result->getImpact());
     }
 
     public function testURIList(){
@@ -1021,7 +1021,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(74, $result->getImpact());
+        $this->assertEquals(67, $result->getImpact());
     }
 
     public function testOctalCCConverter() {
@@ -1235,6 +1235,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '"Deutsche Journalistenschule (DJS)"';
         $exploits[] = '"Cambridge First Certificate FCE (2000)"';
         $exploits[] = 'Universität Karlsruhe (TH)';
+        $exploits[] = 'Psychologie, Coaching und Training, Wissenserlangung von Führungskräften, Menschen bewegen, Direktansprache, Erfolg, Spaß, Positiv Thinking and Feeling, Natur, Kontakte pflegen, Face to Face Contact, Sport/Fitness (Fussball, Beachvolleyball, Schwimmen, Laufen, Krafttraining, Bewegungsübungen uvm.), Wellness & Beauty';
+        $exploits[] = 'Großelternzeit - (Sachbearbeiter Lightfline)';
 
         $test = new IDS_Monitor(
             $exploits,

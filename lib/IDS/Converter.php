@@ -585,7 +585,7 @@ class IDS_Converter
             $tmp_value = preg_replace('/([*.!?+-])\1{1,}/m', '$1', $tmp_value);
             $tmp_value = preg_replace('/"[\p{L}\d\s]+"/m', null, $tmp_value);
 
-            $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><]+/m',
+            $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><-]+/m',
                 null, $tmp_value));
             $overall_length  = strlen(preg_replace('/([\d\s\p{L}]{4,})+/m', 'aaa',
                 preg_replace('/\s{2,}/m', null, $tmp_value)));
@@ -604,7 +604,7 @@ class IDS_Converter
 
         if (strlen($value) > 40) {
             // Replace all non-special chars
-            $converted =  preg_replace('/[\w\s\p{L}]/', null, $value);
+            $converted =  preg_replace('/[\w\s\p{L},.]/', null, $value);
 
             // Split string into an array, unify and sort
             $array = str_split($converted);
@@ -627,7 +627,7 @@ class IDS_Converter
                 array_values($schemes), $converted);
             $converted = preg_replace('/[+-]\s*\d+/', '+', $converted);
             $converted = preg_replace('/[()[\]{}]/', '(', $converted);
-            $converted = preg_replace('/[!?,.:=]/', ':', $converted);
+            $converted = preg_replace('/[!?:=]/', ':', $converted);
             $converted = preg_replace('/[^:(+]/', null, stripslashes($converted));
 
             // Sort again and implode
