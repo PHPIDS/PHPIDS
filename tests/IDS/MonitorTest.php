@@ -387,6 +387,12 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'al�ert(1)';
         $exploits[] = '1[<t>__par{new Array}ent__</t>][<t>al{new Array}ert</t>](1) ';
         $exploits[] = '(new Option).style.setExpression(1,1&&name)';
+        $exploits[] = 'default xml namespace=toolbar,b=1&&this.atob
+                        default xml namespace=toolbar,e2=b(\'ZXZhbA\')
+                        default xml namespace=toolbar,e=this[toolbar,e2]
+                        default xml namespace=toolbar,y=1&&name
+                        default xml namespace=toolbar
+                        default xml namespace=e(y)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -395,7 +401,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(651, $result->getImpact());
+        $this->assertEquals(665, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -417,7 +423,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(95, $result->getImpact());
+        $this->assertEquals(100, $result->getImpact());
     }
 
     public function testXSSList() {
