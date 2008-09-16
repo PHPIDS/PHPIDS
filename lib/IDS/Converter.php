@@ -287,8 +287,8 @@ class IDS_Converter
     public static function convertFromSQLKeywords($value)
     {
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' .
-            '(?:IN[+\s]*\([^()]+\))/ims');
-        $value   = preg_replace($pattern, '=0', $value);
+            '(?:(?:^|\W)IN[+\s]*\([^()]+\))/ims');
+        $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/null,/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' .
@@ -521,7 +521,6 @@ class IDS_Converter
         //strip object traversal
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
-
         //convert JS special numbers
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
             '|(?:NaN|Infinity)\W/ms', 1, $converted);
@@ -549,6 +548,9 @@ class IDS_Converter
 
         //strip quotes within typical search patterns
         $value = preg_replace('/^"([^"=\\!>]+)"$/', '$1', $value);
+
+		//convert Content to null to avoid false alerts 
+		$value = preg_replace('/Content/', null, $value);
 
         //strip emoticons
         $value = preg_replace(
