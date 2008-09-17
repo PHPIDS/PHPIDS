@@ -59,10 +59,14 @@ class IDS_Caching
     {
         
     	$object  = false;
-        $wrapper = ucfirst($init->config['Caching']['caching']);
-        $class   = 'IDS_Caching_' . escapeshellcmd($wrapper);
+        $wrapper = preg_replace(
+			'/\W+/m', 
+			null, 
+			ucfirst($init->config['Caching']['caching'])
+		);
+        $class   = 'IDS_Caching_' . $wrapper;
         $path    = dirname(__FILE__) . DIRECTORY_SEPARATOR . 
-            escapeshellcmd($wrapper) . '.php';
+            $wrapper . '.php';
 
         if (file_exists($path)) {
             include_once $path;
