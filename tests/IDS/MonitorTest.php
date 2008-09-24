@@ -266,6 +266,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '$=\'e\'
                         ,x=$[$+\'val\']
                         x(x(\'nam\'+$)+$)';
+        $exploits[] = 'typeof~delete~typeof~alert(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -274,7 +275,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(972, $result->getImpact());
+        $this->assertEquals(987, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {

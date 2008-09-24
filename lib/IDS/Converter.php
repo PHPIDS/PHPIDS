@@ -302,7 +302,7 @@ class IDS_Converter
                          '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '!', $value);
         $value   = preg_replace('/"\s+\d/', '"', $value);
-        $value   = str_replace('~', '0', $value);
+        $value   = str_replace('~', ' ', $value);
 
         return $value;
     }
