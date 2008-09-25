@@ -76,12 +76,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="68" height="10" alt="68.89 %"><img src="snow.png" width="32" height="10" alt="68.89%"></td>
+                <td class="coverBarOutline"><img src="butter.png" width="66" height="10" alt="66.67 %"><img src="snow.png" width="34" height="10" alt="66.67%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerMed">68.89%</td>
-          <td class="coverNumMed">62 / 90</td>
+          <td class="coverPerMed">66.67%</td>
+          <td class="coverNumMed">62 / 93</td>
         </tr>
 
         <tr>
@@ -110,12 +110,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="68" height="10" alt="68.89 %"><img src="snow.png" width="32" height="10" alt="68.89%"></td>
+                <td class="coverBarOutline"><img src="butter.png" width="66" height="10" alt="66.67 %"><img src="snow.png" width="34" height="10" alt="66.67%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerMed">68.89%</td>
-          <td class="coverNumMed">62 / 90</td>
+          <td class="coverPerMed">66.67%</td>
+          <td class="coverNumMed">62 / 93</td>
         </tr>
 
         <tr>
@@ -132,12 +132,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="68" height="10" alt="68.54 %"><img src="snow.png" width="32" height="10" alt="68.54%"></td>
+                <td class="coverBarOutline"><img src="butter.png" width="66" height="10" alt="66.30 %"><img src="snow.png" width="34" height="10" alt="66.30%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerMed">68.54%</td>
-          <td class="coverNumMed">61 / 89</td>
+          <td class="coverPerMed">66.30%</td>
+          <td class="coverNumMed">61 / 92</td>
         </tr>
 
 
@@ -168,7 +168,7 @@
 <span class="lineNum" id="container13"><a name="13"></a><a href="#13" id="line13">      13</a> </span>                :                                                                                                                            
 <span class="lineNum" id="container14"><a name="14"></a><a href="#14" id="line14">      14</a> </span>                :     public function execute($tokens, $config, $context) {                                                                  
 <span class="lineNum" id="container15"><a name="15"></a><a href="#15" id="line15">      15</a> </span><span class="lineCov">              2 :         $definition = $config-&gt;getHTMLDefinition();                                                                        </span>
-<span class="lineNum" id="container16"><a name="16"></a><a href="#16" id="line16">      16</a> </span><span class="lineCov">              2 :         $generator = new HTMLPurifier_Generator();                                                                         </span>
+<span class="lineNum" id="container16"><a name="16"></a><a href="#16" id="line16">      16</a> </span><span class="lineCov">              2 :         $generator = new HTMLPurifier_Generator($config, $context);                                                        </span>
 <span class="lineNum" id="container17"><a name="17"></a><a href="#17" id="line17">      17</a> </span><span class="lineCov">              2 :         $result = array();                                                                                                 </span>
 <span class="lineNum" id="container18"><a name="18"></a><a href="#18" id="line18">      18</a> </span>                :                                                                                                                            
 <span class="lineNum" id="container19"><a name="19"></a><a href="#19" id="line19">      19</a> </span><span class="lineCov">              2 :         $escape_invalid_tags = $config-&gt;get('Core', 'EscapeInvalidTags');                                                  </span>
@@ -204,7 +204,7 @@
 <span class="lineNum" id="container49"><a name="49"></a><a href="#49" id="line49">      49</a> </span><span class="lineCov">              2 :             if ($remove_until) {                                                                                           </span>
 <span class="lineNum" id="container50"><a name="50"></a><a href="#50" id="line50">      50</a> </span><span class="lineCov">              1 :                 if (empty($token-&gt;is_tag) || $token-&gt;name !== $remove_until) {                                             </span>
 <span class="lineNum" id="container51"><a name="51"></a><a href="#51" id="line51">      51</a> </span><span class="lineCov">              1 :                     continue;                                                                                              </span>
-<span class="lineNum" id="container52"><a name="52"></a><a href="#52" id="line52">      52</a> </span><span class="lineDeadCode">                :                 }                                                                                                          </span>
+<span class="lineNum" id="container52"><a name="52"></a><a href="#52" id="line52">      52</a> </span><span class="lineNoCov">              0 :                 }                                                                                                          </span>
 <span class="lineNum" id="container53"><a name="53"></a><a href="#53" id="line53">      53</a> </span><span class="lineCov">              1 :             }                                                                                                              </span>
 <span class="lineNum" id="container54"><a name="54"></a><a href="#54" id="line54">      54</a> </span><span class="lineCov">              2 :             if (!empty( $token-&gt;is_tag )) {                                                                                </span>
 <span class="lineNum" id="container55"><a name="55"></a><a href="#55" id="line55">      55</a> </span>                :                 // DEFINITION CALL                                                                                         
@@ -237,12 +237,12 @@
 <span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span><span class="lineCov">              2 :                             if (!isset($token-&gt;attr[$name])) {                                                             </span>
 <span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span><span class="lineCov">              1 :                                 $ok = false;                                                                               </span>
 <span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span><span class="lineCov">              1 :                                 break;                                                                                     </span>
-<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span><span class="lineDeadCode">                :                             }                                                                                              </span>
+<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span><span class="lineNoCov">              0 :                             }                                                                                              </span>
 <span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span><span class="lineCov">              2 :                         }                                                                                                  </span>
 <span class="lineNum" id="container87"><a name="87"></a><a href="#87" id="line87">      87</a> </span><span class="lineCov">              2 :                         if (!$ok) {                                                                                        </span>
 <span class="lineNum" id="container88"><a name="88"></a><a href="#88" id="line88">      88</a> </span><span class="lineCov">              1 :                             if ($e) $e-&gt;send(E_ERROR, 'Strategy_RemoveForeignElements: Missing required attribute', $name);</span>
 <span class="lineNum" id="container89"><a name="89"></a><a href="#89" id="line89">      89</a> </span><span class="lineCov">              1 :                             continue;                                                                                      </span>
-<span class="lineNum" id="container90"><a name="90"></a><a href="#90" id="line90">      90</a> </span><span class="lineDeadCode">                :                         }                                                                                                  </span>
+<span class="lineNum" id="container90"><a name="90"></a><a href="#90" id="line90">      90</a> </span><span class="lineNoCov">              0 :                         }                                                                                                  </span>
 <span class="lineNum" id="container91"><a name="91"></a><a href="#91" id="line91">      91</a> </span><span class="lineCov">              2 :                         $token-&gt;armor['ValidateAttributes'] = true;                                                        </span>
 <span class="lineNum" id="container92"><a name="92"></a><a href="#92" id="line92">      92</a> </span><span class="lineCov">              2 :                     }                                                                                                      </span>
 <span class="lineNum" id="container93"><a name="93"></a><a href="#93" id="line93">      93</a> </span>                :                                                                                                                            
@@ -256,7 +256,7 @@
 <span class="lineNum" id="container101"><a name="101"></a><a href="#101" id="line101">     101</a> </span>                :                     // invalid tag, generate HTML representation and insert in                                             
 <span class="lineNum" id="container102"><a name="102"></a><a href="#102" id="line102">     102</a> </span><span class="lineNoCov">              0 :                     if ($e) $e-&gt;send(E_WARNING, 'Strategy_RemoveForeignElements: Foreign element to text');                </span>
 <span class="lineNum" id="container103"><a name="103"></a><a href="#103" id="line103">     103</a> </span><span class="lineNoCov">              0 :                     $token = new HTMLPurifier_Token_Text(                                                                  </span>
-<span class="lineNum" id="container104"><a name="104"></a><a href="#104" id="line104">     104</a> </span><span class="lineNoCov">              0 :                         $generator-&gt;generateFromToken($token, $config, $context)                                           </span>
+<span class="lineNum" id="container104"><a name="104"></a><a href="#104" id="line104">     104</a> </span><span class="lineNoCov">              0 :                         $generator-&gt;generateFromToken($token)                                                              </span>
 <span class="lineNum" id="container105"><a name="105"></a><a href="#105" id="line105">     105</a> </span><span class="lineNoCov">              0 :                     );                                                                                                     </span>
 <span class="lineNum" id="container106"><a name="106"></a><a href="#106" id="line106">     106</a> </span><span class="lineNoCov">              0 :                 } else {                                                                                                   </span>
 <span class="lineNum" id="container107"><a name="107"></a><a href="#107" id="line107">     107</a> </span>                :                     // check if we need to destroy all of the tag's children                                               
@@ -311,7 +311,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.2.20</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.3</a> at Sat Jun 7 16:34:07 CEST 2008.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.3.1</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.2</a> at Thu Sep 25 18:42:10 CEST 2008.</td></tr>
     </table>
 
     <br />

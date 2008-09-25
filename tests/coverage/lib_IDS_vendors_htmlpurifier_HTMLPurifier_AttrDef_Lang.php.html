@@ -76,12 +76,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="2" height="10" alt="2.38 %"><img src="snow.png" width="98" height="10" alt="2.38%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="4" height="10" alt="4.17 %"><img src="snow.png" width="96" height="10" alt="4.17%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">2.38%</td>
-          <td class="coverNumLo">1 / 42</td>
+          <td class="coverPerLo">4.17%</td>
+          <td class="coverNumLo">1 / 24</td>
         </tr>
 
         <tr>
@@ -110,12 +110,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="2" height="10" alt="2.38 %"><img src="snow.png" width="98" height="10" alt="2.38%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="4" height="10" alt="4.17 %"><img src="snow.png" width="96" height="10" alt="4.17%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">2.38%</td>
-          <td class="coverNumLo">1 / 42</td>
+          <td class="coverPerLo">4.17%</td>
+          <td class="coverNumLo">1 / 24</td>
         </tr>
 
         <tr>
@@ -137,7 +137,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 41</td>
+          <td class="coverNumLo">0 / 23</td>
         </tr>
 
 
@@ -194,32 +194,32 @@
 <span class="lineNum" id="container39"><a name="39"></a><a href="#39" id="line39">      39</a> </span><span class="lineNoCov">              0 :                 return false;                                                                                  </span>
 <span class="lineNum" id="container40"><a name="40"></a><a href="#40" id="line40">      40</a> </span><span class="lineNoCov">              0 :         }                                                                                                      </span>
 <span class="lineNum" id="container41"><a name="41"></a><a href="#41" id="line41">      41</a> </span>                :                                                                                                                
-<span class="lineNum" id="container42"><a name="42"></a><a href="#42" id="line42">      42</a> </span><span class="lineNoCov">              0 :         $new_string = $subtags[0];                                                                             </span>
-<span class="lineNum" id="container43"><a name="43"></a><a href="#43" id="line43">      43</a> </span><span class="lineNoCov">              0 :         if ($num_subtags == 1) return $new_string;                                                             </span>
+<span class="lineNum" id="container42"><a name="42"></a><a href="#42" id="line42">      42</a> </span><span class="lineDeadCode">                :         $new_string = $subtags[0];                                                                             </span>
+<span class="lineNum" id="container43"><a name="43"></a><a href="#43" id="line43">      43</a> </span><span class="lineDeadCode">                :         if ($num_subtags == 1) return $new_string;                                                             </span>
 <span class="lineNum" id="container44"><a name="44"></a><a href="#44" id="line44">      44</a> </span>                :                                                                                                                
 <span class="lineNum" id="container45"><a name="45"></a><a href="#45" id="line45">      45</a> </span>                :         // process second subtag : $subtags[1]                                                                 
-<span class="lineNum" id="container46"><a name="46"></a><a href="#46" id="line46">      46</a> </span><span class="lineNoCov">              0 :         $length = strlen($subtags[1]);                                                                         </span>
-<span class="lineNum" id="container47"><a name="47"></a><a href="#47" id="line47">      47</a> </span><span class="lineNoCov">              0 :         if ($length == 0 || ($length == 1 &amp;&amp; $subtags[1] != 'x') || $length &gt; 8 || !ctype_alnum($subtags[1])) {</span>
-<span class="lineNum" id="container48"><a name="48"></a><a href="#48" id="line48">      48</a> </span><span class="lineNoCov">              0 :             return $new_string;                                                                                </span>
+<span class="lineNum" id="container46"><a name="46"></a><a href="#46" id="line46">      46</a> </span><span class="lineDeadCode">                :         $length = strlen($subtags[1]);                                                                         </span>
+<span class="lineNum" id="container47"><a name="47"></a><a href="#47" id="line47">      47</a> </span><span class="lineDeadCode">                :         if ($length == 0 || ($length == 1 &amp;&amp; $subtags[1] != 'x') || $length &gt; 8 || !ctype_alnum($subtags[1])) {</span>
+<span class="lineNum" id="container48"><a name="48"></a><a href="#48" id="line48">      48</a> </span><span class="lineDeadCode">                :             return $new_string;                                                                                </span>
 <span class="lineNum" id="container49"><a name="49"></a><a href="#49" id="line49">      49</a> </span><span class="lineDeadCode">                :         }                                                                                                      </span>
-<span class="lineNum" id="container50"><a name="50"></a><a href="#50" id="line50">      50</a> </span><span class="lineNoCov">              0 :         if (!ctype_lower($subtags[1])) $subtags[1] = strtolower($subtags[1]);                                  </span>
+<span class="lineNum" id="container50"><a name="50"></a><a href="#50" id="line50">      50</a> </span><span class="lineDeadCode">                :         if (!ctype_lower($subtags[1])) $subtags[1] = strtolower($subtags[1]);                                  </span>
 <span class="lineNum" id="container51"><a name="51"></a><a href="#51" id="line51">      51</a> </span>                :                                                                                                                
-<span class="lineNum" id="container52"><a name="52"></a><a href="#52" id="line52">      52</a> </span><span class="lineNoCov">              0 :         $new_string .= '-' . $subtags[1];                                                                      </span>
-<span class="lineNum" id="container53"><a name="53"></a><a href="#53" id="line53">      53</a> </span><span class="lineNoCov">              0 :         if ($num_subtags == 2) return $new_string;                                                             </span>
+<span class="lineNum" id="container52"><a name="52"></a><a href="#52" id="line52">      52</a> </span><span class="lineDeadCode">                :         $new_string .= '-' . $subtags[1];                                                                      </span>
+<span class="lineNum" id="container53"><a name="53"></a><a href="#53" id="line53">      53</a> </span><span class="lineDeadCode">                :         if ($num_subtags == 2) return $new_string;                                                             </span>
 <span class="lineNum" id="container54"><a name="54"></a><a href="#54" id="line54">      54</a> </span>                :                                                                                                                
 <span class="lineNum" id="container55"><a name="55"></a><a href="#55" id="line55">      55</a> </span>                :         // process all other subtags, index 2 and up                                                           
-<span class="lineNum" id="container56"><a name="56"></a><a href="#56" id="line56">      56</a> </span><span class="lineNoCov">              0 :         for ($i = 2; $i &lt; $num_subtags; $i++) {                                                                </span>
-<span class="lineNum" id="container57"><a name="57"></a><a href="#57" id="line57">      57</a> </span><span class="lineNoCov">              0 :             $length = strlen($subtags[$i]);                                                                    </span>
-<span class="lineNum" id="container58"><a name="58"></a><a href="#58" id="line58">      58</a> </span><span class="lineNoCov">              0 :             if ($length == 0 || $length &gt; 8 || !ctype_alnum($subtags[$i])) {                                   </span>
-<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span><span class="lineNoCov">              0 :                 return $new_string;                                                                            </span>
+<span class="lineNum" id="container56"><a name="56"></a><a href="#56" id="line56">      56</a> </span><span class="lineDeadCode">                :         for ($i = 2; $i &lt; $num_subtags; $i++) {                                                                </span>
+<span class="lineNum" id="container57"><a name="57"></a><a href="#57" id="line57">      57</a> </span><span class="lineDeadCode">                :             $length = strlen($subtags[$i]);                                                                    </span>
+<span class="lineNum" id="container58"><a name="58"></a><a href="#58" id="line58">      58</a> </span><span class="lineDeadCode">                :             if ($length == 0 || $length &gt; 8 || !ctype_alnum($subtags[$i])) {                                   </span>
+<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span><span class="lineDeadCode">                :                 return $new_string;                                                                            </span>
 <span class="lineNum" id="container60"><a name="60"></a><a href="#60" id="line60">      60</a> </span><span class="lineDeadCode">                :             }                                                                                                  </span>
-<span class="lineNum" id="container61"><a name="61"></a><a href="#61" id="line61">      61</a> </span><span class="lineNoCov">              0 :             if (!ctype_lower($subtags[$i])) {                                                                  </span>
-<span class="lineNum" id="container62"><a name="62"></a><a href="#62" id="line62">      62</a> </span><span class="lineNoCov">              0 :                 $subtags[$i] = strtolower($subtags[$i]);                                                       </span>
-<span class="lineNum" id="container63"><a name="63"></a><a href="#63" id="line63">      63</a> </span><span class="lineNoCov">              0 :             }                                                                                                  </span>
-<span class="lineNum" id="container64"><a name="64"></a><a href="#64" id="line64">      64</a> </span><span class="lineNoCov">              0 :             $new_string .= '-' . $subtags[$i];                                                                 </span>
-<span class="lineNum" id="container65"><a name="65"></a><a href="#65" id="line65">      65</a> </span><span class="lineNoCov">              0 :         }                                                                                                      </span>
+<span class="lineNum" id="container61"><a name="61"></a><a href="#61" id="line61">      61</a> </span><span class="lineDeadCode">                :             if (!ctype_lower($subtags[$i])) {                                                                  </span>
+<span class="lineNum" id="container62"><a name="62"></a><a href="#62" id="line62">      62</a> </span><span class="lineDeadCode">                :                 $subtags[$i] = strtolower($subtags[$i]);                                                       </span>
+<span class="lineNum" id="container63"><a name="63"></a><a href="#63" id="line63">      63</a> </span><span class="lineDeadCode">                :             }                                                                                                  </span>
+<span class="lineNum" id="container64"><a name="64"></a><a href="#64" id="line64">      64</a> </span><span class="lineDeadCode">                :             $new_string .= '-' . $subtags[$i];                                                                 </span>
+<span class="lineNum" id="container65"><a name="65"></a><a href="#65" id="line65">      65</a> </span><span class="lineDeadCode">                :         }                                                                                                      </span>
 <span class="lineNum" id="container66"><a name="66"></a><a href="#66" id="line66">      66</a> </span>                :                                                                                                                
-<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span><span class="lineNoCov">              0 :         return $new_string;                                                                                    </span>
+<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span><span class="lineDeadCode">                :         return $new_string;                                                                                    </span>
 <span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span>                :                                                                                                                
 <span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span><span class="lineDeadCode">                :     }                                                                                                          </span>
 <span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span>                :                                                                                                                
@@ -233,7 +233,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.2.20</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.3</a> at Sat Jun 7 16:34:07 CEST 2008.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.3.1</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.2</a> at Thu Sep 25 18:42:10 CEST 2008.</td></tr>
     </table>
 
     <br />

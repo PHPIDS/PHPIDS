@@ -76,12 +76,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="chameleon.png" width="71" height="10" alt="71.43 %"><img src="snow.png" width="29" height="10" alt="71.43%"></td>
+                <td class="coverBarOutline"><img src="butter.png" width="66" height="10" alt="66.67 %"><img src="snow.png" width="34" height="10" alt="66.67%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerHi">71.43%</td>
-          <td class="coverNumHi">5 / 7</td>
+          <td class="coverPerMed">66.67%</td>
+          <td class="coverNumMed">4 / 6</td>
         </tr>
 
         <tr>
@@ -110,16 +110,16 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="chameleon.png" width="71" height="10" alt="71.43 %"><img src="snow.png" width="29" height="10" alt="71.43%"></td>
+                <td class="coverBarOutline"><img src="butter.png" width="66" height="10" alt="66.67 %"><img src="snow.png" width="34" height="10" alt="66.67%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerHi">71.43%</td>
-          <td class="coverNumHi">5 / 7</td>
+          <td class="coverPerMed">66.67%</td>
+          <td class="coverNumMed">4 / 6</td>
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#60">public function parseCDATA($string)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#58">public function parseCDATA($string)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -137,11 +137,11 @@
             </table>
           </td>
           <td class="coverPerHi">100.00%</td>
-          <td class="coverNumHi">4 / 4</td>
+          <td class="coverNumHi">3 / 3</td>
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#72">public function make($string)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#69">public function make($string)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -163,7 +163,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#84">protected function mungeRgb($string)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#81">protected function mungeRgb($string)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -250,42 +250,39 @@
 <span class="lineNum" id="container51"><a name="51"></a><a href="#51" id="line51">      51</a> </span>                :      *                                                                                          
 <span class="lineNum" id="container52"><a name="52"></a><a href="#52" id="line52">      52</a> </span>                :      * @warning This processing is inconsistent with XML's whitespace handling                  
 <span class="lineNum" id="container53"><a name="53"></a><a href="#53" id="line53">      53</a> </span>                :      *          as specified by section 3.3.3 and referenced XHTML 1.0 section                  
-<span class="lineNum" id="container54"><a name="54"></a><a href="#54" id="line54">      54</a> </span>                :      *          4.7.  Compliant processing requires all line breaks normalized                  
-<span class="lineNum" id="container55"><a name="55"></a><a href="#55" id="line55">      55</a> </span>                :      *          to &quot;\n&quot;, so the fix is not as simple as fixing it in this                       
-<span class="lineNum" id="container56"><a name="56"></a><a href="#56" id="line56">      56</a> </span>                :      *          function.  Trim and whitespace collapsing are supposed to only                  
-<span class="lineNum" id="container57"><a name="57"></a><a href="#57" id="line57">      57</a> </span>                :      *          occur in NMTOKENs.  However, note that we are NOT necessarily                   
-<span class="lineNum" id="container58"><a name="58"></a><a href="#58" id="line58">      58</a> </span>                :      *          parsing XML, thus, this behavior may still be correct.                          
-<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span>                :      */                                                                                         
-<span class="lineNum" id="container60"><a name="60"></a><a href="#60" id="line60">      60</a> </span>                :     public function parseCDATA($string) {                                                       
-<span class="lineNum" id="container61"><a name="61"></a><a href="#61" id="line61">      61</a> </span><span class="lineCov">              2 :         $string = trim($string);                                                                </span>
-<span class="lineNum" id="container62"><a name="62"></a><a href="#62" id="line62">      62</a> </span><span class="lineCov">              2 :         $string = str_replace(&quot;\n&quot;, '', $string);                                               </span>
-<span class="lineNum" id="container63"><a name="63"></a><a href="#63" id="line63">      63</a> </span><span class="lineCov">              2 :         $string = str_replace(array(&quot;\r&quot;, &quot;\t&quot;), ' ', $string);                                 </span>
-<span class="lineNum" id="container64"><a name="64"></a><a href="#64" id="line64">      64</a> </span><span class="lineCov">              2 :         return $string;                                                                         </span>
-<span class="lineNum" id="container65"><a name="65"></a><a href="#65" id="line65">      65</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
-<span class="lineNum" id="container66"><a name="66"></a><a href="#66" id="line66">      66</a> </span>                :                                                                                                 
-<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span>                :     /**                                                                                         
-<span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span>                :      * Factory method for creating this class from a string.                                    
-<span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span>                :      * @param $string String construction info                                                  
-<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span>                :      * @return Created AttrDef object corresponding to $string                                  
-<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span>                :      */                                                                                         
-<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span>                :     public function make($string) {                                                             
-<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span>                :         // default implementation, return a flyweight of this object.                           
-<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span>                :         // If $string has an effect on the returned object (i.e. you                            
-<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span>                :         // need to overload this method), it is best                                            
-<span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span>                :         // to clone or instantiate new copies. (Instantiation is safer.)                        
-<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span><span class="lineNoCov">              0 :         return $this;                                                                           </span>
-<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
-<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span>                :                                                                                                 
-<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span>                :     /**                                                                                         
-<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :      * Removes spaces from rgb(0, 0, 0) so that shorthand CSS properties work                   
-<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span>                :      * properly. THIS IS A HACK!                                                                
-<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span>                :      */                                                                                         
-<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span>                :     protected function mungeRgb($string) {                                                      
-<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span><span class="lineNoCov">              0 :         return preg_replace('/rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/', 'rgb(\1,\2,\3)', $string);</span>
-<span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
-<span class="lineNum" id="container87"><a name="87"></a><a href="#87" id="line87">      87</a> </span>                :                                                                                                 
-<span class="lineNum" id="container88"><a name="88"></a><a href="#88" id="line88">      88</a> </span>                : }                                                                                               
-<span class="lineNum" id="container89"><a name="89"></a><a href="#89" id="line89">      89</a> </span>                :                                                                                                 
+<span class="lineNum" id="container54"><a name="54"></a><a href="#54" id="line54">      54</a> </span>                :      *          4.7.  However, note that we are NOT necessarily                                 
+<span class="lineNum" id="container55"><a name="55"></a><a href="#55" id="line55">      55</a> </span>                :      *          parsing XML, thus, this behavior may still be correct. We                       
+<span class="lineNum" id="container56"><a name="56"></a><a href="#56" id="line56">      56</a> </span>                :      *          assume that newlines have been normalized.                                      
+<span class="lineNum" id="container57"><a name="57"></a><a href="#57" id="line57">      57</a> </span>                :      */                                                                                         
+<span class="lineNum" id="container58"><a name="58"></a><a href="#58" id="line58">      58</a> </span>                :     public function parseCDATA($string) {                                                       
+<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span><span class="lineCov">              2 :         $string = trim($string);                                                                </span>
+<span class="lineNum" id="container60"><a name="60"></a><a href="#60" id="line60">      60</a> </span><span class="lineCov">              2 :         $string = str_replace(array(&quot;\n&quot;, &quot;\t&quot;, &quot;\r&quot;), ' ', $string);                           </span>
+<span class="lineNum" id="container61"><a name="61"></a><a href="#61" id="line61">      61</a> </span><span class="lineCov">              2 :         return $string;                                                                         </span>
+<span class="lineNum" id="container62"><a name="62"></a><a href="#62" id="line62">      62</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
+<span class="lineNum" id="container63"><a name="63"></a><a href="#63" id="line63">      63</a> </span>                :                                                                                                 
+<span class="lineNum" id="container64"><a name="64"></a><a href="#64" id="line64">      64</a> </span>                :     /**                                                                                         
+<span class="lineNum" id="container65"><a name="65"></a><a href="#65" id="line65">      65</a> </span>                :      * Factory method for creating this class from a string.                                    
+<span class="lineNum" id="container66"><a name="66"></a><a href="#66" id="line66">      66</a> </span>                :      * @param $string String construction info                                                  
+<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span>                :      * @return Created AttrDef object corresponding to $string                                  
+<span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span>                :      */                                                                                         
+<span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span>                :     public function make($string) {                                                             
+<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span>                :         // default implementation, return a flyweight of this object.                           
+<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span>                :         // If $string has an effect on the returned object (i.e. you                            
+<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span>                :         // need to overload this method), it is best                                            
+<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span>                :         // to clone or instantiate new copies. (Instantiation is safer.)                        
+<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span><span class="lineNoCov">              0 :         return $this;                                                                           </span>
+<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
+<span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span>                :                                                                                                 
+<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span>                :     /**                                                                                         
+<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span>                :      * Removes spaces from rgb(0, 0, 0) so that shorthand CSS properties work                   
+<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span>                :      * properly. THIS IS A HACK!                                                                
+<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span>                :      */                                                                                         
+<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :     protected function mungeRgb($string) {                                                      
+<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span><span class="lineNoCov">              0 :         return preg_replace('/rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/', 'rgb(\1,\2,\3)', $string);</span>
+<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span><span class="lineDeadCode">                :     }                                                                                           </span>
+<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span>                :                                                                                                 
+<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span>                : }                                                                                               
+<span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span>                :                                                                                                 
 
 </pre>
         </td>
@@ -294,7 +291,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.2.20</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.3</a> at Sat Jun 7 16:34:07 CEST 2008.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.3.1</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.2</a> at Thu Sep 25 18:42:10 CEST 2008.</td></tr>
     </table>
 
     <br />
@@ -308,23 +305,18 @@
           "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li></ul>",
           "footer": ""
         },
+        "panel59": {
+          "header": "2 tests cover line 59",
+          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
+          "footer": ""
+        },
+        "panel60": {
+          "header": "2 tests cover line 60",
+          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
+          "footer": ""
+        },
         "panel61": {
           "header": "2 tests cover line 61",
-          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
-          "footer": ""
-        },
-        "panel62": {
-          "header": "2 tests cover line 62",
-          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
-          "footer": ""
-        },
-        "panel63": {
-          "header": "2 tests cover line 63",
-          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
-          "footer": ""
-        },
-        "panel64": {
-          "header": "2 tests cover line 64",
           "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
           "footer": ""
         },

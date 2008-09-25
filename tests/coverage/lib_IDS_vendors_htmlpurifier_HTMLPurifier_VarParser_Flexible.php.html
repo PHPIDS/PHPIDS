@@ -76,12 +76,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="19" height="10" alt="19.12 %"><img src="snow.png" width="81" height="10" alt="19.12%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="20" height="10" alt="20.29 %"><img src="snow.png" width="80" height="10" alt="20.29%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">19.12%</td>
-          <td class="coverNumLo">13 / 68</td>
+          <td class="coverPerLo">20.29%</td>
+          <td class="coverNumLo">14 / 69</td>
         </tr>
 
         <tr>
@@ -110,12 +110,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="19" height="10" alt="19.12 %"><img src="snow.png" width="81" height="10" alt="19.12%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="20" height="10" alt="20.29 %"><img src="snow.png" width="80" height="10" alt="20.29%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">19.12%</td>
-          <td class="coverNumLo">13 / 68</td>
+          <td class="coverPerLo">20.29%</td>
+          <td class="coverNumLo">14 / 69</td>
         </tr>
 
         <tr>
@@ -132,12 +132,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="17" height="10" alt="17.91 %"><img src="snow.png" width="83" height="10" alt="17.91%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="19" height="10" alt="19.12 %"><img src="snow.png" width="81" height="10" alt="19.12%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">17.91%</td>
-          <td class="coverNumLo">12 / 67</td>
+          <td class="coverPerLo">19.12%</td>
+          <td class="coverNumLo">13 / 68</td>
         </tr>
 
 
@@ -169,19 +169,19 @@
 <span class="lineNum" id="container14"><a name="14"></a><a href="#14" id="line14">      14</a> </span>                :             // Note: if code &quot;breaks&quot; from the switch, it triggers a generic                             
 <span class="lineNum" id="container15"><a name="15"></a><a href="#15" id="line15">      15</a> </span>                :             // exception to be thrown. Specific errors can be specifically                               
 <span class="lineNum" id="container16"><a name="16"></a><a href="#16" id="line16">      16</a> </span>                :             // done here.                                                                                
-<span class="lineNum" id="container17"><a name="17"></a><a href="#17" id="line17">      17</a> </span><span class="lineCov">              2 :             case 'mixed':                                                                                </span>
-<span class="lineNum" id="container18"><a name="18"></a><a href="#18" id="line18">      18</a> </span><span class="lineCov">              2 :             case 'istring':                                                                              </span>
-<span class="lineNum" id="container19"><a name="19"></a><a href="#19" id="line19">      19</a> </span><span class="lineCov">              2 :             case 'string':                                                                               </span>
-<span class="lineNum" id="container20"><a name="20"></a><a href="#20" id="line20">      20</a> </span><span class="lineCov">              2 :             case 'text':                                                                                 </span>
-<span class="lineNum" id="container21"><a name="21"></a><a href="#21" id="line21">      21</a> </span><span class="lineCov">              2 :             case 'itext':                                                                                </span>
-<span class="lineNum" id="container22"><a name="22"></a><a href="#22" id="line22">      22</a> </span><span class="lineNoCov">              0 :                 return $var;                                                                             </span>
-<span class="lineNum" id="container23"><a name="23"></a><a href="#23" id="line23">      23</a> </span><span class="lineCov">              2 :             case 'int':                                                                                  </span>
+<span class="lineNum" id="container17"><a name="17"></a><a href="#17" id="line17">      17</a> </span><span class="lineCov">              2 :             case self::MIXED :                                                                           </span>
+<span class="lineNum" id="container18"><a name="18"></a><a href="#18" id="line18">      18</a> </span><span class="lineCov">              2 :             case self::ISTRING :                                                                         </span>
+<span class="lineNum" id="container19"><a name="19"></a><a href="#19" id="line19">      19</a> </span><span class="lineCov">              2 :             case self::STRING :                                                                          </span>
+<span class="lineNum" id="container20"><a name="20"></a><a href="#20" id="line20">      20</a> </span><span class="lineCov">              2 :             case self::TEXT :                                                                            </span>
+<span class="lineNum" id="container21"><a name="21"></a><a href="#21" id="line21">      21</a> </span><span class="lineCov">              2 :             case self::ITEXT :                                                                           </span>
+<span class="lineNum" id="container22"><a name="22"></a><a href="#22" id="line22">      22</a> </span><span class="lineCov">              2 :                 return $var;                                                                             </span>
+<span class="lineNum" id="container23"><a name="23"></a><a href="#23" id="line23">      23</a> </span><span class="lineCov">              2 :             case self::INT :                                                                             </span>
 <span class="lineNum" id="container24"><a name="24"></a><a href="#24" id="line24">      24</a> </span><span class="lineNoCov">              0 :                 if (is_string($var) &amp;&amp; ctype_digit($var)) $var = (int) $var;                             </span>
 <span class="lineNum" id="container25"><a name="25"></a><a href="#25" id="line25">      25</a> </span><span class="lineNoCov">              0 :                 return $var;                                                                             </span>
-<span class="lineNum" id="container26"><a name="26"></a><a href="#26" id="line26">      26</a> </span><span class="lineCov">              2 :             case 'float':                                                                                </span>
+<span class="lineNum" id="container26"><a name="26"></a><a href="#26" id="line26">      26</a> </span><span class="lineCov">              2 :             case self::FLOAT :                                                                           </span>
 <span class="lineNum" id="container27"><a name="27"></a><a href="#27" id="line27">      27</a> </span><span class="lineNoCov">              0 :                 if ((is_string($var) &amp;&amp; is_numeric($var)) || is_int($var)) $var = (float) $var;          </span>
 <span class="lineNum" id="container28"><a name="28"></a><a href="#28" id="line28">      28</a> </span><span class="lineNoCov">              0 :                 return $var;                                                                             </span>
-<span class="lineNum" id="container29"><a name="29"></a><a href="#29" id="line29">      29</a> </span><span class="lineCov">              2 :             case 'bool':                                                                                 </span>
+<span class="lineNum" id="container29"><a name="29"></a><a href="#29" id="line29">      29</a> </span><span class="lineCov">              2 :             case self::BOOL :                                                                            </span>
 <span class="lineNum" id="container30"><a name="30"></a><a href="#30" id="line30">      30</a> </span><span class="lineCov">              2 :                 if (is_int($var) &amp;&amp; ($var === 0 || $var === 1)) {                                        </span>
 <span class="lineNum" id="container31"><a name="31"></a><a href="#31" id="line31">      31</a> </span><span class="lineNoCov">              0 :                     $var = (bool) $var;                                                                  </span>
 <span class="lineNum" id="container32"><a name="32"></a><a href="#32" id="line32">      32</a> </span><span class="lineCov">              2 :                 } elseif (is_string($var)) {                                                             </span>
@@ -194,9 +194,9 @@
 <span class="lineNum" id="container39"><a name="39"></a><a href="#39" id="line39">      39</a> </span>                :                     }                                                                                    
 <span class="lineNum" id="container40"><a name="40"></a><a href="#40" id="line40">      40</a> </span><span class="lineNoCov">              0 :                 }                                                                                        </span>
 <span class="lineNum" id="container41"><a name="41"></a><a href="#41" id="line41">      41</a> </span><span class="lineCov">              2 :                 return $var;                                                                             </span>
-<span class="lineNum" id="container42"><a name="42"></a><a href="#42" id="line42">      42</a> </span><span class="lineNoCov">              0 :             case 'list':                                                                                 </span>
-<span class="lineNum" id="container43"><a name="43"></a><a href="#43" id="line43">      43</a> </span><span class="lineNoCov">              0 :             case 'hash':                                                                                 </span>
-<span class="lineNum" id="container44"><a name="44"></a><a href="#44" id="line44">      44</a> </span><span class="lineNoCov">              0 :             case 'lookup':                                                                               </span>
+<span class="lineNum" id="container42"><a name="42"></a><a href="#42" id="line42">      42</a> </span><span class="lineNoCov">              0 :             case self::ALIST :                                                                           </span>
+<span class="lineNum" id="container43"><a name="43"></a><a href="#43" id="line43">      43</a> </span><span class="lineNoCov">              0 :             case self::HASH :                                                                            </span>
+<span class="lineNum" id="container44"><a name="44"></a><a href="#44" id="line44">      44</a> </span><span class="lineNoCov">              0 :             case self::LOOKUP :                                                                          </span>
 <span class="lineNum" id="container45"><a name="45"></a><a href="#45" id="line45">      45</a> </span><span class="lineNoCov">              0 :                 if (is_string($var)) {                                                                   </span>
 <span class="lineNum" id="container46"><a name="46"></a><a href="#46" id="line46">      46</a> </span>                :                     // special case: technically, this is an array with                                  
 <span class="lineNum" id="container47"><a name="47"></a><a href="#47" id="line47">      47</a> </span>                :                     // a single empty string item, but having an empty                                   
@@ -211,7 +211,7 @@
 <span class="lineNum" id="container56"><a name="56"></a><a href="#56" id="line56">      56</a> </span>                :                     }                                                                                    
 <span class="lineNum" id="container57"><a name="57"></a><a href="#57" id="line57">      57</a> </span>                :                     // remove spaces                                                                     
 <span class="lineNum" id="container58"><a name="58"></a><a href="#58" id="line58">      58</a> </span><span class="lineNoCov">              0 :                     foreach ($var as $i =&gt; $j) $var[$i] = trim($j);                                      </span>
-<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span><span class="lineNoCov">              0 :                     if ($type === 'hash') {                                                              </span>
+<span class="lineNum" id="container59"><a name="59"></a><a href="#59" id="line59">      59</a> </span><span class="lineNoCov">              0 :                     if ($type === self::HASH) {                                                          </span>
 <span class="lineNum" id="container60"><a name="60"></a><a href="#60" id="line60">      60</a> </span>                :                         // key:value,key2:value2                                                         
 <span class="lineNum" id="container61"><a name="61"></a><a href="#61" id="line61">      61</a> </span><span class="lineNoCov">              0 :                         $nvar = array();                                                                 </span>
 <span class="lineNum" id="container62"><a name="62"></a><a href="#62" id="line62">      62</a> </span><span class="lineNoCov">              0 :                         foreach ($var as $keypair) {                                                     </span>
@@ -225,16 +225,16 @@
 <span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span><span class="lineNoCov">              0 :                 if (!is_array($var)) break;                                                              </span>
 <span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span><span class="lineNoCov">              0 :                 $keys = array_keys($var);                                                                </span>
 <span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span><span class="lineNoCov">              0 :                 if ($keys === array_keys($keys)) {                                                       </span>
-<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span><span class="lineNoCov">              0 :                     if ($type == 'list') return $var;                                                    </span>
-<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span><span class="lineNoCov">              0 :                     elseif ($type == 'lookup') {                                                         </span>
+<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span><span class="lineNoCov">              0 :                     if ($type == self::ALIST) return $var;                                               </span>
+<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span><span class="lineNoCov">              0 :                     elseif ($type == self::LOOKUP) {                                                     </span>
 <span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span><span class="lineNoCov">              0 :                         $new = array();                                                                  </span>
 <span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span><span class="lineNoCov">              0 :                         foreach ($var as $key) {                                                         </span>
 <span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span><span class="lineNoCov">              0 :                             $new[$key] = true;                                                           </span>
 <span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span><span class="lineNoCov">              0 :                         }                                                                                </span>
 <span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span><span class="lineNoCov">              0 :                         return $new;                                                                     </span>
 <span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span><span class="lineNoCov">              0 :                     } else break;                                                                        </span>
-<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span><span class="lineDeadCode">                :                 }                                                                                        </span>
-<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span><span class="lineNoCov">              0 :                 if ($type === 'lookup') {                                                                </span>
+<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span><span class="lineNoCov">              0 :                 }                                                                                        </span>
+<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span><span class="lineNoCov">              0 :                 if ($type === self::LOOKUP) {                                                            </span>
 <span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span><span class="lineNoCov">              0 :                     foreach ($var as $key =&gt; $value) {                                                   </span>
 <span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span><span class="lineNoCov">              0 :                         $var[$key] = true;                                                               </span>
 <span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span><span class="lineNoCov">              0 :                     }                                                                                    </span>
@@ -255,7 +255,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.2.20</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.3</a> at Sat Jun 7 16:34:07 CEST 2008.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.3.1</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.2</a> at Thu Sep 25 18:42:10 CEST 2008.</td></tr>
     </table>
 
     <br />
@@ -296,6 +296,11 @@
         },
         "panel21": {
           "header": "2 tests cover line 21",
+          "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
+          "footer": ""
+        },
+        "panel22": {
+          "header": "2 tests cover line 22",
           "body": "<ul><li class=\"testPassed\">testAllowedHTMLScanningPositive(IDS_MonitorTest)</li><li class=\"testPassed\">testAllowedHTMLScanningNegative(IDS_MonitorTest)</li></ul>",
           "footer": ""
         },

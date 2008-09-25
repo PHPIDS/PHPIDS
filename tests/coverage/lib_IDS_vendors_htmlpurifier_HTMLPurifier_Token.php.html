@@ -119,7 +119,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#17">public function __get($n)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#16">public function __get($n)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -159,30 +159,29 @@
 <span class="lineNum" id="container4"><a name="4"></a><a href="#4" id="line4">       4</a> </span>                :  * Abstract base token class that all others inherit from.                              
 <span class="lineNum" id="container5"><a name="5"></a><a href="#5" id="line5">       5</a> </span>                :  */                                                                                     
 <span class="lineNum" id="container6"><a name="6"></a><a href="#6" id="line6">       6</a> </span><span class="lineCov">              1 : class HTMLPurifier_Token {                                                              </span>
-<span class="lineNum" id="container7"><a name="7"></a><a href="#7" id="line7">       7</a> </span>                :     public $type; /**&lt; Type of node to bypass &lt;tt&gt;is_a()&lt;/tt&gt;. */                       
-<span class="lineNum" id="container8"><a name="8"></a><a href="#8" id="line8">       8</a> </span>                :     public $line; /**&lt; Line number node was on in source document. Null if unknown. */  
-<span class="lineNum" id="container9"><a name="9"></a><a href="#9" id="line9">       9</a> </span>                :                                                                                         
-<span class="lineNum" id="container10"><a name="10"></a><a href="#10" id="line10">      10</a> </span>                :     /**                                                                                 
-<span class="lineNum" id="container11"><a name="11"></a><a href="#11" id="line11">      11</a> </span>                :      * Lookup array of processing that this token is exempt from.                       
-<span class="lineNum" id="container12"><a name="12"></a><a href="#12" id="line12">      12</a> </span>                :      * Currently, valid values are &quot;ValidateAttributes&quot; and                             
-<span class="lineNum" id="container13"><a name="13"></a><a href="#13" id="line13">      13</a> </span>                :      * &quot;MakeWellFormed_TagClosedError&quot;                                                  
-<span class="lineNum" id="container14"><a name="14"></a><a href="#14" id="line14">      14</a> </span>                :      */                                                                                 
-<span class="lineNum" id="container15"><a name="15"></a><a href="#15" id="line15">      15</a> </span>                :     public $armor = array();                                                            
-<span class="lineNum" id="container16"><a name="16"></a><a href="#16" id="line16">      16</a> </span>                :                                                                                         
-<span class="lineNum" id="container17"><a name="17"></a><a href="#17" id="line17">      17</a> </span>                :     public function __get($n) {                                                         
-<span class="lineNum" id="container18"><a name="18"></a><a href="#18" id="line18">      18</a> </span>                :       if ($n === 'type') {                                                              
-<span class="lineNum" id="container19"><a name="19"></a><a href="#19" id="line19">      19</a> </span>                :         trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
-<span class="lineNum" id="container20"><a name="20"></a><a href="#20" id="line20">      20</a> </span>                :         switch (get_class($this)) {                                                     
-<span class="lineNum" id="container21"><a name="21"></a><a href="#21" id="line21">      21</a> </span>                :           case 'HTMLPurifier_Token_Start': return 'start';                              
-<span class="lineNum" id="container22"><a name="22"></a><a href="#22" id="line22">      22</a> </span>                :           case 'HTMLPurifier_Token_Empty': return 'empty';                              
-<span class="lineNum" id="container23"><a name="23"></a><a href="#23" id="line23">      23</a> </span>                :           case 'HTMLPurifier_Token_End': return 'end';                                  
-<span class="lineNum" id="container24"><a name="24"></a><a href="#24" id="line24">      24</a> </span>                :           case 'HTMLPurifier_Token_Text': return 'text';                                
-<span class="lineNum" id="container25"><a name="25"></a><a href="#25" id="line25">      25</a> </span>                :           case 'HTMLPurifier_Token_Comment': return 'comment';                          
-<span class="lineNum" id="container26"><a name="26"></a><a href="#26" id="line26">      26</a> </span>                :           default: return null;                                                         
-<span class="lineNum" id="container27"><a name="27"></a><a href="#27" id="line27">      27</a> </span>                :         }                                                                               
-<span class="lineNum" id="container28"><a name="28"></a><a href="#28" id="line28">      28</a> </span>                :       }                                                                                 
-<span class="lineNum" id="container29"><a name="29"></a><a href="#29" id="line29">      29</a> </span>                :     }                                                                                   
-<span class="lineNum" id="container30"><a name="30"></a><a href="#30" id="line30">      30</a> </span>                : }                                                                                       
+<span class="lineNum" id="container7"><a name="7"></a><a href="#7" id="line7">       7</a> </span>                :     public $line; /**&lt; Line number node was on in source document. Null if unknown. */  
+<span class="lineNum" id="container8"><a name="8"></a><a href="#8" id="line8">       8</a> </span>                :                                                                                         
+<span class="lineNum" id="container9"><a name="9"></a><a href="#9" id="line9">       9</a> </span>                :     /**                                                                                 
+<span class="lineNum" id="container10"><a name="10"></a><a href="#10" id="line10">      10</a> </span>                :      * Lookup array of processing that this token is exempt from.                       
+<span class="lineNum" id="container11"><a name="11"></a><a href="#11" id="line11">      11</a> </span>                :      * Currently, valid values are &quot;ValidateAttributes&quot; and                             
+<span class="lineNum" id="container12"><a name="12"></a><a href="#12" id="line12">      12</a> </span>                :      * &quot;MakeWellFormed_TagClosedError&quot;                                                  
+<span class="lineNum" id="container13"><a name="13"></a><a href="#13" id="line13">      13</a> </span>                :      */                                                                                 
+<span class="lineNum" id="container14"><a name="14"></a><a href="#14" id="line14">      14</a> </span>                :     public $armor = array();                                                            
+<span class="lineNum" id="container15"><a name="15"></a><a href="#15" id="line15">      15</a> </span>                :                                                                                         
+<span class="lineNum" id="container16"><a name="16"></a><a href="#16" id="line16">      16</a> </span>                :     public function __get($n) {                                                         
+<span class="lineNum" id="container17"><a name="17"></a><a href="#17" id="line17">      17</a> </span>                :       if ($n === 'type') {                                                              
+<span class="lineNum" id="container18"><a name="18"></a><a href="#18" id="line18">      18</a> </span>                :         trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
+<span class="lineNum" id="container19"><a name="19"></a><a href="#19" id="line19">      19</a> </span>                :         switch (get_class($this)) {                                                     
+<span class="lineNum" id="container20"><a name="20"></a><a href="#20" id="line20">      20</a> </span>                :           case 'HTMLPurifier_Token_Start': return 'start';                              
+<span class="lineNum" id="container21"><a name="21"></a><a href="#21" id="line21">      21</a> </span>                :           case 'HTMLPurifier_Token_Empty': return 'empty';                              
+<span class="lineNum" id="container22"><a name="22"></a><a href="#22" id="line22">      22</a> </span>                :           case 'HTMLPurifier_Token_End': return 'end';                                  
+<span class="lineNum" id="container23"><a name="23"></a><a href="#23" id="line23">      23</a> </span>                :           case 'HTMLPurifier_Token_Text': return 'text';                                
+<span class="lineNum" id="container24"><a name="24"></a><a href="#24" id="line24">      24</a> </span>                :           case 'HTMLPurifier_Token_Comment': return 'comment';                          
+<span class="lineNum" id="container25"><a name="25"></a><a href="#25" id="line25">      25</a> </span>                :           default: return null;                                                         
+<span class="lineNum" id="container26"><a name="26"></a><a href="#26" id="line26">      26</a> </span>                :         }                                                                               
+<span class="lineNum" id="container27"><a name="27"></a><a href="#27" id="line27">      27</a> </span>                :       }                                                                                 
+<span class="lineNum" id="container28"><a name="28"></a><a href="#28" id="line28">      28</a> </span>                :     }                                                                                   
+<span class="lineNum" id="container29"><a name="29"></a><a href="#29" id="line29">      29</a> </span>                : }                                                                                       
 
 </pre>
         </td>
@@ -191,7 +190,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.2.20</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.3</a> at Sat Jun 7 16:34:07 CEST 2008.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.3.1</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.2</a> at Thu Sep 25 18:42:10 CEST 2008.</td></tr>
     </table>
 
     <br />
