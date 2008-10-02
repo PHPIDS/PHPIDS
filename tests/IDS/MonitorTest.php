@@ -394,6 +394,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         default xml namespace=toolbar,y=1&&name
                         default xml namespace=toolbar
                         default xml namespace=e(y)';
+		$exploits[] = '-Infinity++in eval(1&&name)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -402,7 +403,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(665, $result->getImpact());
+        $this->assertEquals(678, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
