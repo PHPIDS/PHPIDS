@@ -548,6 +548,9 @@ class IDS_Converter
 
         //strip quotes within typical search patterns
         $value = preg_replace('/^"([^"=\\!>]+)"$/', '$1', $value);
+        
+        //OpenID login tokens
+        $value = preg_replace('/{[\w-]{8,9}\}(?:\{[\w=]{8}\}){2}/', null, $value);
 
 		//convert Content to null to avoid false alerts 
 		$value = preg_replace('/Content/', null, $value);
