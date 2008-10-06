@@ -1245,6 +1245,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'Universität Karlsruhe (TH)';
         $exploits[] = 'Psychologie, Coaching und Training, Wissenserlangung von Führungskräften, Menschen bewegen, Direktansprache, Erfolg, Spaß, Positiv Thinking and Feeling, Natur, Kontakte pflegen, Face to Face Contact, Sport/Fitness (Fussball, Beachvolleyball, Schwimmen, Laufen, Krafttraining, Bewegungsübungen uvm.), Wellness & Beauty';
         $exploits[] = 'Großelternzeit - (Sachbearbeiter Lightfline)';
+		$exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
 
         $test = new IDS_Monitor(
             $exploits,
