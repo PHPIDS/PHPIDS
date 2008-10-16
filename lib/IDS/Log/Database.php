@@ -238,6 +238,12 @@ class IDS_Log_Database implements IDS_Log_Interface
      */
     public function execute(IDS_Report $data) 
     {
+		if (!isset($_SERVER['REQUEST_URI'])) {
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+			if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
+				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
+			} 
+		}     	
 
         foreach ($data as $event) {
             $page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';

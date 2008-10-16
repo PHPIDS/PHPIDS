@@ -269,6 +269,13 @@ class IDS_Log_Email implements IDS_Log_Interface
         $format .= "Affected parameters: %s \n";
         $format .= "Request URI: %s";
 
+		if (!isset($_SERVER['REQUEST_URI'])) {
+			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+			if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
+				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
+			} 
+		} 
+
         return sprintf($format,
                        $this->ip,
                        date('c'),
