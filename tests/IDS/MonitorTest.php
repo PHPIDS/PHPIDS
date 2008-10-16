@@ -198,7 +198,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testCommentList() {
 
         $exploits = array();
-        $exploits[] = '<![test';
         $exploits[] = 'test/**/blafasel';
         $exploits[] = 'OR 1#';
         $exploits[] = '<!-- test -->';
@@ -209,7 +208,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(12, $result->getImpact());
+        $this->assertEquals(9, $result->getImpact());
     }
 
     public function testConcatenatedXSSList() {

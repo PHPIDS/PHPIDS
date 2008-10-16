@@ -616,7 +616,7 @@ class IDS_Converter
 
         if (strlen($value) > 40) {
             // Replace all non-special chars
-            $converted =  preg_replace('/[\w\s\p{L},.]/', null, $value);
+            $converted =  preg_replace('/[\w\s\p{L},.!]/', null, $value);
 
             // Split string into an array, unify and sort
             $array = str_split($converted);
