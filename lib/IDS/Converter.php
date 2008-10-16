@@ -287,7 +287,7 @@ class IDS_Converter
     public static function convertFromSQLKeywords($value)
     {
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' .
-            '(?:(?:^|\W)IN[+\s]*\([^()]+\))/ims');
+            '(?:(?:^|\W)IN[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/null,/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
@@ -561,6 +561,13 @@ class IDS_Converter
             null,
             $value
         );
+        
+        //remove parenthesis inside sentences
+        $value = preg_replace('/(\w\s)\(([&\w]+)\)(\s\w|$)/', '$1$2$3', $value);
+
+        //normalize ampersand listings
+        $value = preg_replace('/(\w\s)&\s(\w)/', '$1$3', $value);
+
 
         return $value;
     }

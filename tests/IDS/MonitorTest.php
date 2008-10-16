@@ -403,7 +403,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(678, $result->getImpact());
+        $this->assertEquals(675, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -1246,6 +1246,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'Psychologie, Coaching und Training, Wissenserlangung von Führungskräften, Menschen bewegen, Direktansprache, Erfolg, Spaß, Positiv Thinking and Feeling, Natur, Kontakte pflegen, Face to Face Contact, Sport/Fitness (Fussball, Beachvolleyball, Schwimmen, Laufen, Krafttraining, Bewegungsübungen uvm.), Wellness & Beauty';
         $exploits[] = 'Großelternzeit - (Sachbearbeiter Lightfline)';
 		$exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
+		$exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
+		$exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
 
         $test = new IDS_Monitor(
             $exploits,
