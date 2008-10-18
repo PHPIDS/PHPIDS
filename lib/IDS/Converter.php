@@ -548,11 +548,11 @@ class IDS_Converter
 
         //strip quotes within typical search patterns
         $value = preg_replace('/^"([^"=\\!>]+)"$/', '$1', $value);
-        
+
         //OpenID login tokens
         $value = preg_replace('/{[\w-]{8,9}\}(?:\{[\w=]{8}\}){2}/', null, $value);
 
-		//convert Content to null to avoid false alerts 
+		//convert Content to null to avoid false alerts
 		$value = preg_replace('/Content/', null, $value);
 
         //strip emoticons
@@ -561,12 +561,12 @@ class IDS_Converter
             null,
             $value
         );
-        
+
         //remove parenthesis inside sentences
         $value = preg_replace('/(\w\s)\(([&\w]+)\)(\s\w|$)/', '$1$2$3', $value);
 
         //normalize ampersand listings
-        $value = preg_replace('/(\w\s)&\s(\w)/', '$1$3', $value);
+        $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
 
 
         return $value;
