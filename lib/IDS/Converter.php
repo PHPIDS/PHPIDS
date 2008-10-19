@@ -302,7 +302,6 @@ class IDS_Converter
                          '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '!', $value);
         $value   = preg_replace('/"\s+\d/', '"', $value);
-        $value   = str_replace('~', ' ', $value);
 
         return $value;
     }
@@ -547,7 +546,7 @@ class IDS_Converter
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
         //strip quotes within typical search patterns
-        $value = preg_replace('/^"([^"=\\!>]+)"$/', '$1', $value);
+        $value = preg_replace('/^"([^"=\\!><~]+)"$/', '$1', $value);
 
         //OpenID login tokens
         $value = preg_replace('/{[\w-]{8,9}\}(?:\{[\w=]{8}\}){2}/', null, $value);
