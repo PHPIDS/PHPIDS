@@ -561,6 +561,9 @@ class IDS_Converter
             $value
         );
 
+		// normalize separation char repetion
+		$value = preg_replace('/([.+~=\-])\1{2,}/m', '$1', $value);
+
         //remove parenthesis inside sentences
         $value = preg_replace('/(\w\s)\(([&\w]+)\)(\s\w|$)/', '$1$2$3', $value);
 
