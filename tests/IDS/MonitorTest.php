@@ -558,6 +558,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa' REGEXP- md5(1) or '1";
         $exploits[] = "aa' DIV@1 = 0 or '1";
         $exploits[] = "aa' XOR- column != -'0";
+        $exploits[] = '============================="';
 
         $this->_testForPlainEvent($exploits);
 
@@ -566,7 +567,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(474, $result->getImpact());
+        $this->assertEquals(480, $result->getImpact());
     }
 
     public function testSQLIList2() {
