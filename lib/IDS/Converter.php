@@ -132,7 +132,7 @@ class IDS_Converter
         $matches = array();
 
         // check if value matches typical charCode pattern
-        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)+){4,}/ms',
+        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)){4,}/ms',
             $value, $matches)) {
 
             $converted = '';
