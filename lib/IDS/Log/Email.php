@@ -364,7 +364,7 @@ class IDS_Log_Email implements IDS_Log_Interface
      */
     protected function send($address, $data, $headers, $envelope = null)
     {
-        if (!$envelope || strpos(ini_get('sendmail_path'),' -f ') !== false) {
+        if (!$envelope || strpos(ini_get('sendmail_path'),' -f') !== false) {
             return mail($address,
                 $this->subject,
                 $data,
