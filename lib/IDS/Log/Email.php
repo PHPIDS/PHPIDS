@@ -269,12 +269,12 @@ class IDS_Log_Email implements IDS_Log_Interface
         $format .= "Affected parameters: %s \n";
         $format .= "Request URI: %s";
 
-		if (!isset($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-			if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
-				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
-			} 
-		} 
+        if (!isset($_SERVER['REQUEST_URI'])) {
+            $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
+                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
+            } 
+        } 
 
         return sprintf($format,
                        $this->ip,
@@ -355,19 +355,27 @@ class IDS_Log_Email implements IDS_Log_Interface
     /**
      * Sends an email
      *
-     * @param string $address email address
-     * @param string $data    the report data
-     * @param string $headers the mail headers
+     * @param string $address  email address
+     * @param string $data     the report data
+     * @param string $headers  the mail headers
+     * @param string $envelope the optional envelope string
      *
      * @return boolean
      */
     protected function send($address, $data, $headers, $envelope = null)
     {
-        return mail($address,
-                    $this->subject,
-                    $data,
-                    $headers,
-                    '-f' . $envelope);
+        if (!$envelope || strpos(ini_get('sendmail_path'),' -f ') !== false) {
+            return mail($address,
+                $this->subject,
+                $data,
+                $headers);
+        } else {
+            return mail($address,
+                $this->subject,
+                $data,
+                $headers,
+                '-f' . $envelope);
+        }
     }
 }
 
