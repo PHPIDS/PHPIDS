@@ -61,7 +61,7 @@
     </filter>
     <filter>
         <id>7</id>
-        <rule><![CDATA[(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+;)]]></rule>
+        <rule><![CDATA[(?:\d\s*[|&]{2}\s*\w)|(?:[=(].+\?.+:)|(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+(;|$))]]></rule>
         <description>Detects JavaScript with(), ternary operators and XML predicate attacks</description>
         <tags>
             <tag>xss</tag>
@@ -158,7 +158,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.\/+-]))]]></rule>
+        <rule><![CDATA[([^*\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.\/+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
