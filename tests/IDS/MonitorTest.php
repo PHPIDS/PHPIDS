@@ -266,6 +266,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         ,x=$[$+\'val\']
                         x(x(\'nam\'+$)+$)';
         $exploits[] = 'typeof~delete~typeof~alert(1)';
+        $exploits[] = 'ªª=1&& name
+                        ª=1&&window.eval,1
+                        ª(ªª)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -274,7 +277,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1004, $result->getImpact());
+        $this->assertEquals(1011, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -402,7 +405,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(675, $result->getImpact());
+        $this->assertEquals(681, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -481,7 +484,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(434, $result->getImpact());
+        $this->assertEquals(437, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
