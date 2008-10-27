@@ -185,6 +185,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '"src=xxx a="';
         $exploits[] = '"\' onerror = alert(1) ';
         $exploits[] = '" a "" b="x"';
+
         $this->_testForPlainEvent($exploits);
 
         $test = new IDS_Monitor(
@@ -269,6 +270,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'ªª=1&& name
                         ª=1&&window.eval,1
                         ª(ªª)';
+        $exploits[] = "y='nam' x=this.eval x(x(y  ('e') new Array) y)";
 
         $this->_testForPlainEvent($exploits);
 
@@ -277,7 +279,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1051, $result->getImpact());
+        $this->assertEquals(1070, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -520,7 +522,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(460, $result->getImpact());
+        $this->assertEquals(486, $result->getImpact());
     }
 
     public function testSQLIList() {
