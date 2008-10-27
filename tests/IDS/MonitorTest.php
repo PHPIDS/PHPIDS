@@ -478,6 +478,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         type=text/html>";
         $exploits[] = "onabort=onblur=onchange=onclick=ondblclick=onerror=onfocus=onkeydown=onkeypress=onkeyup=onload=onmousedown=onmousemove=onmouseout=onmouseover=onmouseup=onreset=onresize=onselect=onsubmit=onunload=alert";
         $exploits[] = 'onload=1&&alert';
+        $exploits[] = "document.createStyleSheet('http://businessinfo.co.uk/labs/xss/xss.css')";
 
         $this->_testForPlainEvent($exploits);
 
@@ -486,7 +487,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(462, $result->getImpact());
+        $this->assertEquals(466, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
