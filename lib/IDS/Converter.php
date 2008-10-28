@@ -546,6 +546,9 @@ class IDS_Converter
         //Xajax error reportings
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
+        //strip false alert triggering apostrophes
+        $value = preg_replace('/(\w)\"(s)/m', '$1$2', $value);
+
         //strip quotes within typical search patterns
         $value = preg_replace('/^"([^"=\\!><~]+)"$/', '$1', $value);
 
@@ -561,7 +564,7 @@ class IDS_Converter
             null,
             $value
         );
-
+        
 		// normalize separation char repetion
 		$value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
 
