@@ -400,7 +400,7 @@ class IDS_Converter
     {
         $converted = strip_tags($value);
 
-        if ($converted != $value) {
+        if ($converted && ($converted != $value)) {
             return $value . "\n" . $converted;
         }
         return $value;
@@ -525,7 +525,7 @@ class IDS_Converter
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
             '|(?:NaN|Infinity)\W/ms', 1, $converted);
 
-        if ($compare != $converted) {
+        if ($converted && ($compare != $converted)) {
             $value .= "\n" . $converted;
         }
 
