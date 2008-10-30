@@ -431,6 +431,24 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         $this->assertEquals(100, $result->getImpact());
     }
+    
+    public function testConditionalCompilationXSSList() {
+
+        $exploits = array();
+        $exploits[] = "/*@cc_on@set@x=88@set@ss=83@set@s=83@*/@cc_on alert(String.fromCharCode(@x,@s,@ss))";
+        $exploits[] = "@cc_on eval(@cc_on name)";
+        $exploits[] = "@if(@_mc680x0)@else alert(@_jscript_version)@end";
+        $exploits[] = "\"\"@cc_on,x=@cc_on'something'@cc_on";
+
+        $this->_testForPlainEvent($exploits);
+
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+        $result = $test->run();
+        $this->assertEquals(63, $result->getImpact());
+    }    
 
     public function testXSSList() {
 
@@ -487,7 +505,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(466, $result->getImpact());
+        $this->assertEquals(467, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {

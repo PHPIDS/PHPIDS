@@ -358,13 +358,13 @@
     </filter>
     <filter>
         <id>34</id>
-        <rule><![CDATA[(?:\<\/\w+\s\w+)]]></rule>
-        <description>Detects attributes in closing tags (IE-only issue)</description>
+        <rule><![CDATA[(?:\<\/\w+\s\w+)|(?:@(?:cc_on|set)[\s@,"=])]]></rule>
+        <description>Detects attributes in closing tags and conditional compilation tokens</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
         </tags>
-        <impact>3</impact>
+        <impact>4</impact>
     </filter>
     <filter>
         <id>35</id>
