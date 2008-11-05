@@ -158,7 +158,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^*\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.\/+-]))]]></rule>
+        <rule><![CDATA[([^*\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@>-])(\s*return\s*)?(?:alert|showmodaldialog|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.\/+-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -218,7 +218,7 @@
     </filter>
     <filter>
         <id>21</id>
-        <rule><![CDATA[(?:\d\s*[|&]+\w+)|(?:,\s*(?:alert|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.@\/+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)|(?:&\s*\w+\s*\)[^,])]]></rule>
+        <rule><![CDATA[(?:\d\s*[|&]+\w+)|(?:,\s*(?:alert|showmodaldialog|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|showmodaldialog|prompt|write(?:ln)?|confirm|dialog|open))(?(1)[^\w]|(?:\s*[^\s\w,.@\/+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)|(?:&\s*\w+\s*\)[^,])]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
