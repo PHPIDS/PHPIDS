@@ -154,12 +154,12 @@ class IDS_Log_File implements IDS_Log_Interface
                 rawurlencode($event->getValue()) . ' ';
         }
 
-		if (!isset($_SERVER['REQUEST_URI'])) {
-			$_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-			if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
-				$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
-			} 
-		} 
+        if (!isset($_SERVER['REQUEST_URI'])) {
+            $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
+                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
+            } 
+        } 
 
         $dataString = sprintf($format,
                               $this->ip,
