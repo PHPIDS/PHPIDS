@@ -46,6 +46,7 @@ require_once 'IDS/Log/Interface.php';
       `page` varchar(255) NOT null,
       `ip` varchar(15) NOT null,
       `impact` int(11) unsigned NOT null,
+      `origin` varchar(15) NOT null,
       `created` datetime NOT null,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM ;
@@ -179,6 +180,7 @@ class IDS_Log_Database implements IDS_Log_Interface
                     page,
                     ip,
                     impact,
+					origin,
                     created
                 )
                 VALUES (
@@ -187,6 +189,7 @@ class IDS_Log_Database implements IDS_Log_Interface
                     :page,
                     :ip,
                     :impact,
+					:origin,
                     now()
                 )
             ');
@@ -258,6 +261,7 @@ class IDS_Log_Database implements IDS_Log_Interface
             $this->statement->bindParam('page', $page);
             $this->statement->bindParam('ip', $ip);
             $this->statement->bindParam('impact', $data->getImpact());
+            $this->statement->bindParam('origin', $_SERVER['SERVER_ADDR']);
 
             if (!$this->statement->execute()) {
 

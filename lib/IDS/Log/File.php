@@ -146,7 +146,7 @@ class IDS_Log_File implements IDS_Log_Interface
     protected function prepareData($data) 
     {
 
-        $format = '"%s",%s,%d,"%s","%s","%s"';
+        $format = '"%s",%s,%d,"%s","%s","%s","%s"';
 
         $attackedParameters = '';
         foreach ($data as $event) {
@@ -167,7 +167,8 @@ class IDS_Log_File implements IDS_Log_Interface
                               $data->getImpact(),
                               join(' ', $data->getTags()),
                               trim($attackedParameters),
-                              urlencode($_SERVER['REQUEST_URI']));
+                              urlencode($_SERVER['REQUEST_URI']),
+                              $_SERVER['SERVER_ADDR']);
 
         return $dataString;
     }
