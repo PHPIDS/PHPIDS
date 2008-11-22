@@ -271,8 +271,8 @@ class IDS_Log_Email implements IDS_Log_Interface
         }
 
         $format .= "Affected parameters: %s \n";
-        $format .= "Request URI: %s";
-        $format .= "Origin: %s";
+        $format .= "Request URI: %s \n";
+        $format .= "Origin: %s \n";
 
         if (!isset($_SERVER['REQUEST_URI'])) {
             $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
