@@ -688,7 +688,7 @@
     </filter>
     <filter>
         <id>65</id>
-        <rule><![CDATA[(?:(?:^|\W)on\w+\s*=[\w\W]*(?:on\w+|alert|eval|print|confirm|prompt))|(?:groups=\d+\(\w+\))|(?:(.)\1{128,})]]></rule>
+        <rule><![CDATA[(?:(?:do|for|while)\s*\([^;]+;+\))|(?:(?:^|\W)on\w+\s*=[\w\W]*(?:on\w+|alert|eval|print|confirm|prompt))|(?:groups=\d+\(\w+\))|(?:(.)\1{128,})]]></rule>
         <description>Detects basic XSS DoS attempts</description>
         <tags>
             <tag>rfe</tag>
