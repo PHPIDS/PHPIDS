@@ -38,7 +38,13 @@ try {
     * Please keep in mind what array_merge does and how this might interfer 
     * with your variables_order settings
     */
-    $request = array_merge_recursive($_GET, $_POST, $_COOKIE);
+    $request = array(
+        'REQUEST' => $_REQUEST,
+        'GET' => $_GET,
+        'POST' => $_POST,
+        'COOKIE' => $_COOKIE
+    );
+
     $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');
 
     /**
