@@ -43,6 +43,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml('test1');
         $this->assertEquals(array('test1'), $test->getHtml());
     }
+    
+    public function testGetStorage() {
+        $test = new IDS_Monitor(
+            array('user' => 'admin<script/src=http/attacker.com>'),
+            $this->init
+        );
+        $this->assertTrue($test->getStorage() instanceof IDS_Filter_Storage);
+    }      
 
     public function testRunWithTags() {
         $test = new IDS_Monitor(

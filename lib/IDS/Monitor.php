@@ -642,6 +642,16 @@ class IDS_Monitor
     }
 
     /**
+     * Returns storage container
+     *
+     * @return array
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
      * Returns report object providing various functions to work with
      * detected results. Also the centrifuge data is being set as property
      * of the report object.
