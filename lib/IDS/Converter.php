@@ -594,11 +594,10 @@ class IDS_Converter
     {
         $threshold = 3.49;
 
-        try {
-            $unserialized = @unserialize($value);
-        } catch (Exception $exception) {
-            $unserialized = false;
-        }
+		$unserialized = false;
+		if(preg_match('/^\w:\d+:\{/', $value)) {
+        	$unserialized = @unserialize($value);
+		}
 
         if (strlen($value) > 25 && !$unserialized) {
             // Check for the attack char ratio
