@@ -559,8 +559,8 @@ class IDS_Converter
         //OpenID login tokens
         $value = preg_replace('/{[\w-]{8,9}\}(?:\{[\w=]{8}\}){2}/', null, $value);
 
-		//convert Content to null to avoid false alerts
-		$value = preg_replace('/Content/', null, $value);
+		//convert Content and \sdo\s to null
+		$value = preg_replace('/Content|\Wdo\s/', null, $value);
 
         //strip emoticons
         $value = preg_replace(
@@ -607,7 +607,7 @@ class IDS_Converter
 
             $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><-]+/m',
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/([\d\s\p{L}]{4,})+/m', 'aaa',
+            $overall_length  = strlen(preg_replace('/([\d\s\p{L}]{3,})+/m', 'aaa',
                 preg_replace('/\s{2,}/m', null, $tmp_value)));
 
             if ($stripped_length != 0

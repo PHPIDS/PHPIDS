@@ -544,6 +544,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "if(0){} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
                         'foo bar foo bar foo'";
         $exploits[] = "switch('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
+        $exploits[] = "xxx='javascr',xxx+=('ipt:eva'),xxx+=('l(n'),xxx+=('ame),y')
+                        Cen:tri:fug:eBy:pas:sTe:xt:do location=(xxx)
+                        while(0)
+                        ";
 
         $this->_testForPlainEvent($exploits);
 
@@ -552,7 +556,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(486, $result->getImpact());
+        $this->assertEquals(497, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -705,7 +709,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(554, $result->getImpact());
+        $this->assertEquals(558, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -1177,7 +1181,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 166, 155);
+        $this->assertEquals(155, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
