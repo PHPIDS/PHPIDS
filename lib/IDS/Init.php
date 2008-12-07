@@ -135,7 +135,8 @@ class IDS_Init
             $this->configPath = $path;
         } else {
             throw new Exception(
-                'Configuration file could not be found'
+                'Configuration file could not be found at ' .
+                htmlspecialchars($path, ENT_QUOTES, 'UTF-8')
             );
         }
     }

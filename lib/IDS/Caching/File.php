@@ -96,7 +96,8 @@ class IDS_Caching_File implements IDS_Caching_Interface
         $this->path   = $init->getBasePath() . $this->config['path'];
 
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp ' . 
+            throw new Exception('Make sure all files in ' . 
+            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') . 
                 'are writeable!');
         }
     }
@@ -131,7 +132,9 @@ class IDS_Caching_File implements IDS_Caching_Interface
 
         if (!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, 
             $this->path))) {
-            throw new Exception("Temp directory seems not writable");
+            throw new Exception('Temp directory ' . 
+            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') . 
+            ' seems not writable');
         }    	
         
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > 

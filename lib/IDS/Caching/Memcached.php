@@ -107,7 +107,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
         $this->_connect();
 
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp' . 
+            throw new Exception('Make sure all files in ' . 
+            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
                 ' are writeable!');
         }
     }
@@ -147,7 +148,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
         }
 
         if (!is_writable($this->path)) {
-            throw new Exception('Make sure all files in IDS/tmp' . 
+            throw new Exception('Make sure all files in ' . 
+            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') . 
                 ' are writeable!');
         }
 
