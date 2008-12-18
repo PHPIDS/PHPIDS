@@ -151,7 +151,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         $rows = $handle->query('SELECT created FROM `' . 
             $handle->quote($this->config['table']).'`');
             
-        if ($rows->rowCount() === 0) {
+        if (!$rows || $rows->rowCount() === 0) {
         
             $this->_write($handle, $data);             
         } else {
@@ -246,10 +246,10 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         
         try {
             $handle->query('TRUNCATE ' . 
-                $handle->quote($this->config['table']).'');
+                $this->config['table'].'');
             $statement = $handle->prepare('
                 INSERT INTO `' . 
-                $handle->quote($this->config['table']).'` (
+                $this->config['table'].'` (
                     type,
                     data,
                     created,
