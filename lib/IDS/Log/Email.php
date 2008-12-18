@@ -84,6 +84,17 @@ class IDS_Log_Email implements IDS_Log_Interface
     private $safemode = true;
 
     /**
+     * Urlencode for result strings
+     *
+     * This switch is true by default. Setting it to false removes 
+     * the 'better safe than sorry' urlencoding for the result string in 
+     * the report mails. Enhances readability but maybe XSSes email clients.
+     *
+     * @var boolean
+     */
+    private $urlencode = true;
+
+    /**
      * Send rate
      *
      * If safemode is enabled, this property defines how often reports will be
@@ -141,6 +152,7 @@ class IDS_Log_Email implements IDS_Log_Interface
             $this->headers      = $config->config['Logging']['header'];
             $this->envelope     = $config->config['Logging']['envelope'];
             $this->safemode     = $config->config['Logging']['safemode'];
+            $this->urlencode    = $config->config['Logging']['urlencode'];
             $this->allowed_rate = $config->config['Logging']['allowed_rate'];
             $this->tmp_path     = $config->getBasePath() 
                 . $config->config['General']['tmp_path'];
@@ -267,7 +279,9 @@ class IDS_Log_Email implements IDS_Log_Interface
         $attackedParameters = '';
         foreach ($data as $event) {
             $attackedParameters .= $event->getName() . '=' .
-                urlencode($event->getValue()) . ", ";
+                ((!isset($this->urlencode) ||$this->urlencode) 
+                	? urlencode($event->getValue()) 
+                	: $event->getValue()) . ", ";
         }
 
         $format .= "Affected parameters: %s \n";
