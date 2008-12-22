@@ -448,39 +448,50 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value)
     {
-        if (function_exists('mb_convert_encoding')
-           && preg_match('/\+A\w+-/m', $value)) {
-            $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
-        } else {
-            //list of all critical UTF7 codepoints
-            $schemes = array(
-                '+ACI-'      => '"',
-                '+ADw-'      => '<',
-                '+AD4-'      => '>',
-                '+AFs-'      => '[',
-                '+AF0-'      => ']',
-                '+AHs-'      => '{',
-                '+AH0-'      => '}',
-                '+AFw-'      => '\\',
-                '+ADs-'      => ';',
-                '+ACM-'      => '#',
-                '+ACY-'      => '&',
-                '+ACU-'      => '%',
-                '+ACQ-'      => '$',
-                '+AD0-'      => '=',
-                '+AGA-'      => '`',
-                '+ALQ-'      => '"',
-                '+IBg-'      => '"',
-                '+IBk-'      => '"',
-                '+AHw-'      => '|',
-                '+ACo-'      => '*',
-                '+AF4-'      => '^',
-                '+ACIAPg-'   => '">',
-                '+ACIAPgA8-' => '">'
-            );
-
-            $value = str_ireplace(array_keys($schemes),
-                array_values($schemes), $value);
+        if(preg_match('/\+A\w+-/m', $value)) {
+            if (function_exists('mb_convert_encoding')) {
+                if(version_compare(PHP_VERSION, '5.2.8', '>=')) {
+                    $value .= "\n" 
+                        . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
+                } else {
+                    $value .= "\n" 
+                        . mb_convert_encoding(
+                            urlencode($value), 
+                            'UTF-8', 
+                            'UTF-7'
+                        );
+                }
+            } else {
+                //list of all critical UTF7 codepoints
+                $schemes = array(
+                    '+ACI-'      => '"',
+                    '+ADw-'      => '<',
+                    '+AD4-'      => '>',
+                    '+AFs-'      => '[',
+                    '+AF0-'      => ']',
+                    '+AHs-'      => '{',
+                    '+AH0-'      => '}',
+                    '+AFw-'      => '\\',
+                    '+ADs-'      => ';',
+                    '+ACM-'      => '#',
+                    '+ACY-'      => '&',
+                    '+ACU-'      => '%',
+                    '+ACQ-'      => '$',
+                    '+AD0-'      => '=',
+                    '+AGA-'      => '`',
+                    '+ALQ-'      => '"',
+                    '+IBg-'      => '"',
+                    '+IBk-'      => '"',
+                    '+AHw-'      => '|',
+                    '+ACo-'      => '*',
+                    '+AF4-'      => '^',
+                    '+ACIAPg-'   => '">',
+                    '+ACIAPgA8-' => '">'
+                );
+    
+                $value = str_ireplace(array_keys($schemes),
+                    array_values($schemes), $value);
+            }
         }
         return $value;
     }
@@ -559,8 +570,8 @@ class IDS_Converter
         //OpenID login tokens
         $value = preg_replace('/{[\w-]{8,9}\}(?:\{[\w=]{8}\}){2}/', null, $value);
 
-		//convert Content and \sdo\s to null
-		$value = preg_replace('/Content|\Wdo\s/', null, $value);
+        //convert Content and \sdo\s to null
+        $value = preg_replace('/Content|\Wdo\s/', null, $value);
 
         //strip emoticons
         $value = preg_replace(
@@ -569,8 +580,8 @@ class IDS_Converter
             $value
         );
         
-		// normalize separation char repetion
-		$value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
+        // normalize separation char repetion
+        $value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
 
         //remove parenthesis inside sentences
         $value = preg_replace('/(\w\s)\(([&\w]+)\)(\s\w|$)/', '$1$2$3', $value);
@@ -594,10 +605,10 @@ class IDS_Converter
     {
         $threshold = 3.49;
 
-		$unserialized = false;
-		if(preg_match('/^\w:\d+:\{/', $value)) {
-        	$unserialized = @unserialize($value);
-		}
+        $unserialized = false;
+        if(preg_match('/^\w:\d+:\{/', $value)) {
+            $unserialized = @unserialize($value);
+        }
 
         if (strlen($value) > 25 && !$unserialized) {
             // Check for the attack char ratio
