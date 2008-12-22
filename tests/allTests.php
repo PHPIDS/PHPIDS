@@ -21,6 +21,10 @@
 error_reporting(E_ALL | E_STRICT | @E_DEPRECATED);
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'PHPUnit/Util/Filter.php';
+
+PHPUnit_Util_Filter::addDirectoryToFilter(dirname(__FILE__));
+PHPUnit_Util_Filter::addDirectoryToFilter(dirname(__FILE__) . '/../lib/IDS/vendors');
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
