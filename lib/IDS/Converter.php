@@ -450,17 +450,16 @@ class IDS_Converter
     {
         if(preg_match('/\+A\w+-/m', $value)) {
             if (function_exists('mb_convert_encoding')) {
-                if(version_compare(PHP_VERSION, '5.2.8', '>=')) {
-                    $value .= "\n" 
-                        . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
-                } else {
-                    $value .= "\n" 
-                        . mb_convert_encoding(
-                            urlencode($value), 
-                            'UTF-8', 
-                            'UTF-7'
-                        );
+                if(version_compare(PHP_VERSION, '5.2.8', '<')) {
+                	$tmp_chars = str_split($value);
+                	$value = '';
+                	foreach($tmp_chars as $char) {
+                		if(ord($char) <= 127) {
+                			$value .= $char;	
+                		}
+                	}    
                 }
+                $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
             } else {
                 //list of all critical UTF7 codepoints
                 $schemes = array(
