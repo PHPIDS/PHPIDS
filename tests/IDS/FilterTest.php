@@ -87,3 +87,11 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
 	}
 }
+
+/**
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: sw=4 ts=4 expandtab
+ */

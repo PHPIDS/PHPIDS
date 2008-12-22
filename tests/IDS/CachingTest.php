@@ -94,3 +94,11 @@ class IDS_CachingTest extends PHPUnit_Framework_TestCase {
     	@unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/memcache.timestamp');
     }
 }
+
+/**
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: sw=4 ts=4 expandtab
+ */

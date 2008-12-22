@@ -80,3 +80,11 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
         $this->assertSame($init, IDS_Init::init());
     }
 }
+
+/**
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: sw=4 ts=4 expandtab
+ */

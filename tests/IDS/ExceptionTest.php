@@ -102,3 +102,11 @@ class IDS_ExceptionTest extends PHPUnit_Framework_TestCase
     	$this->init->config['General']['filter_type'] = 'xml';
     }
 }
+
+/**
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * End:
+ * vim600: sw=4 ts=4 expandtab
+ */
