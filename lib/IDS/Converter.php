@@ -526,7 +526,7 @@ class IDS_Converter
             '/(?:"\s*"\s*\.)/s',
             '/(?:\s*new\s+\w+\s*[+"])/',
             '/(?:(?:^|\s+)(?:do|else)\s+)/',
-            '/(?:\{\s*new\s+\w+\s*\})/',
+            '/(?:[{(]\s*new\s+\w+\s*[)}])/',
             '/(?:(this|self).)/');
 
         // strip out concatenations
@@ -617,7 +617,7 @@ class IDS_Converter
 
             $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><-]+/m',
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/([\d\s\p{L}]{3,})+/m', 'aaa',
+            $overall_length  = strlen(preg_replace('/([\d\s\p{L}:]{3,})+/m', 'aaa',
                 preg_replace('/\s{2,}/m', null, $tmp_value)));
 
             if ($stripped_length != 0
