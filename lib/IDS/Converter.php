@@ -587,6 +587,9 @@ class IDS_Converter
 
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
+        
+        // normalize JS backspace linebreaks
+        $value = preg_replace('/^\/|\/$|,\/|\/,/m', null, $value);
 
         return $value;
     }
