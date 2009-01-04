@@ -1189,7 +1189,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(155, $result->getImpact());
+        $this->assertEquals(151, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
