@@ -589,7 +589,7 @@ class IDS_Converter
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
         // normalize JS backspace linebreaks
-        $value = preg_replace('/^\/|\/$|,\/|\/,/m', null, $value);
+        $value = preg_replace('/^\/|\/$|,\/|\/,/', null, $value);
 
         return $value;
     }
@@ -620,7 +620,7 @@ class IDS_Converter
 
             $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><-]+/m',
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/([\d\s\p{L}:]{3,})+/m', 'aaa',
+            $overall_length  = strlen(preg_replace('/([\d\s\p{L}:,]{3,})+/m', 'aaa',
                 preg_replace('/\s{2,}/m', null, $tmp_value)));
 
             if ($stripped_length != 0
