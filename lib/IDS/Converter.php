@@ -613,15 +613,25 @@ class IDS_Converter
         }
 
         if (strlen($value) > 25 && !$unserialized) {
+            
+            //strip padding
+            $tmp_value = preg_replace('/\s{4}/m', null, $value);
+            $tmp_value = preg_replace(
+                '/\s{4}|[\p{L}\d\+\-,]{40,}/m', 
+                'aaa', 
+                $tmp_value
+            );
+            
             // Check for the attack char ratio
-            $tmp_value = $value;
             $tmp_value = preg_replace('/([*.!?+-])\1{1,}/m', '$1', $tmp_value);
             $tmp_value = preg_replace('/"[\p{L}\d\s]+"/m', null, $tmp_value);
 
             $stripped_length = strlen(preg_replace('/[\d\s\p{L}.:,%\/><-]+/m',
                 null, $tmp_value));
-            $overall_length  = strlen(preg_replace('/([\d\s\p{L}:,]{3,})+/m', 'aaa',
-                preg_replace('/\s{2,}/m', null, $tmp_value)));
+            $overall_length  = strlen(
+                preg_replace('/([\d\s\p{L}:,]{3,})+/m', 'aaa',
+                preg_replace('/\s{2,}/m', null, $tmp_value))
+            );
 
             if ($stripped_length != 0
                 && $overall_length/$stripped_length <= $threshold) {

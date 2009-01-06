@@ -431,6 +431,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         undefined,undefined
                         undefined,undefined
                         undefined,undefined';
+        $exploits[] = 'location.assign(1?name+1:(x))';
 
         $this->_testForPlainEvent($exploits);
 
@@ -439,7 +440,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 764, 752);
+	$this->assertImpact($result, 768, 756);
     }
 
     public function testXMLPredicateXSSList() {
