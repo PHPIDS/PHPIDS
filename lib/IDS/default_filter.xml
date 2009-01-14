@@ -242,8 +242,8 @@
     </filter>	
     <filter>
         <id>23</id>
-        <rule><![CDATA[(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))]]></rule>
-        <description>Detects JavaScript location/document property access</description>
+        <rule><![CDATA[(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))|(?:\w+\s*=\s*\d+\W\w+)|(?:\]\s*\(\s*\w+)]]></rule>
+        <description>Detects JavaScript location/document property access and window access obfuscation</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -262,7 +262,7 @@
     </filter>
     <filter>
         <id>25</id>
-        <rule><![CDATA[(?:src\s*=s*(?:\w+:|\/\/))|(?:\w+\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()]]></rule>
+        <rule><![CDATA[(?:src\s*=s*(?:\w+:|\/\/))|(?:\w+\[("\w+"|\w+\|\|))|(?:[\d\W]\|\|[\d\W]|\W=\w+,)|(?:\/\s*\+\s*[a-z"])|(?:=\s*\$[^([]*\()|(?:=\s*\(\s*")]]></rule>
         <description>Detects obfuscated JavaScript script injections</description>
         <tags>
             <tag>xss</tag>

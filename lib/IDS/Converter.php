@@ -614,7 +614,7 @@ class IDS_Converter
             //strip padding
             $tmp_value = preg_replace('/\s{4}/m', null, $value);
             $tmp_value = preg_replace(
-                '/\s{4}|[\p{L}\d\+\-,]{40,}/m', 
+                '/\s{4}|[\p{L}\d\+\-,]{20,}/m', 
                 'aaa', 
                 $tmp_value
             );
