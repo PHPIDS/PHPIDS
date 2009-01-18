@@ -535,6 +535,9 @@ class IDS_Converter
         //strip object traversal
         $converted = preg_replace('/\w(\.\w\()/', "$1", $converted);
 
+        // normalize obfuscated method calls
+        $converted = preg_replace('/\)\s*\+/', ")", $converted);
+
         //convert JS special numbers
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
             '|(?:NaN|Infinity)\W/ms', 1, $converted);
@@ -614,7 +617,7 @@ class IDS_Converter
             //strip padding
             $tmp_value = preg_replace('/\s{4}/m', null, $value);
             $tmp_value = preg_replace(
-                '/\s{4}|[\p{L}\d\+\-,]{20,}/m', 
+                '/\s{4}|[\p{L}\d\+\-,]{8,}/m', 
                 'aaa', 
                 $tmp_value
             );

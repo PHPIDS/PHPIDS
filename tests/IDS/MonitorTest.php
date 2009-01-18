@@ -287,7 +287,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1109, $result->getImpact());
+        $this->assertEquals(1120, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -440,7 +440,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 820, 808);
+	$this->assertImpact($result, 825, 813);
     }
 
     public function testXMLPredicateXSSList() {
@@ -541,7 +541,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 519, 543);
+        $this->assertImpact($result, 493, 517);
     }
 
     public function testSelfContainedXSSList() {
@@ -581,7 +581,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(502, $result->getImpact());
+        $this->assertEquals(500, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -734,7 +734,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(583, $result->getImpact());
+        $this->assertEquals(597, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -873,7 +873,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 844, 857);
+        $this->assertImpact($result, 859, 872);
     }
 
     public function testSQLIList6() {
@@ -980,7 +980,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 122, 132);
+        $this->assertImpact($result, 126, 136);
     }
 
     public function testRFEList() {
