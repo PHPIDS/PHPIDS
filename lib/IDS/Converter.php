@@ -98,6 +98,10 @@ class IDS_Converter
             $converted = preg_replace($pattern, ';', $value);
             $value    .= "\n" . $converted;
         }
+        
+        // deal with x509 false alerts
+        $value = preg_replace('/(\w+)\/\/(\w+)/m', '$1/$2', $value);        
+        
         //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
