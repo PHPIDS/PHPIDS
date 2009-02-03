@@ -508,7 +508,7 @@ class IDS_Converter
      * @static
      * @return string
      */
-    public static function convertConcatenations($value)
+    public static function convertFromConcatenated($value)
     {
         //normalize remaining backslashes
         if ($value != preg_replace('/(\w)\\\/', "$1", $value)) {
@@ -532,7 +532,8 @@ class IDS_Converter
             '/(?:\s*new\s+\w+\s*[+",])/',
             '/(?:(?:^|\s+)(?:do|else)\s+)/',
             '/(?:[{(]\s*new\s+\w+\s*[)}])/',
-            '/(?:(this|self).)/');
+            '/(?:(this|self).)/',
+            '/(?:in\s+)/');
 
         // strip out concatenations
         $converted = preg_replace($pattern, null, $compare);
