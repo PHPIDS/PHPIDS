@@ -681,7 +681,7 @@
         <rule><![CDATA[(?:\.pl\?\w+=\w?\|\w+;)|(?:\|\(\w+=\*)|(?:\*\s*\)+\s*;)]]></rule>
         <description>Detects perl echo shellcode injection and LDAP vectors</description>
         <tags>
-            <tag>fli</tag>
+            <tag>lfi</tag>
             <tag>rfe</tag>
         </tags>
         <impact>5</impact>
