@@ -481,7 +481,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(68, $result->getImpact());
+        $this->assertEquals(87, $result->getImpact());
     }    
 
     public function testXSSList() {
@@ -533,6 +533,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "document.createStyleSheet('http://businessinfo.co.uk/labs/xss/xss.css')";
         $exploits[] = "document.body.style.cssText=name";
         $exploits[] = "for(i=0;;)i";
+        $exploits[] = "stop.sdfgkldfsgsdfgsdfgdsfg in alert(1)";
 
         $this->_testForPlainEvent($exploits);
 
@@ -541,7 +542,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 488, 512);
+        $this->assertImpact($result, 502, 524);
     }
 
     public function testSelfContainedXSSList() {
@@ -581,7 +582,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(500, $result->getImpact());
+        $this->assertEquals(503, $result->getImpact());
     }
 
     public function testSQLIList() {
