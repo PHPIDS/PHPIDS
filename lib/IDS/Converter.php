@@ -583,7 +583,7 @@ class IDS_Converter
 
         //strip emoticons
         $value = preg_replace(
-            '/(?:\s[:;]-[()\/PD]+)|(?:\s;[()PD]+)|(?:\s:[)PD]+)|-\.-|\^\^/m',
+            '/(?:\s[:;]-[)\/PD]+)|(?:\s;[)PD]+)|(?:\s:[)PD]+)|-\.-|\^\^/m',
             null,
             $value
         );

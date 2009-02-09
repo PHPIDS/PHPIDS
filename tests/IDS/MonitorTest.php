@@ -534,6 +534,12 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "document.body.style.cssText=name";
         $exploits[] = "for(i=0;;)i";
         $exploits[] = "stop.sdfgkldfsgsdfgsdfgdsfg in alert(1)";
+        $exploits[] = "this .fdgsdfgsdfgdsfgdsfg
+                        this .fdgsdfgsdfgdsfgdsfg
+                        this .fdgsdfgsdfgdsfgdsfg
+                        this .fdgsdfgsdfgdsfgdsfg
+                        this .fdgsdfgsdfgdsfgdsfg
+                        aaaaaaaaaaaaaaaa :-(alert||foo)(1)||foo";
 
         $this->_testForPlainEvent($exploits);
 
@@ -542,7 +548,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 502, 526);
+        $this->assertImpact($result, 510, 534);
     }
 
     public function testSelfContainedXSSList() {
