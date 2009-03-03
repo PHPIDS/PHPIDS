@@ -234,6 +234,10 @@ class IDS_Converter
     public static function convertEntities($value)
     {
         $converted = null;
+        
+        //deal with double encoded payload 
+        $value = preg_replace('/&amp;/', '&', $value);     
+        
         if (preg_match('/&#x?[\w]+/ms', $value)) {
             $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
             $converted = html_entity_decode($converted, ENT_QUOTES, 'UTF-8');
@@ -533,6 +537,7 @@ class IDS_Converter
             '/(?:(?:^|\s+)(?:do|else)\s+)/',
             '/(?:[{(]\s*new\s+\w+\s*[)}])/',
             '/(?:(this|self).)/',
+            '/(?:undefined)/',
             '/(?:in\s+)/');
 
         // strip out concatenations
@@ -588,15 +593,15 @@ class IDS_Converter
             $value
         );
         
-        // normalize separation char repetion
+        //normalize separation char repetion
         $value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
 
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
-        // normalize JS backspace linebreaks
+        //normalize JS backspace linebreaks
         $value = preg_replace('/^\/|\/$|,\/\n|\/,/', null, $value);
-
+        
         return $value;
     }
 
