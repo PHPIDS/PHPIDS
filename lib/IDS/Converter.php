@@ -275,7 +275,7 @@ class IDS_Converter
     public static function convertFromSQLHex($value)
     {
         $matches = array();
-        if(preg_match_all('/(?:0x[a-f\d]{2,}[a-f\d\s]*)+/im', $value, $matches)) {
+        if(preg_match_all('/(?:0x[a-f\d]{2,}[a-f\d]*)+/im', $value, $matches)) {
             foreach($matches[0] as $match) {
                 $converted = '';
                 foreach(str_split($match, 2) as $hex_index) {
@@ -304,6 +304,9 @@ class IDS_Converter
         $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/null,/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
+        $value   = preg_replace('/(?:between|mod)/ims', '', $value);
+        $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
+        $value   = preg_replace('/(?:\s+and\s+)/ims', ' or ', $value);
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' .
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' .
                          '(?:(?:ASCII|SOUNDEX|' .
@@ -460,13 +463,13 @@ class IDS_Converter
         if(preg_match('/\+A\w+-/m', $value)) {
             if (function_exists('mb_convert_encoding')) {
                 if(version_compare(PHP_VERSION, '5.2.8', '<')) {
-                	$tmp_chars = str_split($value);
-                	$value = '';
-                	foreach($tmp_chars as $char) {
-                		if(ord($char) <= 127) {
-                			$value .= $char;	
-                		}
-                	}    
+                    $tmp_chars = str_split($value);
+                    $value = '';
+                    foreach($tmp_chars as $char) {
+                        if(ord($char) <= 127) {
+                            $value .= $char;	
+                        }
+                    }    
                 }
                 $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
             } else {

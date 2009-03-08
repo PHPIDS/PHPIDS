@@ -287,7 +287,7 @@ class IDS_Monitor
 
         // to increase performance, only start detection if value
         // isn't alphanumeric
-        if (!$value || !preg_match('/[^\w\s\/@!?,\.]+|(?:\.\/)/', $value)) {
+        if (!$value || !preg_match('/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/', $value)) {
             return false;
         }
 

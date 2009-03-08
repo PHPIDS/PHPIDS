@@ -698,7 +698,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 586, 628);
+        $this->assertImpact($result, 591, 633);
     }
 
     public function testSQLIList3() {
@@ -881,7 +881,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 859, 872);
+        $this->assertImpact($result, 866, 879);
     }
 
     public function testSQLIList6() {
@@ -906,6 +906,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         633D22687474703A2F2F777777302E646F7568756E716E2E636E2F63737273732F772E6A73223E3C2F7363726970743E3C212D2D272727294645544348204E4558542046524F4D20205461626C655F437572736F7220494E544F2040542C404320454E4420434C4F5345205461626C655F437572736F72204445414C4C4F43415445205461626C655F437572736F72%20AS%20CHAR(4000));EXEC(@S);';
         $exploits[] = "asaa';SELECT[asd]FROM[asd]";
         $exploits[] = "asd'; select [column] from users ";
+        $exploits[] = "0x31 union select @@version,username,password from users ";
+		$exploits[] = "1 order by if(1<2 ,uname,uid) ";
+		$exploits[] = "1 order by ifnull(null,userid) ";
+		$exploits[] = "2' between 1 and 3 or 0x61 like 'a";
+		$exploits[] = "4' MOD 2 like '0";
 
         $this->_testForPlainEvent($exploits);
 
@@ -914,7 +919,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(206, $result->getImpact());
+        $this->assertEquals(210, $result->getImpact());
     }
 
     public function testDTList(){
