@@ -604,7 +604,6 @@ class IDS_Converter
         
         //normalize JS backspace linebreaks
         $value = preg_replace('/^\/|\/$|,\/\n|\/,/', null, $value);
-        
         return $value;
     }
 
@@ -620,7 +619,6 @@ class IDS_Converter
     public static function runCentrifuge($value, IDS_Monitor $monitor = null)
     {
         $threshold = 3.49;
-
         $unserialized = false;
         if(preg_match('/^\w:\d+:\{/', $value)) {
             $unserialized = @unserialize($value);
