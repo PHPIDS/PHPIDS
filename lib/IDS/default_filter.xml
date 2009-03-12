@@ -21,7 +21,7 @@
     </filter>
     <filter>
         <id>2</id>
-        <rule><![CDATA[(?:[\s\/]+(?:on\w+|style)=["\w])]]></rule>
+        <rule><![CDATA[(?:[\s\/"]+(?:on\w+|style)=["\w])]]></rule>
         <description>finds malicious attribute injection attempts</description>
         <tags>
             <tag>xss</tag>
