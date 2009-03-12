@@ -20,6 +20,16 @@
         <impact>4</impact>
     </filter>
     <filter>
+        <id>2</id>
+        <rule><![CDATA[(?:[\s\/]+(?:on\w+|style)=["\w])]]></rule>
+        <description>finds malicious attribute injection attempts</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+        </tags>
+        <impact>6</impact>
+    </filter>	
+    <filter>
         <id>3</id>
         <rule><![CDATA[(?:^>[\w\s]*<\/?\w{2,}>)]]></rule>
         <description>finds unquoted attribute breaking injections</description>
@@ -401,7 +411,7 @@
     </filter>
     <filter>
         <id>38</id>
-        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|applet|isindex|keygen|script|video|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xm\w+|image|im(?:g|port)))]]></rule>
+        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|applet|isindex|marquee|keygen|script|video|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xm\w+|image|im(?:g|port)))]]></rule>
         <description>Detects possibly malicious html elements including some attributes</description>
         <tags>
             <tag>xss</tag>
