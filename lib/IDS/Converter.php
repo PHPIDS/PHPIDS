@@ -304,7 +304,7 @@ class IDS_Converter
         $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/null,/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
-        $value   = preg_replace('/(?:between|mod)/ims', '', $value);
+        $value   = preg_replace('/(?:between|mod)/ims', 'or', $value);
         $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
         $value   = preg_replace('/(?:\s+and\s+)/ims', ' or ', $value);
         $pattern = array('/[^\w,]NULL|\\\N|TRUE|FALSE|UTC_TIME|' .
@@ -318,6 +318,7 @@ class IDS_Converter
                          '(?:SOUNDS\s+LIKE)/ims');
         $value   = preg_replace($pattern, '!', $value);
         $value   = preg_replace('/"\s+\d/', '"', $value);
+        $value   = preg_replace('/\/\d+/', null, $value);
 
         return $value;
     }

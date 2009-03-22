@@ -432,6 +432,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         undefined,undefined
                         undefined,undefined';
         $exploits[] = 'location.assign(1?name+1:(x))';
+        $exploits[] = "this[('eva')+new Array + 'l'](/x.x.x/+name+/x.x/)"; 
 
         $this->_testForPlainEvent($exploits);
 
@@ -440,7 +441,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 833, 821);
+	$this->assertImpact($result, 855, 843);
     }
 
     public function testXMLPredicateXSSList() {
@@ -463,7 +464,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(148, $result->getImpact());
+        $this->assertEquals(155, $result->getImpact());
     }
     
     public function testConditionalCompilationXSSList() {
@@ -550,7 +551,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 569, 593);
+        $this->assertImpact($result, 581, 605);
     }
 
     public function testSelfContainedXSSList() {
@@ -590,7 +591,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(513, $result->getImpact());
+        $this->assertEquals(520, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -882,7 +883,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 866, 879);
+        $this->assertImpact($result, 920, 933);
     }
 
     public function testSQLIList6() {
@@ -911,6 +912,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "1 order by ifnull(null,userid) ";
 		$exploits[] = "2' between 1 and 3 or 0x61 like 'a";
 		$exploits[] = "4' MOD 2 like '0";
+		$exploits[] = "-1' /ID having 1< 1 and 1 like 1/'1 ";
+		$exploits[] = "2' / 0x62 or 0 like binary '0";
+		$exploits[] = "0' between 2-1 and 4-1 or 1 sounds like binary '1 ";
+		$exploits[] = "-1' union ((select (select user),(select password),1/1 from mysql.user)) order by '1 ";
 
         $this->_testForPlainEvent($exploits);
 
@@ -919,7 +924,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(256, $result->getImpact());
+        $this->assertEquals(314, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1055,7 +1060,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 495, 490);
+        $this->assertImpact($result, 502, 497);
     }
 
     public function testUTF7List() {

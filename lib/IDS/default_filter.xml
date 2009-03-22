@@ -41,7 +41,7 @@
     </filter>
     <filter>
         <id>4</id>
-        <rule><![CDATA[(?:;\W*url\s*=)|(?:[^\w\s\/?:>]\s*(?:location|referrer|name)\s*[^\/\w\s-])]]></rule>
+        <rule><![CDATA[(?:[+\/]\s*name\s*\+)|(?:;\W*url\s*=)|(?:[^\w\s\/?:>]\s*(?:location|referrer|name)\s*[^\/\w\s-])]]></rule>
         <description>Detects url-, name-, JSON, and referrer-contained payload attacks</description>
         <tags>
             <tag>xss</tag>
@@ -228,7 +228,7 @@
     </filter>
     <filter>
         <id>21</id>
-        <rule><![CDATA[(?:,\s*(?:alert|showmodaldialog|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|showmodaldialog|prompt|write(?:ln)?|confirm|dialog|open))\s*(?(1)[^\w]|(?:\s*[^\s\w,.@\/+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)|(?:&\s*\w+\s*\)[^,])|(?:\+\s*new\s+\w+\+)|(?:document\.\w)]]></rule>
+        <rule><![CDATA[(?:,\s*(?:alert|showmodaldialog|eval)\s*,)|(?::\s*eval\s*[^\s])|([^:\s\w,.\/?+-]\s*)?(?<![a-z\/_@])(\s*return\s*)?(?:(?:document\s*\.)?(?:.+\/)?(?:alert|eval|msgbox|showmodaldialog|prompt|write(?:ln)?|confirm|dialog|open))\s*(?(1)[^\w]|(?:\s*[^\s\w,.@\/+-]))|(?:java[\s\/]*\.[\s\/]*lang)|(?:\w\s*=\s*new\s+\w+)|(?:&\s*\w+\s*\)[^,])|(?:\+\s*new\s+\w+\s*\+)|(?:document\.\w)]]></rule>
         <description>Detects very basic XSS probings</description>
         <tags>
             <tag>xss</tag>
@@ -411,7 +411,7 @@
     </filter>
     <filter>
         <id>38</id>
-        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|applet|isindex|marquee|keygen|script|video|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xm\w+|image|im(?:g|port)))]]></rule>
+        <rule><![CDATA[(?:\<[\/]?(?:[i]?frame|applet|isindex|marquee|keygen|script|audio|video|input|button|textarea|style|base|body|meta|link|object|embed|param|plaintext|xm\w+|image|im(?:g|port)))]]></rule>
         <description>Detects possibly malicious html elements including some attributes</description>
         <tags>
             <tag>xss</tag>
@@ -446,7 +446,7 @@
     </filter>   
     <filter>
         <id>41</id>
-        <rule><![CDATA[(?:having\s+[\d\w]\s?=)|(?:if\s?\([\d\w]\s?=)]]></rule>
+        <rule><![CDATA[(?:having\s+[\d\w]\s*[=<>~])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
         <description>Detects conditional SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -490,7 +490,7 @@
     </filter> 
     <filter>
         <id>45</id>
-        <rule><![CDATA[(?:union\s*(?:all|distinct)?\s*[([]\s*select)|(?:\w+\s+like\s+\")|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;\/)(]+\s*[(@]*\s*\w+\W+\w)|(?:select\s*[\[\]()\s\w\.,-]+from)]]></rule>
+        <rule><![CDATA[(?:union\s*(?:all|distinct|[(!@]*)?\s*[([]\s*select)|(?:\w+\s+like\s+\")|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;)(]+\s*[(@]*\s*\w+\W+\w)|(?:select\s*[\[\]()\s\w\.,-]+from)]]></rule>
         <description>Detects basic SQL authentication bypass attempts 2/3</description>
         <tags>
             <tag>sqli</tag>
@@ -523,7 +523,7 @@
     </filter>
     <filter>
         <id>48</id>
-        <rule><![CDATA[(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)\s+\w+[!=+]+[\s\d]*["=(])]]></rule>
+        <rule><![CDATA[(?:\/\w+;?\s+(?:having|and|or|select))|(?:\d\s+group\s+by.+\()|(?:(?:;|#|--)\s*(?:drop|alter))|(?:(?:;|#|--)\s*(?:update|insert)\s*\w{2,})|(?:[^\w]SET\s*@\w+)|(?:(?:n?and|x?or|not |\|\||\&\&)\s+\w+[!=+]+[\s\d]*["=(])]]></rule>
         <description>Detects chained SQL injection attempts 1/2</description>
         <tags>
             <tag>sqli</tag>
