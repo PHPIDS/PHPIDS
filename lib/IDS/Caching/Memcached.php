@@ -74,6 +74,13 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     private $path = null;
 
     /**
+     * Flag if the filter storage has been found in memcached 
+     * 
+     * @var boolean 
+     */ 
+    private $isCached = false; 
+    
+    /**
      * Memcache object
      *
      * @var object
@@ -153,9 +160,11 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
                 ' are writeable!');
         }
 
-        if ((time()-filectime($this->path))>$this->config['expiration_time']) {
-            $this->memcache->set($this->config['key_prefix'] . '.storage',
-                                 $data);
+        if(!$this->isCached) { 
+            $this->memcache->set(
+                $this->config['key_prefix'] . '.storage',
+                $data, false, $this->config['expiration_time']
+            ); 
         }
 
         return $this;
@@ -171,15 +180,14 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
      */
     public function getCache() 
     {
-
-        // make sure filters are parsed again if cache expired
-        if ((time()-filectime($this->path))<$this->config['expiration_time']) {
-            $data = $this->memcache->get($this->config['key_prefix'] . 
-                '.storage');
-            return $data;
-        }
-
-        return false;
+        
+        $data = $this->memcache->get(
+            $this->config['key_prefix'] .  
+            '.storage'
+        ); 
+        $this->isCached = !empty($data); 
+        
+        return $data;
     }
 
     /**
