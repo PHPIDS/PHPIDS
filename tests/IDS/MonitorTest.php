@@ -1060,7 +1060,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 502, 497);
+        $this->assertImpact($result, 502, 490);
     }
 
     public function testUTF7List() {
@@ -1169,7 +1169,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 111, 106);
+        $this->assertImpact($result, 111, 111);
     }
 
     public function testLDAPInjectionList() {
