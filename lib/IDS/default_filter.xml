@@ -446,7 +446,7 @@
     </filter>   
     <filter>
         <id>41</id>
-        <rule><![CDATA[(?:having\s+[\d\w]\s*[=<>~])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
+        <rule><![CDATA[(?:\)\s*like\s*\()|(?:having\s+[\d\w\-"]+\s*[(=<>~])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
         <description>Detects conditional SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -479,7 +479,7 @@
     </filter> 
     <filter>
         <id>44</id>
-        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+<>=(),-]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like[+=\s\.-]+[\d"(])|(?:\sis\s*0\W)|(?:where\s[\s\w\.,-]+\s=)|(?:"[<>~]+")]]></rule>
+        <rule><![CDATA[(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+<>=(),-]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like\W+[\w"(])|(?:\sis\s*0\W)|(?:where\s[\s\w\.,-]+\s=)|(?:"[<>~]+")]]></rule>
         <description>Detects basic SQL authentication bypass attempts 1/3</description>
         <tags>
             <tag>sqli</tag>
@@ -593,7 +593,7 @@
     </filter>
     <filter>
         <id>55</id>
-        <rule><![CDATA[(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union\s*\w*\s*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
+        <rule><![CDATA[(?:";?\s*(?:select|union|having)\s*["(\d])|(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union[\w(\s]*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
