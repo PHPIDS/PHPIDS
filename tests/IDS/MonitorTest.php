@@ -1060,7 +1060,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 495, 483);
+        $this->assertImpact($result, 495, 490);
     }
 
     public function testUTF7List() {
