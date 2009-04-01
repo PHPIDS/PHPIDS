@@ -1331,6 +1331,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
         $exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
         $exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
+		$exploits[] = "'Reservist, Status: Stabsoffizier'";
 
         $test = new IDS_Monitor(
             $exploits,
