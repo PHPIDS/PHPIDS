@@ -433,6 +433,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         undefined,undefined';
         $exploits[] = 'location.assign(1?name+1:(x))';
         $exploits[] = "this[('eva')+new Array + 'l'](/x.x.x/+name+/x.x/)"; 
+        $exploits[] = "this[[],('eva')+(/x/,new Array)+'l'](/xxx.xxx.xxx.xxx.xx/+name,new Array)";
 
         $this->_testForPlainEvent($exploits);
 
@@ -441,7 +442,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 868, 856);
+	$this->assertImpact($result, 880, 868);
     }
 
     public function testXMLPredicateXSSList() {
@@ -916,6 +917,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "2' / 0x62 or 0 like binary '0";
 		$exploits[] = "0' between 2-1 and 4-1 or 1 sounds like binary '1 ";
 		$exploits[] = "-1' union ((select (select user),(select password),1/1 from mysql.user)) order by '1 ";
+		$exploits[] = "-1' or substring(null/null,1/null,1) or '1";
+		$exploits[] = "1' and 1 = hex(null-1 or 1) or 1 /'null ";		
 
         $this->_testForPlainEvent($exploits);
 
@@ -924,7 +927,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(340, $result->getImpact());
+        $this->assertEquals(353, $result->getImpact());
     }
 
     public function testDTList(){
