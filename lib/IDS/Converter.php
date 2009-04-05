@@ -524,7 +524,7 @@ class IDS_Converter
         }
 
         $compare = stripslashes($value);
-
+		
         $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
             '/(?:":\d+[^"[]+")/s',
             '/(?:"?"\+\w+\+")/s',
@@ -540,7 +540,7 @@ class IDS_Converter
             '/(?:\s*new\s+\w+\s*[+",])/',
             '/(?:(?:^|\s+)(?:do|else)\s+)/',
             '/(?:[{(]\s*new\s+\w+\s*[)}])/',
-            '/(?:(this|self).)/',
+            '/(?:(this|self)\.)/',
             '/(?:undefined)/',
             '/(?:in\s+)/');
 
@@ -605,6 +605,7 @@ class IDS_Converter
         
         //normalize JS backspace linebreaks
         $value = preg_replace('/^\/|\/$|,\/\n|\/,/', null, $value);
+        
         return $value;
     }
 
@@ -630,7 +631,7 @@ class IDS_Converter
             //strip padding
             $tmp_value = preg_replace('/\s{4}/m', null, $value);
             $tmp_value = preg_replace(
-                '/\s{4}|[\p{L}\d\+\-,.]{8,}/m', 
+                '/\s{4}|[\p{L}\d\+\-,.%]{8,}/m', 
                 'aaa', 
                 $tmp_value
             );
