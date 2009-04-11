@@ -287,7 +287,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1113, $result->getImpact());
+        $this->assertEquals(1099, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -442,7 +442,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 880, 868);
+	$this->assertImpact($result, 873, 861);
     }
 
     public function testXMLPredicateXSSList() {
@@ -552,7 +552,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 598, 622);
+        $this->assertImpact($result, 563, 577);
     }
 
     public function testSelfContainedXSSList() {
@@ -592,7 +592,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(504, $result->getImpact());
+        $this->assertEquals(479, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -642,7 +642,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(490, $result->getImpact());
+        $this->assertEquals(465, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -927,7 +927,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(353, $result->getImpact());
+        $this->assertEquals(335, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1063,7 +1063,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 495, 490);
+        $this->assertImpact($result, 488, 483);
     }
 
     public function testUTF7List() {
@@ -1081,7 +1081,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(78, $result->getImpact());
+        $this->assertEquals(71, $result->getImpact());
     }
 
     public function testBase64CCConverter() {
@@ -1335,6 +1335,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
         $exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
 		$exploits[] = "'Reservist, Status: Stabsoffizier'";
+		$exploits[] = ')))) да второй состав в отличной форме, не оставили парням ни единого шанса!!! Я думаю нас jedi, можно в первый переводить ))) ';
 
         $test = new IDS_Monitor(
             $exploits,
