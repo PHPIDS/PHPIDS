@@ -600,6 +600,9 @@ class IDS_Converter
         //normalize separation char repetion
         $value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
 
+        //normalize multiple single quotes
+        $value = preg_replace('/"{2,}/m', '"', $value);
+
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
