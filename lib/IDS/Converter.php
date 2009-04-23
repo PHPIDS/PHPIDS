@@ -286,6 +286,9 @@ class IDS_Converter
                 $value = str_replace($match, $converted, $value);
             }
         }
+        // take care of hex encoded ctrl chars
+        $value = preg_replace('/0x\d+/m', 1, $value);
+        
         return $value;
     }
 
