@@ -68,6 +68,19 @@ class IDS_Log_Composite
      */
     public function execute(IDS_Report $data) 
     {
+    	// make sure request uri is set right on IIS
+        if (!isset($_SERVER['REQUEST_URI'])) {
+            $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
+            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
+                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
+            } 
+        } 
+        
+        // make sure server address is set right on IIS
+        if (isset($_SERVER['LOCAL_ADDR'])) {
+            $_SERVER['SERVER_ADDR'] = $_SERVER['LOCAL_ADDR'];
+        } 
+    	
         foreach ($this->loggers as $logger) {
             $logger->execute($data);
         }
