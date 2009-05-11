@@ -558,7 +558,7 @@ class IDS_Converter
 
         //convert JS special numbers
         $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
-            '|(?:NaN|Infinity)\W/ms', 1, $converted);
+            '|(?:NaN|Infinity)\W/ims', 1, $converted);
 
         if ($converted && ($compare != $converted)) {
             $value .= "\n" . $converted;
@@ -613,7 +613,7 @@ class IDS_Converter
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
         //normalize JS backspace linebreaks
-        $value = preg_replace('/^\/|\/$|,\/\n|\/,/', null, $value);
+        $value = preg_replace('/^\/|\/$|,\/\n|\/,|\\s{4}/', null, $value);
         
         return $value;
     }

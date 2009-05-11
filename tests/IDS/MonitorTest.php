@@ -545,6 +545,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "(this)[new Array+('eva')+new Array+ 'l'](/foo.bar/+name+/foo.bar/)";
         $exploits[] = '<video/title=.10000/aler&#x74;(1) onload=.1/setTimeout(title)>';
         $exploits[] = "const urchinTracker = open";
+        $exploits[] = "-setTimeout(
+						1E1+
+						',aler\
+						t ( /Mario dont go, its fun phpids rocks/ ) + 1E100000 ' )";
 
         $this->_testForPlainEvent($exploits);
 
@@ -553,7 +557,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 568, 592);
+        $this->assertImpact($result, 573, 597);
     }
 
     public function testSelfContainedXSSList() {
