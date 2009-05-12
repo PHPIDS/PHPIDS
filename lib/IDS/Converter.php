@@ -613,7 +613,7 @@ class IDS_Converter
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
         //normalize JS backspace linebreaks
-        $value = preg_replace('/^\/|\/$|,\/\n|\/,|\\s{4}/', null, $value);
+        $value = preg_replace('/^\/|\/$|,\/\n|\/,|[\\\]+\s{4}/', null, $value);
         
         return $value;
     }
