@@ -122,7 +122,7 @@ class IdsComponent extends Object {
 
         #init the PHPIDS and pass the REQUEST array
         $this->init = IDS_Init::init();
-        $ids        = new IDS_Monitor($this->init, $_REQUEST);
+        $ids        = new IDS_Monitor($_REQUEST, $this->init);
         $result     = $ids->run();
 
         // Re-set include path
