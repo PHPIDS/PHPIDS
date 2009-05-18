@@ -214,7 +214,10 @@ class IdsComponent extends Object {
 
         loadModel('Intrusion');
         $intrusion = new Intrusion;
-        $saveable  = array('name', 'value', 'page', 'userid', 'session', 'ip', 'reaction', 'impact');
+        $saveable  = array(
+			'name', 'value', 'page', 'userid', 
+			'session', 'ip', 'reaction', 'impact'
+		);
         $intrusion->save($data, false, $saveable);
 
         return true;
@@ -234,12 +237,14 @@ class IdsComponent extends Object {
 
         $compositeLog = new IDS_Log_Composite();
         $compositeLog->addLogger(
-           IDS_Log_Email::getInstance($this->init->config['IDS_Logging']['recipient'],
-                                      $this->config['IDS_Logging']['subject'],
-                                      NULL, //optional headers
-                                      $this->init->config['IDS_Logging']['safemode'],
-                                      $this->init->config['IDS_Logging']['allowed_rate'],
-                                      $this->init->config['IDS_Basic']['tmp_path'])
+            IDS_Log_Email::getInstance(
+                $this->init->config['IDS_Logging']['recipient'],
+                $this->config['IDS_Logging']['subject'],
+                NULL, //optional headers
+                $this->init->config['IDS_Logging']['safemode'],
+                $this->init->config['IDS_Logging']['allowed_rate'],
+                $this->init->config['IDS_Basic']['tmp_path']
+            )
         );
 
         if (!$result->isEmpty()) {
