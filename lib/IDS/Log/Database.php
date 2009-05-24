@@ -255,12 +255,16 @@ class IDS_Log_Database implements IDS_Log_Interface
         foreach ($data as $event) {
             $page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             $ip   = $this->ip;
+            
+            $name   = $event->getName();
+            $value  = $event->getValue();
+            $impact = $event->getImpact();
 
-            $this->statement->bindParam('name', $event->getName());
-            $this->statement->bindParam('value', $event->getValue());
+            $this->statement->bindParam('name', $name);
+            $this->statement->bindParam('value', $value);
             $this->statement->bindParam('page', $page);
             $this->statement->bindParam('ip', $ip);
-            $this->statement->bindParam('impact', $data->getImpact());
+            $this->statement->bindParam('impact', $impact);
             $this->statement->bindParam('origin', $_SERVER['SERVER_ADDR']);
 
             if (!$this->statement->execute()) {

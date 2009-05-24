@@ -157,7 +157,7 @@ class IDS_Log_File implements IDS_Log_Interface
         $dataString = sprintf($format,
                               $this->ip,
                               date('c'),
-                              $data->getImpact(),
+                              $event->getImpact(),
                               join(' ', $data->getTags()),
                               trim($attackedParameters),
                               urlencode($_SERVER['REQUEST_URI']),

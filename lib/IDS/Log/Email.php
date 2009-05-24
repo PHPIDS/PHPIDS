@@ -291,7 +291,7 @@ class IDS_Log_Email implements IDS_Log_Interface
         return sprintf($format,
                        $this->ip,
                        date('c'),
-                       $data->getImpact(),
+                       $event->getImpact(),
                        join(' ', $data->getTags()),
                        trim($attackedParameters),
                        urlencode($_SERVER['REQUEST_URI']),
