@@ -923,7 +923,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "0' between 2-1 and 4-1 or 1 sounds like binary '1 ";
 		$exploits[] = "-1' union ((select (select user),(select password),1/1 from mysql.user)) order by '1 ";
 		$exploits[] = "-1' or substring(null/null,1/null,1) or '1";
-		$exploits[] = "1' and 1 = hex(null-1 or 1) or 1 /'null ";		
+		$exploits[] = "1' and 1 = hex(null-1 or 1) or 1 /'null ";	
+		$exploits[] = "AND CONNECTION_ID()=CONNECTION_ID()";
+		$exploits[] = "AND ISNULL(1/0)";
+		$exploits[] = "MID(@@hostname, 1, 1)";
+		$exploits[] = "CHARSET(CURRENT_USER())";
+		$exploits[] = "DATABASE() LIKE SCHEMA()";
+		$exploits[] = "COERCIBILITY(USER())";
 
         $this->_testForPlainEvent($exploits);
 
