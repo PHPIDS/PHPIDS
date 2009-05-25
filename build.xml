@@ -1,5 +1,10 @@
-<project name="PHPIDS" default="info">
-	<target name="info"/>
+<project name="PHPIDS" default="tests">
+	<target name="tests">
+        <exec executable="phpunit" failonerror="true">
+            <arg line="--verbose"/>
+            <arg line="tests/allTests.php"/>
+        </exec>
+    </target>
 
 	<target name="docs">
 		<phpdoc
