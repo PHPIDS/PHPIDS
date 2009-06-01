@@ -21,7 +21,7 @@
     </filter>
     <filter>
         <id>69</id>
-        <rule><![CDATA[(?:[\s\/"]+(?:on\w+|style)=["\w])]]></rule>
+        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style)=["\w])]]></rule>
         <description>finds malicious attribute injection attempts</description>
         <tags>
             <tag>xss</tag>
@@ -168,7 +168,7 @@
     </filter>
     <filter>
         <id>16</id>
-        <rule><![CDATA[([^*\s\w,.\/?+-]\s*)?(?<![a-mo-z]\s)(?<![a-z\/_@>\-\|])(\s*return\s*)?(?:alert|showmodaldialog|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|status|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.:\/+\-]))]]></rule>
+        <rule><![CDATA[([^*\s\w,.\/?+-]\s*)?(?<![a-mo-z]\s)(?<![a-z\/_@>\-\|])(\s*return\s*)?(?:alert|inputbox|showmodaldialog|infinity|isnan|isnull|msgbox|expression|prompt|write(?:ln)?|confirm|dialog|urn|(?:un)?eval|exec|execscript|tostring|status|execute|window|unescape|navigate)(?(1)[^\w%"]|(?:\s*[^@\s\w%",.:\/+\-]))]]></rule>
         <description>Detects possible includes and typical script methods</description>
         <tags>
             <tag>xss</tag>
@@ -262,7 +262,7 @@
     </filter>    
     <filter>
         <id>24</id>
-        <rule><![CDATA[(?:\/[\w\s]+\/\.)|(?:=\s*\/\w+\/\s*\.)|(?:(?:this|window|top|parent|frames|self|content)\[\s*[(,"]*\s*\w)|(?:,\s*new\s+\w+\s*[,;)])]]></rule>
+        <rule><![CDATA[(?:\/[\w\s]+\/\.)|(?:=\s*\/\w+\/\s*\.)|(?:(?:this|window|top|parent|frames|self|content)\[\s*[(,"]*\s*[\w\$])|(?:,\s*new\s+\w+\s*[,;)])]]></rule>
         <description>Detects basic obfuscated JavaScript script injections</description>
         <tags>
             <tag>xss</tag>

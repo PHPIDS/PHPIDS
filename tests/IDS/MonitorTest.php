@@ -483,7 +483,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(87, $result->getImpact());
+        $this->assertEquals(73, $result->getImpact());
     }    
 
     public function testXSSList() {
@@ -549,6 +549,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						1E1+
 						',aler\
 						t ( /Mario dont go, its fun phpids rocks/ ) + 1E100000 ' )";
+		$exploits[] = '<b/alt="1"onmouseover=InputBox+1 language=vbs>test</b>';
+		$exploits[] = '$$=\'e\'
+						_=$$+\'val\'
+						$=_
+						x=this[$]
+						y=x(\'nam\' + $$)
+						x(y)
+						\'foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar\'';
 
         $this->_testForPlainEvent($exploits);
 
@@ -557,7 +565,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 577, 601);
+        $this->assertImpact($result, 593, 601);
     }
 
     public function testSelfContainedXSSList() {
@@ -706,7 +714,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 604, 646);
+        $this->assertImpact($result, 597, 646);
     }
 
     public function testSQLIList3() {
@@ -750,7 +758,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(600, $result->getImpact());
+        $this->assertEquals(593, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -811,7 +819,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 753, 757);
+        $this->assertImpact($result, 731, 757);
     }
 
     public function testSQLIList5() {
@@ -889,7 +897,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 927, 940);
+        $this->assertImpact($result, 920, 940);
     }
 
     public function testSQLIList6() {
