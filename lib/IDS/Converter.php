@@ -638,7 +638,7 @@ class IDS_Converter
         if (strlen($value) > 25 && !$unserialized) {
             
             //strip padding
-            $tmp_value = preg_replace('/\s{4}/m', null, $value);
+            $tmp_value = preg_replace('/\s{4}|==$/m', null, $value);
             $tmp_value = preg_replace(
                 '/\s{4}|[\p{L}\d\+\-,.%]{8,}/m', 
                 'aaa', 

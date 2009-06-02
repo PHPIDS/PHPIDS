@@ -1355,6 +1355,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
 		$exploits[] = "'Reservist, Status: Stabsoffizier'";
 		$exploits[] = ')))) да второй состав в отличной форме, не оставили парням ни единого шанса!!! Я думаю нас jedi, можно в первый переводить ))) ';
+		$exploits[] = 'd3d3LmRlbW90eXdhdG9yeS5wbA==';
 
         $test = new IDS_Monitor(
             $exploits,
