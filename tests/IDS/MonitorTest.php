@@ -465,7 +465,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(154, $result->getImpact());
+        $this->assertEquals(147, $result->getImpact());
     }
     
     public function testConditionalCompilationXSSList() {
@@ -1191,7 +1191,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(106, $result->getImpact());
+        $this->assertEquals(99, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
