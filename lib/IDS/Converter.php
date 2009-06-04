@@ -359,6 +359,13 @@ class IDS_Converter
                 '(?:&#x(?:fe|20)\w{2};?)|' .
                 '(?:&#x(?:d[c-f])\w{2};?)/i', null,
                 $value);
+                
+		$value = str_replace(
+			array('«', '〈', '＜', '‹', '〈', '⟨'), '<', $value
+		);
+		$value = str_replace(
+			array('»', '〉', '＞', '›', '〉', '⟩'), '>', $value
+		);
 
         return $value;
     }

@@ -557,6 +557,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						y=x(\'nam\' + $$)
 						x(y)
 						\'foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar\'';
+		$exploits[] = '＜script>alert("xss")＜/script>';
+		$exploits[] = '‹img/src=x""onerror=alert(1)///›';
 
         $this->_testForPlainEvent($exploits);
 
@@ -565,7 +567,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 600, 631);
+        $this->assertImpact($result, 668, 699);
     }
 
     public function testSelfContainedXSSList() {
