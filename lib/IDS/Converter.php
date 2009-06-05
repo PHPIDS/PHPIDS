@@ -261,6 +261,9 @@ class IDS_Converter
         $pattern = array('\'', '`', '´', '’', '‘');
         $value   = str_replace($pattern, '"', $value);
 
+		//make sure harmless quoted strings don't generate false alerts
+		$value = preg_replace('/^"([^"=\\!><~]+)"$/', '$1', $value);
+
         return $value;
     }
 
@@ -337,12 +340,13 @@ class IDS_Converter
     public static function convertFromControlChars($value)
     {
         // critical ctrl values
-        $search     = array(chr(0), chr(1), chr(2),
-                            chr(3), chr(4), chr(5),
-                            chr(6), chr(7), chr(8),
-                            chr(11), chr(12), chr(14),
-                            chr(15), chr(16), chr(17),
-                            chr(18), chr(19));
+        $search     = array(
+        	chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
+			chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
+			chr(15), chr(16), chr(17), chr(18), chr(19),
+			chr(192), chr(223), chr(238), chr(255)
+		);
+        
         $value      = str_replace($search, '%00', $value);
         $urlencoded = urlencode($value);
 

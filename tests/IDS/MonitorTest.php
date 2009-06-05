@@ -887,7 +887,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa' / current_date != '1";
         $exploits[] = "1' or current_date*-0 rlike'1";
         $exploits[] = "0' / current_date XOR '1";
-        $exploits[] = "'or not'";
         $exploits[] = "'or not false #aa";
         $exploits[] = "1' * id - '0";
         $exploits[] = "1' *id-'0";
@@ -899,7 +898,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 927, 940);
+        $this->assertImpact($result, 921, 934);
     }
 
     public function testSQLIList6() {
@@ -1358,6 +1357,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "'Reservist, Status: Stabsoffizier'";
 		$exploits[] = ')))) да второй состав в отличной форме, не оставили парням ни единого шанса!!! Я думаю нас jedi, можно в первый переводить ))) ';
 		$exploits[] = 'd3d3LmRlbW90eXdhdG9yeS5wbA==';
+		$exploits[] = '"Einkäuferin Zutaten + Stoffe"';
+		$exploits[] = '"mooie verhalen in de talen: engels"';
 
         $test = new IDS_Monitor(
             $exploits,
