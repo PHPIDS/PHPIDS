@@ -218,7 +218,7 @@ class IDS_Converter
      */
     public static function convertJSRegexModifiers($value)
     {
-        $value = preg_replace('/\/[gim]/', '/', $value);
+        $value = preg_replace('/\/[gim]+/', '/', $value);
 
         return $value;
     }
