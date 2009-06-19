@@ -599,6 +599,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         Cen:tri:fug:eBy:pas:sTe:xt:do location=(xxx)
                         while(0)
                         ";
+		$exploits[] = '-parent(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -607,7 +608,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 479, 492);
+        $this->assertImpact($result, 483, 496);
     }
 
     public function testSQLIList() {
