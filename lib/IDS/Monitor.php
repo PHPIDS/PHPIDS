@@ -203,10 +203,12 @@ class IDS_Monitor
 
             if(isset($init->config['General']['HTML_Purifier_Path'])
                 && isset($init->config['General']['HTML_Purifier_Cache'])) {
-                $this->pathToHTMLPurifier =
+                
+                $this->pathToHTMLPurifier = 
                     $init->config['General']['HTML_Purifier_Path'];
-                $this->HTMLPurifierCache  =
-                    $init->config['General']['HTML_Purifier_Cache'];
+                
+                $this->HTMLPurifierCache  = $init->getBasePath()
+                    . $init->config['General']['HTML_Purifier_Cache'];
             }
 
         }

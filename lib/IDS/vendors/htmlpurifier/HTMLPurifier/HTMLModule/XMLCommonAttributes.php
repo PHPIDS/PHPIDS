@@ -3,7 +3,7 @@
 class HTMLPurifier_HTMLModule_XMLCommonAttributes extends HTMLPurifier_HTMLModule
 {
     public $name = 'XMLCommonAttributes';
-    
+
     public $attr_collections = array(
         'Lang' => array(
             'xml:lang' => 'LanguageCode',
@@ -11,3 +11,4 @@ class HTMLPurifier_HTMLModule_XMLCommonAttributes extends HTMLPurifier_HTMLModul
     );
 }
 
+// vim: et sw=4 sts=4
