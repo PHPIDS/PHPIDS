@@ -57,7 +57,7 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
             true
         );
         $this->assertSame(
-            array('foo', '__utmc'),
+            array('foo', 'GET.__utmc'),
             $this->init->config['General']['exceptions']
         );
     }
