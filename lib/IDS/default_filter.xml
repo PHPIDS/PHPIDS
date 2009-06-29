@@ -71,7 +71,7 @@
     </filter>
     <filter>
         <id>7</id>
-        <rule><![CDATA[(?:\d\s*[|&]{2}\s*\w)|(?:[=(].+\?.+:)|(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:]+:[^;]+(;|$))]]></rule>
+        <rule><![CDATA[(?:\d\s*[|&]{2}\s*\w)|(?:[=(].+\?.+:)|(?:with\([^)]*\)\))|(?:\.\s*source\W)|(?:\?[^:=]+:[^;]+(;|$))]]></rule>
         <description>Detects JavaScript with(), ternary operators and XML predicate attacks</description>
         <tags>
             <tag>xss</tag>
