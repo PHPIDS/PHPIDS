@@ -21,7 +21,7 @@
     </filter>
     <filter>
         <id>69</id>
-        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style)=["\w])]]></rule>
+        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style)=[$"\w])]]></rule>
         <description>finds malicious attribute injection attempts</description>
         <tags>
             <tag>xss</tag>
@@ -728,5 +728,15 @@
             <tag>csrf</tag>
         </tags>
         <impact>4</impact>
-    </filter>  
+    </filter> 
+    <filter>
+        <id>69</id>
+        <rule><![CDATA[(?:(?:msgbox|eval)\s*\+|(?:language\s*=\*vbscript))]]></rule>
+        <description>finds basic VBScript injection attempts</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>  	
 </filters>

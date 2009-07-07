@@ -351,6 +351,7 @@ class IDS_Converter
             '\w|%EF%BB%BF|%EF%BF%BD)|(?:&#(?:65|8)\d{3};?)/i', null,
                 $urlencoded));
 
+		$value = preg_replace('/(?:%ff1c)/', '<', $value);
         $value = preg_replace('/(?:&[#x]*(200|820|200|820|zwn?j|lrm|rlm)\w?;?)/i', null,
                 $value);
 
