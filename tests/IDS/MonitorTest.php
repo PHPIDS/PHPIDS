@@ -561,6 +561,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = '‹img/src=x""onerror=alert(1)///›';
 		$exploits[] = 'Image() . 
 						ownerDocument .x=1';
+		$exploits[] = urldecode('%FF%F0%80%BCimg%20src=x%20onerror=alert(1)//');
 
         $this->_testForPlainEvent($exploits);
 
@@ -569,7 +570,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 707, 742);
+        $this->assertImpact($result, 742, 777);
     }
 
     public function testSelfContainedXSSList() {
