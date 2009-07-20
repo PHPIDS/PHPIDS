@@ -365,7 +365,14 @@ class IDS_Monitor
      *
      * @return array
      */
-    private function _purifyValues($key, $value) {
+    private function _purifyValues($key, $value) 
+    {
+        /*
+         * Perform a pre-check if string is valid for purification
+         */
+        if(!$this->_purifierPreCheck($key, $value)) {
+            return array($key, $value);
+        }
 
         include_once $this->pathToHTMLPurifier;
 
@@ -407,6 +414,37 @@ class IDS_Monitor
 
         return array($key, $value);
     }
+    
+    /**
+     * This method makes sure no dangerous markup can be smuggled in 
+     * attributes when HTML mode is switched on. 
+     * 
+     * If the precheck considers the string too dangerous for 
+     * purification false is being returned.
+     * 
+     * @param  mixed $key
+     * @param  mixed $value
+     * @since  0.6
+     *
+     * @return boolean
+     */
+    private function _purifierPreCheck($key = '', $value = '') 
+    {
+    	/*
+    	 * Remove control chars before pre-check
+    	 */
+        $tmp_value = preg_replace('/\p{C}/', null, $value);
+        $tmp_key = preg_replace('/\p{C}/', null, $key);
+        
+        $precheck = '/<(script|iframe|applet|object)\W/i';
+        if(preg_match($precheck, $tmp_key) 
+            || preg_match($precheck, $tmp_value)) {
+            
+            return false;
+        }
+        return true;
+    }
+    
 
     /**
      * This method calculates the difference between the original
