@@ -21,14 +21,34 @@
 		</phpdoc>
 	</target>
 
-    <target name="release" if="release.version">
-        <tar
-            destfile="phpids-${release.version}.tar.bz2"
-            compression="bzip2">
+    <target
+        name="release"
+        if="release.version"
+        depends="release.tarball,release.checksum"
+        description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
 
-            <tarfileset
-                dir="${basedir}"
-                prefix="phpids-${release.version}"/>
+    <target name="release.tarball" if="release.version">
+        <property name="release.name" value="phpids-${release.version}"/>
+        <property name="release.tarball.bzip2" value="${release.name}.tar.bz2"/>
+        <property name="release.tarball.gzip" value="${release.name}.tar.gz"/>
+        <property name="release.tarball.zip" value="${release.name}.tar.zip"/>
+        <tar destfile="${release.tarball.bzip2}" compression="bzip2">
+            <tarfileset dir="${basedir}" prefix="${release.name}"/>
         </tar>
+        <tar destfile="${release.tarball.gzip}" compression="gzip">
+            <tarfileset dir="${basedir}" prefix="${release.name}"/>
+        </tar>
+        <zip destfile="${release.tarball.zip}">
+            <zipfileset dir="${basedir}" prefix="${release.name}"/>
+        </zip>
+    </target>
+
+    <target name="release.checksum">
+        <checksum file="${release.tarball.bzip2}" algorithm="SHA"/>
+        <checksum file="${release.tarball.bzip2}" algorithm="MD5"/>
+        <checksum file="${release.tarball.gzip}" algorithm="SHA"/>
+        <checksum file="${release.tarball.gzip}" algorithm="MD5"/>
+        <checksum file="${release.tarball.zip}" algorithm="SHA"/>
+        <checksum file="${release.tarball.zip}" algorithm="MD5"/>
     </target>
 </project>
