@@ -20,4 +20,15 @@
 			</fileset>
 		</phpdoc>
 	</target>
+
+    <target name="release" if="release.version">
+        <tar
+            destfile="phpids-${release.version}.tar.bz2"
+            compression="bzip2">
+
+            <tarfileset
+                dir="${basedir}"
+                prefix="phpids-${release.version}"/>
+        </tar>
+    </target>
 </project>
