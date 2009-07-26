@@ -149,7 +149,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
         $handle = $this->handle;
         
         $rows = $handle->query('SELECT created FROM `' . 
-            $handle->quote($this->config['table']).'`');
+            $this->config['table'].'`');
             
         if (!$rows || $rows->rowCount() === 0) {
         
@@ -183,9 +183,9 @@ class IDS_Caching_Database implements IDS_Caching_Interface
 
         try{
             $handle = $this->handle;
-            $result = $handle->prepare('SELECT * FROM ' . 
-                $handle->quote($this->config['table']) . 
-                ' where type=?');
+            $result = $handle->prepare('SELECT * FROM `' . 
+                $this->config['table'] . 
+                '` where type=?');
             $result->execute(array($this->type));
 
             foreach ($result as $row) {
