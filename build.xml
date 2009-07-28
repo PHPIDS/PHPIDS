@@ -24,7 +24,7 @@
     <target
         name="release"
         if="release.version"
-        depends="release.tarball,release.checksum"
+        depends="tests,release.tarball,release.checksum"
         description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
 
     <target name="release.tarball" if="release.version">
@@ -44,11 +44,16 @@
     </target>
 
     <target name="release.checksum">
-        <checksum file="${release.tarball.bzip2}" algorithm="SHA"/>
-        <checksum file="${release.tarball.bzip2}" algorithm="MD5"/>
-        <checksum file="${release.tarball.gzip}" algorithm="SHA"/>
-        <checksum file="${release.tarball.gzip}" algorithm="MD5"/>
-        <checksum file="${release.tarball.zip}" algorithm="SHA"/>
-        <checksum file="${release.tarball.zip}" algorithm="MD5"/>
+        <checksum file="${release.tarball.bzip2}" algorithm="sha1"/>
+        <checksum file="${release.tarball.bzip2}" algorithm="md5"/>
+        <checksum file="${release.tarball.bzip2}" algorithm="blowfish"/>
+
+        <checksum file="${release.tarball.gzip}" algorithm="sha1"/>
+        <checksum file="${release.tarball.gzip}" algorithm="md5"/>
+        <checksum file="${release.tarball.gzip}" algorithm="blowfish"/>
+
+        <checksum file="${release.tarball.zip}" algorithm="sha1"/>
+        <checksum file="${release.tarball.zip}" algorithm="md5"/>
+        <checksum file="${release.tarball.zip}" algorithm="blowfish"/>
     </target>
 </project>
