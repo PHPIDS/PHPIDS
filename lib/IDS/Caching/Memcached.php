@@ -67,13 +67,6 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     private $config = null;
 
     /**
-     * Path to memcache timestamp file
-     *
-     * @var string
-     */
-    private $path = null;
-
-    /**
      * Flag if the filter storage has been found in memcached 
      * 
      * @var boolean 
@@ -109,15 +102,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
 
         $this->type   = $type;
         $this->config = $init->config['Caching'];
-        $this->path   = $init->getBasePath() . $this->config['path'];        
         
         $this->_connect();
-
-        if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception('Make sure all files in ' . 
-            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
-                ' are writeable!');
-        }
     }
 
     /**
@@ -148,17 +134,6 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
      */
     public function setCache(array $data) 
     {
-
-        if (!file_exists($this->path)) {
-            $handle = fopen($this->path, 'w');
-            fclose($handle);
-        }
-
-        if (!is_writable($this->path)) {
-            throw new Exception('Make sure all files in ' . 
-            htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') . 
-                ' are writeable!');
-        }
 
         if(!$this->isCached) { 
             $this->memcache->set(
@@ -202,17 +177,11 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
         if ($this->config['host'] && $this->config['port']) {
             // establish the memcache connection
             $this->memcache = new Memcache;
-            $this->memcache->pconnect($this->config['host'], 
-                $this->config['port']);
-            $this->path = $this->config['tmp_path'];
-            
-            if(isset($init->config['General']['base_path']) 
-                && $init->config['General']['base_path'] 
-                && isset($init->config['General']['use_base_path']) 
-                && $init->config['General']['use_base_path']) {
-                $this->source = $init->config['General']['base_path'] . $this->path;
-            }            
-            
+            $this->memcache->pconnect(
+            	$this->config['host'], 
+                $this->config['port']
+            );
+
         } else {
             throw new Exception('Insufficient connection parameters');
         }
