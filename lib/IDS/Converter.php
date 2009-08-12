@@ -304,6 +304,7 @@ class IDS_Converter
         $pattern = array('/(?:IS\s+null)|(LIKE\s+null)|' .
             '(?:(?:^|\W)IN[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
+        $value   = preg_replace('/\W+\s+like\s+\W+/', ' 1 like 1 ', $value);
         $value   = preg_replace('/null[,\s]/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
         $value   = preg_replace('/(?:between|mod)/ims', 'or', $value);
@@ -656,7 +657,7 @@ class IDS_Converter
             //strip padding
             $tmp_value = preg_replace('/\s{4}|==$/m', null, $value);
             $tmp_value = preg_replace(
-                '/\s{4}|[\p{L}\d\+\-,.%]{8,}/m', 
+                '/\s{4}|[\p{L}\d\+\-,.%()]{8,}/m', 
                 'aaa', 
                 $tmp_value
             );

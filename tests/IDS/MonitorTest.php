@@ -287,7 +287,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1102, $result->getImpact());
+        $this->assertEquals(1127, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -442,7 +442,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 918, 912);
+	$this->assertImpact($result, 923, 917);
     }
 
     public function testXMLPredicateXSSList() {
@@ -465,7 +465,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(147, $result->getImpact());
+        $this->assertEquals(152, $result->getImpact());
     }
     
     public function testConditionalCompilationXSSList() {
@@ -570,7 +570,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 742, 777);
+        $this->assertImpact($result, 752, 787);
     }
 
     public function testSelfContainedXSSList() {
@@ -613,7 +613,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 514, 527);
+        $this->assertImpact($result, 519, 532);
     }
 
     public function testSQLIList() {
@@ -722,7 +722,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 604, 646);
+        $this->assertImpact($result, 593, 635);
     }
 
     public function testSQLIList3() {
@@ -945,6 +945,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "CHARSET(CURRENT_USER())";
 		$exploits[] = "DATABASE() LIKE SCHEMA()";
 		$exploits[] = "COERCIBILITY(USER())";
+		$exploits[] = "1' and 0x1abc like 0x88 or '0";
 
         $this->_testForPlainEvent($exploits);
 
@@ -953,7 +954,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(399, $result->getImpact());
+        $this->assertEquals(413, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1027,7 +1028,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 131, 136);
+        $this->assertImpact($result, 136, 141);
     }
 
     public function testRFEList() {
@@ -1245,6 +1246,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
         $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
         $exploits['html_9'] = '<b "<script>alert(1)</script>">hola</b>';
+        $exploits['html_10'] = '<img src=phpids_logo.gif alt=Logo onreadystatechange=MsgBox-1 language=vbs>';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
@@ -1254,7 +1256,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(189, $result->getImpact());
+        $this->assertEquals(194, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {

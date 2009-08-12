@@ -383,9 +383,9 @@ class IDS_Monitor
 
         if (class_exists('HTMLPurifier')) {
             $config = HTMLPurifier_Config::createDefault();
-            $config->set('Attr', 'EnableID', true);
-            $config->set('Cache', 'SerializerPath', $this->HTMLPurifierCache);
-            $config->set('Output', 'Newline', "\n");
+            $config->set('Attr.EnableID', true);
+            $config->set('Cache.SerializerPath', $this->HTMLPurifierCache);
+            $config->set('Output.Newline', "\n");
             $this->htmlpurifier = new HTMLPurifier($config);
         } else {
             throw new Exception(

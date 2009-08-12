@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  *
- * @version 3.3.0
+ * @version 4.0.0
  *
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -98,6 +98,8 @@ require 'HTMLPurifier/AttrDef/CSS/Percentage.php';
 require 'HTMLPurifier/AttrDef/CSS/TextDecoration.php';
 require 'HTMLPurifier/AttrDef/CSS/URI.php';
 require 'HTMLPurifier/AttrDef/HTML/Bool.php';
+require 'HTMLPurifier/AttrDef/HTML/Nmtokens.php';
+require 'HTMLPurifier/AttrDef/HTML/Class.php';
 require 'HTMLPurifier/AttrDef/HTML/Color.php';
 require 'HTMLPurifier/AttrDef/HTML/FrameTarget.php';
 require 'HTMLPurifier/AttrDef/HTML/ID.php';
@@ -105,7 +107,6 @@ require 'HTMLPurifier/AttrDef/HTML/Pixels.php';
 require 'HTMLPurifier/AttrDef/HTML/Length.php';
 require 'HTMLPurifier/AttrDef/HTML/LinkTypes.php';
 require 'HTMLPurifier/AttrDef/HTML/MultiLength.php';
-require 'HTMLPurifier/AttrDef/HTML/Nmtokens.php';
 require 'HTMLPurifier/AttrDef/URI/Email.php';
 require 'HTMLPurifier/AttrDef/URI/Host.php';
 require 'HTMLPurifier/AttrDef/URI/IPv4.php';
@@ -123,6 +124,7 @@ require 'HTMLPurifier/AttrTransform/Input.php';
 require 'HTMLPurifier/AttrTransform/Lang.php';
 require 'HTMLPurifier/AttrTransform/Length.php';
 require 'HTMLPurifier/AttrTransform/Name.php';
+require 'HTMLPurifier/AttrTransform/NameSync.php';
 require 'HTMLPurifier/AttrTransform/SafeEmbed.php';
 require 'HTMLPurifier/AttrTransform/SafeObject.php';
 require 'HTMLPurifier/AttrTransform/SafeParam.php';
