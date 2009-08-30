@@ -766,7 +766,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(600, $result->getImpact());
+        $this->assertEquals(575, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -827,7 +827,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 758, 762);
+        $this->assertImpact($result, 725, 729);
     }
 
     public function testSQLIList5() {
