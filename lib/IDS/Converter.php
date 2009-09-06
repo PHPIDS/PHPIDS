@@ -626,6 +626,9 @@ class IDS_Converter
         //normalize quoted numerical values and asterisks
         $value = preg_replace('/"(\d+)"/m', '$1', $value);
 
+		//normalize pipe separated request parameters
+        $value = preg_replace('/\|(\w+=\w+)/m', '&$1', $value);
+
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
