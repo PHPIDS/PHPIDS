@@ -442,7 +442,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 923, 917);
+	$this->assertImpact($result, 928, 923);
     }
 
     public function testXMLPredicateXSSList() {
@@ -563,6 +563,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						ownerDocument .x=1';
 		$exploits[] = urldecode('%FF%F0%80%BCimg%20src=x%20onerror=alert(1)//');
 		$exploits[] = "',jQuery(\"body\").html(//);\'a'";
+		$exploits[] = '\',$(fred).set(\'html\',\'magically changes\')
+						\'s';
 
         $this->_testForPlainEvent($exploits);
 
@@ -571,7 +573,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 768, 813);
+        $this->assertImpact($result, 787, 830);
     }
 
     public function testSelfContainedXSSList() {
@@ -828,7 +830,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 725, 729);
+        $this->assertImpact($result, 733, 737);
     }
 
     public function testSQLIList5() {
@@ -955,7 +957,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(421, $result->getImpact());
+        $this->assertEquals(433, $result->getImpact());
     }
 
     public function testDTList(){
