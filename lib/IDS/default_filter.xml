@@ -262,7 +262,7 @@
     </filter>    
     <filter>
         <id>24</id>
-        <rule><![CDATA[(?:\$\$?\s*\(\s*[\w"])|(?:\/[\w\s]+\/\.)|(?:=\s*\/\w+\/\s*\.)|(?:(?:this|window|top|parent|frames|self|content)\[\s*[(,"]*\s*[\w\$])|(?:,\s*new\s+\w+\s*[,;)])]]></rule>
+        <rule><![CDATA[(?:[".]script\s*\()|(?:\$\$?\s*\(\s*[\w"])|(?:\/[\w\s]+\/\.)|(?:=\s*\/\w+\/\s*\.)|(?:(?:this|window|top|parent|frames|self|content)\[\s*[(,"]*\s*[\w\$])|(?:,\s*new\s+\w+\s*[,;)])]]></rule>
         <description>Detects basic obfuscated JavaScript script injections</description>
         <tags>
             <tag>xss</tag>
