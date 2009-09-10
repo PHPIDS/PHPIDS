@@ -618,7 +618,7 @@ class IDS_Converter
         );
         
         //normalize separation char repetion
-        $value = preg_replace('/([.+~=*_\-])\1{2,}/m', '$1', $value);
+        $value = preg_replace('/([.+~=*_\-;])\1{2,}/m', '$1', $value);
 
         //normalize multiple single quotes
         $value = preg_replace('/"{2,}/m', '"', $value);
