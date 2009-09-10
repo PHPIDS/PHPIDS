@@ -286,11 +286,20 @@ class IDS_Monitor
      */
     private function _detect($key, $value)
     {
-
+		
+		// define the pre-filter
+		$prefilter = '/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/';
+		
         // to increase performance, only start detection if value
         // isn't alphanumeric
-        if (!$value || !preg_match('/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/', $value)) {
+        if (!$this->scanKeys 
+        	&& (!$value || !preg_match($prefilter, $value))) {
             return false;
+        } elseif($this->scanKeys) {
+            if((!$key || !preg_match($prefilter, $key)) 
+                && (!$value || !preg_match($prefilter, $value))) {
+                return false;
+            }
         }
 
         // check if this field is part of the exceptions
@@ -430,9 +439,9 @@ class IDS_Monitor
      */
     private function _purifierPreCheck($key = '', $value = '') 
     {
-    	/*
-    	 * Remove control chars before pre-check
-    	 */
+        /*
+         * Remove control chars before pre-check
+         */
         $tmp_value = preg_replace('/\p{C}/', null, $value);
         $tmp_key = preg_replace('/\p{C}/', null, $key);
         

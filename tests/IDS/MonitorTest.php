@@ -137,14 +137,16 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits['test1'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $exploits['test2'] = '9<script/src=http/attacker.com>';
-        $exploits['9<script/src=http/attacker.com>'] = '9<script/src=http/attacker.com>';
+        $exploits['7<script/src=http/attacker.com>'] = '9<script/src=http/attacker.com>';
+        $exploits['8<script/src=http/attacker.com>'] = 'abc';
+        $exploits['9<script/src=http/attacker.com>'] = '';
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $test->scanKeys = true;
         $result = $test->run();
-        $this->assertEquals(41, $result->getImpact());
+        $this->assertEquals(57, $result->getImpact());
     }
 
     public function testListWithException() {
