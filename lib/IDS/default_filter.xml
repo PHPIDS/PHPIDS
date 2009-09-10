@@ -424,8 +424,8 @@
     </filter>   
     <filter>
         <id>39</id>
-        <rule><![CDATA[(?:\\x[01FE]\w)|(?:%[01FE]\w)|(?:&#[01FE]\w)|(?:\\[01FE][0-9a-f])|(?:&#x[01FE]\w)]]></rule>
-        <description>Detects nullbytes and HTTP response splitting</description>
+        <rule><![CDATA[(?:\\x[01fe][\db-ce-f])|(?:%[01fe][\db-ce-f])|(?:&#[01fe][\db-ce-f])|(?:\\[01fe][\db-ce-f])|(?:&#x[01fe][\db-ce-f])]]></rule>
+        <description>Detects nullbytes and other dangerous characters</description>
         <tags>
             <tag>id</tag>
             <tag>rfe</tag>
@@ -678,7 +678,7 @@
     </filter>  
     <filter>
         <id>63</id>
-        <rule><![CDATA[(?:[\w.-]+@[\w.-]+%(?:[01]\w)+\w+:)]]></rule>
+        <rule><![CDATA[(?:[\w.-]+@[\w.-]+%(?:[01][\db-ce-f])+\w+:)]]></rule>
         <description>Detects common mail header injections</description>
         <tags>
             <tag>id</tag>

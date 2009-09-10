@@ -1206,7 +1206,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(104, $result->getImpact());
+        $this->assertEquals(99, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
