@@ -76,6 +76,26 @@ class IDS_Converter
     }
 
     /**
+     * Make sure the value to normalize and monitor doesn't contain 
+     * possibilities for a regex DoS.
+     * 
+     * @param string $value the value to pre-sanitize
+     *
+     * @static
+     * @return string
+     */
+    public static function convertFromRepetition($value) 
+    {
+    	// remove obvios repetition patterns
+        $value = preg_replace(
+            '/(?:(.{2,8})\1{32,})|(?:[+=|\-@\s]{128,})/', 
+            'x', 
+            $value
+        );
+        return $value;
+    }
+
+    /**
      * Check for comments and erases them if available
      *
      * @param string $value the value to convert
@@ -257,8 +277,8 @@ class IDS_Converter
         $pattern = array('\'', '`', '´', '’', '‘');
         $value   = str_replace($pattern, '"', $value);
 
-		//make sure harmless quoted strings don't generate false alerts
-		$value = preg_replace('/^"([^"=\\!><~]+)"$/', '$1', $value);
+        //make sure harmless quoted strings don't generate false alerts
+        $value = preg_replace('/^"([^"=\\!><~]+)"$/', '$1', $value);
 
         return $value;
     }
@@ -338,11 +358,11 @@ class IDS_Converter
     {
         // critical ctrl values
         $search     = array(
-        	chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
-			chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
-			chr(15), chr(16), chr(17), chr(18), chr(19),
-			chr(192), chr(193), chr(238), chr(255)
-		);
+            chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
+            chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
+            chr(15), chr(16), chr(17), chr(18), chr(19),
+            chr(192), chr(193), chr(238), chr(255)
+        );
         
         $value      = str_replace($search, '%00', $value);
         $urlencoded = urlencode($value);
@@ -351,31 +371,31 @@ class IDS_Converter
         $value = urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' .
             '\w|%EF%BB%BF|%EF%BF%BD)|(?:&#(?:65|8)\d{3};?)/i', null,
                 urlencode($value)));
-		$value = urldecode(
-			preg_replace('/(?:%F0%80%BE)/i', '>', urlencode($value)));
-		$value = urldecode(
-			preg_replace('/(?:%F0%80%BC)/i', '<', urlencode($value)));
-		$value = urldecode(
-			preg_replace('/(?:%F0%80%A2)/i', '"', urlencode($value)));
-		$value = urldecode(
-			preg_replace('/(?:%F0%80%A7)/i', '\'', urlencode($value)));		
+        $value = urldecode(
+            preg_replace('/(?:%F0%80%BE)/i', '>', urlencode($value)));
+        $value = urldecode(
+            preg_replace('/(?:%F0%80%BC)/i', '<', urlencode($value)));
+        $value = urldecode(
+            preg_replace('/(?:%F0%80%A2)/i', '"', urlencode($value)));
+        $value = urldecode(
+            preg_replace('/(?:%F0%80%A7)/i', '\'', urlencode($value)));		
 
-		$value = preg_replace('/(?:%ff1c)/', '<', $value);
+        $value = preg_replace('/(?:%ff1c)/', '<', $value);
         $value = preg_replace(
-			'/(?:&[#x]*(200|820|200|820|zwn?j|lrm|rlm)\w?;?)/i', null,$value
-		);
+            '/(?:&[#x]*(200|820|200|820|zwn?j|lrm|rlm)\w?;?)/i', null,$value
+        );
         $value = preg_replace('/(?:&#(?:65|8)\d{3};?)|' .
                 '(?:&#(?:56|7)3\d{2};?)|' .
                 '(?:&#x(?:fe|20)\w{2};?)|' .
                 '(?:&#x(?:d[c-f])\w{2};?)/i', null,
                 $value);
                 
-		$value = str_replace(
-			array('«', '〈', '＜', '‹', '〈', '⟨'), '<', $value
-		);
-		$value = str_replace(
-			array('»', '〉', '＞', '›', '〉', '⟩'), '>', $value
-		);
+        $value = str_replace(
+            array('«', '〈', '＜', '‹', '〈', '⟨'), '<', $value
+        );
+        $value = str_replace(
+            array('»', '〉', '＞', '›', '〉', '⟩'), '>', $value
+        );
 
         return $value;
     }
@@ -544,7 +564,7 @@ class IDS_Converter
         }
 
         $compare = stripslashes($value);
-		
+        
         $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
             '/(?:":\d+[^"[]+")/s',
             '/(?:"?"\+\w+\+")/s',
@@ -626,7 +646,7 @@ class IDS_Converter
         //normalize quoted numerical values and asterisks
         $value = preg_replace('/"(\d+)"/m', '$1', $value);
 
-		//normalize pipe separated request parameters
+        //normalize pipe separated request parameters
         $value = preg_replace('/\|(\w+=\w+)/m', '&$1', $value);
 
         //normalize ampersand listings
