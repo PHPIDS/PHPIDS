@@ -56,6 +56,8 @@ class allTests
         $suite->addTestSuite('IDS_CachingTest');
         require_once 'IDS/EventTest.php';
         $suite->addTestSuite('IDS_EventTest');
+        require_once 'IDS/VersionTest.php';
+        $suite->addTestSuite('IDS_VersionTest');
         return $suite;
 	}
 }

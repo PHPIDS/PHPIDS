@@ -24,8 +24,15 @@
     <target
         name="release"
         if="release.version"
-        depends="tests,release.tarball,release.checksum"
+        depends="tests,release.version,release.tarball,release.checksum"
         description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
+
+    <target name="release.version" if="release.version">
+        <replace dir="lib/IDS" value="${release.version}">
+            <include name="**/*.php"/>
+            <replacetoken>@@phpIdsVersion@@</replacetoken>
+        </replace>
+    </target>
 
     <target name="release.tarball" if="release.version">
         <property name="release.name" value="phpids-${release.version}"/>
