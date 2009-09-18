@@ -21,10 +21,17 @@
 		</phpdoc>
 	</target>
 
+    <target name="revert">
+        <exec executable="svn">
+            <arg value="revert"/>
+            <arg value="${basedir}"/>
+        </exec>
+    </target>
+
     <target
         name="release"
         if="release.version"
-        depends="tests,release.version,release.tarball,release.checksum"
+        depends="revert,tests,release.version,release.tarball,release.checksum"
         description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
 
     <target name="release.version" if="release.version">
