@@ -1,3 +1,5 @@
+; <?php die(); ?>
+
 ; PHPIDS Config.ini
 
 ; General configuration settings

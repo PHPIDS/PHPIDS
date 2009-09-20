@@ -45,7 +45,7 @@ try {
         'COOKIE' => $_COOKIE
     );
 
-    $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini');
+    $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php');
 
     /**
      * You can also reset the whole configuration
