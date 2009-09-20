@@ -112,7 +112,7 @@
     </filter>
     <filter>
         <id>11</id>
-        <rule><![CDATA[(?:%c0%ae\/)|(?:(?:\/|\\)+(home|conf|usr|etc|proc|opt|s?bin|local|dev|tmp|kern|[br]oot|sys|system|windows|winnt|program|%[a-z_-]{3,}%)(?:\/|\\))|(?:(?:\/|\\)+inetpub|localstart\.asp|boot\.ini)]]></rule>
+        <rule><![CDATA[(?:%c0%ae\/)|(?:(?:\/|\\)(home|conf|usr|etc|proc|opt|s?bin|local|dev|tmp|kern|[br]oot|sys|system|windows|winnt|program|%[a-z_-]{3,}%)(?:\/|\\))|(?:(?:\/|\\)inetpub|localstart\.asp|boot\.ini)]]></rule>
         <description>Detects specific directory and path traversal</description>
         <tags>
             <tag>dt</tag>
