@@ -26,7 +26,7 @@ require_once 'IDS/Init.php';
 class IDS_InitTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = IDS_Init::init($this->path);
     }
 

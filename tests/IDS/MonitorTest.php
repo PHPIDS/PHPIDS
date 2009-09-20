@@ -27,7 +27,7 @@ require_once 'IDS/Filter/Storage.php';
 class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
-        $path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = IDS_Init::init($path);
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
         $this->init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';

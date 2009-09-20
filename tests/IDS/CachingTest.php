@@ -27,7 +27,7 @@ require_once 'IDS/Caching/Factory.php';
 class IDS_CachingTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = IDS_Init::init($this->path);
     }
 

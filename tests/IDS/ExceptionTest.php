@@ -47,7 +47,7 @@ class IDS_ExceptionTest extends PHPUnit_Framework_TestCase
             )
         ));
 
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini';
+        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = IDS_Init::init($this->path);
     }
 
