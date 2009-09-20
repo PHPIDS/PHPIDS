@@ -88,7 +88,7 @@ class IDS_Converter
     {
     	// remove obvios repetition patterns
         $value = preg_replace(
-            '/(?:(.{2,8})\1{32,})|(?:[+=|\-@\s]{128,})/', 
+            '/(?:(.{2,})\1{32,})|(?:[+=|\-@\s]{128,})/', 
             'x', 
             $value
         );
