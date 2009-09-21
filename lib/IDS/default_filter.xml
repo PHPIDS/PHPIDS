@@ -292,7 +292,7 @@
     </filter>
     <filter>
         <id>27</id>
-        <rule><![CDATA[(?:data:(?:.)*,)|(?:\w+\s*=\W*(?!https?)\w+:)|(jar:\w+:)|(=\s*"?\s*vbs(?:ript)?:)|(language\s*=\s?"?\s*vbs(?:ript)?)|on\w+\s*=\*\w+\-"?]]></rule>
+        <rule><![CDATA[(?:data:.*,)|(?:\w+\s*=\W*(?!https?)\w+:)|(jar:\w+:)|(=\s*"?\s*vbs(?:ript)?:)|(language\s*=\s?"?\s*vbs(?:ript)?)|on\w+\s*=\*\w+\-"?]]></rule>
         <description>Detects data: URL injections, VBS injections and common URI schemes</description>
         <tags>
             <tag>xss</tag>
