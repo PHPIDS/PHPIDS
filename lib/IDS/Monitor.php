@@ -286,14 +286,14 @@ class IDS_Monitor
      */
     private function _detect($key, $value)
     {
-		
-		// define the pre-filter
-		$prefilter = '/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/';
-		
+        
+        // define the pre-filter
+        $prefilter = '/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/';
+        
         // to increase performance, only start detection if value
         // isn't alphanumeric
         if (!$this->scanKeys 
-        	&& (!$value || !preg_match($prefilter, $value))) {
+            && (!$value || !preg_match($prefilter, $value))) {
             return false;
         } elseif($this->scanKeys) {
             if((!$key || !preg_match($prefilter, $key)) 
@@ -558,7 +558,13 @@ class IDS_Monitor
      */
     private function _jsonConcatContents($key, $value) {
 
-        $this->tmpJsonString .=  $key . " " . $value . "\n";
+        if(is_string($key) && is_string($value)) {
+            $this->tmpJsonString .=  $key . " " . $value . "\n";
+        } else {
+        	$this->_jsonDecodeValues(
+        		json_encode($key), json_encode($value)
+        	);
+        }
     }
 
     /**
