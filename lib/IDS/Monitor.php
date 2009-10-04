@@ -536,11 +536,15 @@ class IDS_Monitor
         if($tmp_value && is_array($tmp_value) || is_object($tmp_value)) {
             array_walk_recursive($tmp_value, array($this, '_jsonConcatContents'));
             $value = $this->tmpJsonString;
+        } else {
+        	$this->tmpJsonString .=  " " . $tmp_value . "\n";
         }
 
         if($tmp_key && is_array($tmp_key) || is_object($tmp_key)) {
             array_walk_recursive($tmp_key, array($this, '_jsonConcatContents'));
             $key = $this->tmpJsonString;
+        } else {
+        	$this->tmpJsonString .=  " " . $tmp_key . "\n";
         }
 
         return array($key, $value);
