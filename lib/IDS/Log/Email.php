@@ -175,14 +175,15 @@ class IDS_Log_Email implements IDS_Log_Interface
      * This method allows the passed argument to be either an instance of
      * IDS_Init or an array.
      *
-     * @param mixed $config IDS_Init | array
+     * @param mixed  $config IDS_Init | array
+     * @param string the class name to use
      *
      * @return object $this
      */
-    public static function getInstance($config)
+    public static function getInstance($config, $classname = 'IDS_Log_Email')
     {
         if (!self::$instance) {
-            self::$instance = new IDS_Log_Email($config);
+            self::$instance = new $classname($config);
         }
 
         return self::$instance;
