@@ -140,12 +140,16 @@ class IDS_Caching_File implements IDS_Caching_Interface
         if ((!file_exists($this->path) || (time()-filectime($this->path)) > 
             $this->config['expiration_time'])) {
             $handle = @fopen($this->path, 'w+');
+            $serialized = @serialize($data);
             
             if (!$handle) {
                 throw new Exception("Cache file couldn't be created");
             }
-            
-            fwrite($handle, serialize($data));
+			if (!$serialized) {
+                throw new Exception("Cache data couldn't be serialized");
+            }            
+
+            fwrite($handle, $serialized);
             fclose($handle);
         }
 
