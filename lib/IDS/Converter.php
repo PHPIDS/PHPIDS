@@ -357,14 +357,14 @@ class IDS_Converter
     public static function convertFromControlChars($value)
     {
         // critical ctrl values
-        $search     = array(
+        $search = array(
             chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
             chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
             chr(15), chr(16), chr(17), chr(18), chr(19),
             chr(192), chr(193), chr(238), chr(255)
         );
         
-        $value      = str_replace($search, '%00', $value);
+        $value = str_replace($search, '%00', $value);
         $urlencoded = urlencode($value);
 
         //take care for malicious unicode characters
@@ -418,7 +418,8 @@ class IDS_Converter
 
         foreach ($matches[1] as $item) {
             if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
-                $value = str_replace($item, base64_decode($item), $value);
+            	$base64_item = base64_decode($item);
+                $value = str_replace($item, $base64_item, $value);
             }
         }
 
@@ -480,9 +481,8 @@ class IDS_Converter
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $match) {
-                $value = str_replace($match,
-                    chr(hexdec(substr($match, 2, 4))),
-                    $value);
+            	$chr = chr(hexdec(substr($match, 2, 4))); 
+                $value = str_replace($match, $chr, $value);
             }
             $value .= "\n\u0001";
         }
@@ -510,7 +510,7 @@ class IDS_Converter
                         if(ord($char) <= 127) {
                             $value .= $char;	
                         }
-                    }    
+                    }     
                 }
                 $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
             } else {
@@ -670,12 +670,8 @@ class IDS_Converter
     public static function runCentrifuge($value, IDS_Monitor $monitor = null)
     {
         $threshold = 3.49;
-        $unserialized = false;
-        if(preg_match('/^\w:\d+:\{/', $value)) {
-            $unserialized = @unserialize($value);
-        }
 
-        if (strlen($value) > 25 && !$unserialized) {
+        if (strlen($value) > 25) {
             
             //strip padding
             $tmp_value = preg_replace('/\s{4}|==$/m', null, $value);
@@ -729,8 +725,12 @@ class IDS_Converter
             );
 
             $converted = implode($array);
-            $converted = str_replace(array_keys($schemes),
-                array_values($schemes), $converted);
+            
+            $_keys = array_keys($schemes);
+            $_values = array_values($schemes);
+            
+            $converted = str_replace($_keys, $_values, $converted);
+            
             $converted = preg_replace('/[+-]\s*\d+/', '+', $converted);
             $converted = preg_replace('/[()[\]{}]/', '(', $converted);
             $converted = preg_replace('/[!?:=]/', ':', $converted);
