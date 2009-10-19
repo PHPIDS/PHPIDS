@@ -288,7 +288,7 @@ class IDS_Monitor
     {
         
         // define the pre-filter
-        $prefilter = '/[^\w\s\/@!?,\.]+|(?:\.\/)|(?:@@\w+)/';
+        $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)/';
         
         // to increase performance, only start detection if value
         // isn't alphanumeric
