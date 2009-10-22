@@ -47,10 +47,10 @@
         <property name="release.tarball.gzip" value="${release.name}.tar.gz"/>
         <property name="release.tarball.zip" value="${release.name}.zip"/>
         <property name="release.excludes" value="phpids-*"/>
-        <tar destfile="${release.tarball.bzip2}" compression="bzip2" excludes="${release.excludes}">
+        <tar destfile="${release.tarball.bzip2}" compression="bzip2" excludes="${release.excludes}" longfile="gnu">
             <tarfileset dir="${basedir}" prefix="${release.name}" excludes="${release.excludes}"/>
         </tar>
-        <tar destfile="${release.tarball.gzip}" compression="gzip">
+        <tar destfile="${release.tarball.gzip}" compression="gzip" longfile="gnu">
             <tarfileset dir="${basedir}" prefix="${release.name}" excludes="${release.excludes}"/>
         </tar>
         <zip destfile="${release.tarball.zip}" excludes="${release.excludes}">
