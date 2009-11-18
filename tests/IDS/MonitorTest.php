@@ -577,7 +577,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 788, 832);
+        $this->assertImpact($result, 788, 826);
     }
 
     public function testSelfContainedXSSList() {
@@ -620,7 +620,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 526, 539);
+        $this->assertImpact($result, 526, 536);
     }
 
     public function testSQLIList() {
