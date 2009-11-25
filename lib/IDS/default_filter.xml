@@ -144,8 +144,8 @@
     </filter>
     <filter>
         <id>14</id>
-        <rule><![CDATA[(?:\w+script:|@import[^\w]|;base64|base64,)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
-        <description>Detects possible includes and packed functions</description>
+        <rule><![CDATA[(?:#@~\^\w+)|(?:\w+script:|@import[^\w]|;base64|base64,)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
+        <description>Detects possible includes, VBSCript/JScript encodeed and packed functions</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -435,7 +435,7 @@
     </filter>   
     <filter>
         <id>41</id>
-        <rule><![CDATA[(?:\)\s*like\s*\()|(?:having\s+[\d\w\-"]+\s*[(=<>~])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
+        <rule><![CDATA[(?:\)\s*like\s*\()|(?:having\s*[^\s]+\s*[^\w\s])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
         <description>Detects conditional SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -582,7 +582,7 @@
     </filter>
     <filter>
         <id>55</id>
-        <rule><![CDATA[(?:from\s+information_schema\W)|(?:(?:(?:current_)?user|database|schema|connection_id)\s*\([^\)]*)|(?:";?\s*(?:select|union|having)\s*["(\d])|(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union[\w(\s]*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
+        <rule><![CDATA[(?:"\s*xor\s*["\w])|(?:from\s+information_schema\W)|(?:(?:(?:current_)?user|database|schema|connection_id)\s*\([^\)]*)|(?:";?\s*(?:select|union|having)\s*[^\s)|(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union[\w(\s]*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
@@ -592,7 +592,7 @@
     </filter>
     <filter>
         <id>56</id>
-        <rule><![CDATA[(?:merge.*using\s*\()|(execute\s*immediate\s*")|(?:\W+\d*\s+having\s+\d)|(?:match\s*[\w(),+-]+\s*against\s*\()]]></rule>
+        <rule><![CDATA[(?:merge.*using\s*\()|(execute\s*immediate\s*")|(?:\W+\d*\s*having\s*[^\s])|(?:match\s*[\w(),+-]+\s*against\s*\()]]></rule>
         <description>Detects MATCH AGAINST, MERGE, EXECUTE IMMEDIATE and HAVING injections</description>
         <tags>
             <tag>sqli</tag>

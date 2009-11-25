@@ -399,7 +399,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "ale&#8206;rt(1)";
         $exploits[] = 'al&#56325ert(1)';
         $exploits[] = 'al&#xdfff;ert(1)';
-        $exploits[] = 'al�ert(1)';
         $exploits[] = '1[<t>__par{new Array}ent__</t>][<t>al{new Array}ert</t>](1) ';
         $exploits[] = '(new Option).style.setExpression(1,1&&name)';
         $exploits[] = 'default xml namespace=toolbar,b=1&&this.atob
@@ -444,7 +443,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-	$this->assertImpact($result, 943, 930);
+		$this->assertImpact($result, 935, 923);
     }
 
     public function testXMLPredicateXSSList() {
@@ -670,7 +669,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(452, $result->getImpact());
+        $this->assertEquals(447, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -729,7 +728,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 630, 672);
+        $this->assertImpact($result, 638, 680);
     }
 
     public function testSQLIList3() {
@@ -773,7 +772,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(585, $result->getImpact());
+        $this->assertEquals(570, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -961,7 +960,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(446, $result->getImpact());
+        $this->assertEquals(431, $result->getImpact());
     }
 
     public function testDTList(){

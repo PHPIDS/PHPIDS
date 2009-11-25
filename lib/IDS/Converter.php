@@ -134,11 +134,14 @@ class IDS_Converter
      * @static
      * @return string
      */
-    public static function convertFromNewLines($value)
+    public static function convertFromWhiteSpace($value)
     {
         //check for inline linebreaks
         $search = array('\r', '\n', '\f', '\t', '\v');
         $value  = str_replace($search, ';', $value);
+
+		// replace replacement characters regular spaces
+		$value = str_replace('�', ' ', $value);
 
         //convert real linebreaks
         return preg_replace('/(?:\n|\r|\v)/m', '  ', $value);
@@ -670,7 +673,6 @@ class IDS_Converter
     public static function runCentrifuge($value, IDS_Monitor $monitor = null)
     {
         $threshold = 3.49;
-
         if (strlen($value) > 25) {
             
             //strip padding
