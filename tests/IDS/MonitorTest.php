@@ -669,7 +669,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(452, $result->getImpact());
+        $this->assertEquals(457, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -772,7 +772,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(570, $result->getImpact());
+        $this->assertEquals(585, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -952,6 +952,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "DATABASE() LIKE SCHEMA()";
 		$exploits[] = "COERCIBILITY(USER())";
 		$exploits[] = "1' and 0x1abc like 0x88 or '0";
+		$exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
+		$exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
 
         $this->_testForPlainEvent($exploits);
 
@@ -960,7 +962,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(431, $result->getImpact());
+        $this->assertEquals(448, $result->getImpact());
     }
 
     public function testDTList(){

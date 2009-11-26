@@ -328,14 +328,14 @@ class IDS_Converter
             '(?:(?:^|\W)IN[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/\W+\s+like\s+\W+/', ' 1 like 1 ', $value);
-        $value   = preg_replace('/null[,\s]/ims', ',0', $value);
+        $value   = preg_replace('/null[,"\s]/ims', ',0', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
         $value   = preg_replace('/(?:between|mod)/ims', 'or', $value);
         $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
         $value   = preg_replace('/(?:\s+and\s+)/ims', ' or ', $value);
         $pattern = array('/[^\w,(]NULL|\\\N|TRUE|FALSE|UTC_TIME|' .
                          'LOCALTIME(?:STAMP)?|CURRENT_\w+|BINARY|' .
-                         '(?:(?:ASCII|SOUNDEX|' .
+                         '(?:(?:ASCII|SOUNDEX|FIND_IN_SET|' .
                          'MD5|R?LIKE)[+\s]*\([^()]+\))|(?:-+\d)/ims');
         $value   = preg_replace($pattern, 0, $value);
         $pattern = array('/(?:NOT\s+BETWEEN)|(?:IS\s+NOT)|(?:NOT\s+IN)|' .
