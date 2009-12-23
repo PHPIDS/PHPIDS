@@ -368,7 +368,6 @@ class IDS_Converter
         );
         
         $value = str_replace($search, '%00', $value);
-        $urlencoded = urlencode($value);
 
         //take care for malicious unicode characters
         $value = urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' .
