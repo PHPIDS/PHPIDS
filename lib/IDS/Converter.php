@@ -86,7 +86,7 @@ class IDS_Converter
      */
     public static function convertFromRepetition($value) 
     {
-    	// remove obvios repetition patterns
+        // remove obvios repetition patterns
         $value = preg_replace(
             '/(?:(.{2,})\1{32,})|(?:[+=|\-@\s]{128,})/', 
             'x', 
@@ -140,8 +140,8 @@ class IDS_Converter
         $search = array('\r', '\n', '\f', '\t', '\v');
         $value  = str_replace($search, ';', $value);
 
-		// replace replacement characters regular spaces
-		$value = str_replace('�', ' ', $value);
+        // replace replacement characters regular spaces
+        $value = str_replace('�', ' ', $value);
 
         //convert real linebreaks
         return preg_replace('/(?:\n|\r|\v)/m', '  ', $value);
@@ -420,7 +420,7 @@ class IDS_Converter
 
         foreach ($matches[1] as $item) {
             if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
-            	$base64_item = base64_decode($item);
+                $base64_item = base64_decode($item);
                 $value = str_replace($item, $base64_item, $value);
             }
         }
@@ -483,7 +483,7 @@ class IDS_Converter
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $match) {
-            	$chr = chr(hexdec(substr($match, 2, 4))); 
+                $chr = chr(hexdec(substr($match, 2, 4))); 
                 $value = str_replace($match, $chr, $value);
             }
             $value .= "\n\u0001";
@@ -609,8 +609,7 @@ class IDS_Converter
     /**
      * This method collects and decodes proprietary encoding types
      *
-     * @param string      $value   the value to convert
-     * @param IDS_Monitor $monitor the monitor object
+     * @param string $value the value to convert
      *
      * @static
      * @return string

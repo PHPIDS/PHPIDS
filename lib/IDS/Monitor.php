@@ -371,6 +371,7 @@ class IDS_Monitor
      * @param  mixed $key
      * @param  mixed $value
      * @since  0.5
+     * @throws Exception
      *
      * @return array
      */
@@ -537,14 +538,14 @@ class IDS_Monitor
             array_walk_recursive($tmp_value, array($this, '_jsonConcatContents'));
             $value = $this->tmpJsonString;
         } else {
-        	$this->tmpJsonString .=  " " . $tmp_value . "\n";
+            $this->tmpJsonString .=  " " . $tmp_value . "\n";
         }
 
         if($tmp_key && is_array($tmp_key) || is_object($tmp_key)) {
             array_walk_recursive($tmp_key, array($this, '_jsonConcatContents'));
             $key = $this->tmpJsonString;
         } else {
-        	$this->tmpJsonString .=  " " . $tmp_key . "\n";
+            $this->tmpJsonString .=  " " . $tmp_key . "\n";
         }
 
         return array($key, $value);
@@ -565,9 +566,9 @@ class IDS_Monitor
         if(is_string($key) && is_string($value)) {
             $this->tmpJsonString .=  $key . " " . $value . "\n";
         } else {
-        	$this->_jsonDecodeValues(
-        		json_encode($key), json_encode($value)
-        	);
+            $this->_jsonDecodeValues(
+                json_encode($key), json_encode($value)
+            );
         }
     }
 
@@ -682,7 +683,8 @@ class IDS_Monitor
     /**
      * Adds a value to the json array
      *
-     * @since 0.5.3
+     * @param  string the value containing JSON data
+     * @since  0.5.3
      *
      * @return void
      */

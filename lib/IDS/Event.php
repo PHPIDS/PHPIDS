@@ -218,7 +218,7 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * Returns an iterator to iterate over the appended filters.
      *
-     * @return Iterator|IteratorAggregate
+     * @return ArrayObject the filter collection
      */
     public function getIterator() 
     {

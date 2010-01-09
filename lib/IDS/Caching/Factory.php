@@ -54,8 +54,8 @@ class IDS_Caching
     /**
      * Factory method
      *
-     * @param array  $init the IDS_Init object
-     * @param string $type the caching type
+     * @param  object $init the IDS_Init object
+     * @param  string $type the caching type
      * 
      * @return object the caching facility
      */

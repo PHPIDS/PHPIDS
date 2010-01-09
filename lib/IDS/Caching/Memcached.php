@@ -91,10 +91,9 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     /**
      * Constructor
      *
-     * @param string $type caching type
-     * @param array  $init the IDS_Init object
+     * @param  string $type caching type
+     * @param  array  $init the IDS_Init object
      * 
-     * @throws Exception if necessary files aren't writeable
      * @return void
      */
     public function __construct($type, $init) 
@@ -109,8 +108,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     /**
      * Returns an instance of this class
      *
-     * @param string $type caching type
-     * @param array  $init the IDS_Init object
+     * @param  string $type caching type
+     * @param  object $init the IDS_Init object
      * 
      * @return object $this
      */
@@ -127,9 +126,8 @@ class IDS_Caching_Memcached implements IDS_Caching_Interface
     /**
      * Writes cache data
      *
-     * @param array $data the caching data
+     * @param  array $data the caching data
      * 
-     * @throws Exception if necessary files aren't writeable
      * @return object $this
      */
     public function setCache(array $data) 

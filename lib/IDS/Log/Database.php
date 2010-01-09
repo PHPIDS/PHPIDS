@@ -142,6 +142,7 @@ class IDS_Log_Database implements IDS_Log_Interface
      * @param mixed $config IDS_Init instance | array
      * 
      * @return void
+     * @throws PDOException if a db error occurred
      */
     protected function __construct($config) 
     {
@@ -195,7 +196,7 @@ class IDS_Log_Database implements IDS_Log_Interface
             ');
 
         } catch (PDOException $e) {
-            die('PDOException: ' . $e->getMessage());
+            throw new PDOException('PDOException: ' . $e->getMessage());
         }
     }
 
@@ -205,8 +206,8 @@ class IDS_Log_Database implements IDS_Log_Interface
      * This method allows the passed argument to be either an instance of IDS_Init or
      * an array.
      *
-     * @param mixed $config IDS_Init | array
-     * @param string the class name to use
+     * @param  mixed  $config    IDS_Init | array
+     * @param  string $classname the class name to use
      * 
      * @return object $this
      */

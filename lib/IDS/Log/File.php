@@ -87,11 +87,11 @@ class IDS_Log_File implements IDS_Log_Interface
     {
 
         // determine correct IP address
-        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
+        } elseif ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+            $this->ip = $_SERVER['REMOTE_ADDR'];
+        } 
 
         $this->logfile = $logfile;
     }
@@ -103,8 +103,8 @@ class IDS_Log_File implements IDS_Log_Interface
      * IDS_Init or a path to a log file. Due to the singleton pattern only one 
      * instance for each file can be initiated.
      *
-     * @param mixed $config IDS_Init or path to a file
-     * @param string the class name to use
+     * @param  mixed  $config    IDS_Init or path to a file
+     * @param  string $classname the class name to use
      * 
      * @return object $this
      */
@@ -170,10 +170,10 @@ class IDS_Log_File implements IDS_Log_Interface
     /**
      * Stores given data into a file
      *
-     * @param object $data IDS_Report
+     * @param  object $data IDS_Report
      * 
      * @throws Exception if the logfile isn't writeable
-     * @return mixed
+     * @return boolean
      */
     public function execute(IDS_Report $data) 
     {

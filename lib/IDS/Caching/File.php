@@ -83,8 +83,8 @@ class IDS_Caching_File implements IDS_Caching_Interface
     /**
      * Constructor
      *
-     * @param string $type caching type
-     * @param array  $init the IDS_Init object
+     * @param  string $type caching type
+     * @param  object $init the IDS_Init object
      * 
      * @return void
      */
@@ -105,8 +105,8 @@ class IDS_Caching_File implements IDS_Caching_Interface
     /**
      * Returns an instance of this class
      *
-     * @param string $type caching type
-     * @param array  $init the IDS_Init object
+     * @param  string $type caching type
+     * @param  object $init the IDS_Init object
      * 
      * @return object $this
      */
