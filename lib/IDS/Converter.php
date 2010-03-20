@@ -441,7 +441,7 @@ class IDS_Converter
         $values = str_split($value);
         foreach ($values as $item) {
             if (ord($item) >= 127) {
-                $value = str_replace($item, 'U', $value);
+                $value = str_replace($item, ' ', $value);
             }
         }
 

@@ -289,7 +289,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1120, $result->getImpact());
+        $this->assertEquals(1125, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -466,7 +466,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(147, $result->getImpact());
+        $this->assertEquals(148, $result->getImpact());
     }
     
     public function testConditionalCompilationXSSList() {
@@ -669,7 +669,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(457, $result->getImpact());
+        $this->assertEquals(475, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -720,6 +720,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1' -1 or+1= '+1 ";
         $exploits[] = "1' -1 - column or '1 ";
         $exploits[] = "1' -1 or '1";
+        $exploits[] = ' (1)or(1)=(1) ';
 
         $this->_testForPlainEvent($exploits);
 
@@ -728,7 +729,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 643, 685);
+        $this->assertImpact($result, 649, 691);
     }
 
     public function testSQLIList3() {
@@ -772,7 +773,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(585, $result->getImpact());
+        $this->assertEquals(591, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -833,7 +834,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 834, 838);
+        $this->assertImpact($result, 852, 856);
     }
 
     public function testSQLIList5() {
@@ -954,6 +955,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "1' and 0x1abc like 0x88 or '0";
 		$exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
 		$exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
+		$exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
 
         $this->_testForPlainEvent($exploits);
 
@@ -962,7 +964,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(466, $result->getImpact());
+        $this->assertEquals(483, $result->getImpact());
     }
 
     public function testDTList(){
@@ -979,6 +981,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test10 = '&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt;';
         $test11 = '../../../../../../../../conf/server.xml';
         $test12 = '/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd';
+        $test13 = 'dir/..././..././folder/file.php ';
 
         if (function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc()){
             $test1 = addslashes($test1);
@@ -993,6 +996,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $test10 = addslashes($test10);
             $test11 = addslashes($test11);
             $test12 = addslashes($test12);
+            $test13 = addslashes($test13);
         }
 
         $exploits = array();
@@ -1008,6 +1012,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = $test10;
         $exploits[] = $test11;
         $exploits[] = $test12;
+        $exploits[] = $test13;
 
         $this->_testForPlainEvent($exploits);
 
@@ -1016,7 +1021,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(121, $result->getImpact());
+        $this->assertEquals(126, $result->getImpact());
     }
 
     public function testURIList(){
