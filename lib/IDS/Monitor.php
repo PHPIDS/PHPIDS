@@ -475,9 +475,7 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        $purified = preg_replace(
-            '/(>)\s*"\s*\w+\s*=.+(<|$)/m', null, $purified
-        );
+        $purified = preg_replace('/(>).*(\w+\s*=\s*.+\/\s*\/.*)(<|$)/m', '$1$2$3', $purified);
 
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
         $original = preg_replace('/\s+alt=?/m', null, $original);

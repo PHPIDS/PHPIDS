@@ -1262,6 +1262,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_10'] = '<img src=phpids_logo.gif alt=Logo onreadystatechange=MsgBox-1 language=vbs>';
 		$exploits['html_11'] = '<img src="." =">" onerror=alert(1);//';
 		$exploits['html_12'] = '<img src="." =">" onerror=alert(222222222222222222222222222222222222222222222222222,1);//';
+		$exploits['html_13'] = '<img src="." =">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa onerror = alert(1)/&#10;/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
@@ -1271,7 +1272,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(295, $result->getImpact());
+        $this->assertEquals(233, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
@@ -1279,8 +1280,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_1'] = '<a href="http://www.google.de/">Google</a>';
         $exploits['html_2'] = '<table width="500"><tr><th>Test</th></tr><tr><td>test</td></tr></table>';
         $exploits['html_3'] = '<table><tr><td class="TableRowAlt">
-                                <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align:middle;" />                                 <a href="http://sla.ckers.org/forum/read.php?13,22665">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
-                                </td>
+                                <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align:middle;" />
+								<a href="http://sla.ckers.org/forum/read.php?13">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
                                 <td class="TableRowAlt" align="center">81 </td>
                                 <td class="TableRowAlt" align="center" nowrap="nowrap">1 </td>
                                 <td class="TableRowAlt" nowrap="nowrap"><a href="http://sla.ckers.org/forum/profile.php">euronymous</a></td>
