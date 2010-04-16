@@ -1260,6 +1260,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
         $exploits['html_9'] = '<b "<script>alert(1)</script>">hola</b>';
         $exploits['html_10'] = '<img src=phpids_logo.gif alt=Logo onreadystatechange=MsgBox-1 language=vbs>';
+		$exploits['html_11'] = '<img src="." =">" onerror=alert(1);//';
+		$exploits['html_12'] = '<img src="." =">" onerror=alert(222222222222222222222222222222222222222222222222222,1);//';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
@@ -1269,7 +1271,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(197, $result->getImpact());
+        $this->assertEquals(295, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {

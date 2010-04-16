@@ -475,6 +475,9 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
+        $purified = preg_replace(
+            '/(>)\s*"\s*\w+\s*=.+(<|$)/m', null, $purified
+        );
 
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
         $original = preg_replace('/\s+alt=?/m', null, $original);
@@ -493,7 +496,7 @@ class IDS_Monitor
             $array_2 = str_split($purified);
         }
         foreach ($array_2 as $key => $value) {
-            if ($value !== $array_1[$key]) {
+            if (isset($array_1[$key]) && $value !== $array_1[$key]) {
                 $array_1   = array_reverse($array_1);
                 $array_1[] = $value;
                 $array_1   = array_reverse($array_1);
