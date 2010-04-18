@@ -481,7 +481,8 @@ class IDS_Monitor
         $original = preg_replace('/\s+alt=?/m', null, $original);
 
         // check which string is longer
-        $length = (strlen($original) - strlen($purified));
+        $length = (strlen(urldecode($original)) - strlen($purified));
+        
         /*
          * Calculate the difference between the original html input
          * and the purified string.
@@ -489,10 +490,14 @@ class IDS_Monitor
         if ($length > 0) {
             $array_2 = str_split($original);
             $array_1 = str_split($purified);
-        } else {
+        } elseif($length < 0) {
             $array_1 = str_split($original);
             $array_2 = str_split($purified);
+        } else {
+            $array_1 = str_split($original);
+            $array_2 = str_split(urldecode($purified));        	
         }
+        
         foreach ($array_2 as $key => $value) {
             if (isset($array_1[$key]) && $value !== $array_1[$key]) {
                 $array_1   = array_reverse($array_1);
