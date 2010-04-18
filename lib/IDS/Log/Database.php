@@ -161,10 +161,10 @@ class IDS_Log_Database implements IDS_Log_Interface
         }
 
         // determine correct IP address
-        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $this->ip = $_SERVER['REMOTE_ADDR'];
         }
 
         try {

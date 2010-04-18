@@ -89,9 +89,9 @@ class IDS_Log_File implements IDS_Log_Interface
         // determine correct IP address
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } elseif ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+        } else {
             $this->ip = $_SERVER['REMOTE_ADDR'];
-        } 
+        }
 
         $this->logfile = $logfile;
     }
