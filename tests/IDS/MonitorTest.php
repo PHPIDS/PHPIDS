@@ -1266,23 +1266,27 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_6'] = '<script>alert(1)</script><h1>headline</h1><p>copytext</p>';
         $exploits['html_7'] = '<img src src src src=x onerror=alert(1)>';
         $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
-        $exploits['html_8'] = '<b>\' OR 1=1-</b>-';
         $exploits['html_9'] = '<b "<script>alert(1)</script>">hola</b>';
         $exploits['html_10'] = '<img src=phpids_logo.gif alt=Logo onreadystatechange=MsgBox-1 language=vbs>';
 		$exploits['html_11'] = '<img src="." =">" onerror=alert(1);//';
 		$exploits['html_12'] = '<img src="." =">" onerror=alert(222222222222222222222222222222222222222222222222222,1);//';
 		$exploits['html_13'] = '<img src="." =">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa onerror = alert(1)/&#10;/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 		$exploits['html_14'] = '<a style="background:url(http://hh*/)}lo:expression(this.lol?0:alert(this.lol=1))/*%31);">lo</a>';
+		$exploits['html_15'] = '<a style="background:url(/hyyuj)&#125lo:expression&#40alert&#40/1/&#41//)/*lo);">lo</a>';
+		$exploits['html_16'] = '<img src= # onerror = alert(1) <b>foo</b>';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+        $this->_testForPlainEvent($exploits);
+        
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
         $test->setHtml(array_keys($exploits));
         $result = $test->run();
+        
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(297, $result->getImpact());
+        $this->assertEquals(467, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
@@ -1290,13 +1294,12 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_1'] = '<a href="http://www.google.de/">Google</a>';
         $exploits['html_2'] = '<table width="500"><tr><th>Test</th></tr><tr><td>test</td></tr></table>';
         $exploits['html_3'] = '<table><tr><td class="TableRowAlt">
-                                <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align:middle;" />
-								<a href="http://sla.ckers.org/forum/read.php?13">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
-                                <td class="TableRowAlt" align="center">81 </td>
-                                <td class="TableRowAlt" align="center" nowrap="nowrap">1 </td>
+                                <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align:middle;" /><a href="http://sla.ckers.org/forum/read.php?13">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
+                                </td><td class="TableRowAlt" align="center">81 </td>
+                                <td class="TableRowAlt" align="center" nowrap="nowrap">1 </td>
                                 <td class="TableRowAlt" nowrap="nowrap"><a href="http://sla.ckers.org/forum/profile.php">euronymous</a></td>
                                 <td class="TableRowAlt SmallFont" nowrap="nowrap">
-                                06/01/2008 04:05AM <br /><span class="ListSubText">
+                                06/01/2008 04:05AM <br /><span class="ListSubText">
                                 <a href="http://sla.ckers.org/forum/read.php?13,22665,22665#msg-22665">Last Post</a> by <a href="http://sla.ckers.org/forum/profile.php?13,1410">euronymous</a>        </span>
                                 </td>
                                 </tr></table>';
@@ -1304,11 +1307,12 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_5'] = '<h1>headline</h1><p>copytext</p>
                                 <p>bodytext &copy; 2008</p>     <h2>test
                                 </h2>';
-        $exploits['html_6'] = '<div id="header">
-                                <div id="headerimg">
+        $exploits['html_6'] = '<div>
+                                <div>
                                 <h1><a href="http://php-ids.org/">PHPIDS » Web Application Security 2.0</a></h1>
                                 <div class="description"></div>
                                 </div></div><hr />';
+
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new IDS_Monitor(
@@ -1414,15 +1418,21 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
      */
     private function _testForPlainEvent($exploits = array()) {
 
-        foreach($exploits as $exploit) {
+        foreach($exploits as $key => $value) {
+
             $test = new IDS_Monitor(
-                array('test' => $exploit),
+                array('test' => $value),
                 $this->init
             );
+        	
+        	if(preg_match('/^html_/', $key)) {
+		        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+		        $test->setHtml(array('test'));
+        	}
             $result = $test->run();
 
             if($result->getImpact() === 0) {
-                echo "\n\nNot detected: ".$exploit."\n\n";
+                echo "\n\nNot detected: ".$value."\n\n";
             }
             $this->assertTrue($result->getImpact() > 0);
         }

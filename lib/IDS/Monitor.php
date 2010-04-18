@@ -475,40 +475,38 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        $purified = preg_replace('/(>).*(\w+\s*=\s*.+\/\s*\/.*)(<|$)/m', '$1$2$3', $purified);
-
+        $original = preg_replace('/\s+alt="[^"]*"/m', null, $original);
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
-        $original = preg_replace('/\s+alt=?/m', null, $original);
 
-        // check which string is longer
-        $length = (strlen(urldecode($original)) - strlen($purified));
-        
+        // no purified html is left
+        if (!$purified) {
+            return $original;
+        }
+
+        // calculate the diff length
+        $length = mb_strlen($original) - mb_strlen($purified);
+
         /*
          * Calculate the difference between the original html input
          * and the purified string.
          */
-        if ($length > 0) {
-            $array_2 = str_split($original);
-            $array_1 = str_split($purified);
-        } elseif($length < 0) {
-            $array_1 = str_split($original);
-            $array_2 = str_split($purified);
-        } else {
-            $array_1 = str_split($original);
-            $array_2 = str_split(urldecode($purified));        	
-        }
-        
-        foreach ($array_2 as $key => $value) {
-            if (isset($array_1[$key]) && $value !== $array_1[$key]) {
-                $array_1   = array_reverse($array_1);
-                $array_1[] = $value;
-                $array_1   = array_reverse($array_1);
+        $array_1 = str_split(html_entity_decode(urldecode($original)));
+        $array_2 = str_split(html_entity_decode(urldecode($purified)));
+
+        // create an array containing the single character differences
+        $differences = array();
+        foreach ($array_1 as $key => $value) {
+            if (!isset($array_2[$key]) || $value !== $array_2[$key]) {
+                $differences[] = $value;
             }
         }
-
+        
         // return the diff - ready to hit the converter and the rules
-        $diff = trim(join('', array_reverse(
-            (array_slice($array_1, 0, $length)))));
+        if(intval($length) <= 10) {
+            $diff = trim(join('', $differences));
+        } else {
+            $diff = substr(trim(join('', $differences)), 0, strlen($original));
+        }
 
         // clean up spaces between tag delimiters
         $diff = preg_replace('/>\s*</m', '><', $diff);
@@ -517,7 +515,7 @@ class IDS_Monitor
         $diff = preg_replace('/[^<](iframe|script|embed|object' .
             '|applet|base|img|style)/m', '<$1', $diff);
 
-        if ($original == $purified && !$redux) {
+        if (!$diff) {
             return null;
         }
 
