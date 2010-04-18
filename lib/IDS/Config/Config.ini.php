@@ -4,7 +4,6 @@
 
 ; General configuration settings
 
-; !!!DO NOT PLACE THIS FILE INSIDE THE WEB-ROOT IF DATABASE CONNECTION DATA WAS ADDED!!!
 
 [General]
 
