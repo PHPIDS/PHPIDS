@@ -1274,6 +1274,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits['html_14'] = '<a style="background:url(http://hh*/)}lo:expression(this.lol?0:alert(this.lol=1))/*%31);">lo</a>';
 		$exploits['html_15'] = '<a style="background:url(/hyyuj)&#125lo:expression&#40alert&#40/1/&#41//)/*lo);">lo</a>';
 		$exploits['html_16'] = '<img src= # onerror = alert(1) <b>foo</b>';
+		$exploits['html_17'] = '<a style="background:url(//lo/\\)}lo:expression\000028alert\000028/1/\000029\000029/*lo);">lo</a>';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $this->_testForPlainEvent($exploits);
@@ -1286,7 +1287,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(467, $result->getImpact());
+        $this->assertEquals(496, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
