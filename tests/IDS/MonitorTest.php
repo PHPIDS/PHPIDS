@@ -289,7 +289,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1125, $result->getImpact());
+        $this->assertEquals(1133, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2() {
@@ -435,6 +435,15 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'location.assign(1?name+1:(x))';
         $exploits[] = "this[('eva')+new Array + 'l'](/x.x.x/+name+/x.x/)"; 
         $exploits[] = "this[[],('eva')+(/x/,new Array)+'l'](/xxx.xxx.xxx.xxx.xx/+name,new Array)";
+        $exploits[] = 'alal=(/YWxlcnQ/)(/YWxlcnQ/),
+						alal=alal[0],
+						atyujg=(/atob/)(/atob/),
+						con=atyujg.concat,
+						con1=con()[0],
+						con=con1[atyujg],
+						alal=con(alal),
+						alal=con1[alal],
+						alal(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -443,7 +452,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-		$this->assertImpact($result, 935, 922);
+		$this->assertImpact($result, 964, 953);
     }
 
     public function testXMLPredicateXSSList() {
@@ -576,7 +585,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 788, 826);
+        $this->assertImpact($result, 797, 835);
     }
 
     public function testSelfContainedXSSList() {
@@ -619,7 +628,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 526, 536);
+        $this->assertImpact($result, 530, 540);
     }
 
     public function testSQLIList() {
