@@ -444,6 +444,19 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						alal=con(alal),
 						alal=con1[alal],
 						alal(1)';
+		$exploits[] = 'alal=(1,/YWxlcnQ/), 
+						alal=alal(alal),
+						alal=alal[0],
+						atyujg=(1,/atob/),
+						atyujg=atyujg(atyujg),
+						atat=atyujg[0],
+						con=atyujg.concat,
+						con1=con(),
+						con1=con1[0],
+						con=con1[atat],
+						alal=con(alal),
+						alal=con1[alal],
+						alal(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -452,7 +465,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-		$this->assertImpact($result, 964, 951);
+		$this->assertImpact($result, 1014, 1001);
     }
 
     public function testXMLPredicateXSSList() {
@@ -585,7 +598,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 797, 835);
+        $this->assertImpact($result, 806, 844);
     }
 
     public function testSelfContainedXSSList() {
@@ -1148,7 +1161,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(95, $result->getImpact());
+        $this->assertEquals(131, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {
@@ -1221,7 +1234,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(99, $result->getImpact());
+        $this->assertEquals(105, $result->getImpact());
     }
 
     public function testLDAPInjectionList() {
@@ -1287,7 +1300,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 524, 531);
+        $this->assertImpact($result, 542, 549);
     }
 
     public function testAllowedHTMLScanningNegative() {
