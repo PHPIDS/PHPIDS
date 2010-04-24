@@ -303,9 +303,15 @@ class IDS_Monitor
         }
 
         // check if this field is part of the exceptions
-        if (is_array($this->exceptions)
-            && in_array($key, $this->exceptions, true)) {
-            return false;
+        if (is_array($this->exceptions)) {
+            foreach($this->exceptions as $exception) {
+                if(!preg_match('/^\//', $exception)) {
+                    $exception = '/' . preg_quote($exception, '/') . '/';
+                }
+                if(preg_match($exception, $key)) {
+                    return false;					
+                }        		
+            }
         }
 
         // check for magic quotes and remove them if necessary
@@ -491,7 +497,7 @@ class IDS_Monitor
          * and the purified string.
          */
         $array_1 = str_split(html_entity_decode(urldecode($original)));
-        $array_2 = str_split(html_entity_decode($purified));
+        $array_2 = str_split($purified);
 
         // create an array containing the single character differences
         $differences = array();

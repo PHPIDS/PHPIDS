@@ -34,6 +34,8 @@
     exceptions[]    = GET.__utmz
     exceptions[]    = GET.__utmc
 
+    ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
+
     ; PHPIDS should run with PHP 5.1.2 but this is untested - set 
     ; this value to force compatibilty with minor versions
     min_php_version = 5.1.6
