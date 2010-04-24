@@ -488,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 1014, 1001);
+        $this->assertImpact($result, 1007, 994);
     }
 
     public function testXMLPredicateXSSList() {
@@ -613,6 +613,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         \'s';
         $exploits[] = "',YAHOO.util.Get.script(\"http://ha.ckers.org/xss.js\")
                         's";
+		$exploits[] = 'lo=/,Batman/,alert(\'Batman flew here\')';
 
         $this->_testForPlainEvent($exploits);
 
@@ -621,7 +622,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 806, 844);
+        $this->assertImpact($result, 814, 852);
     }
 
     public function testSelfContainedXSSList() {
