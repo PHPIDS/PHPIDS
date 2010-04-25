@@ -486,6 +486,7 @@ class IDS_Monitor
         
         $original = preg_replace('/\s+alt="[^"]*"/m', null, $original);
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
+        $original = preg_replace('/style\s*=\s*([^"])/m', 'style = "$1', $original);
         
         # strip whitespace between tags
         $original = preg_replace('/>\s*</m', '><', $original);
