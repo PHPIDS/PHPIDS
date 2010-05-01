@@ -481,8 +481,6 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        $purified = preg_replace('/\(\s*\/\*.*\*\//', '(', $purified);
-        $purified = preg_replace('/\\\\\)/', null, $purified);
         
         $original = preg_replace('/\s+alt="[^"]*"/m', null, $original);
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
@@ -500,7 +498,7 @@ class IDS_Monitor
         if (!$purified) {
             return $original;
         }
-
+        
         // calculate the diff length
         $length = mb_strlen($original) - mb_strlen($purified);
 
@@ -508,9 +506,7 @@ class IDS_Monitor
          * Calculate the difference between the original html input
          * and the purified string.
          */
-        $array_1 = str_split(
-            stripslashes(html_entity_decode(urldecode($original)))
-        );
+        $array_1 = str_split(html_entity_decode(urldecode($original)));
         $array_2 = str_split(stripslashes($purified));
 
         // create an array containing the single character differences

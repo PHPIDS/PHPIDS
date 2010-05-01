@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  *
- * @version 4.0.0
+ * @version 4.1.0
  *
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -176,6 +176,7 @@ require 'HTMLPurifier/Injector/DisplayLinkURI.php';
 require 'HTMLPurifier/Injector/Linkify.php';
 require 'HTMLPurifier/Injector/PurifierLinkify.php';
 require 'HTMLPurifier/Injector/RemoveEmpty.php';
+require 'HTMLPurifier/Injector/RemoveSpansWithoutAttributes.php';
 require 'HTMLPurifier/Injector/SafeObject.php';
 require 'HTMLPurifier/Lexer/DOMLex.php';
 require 'HTMLPurifier/Lexer/DirectLex.php';
@@ -198,6 +199,7 @@ require 'HTMLPurifier/URIFilter/DisableExternalResources.php';
 require 'HTMLPurifier/URIFilter/HostBlacklist.php';
 require 'HTMLPurifier/URIFilter/MakeAbsolute.php';
 require 'HTMLPurifier/URIFilter/Munge.php';
+require 'HTMLPurifier/URIScheme/data.php';
 require 'HTMLPurifier/URIScheme/ftp.php';
 require 'HTMLPurifier/URIScheme/http.php';
 require 'HTMLPurifier/URIScheme/https.php';

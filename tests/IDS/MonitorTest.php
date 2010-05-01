@@ -1002,6 +1002,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
         $exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
         $exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
+		$exploits[] = urldecode('%27sounds%20like%281%29%20union%19%28select%191,group_concat%28table_name%29,3%19from%19information_schema.%60tables%60%29%23%28');
 
         $this->_testForPlainEvent($exploits);
 
@@ -1010,7 +1011,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(483, $result->getImpact());
+        $this->assertEquals(501, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1302,6 +1303,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['html_19'] = '<a style="background:url(//mh.mh/\)!*mh:expression\(write\(1\));">lo</a> // you discovered';
         $exploits['html_20'] = '<a href="http://ha.ckers.org/xss.css" style="background:url(/**/javascript:document.documentElement.firstChild.lastChild.href=document.documentElement.firstChild.nextSibling.lastChild.previousSibling.previousSibling.lastChild.previousSibling.previousSibling.lastChild.lastChild.lastChild.lastChild.lastChild.href);">lo</a>';
         $exploits['html_21'] = "<img src=http://lo.lo/lo = '> ' onerror=alert(1)//";
+        $exploits['html_22'] = '<div style="color:white;>;lo:expression\\\28\\\77rite\\\28 1\\\29\\\29;'; 
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $this->_testForPlainEvent($exploits);
@@ -1314,7 +1316,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 627, 630);
+        $this->assertImpact($result, 636, 646);
     }
 
     public function testAllowedHTMLScanningNegative() {
