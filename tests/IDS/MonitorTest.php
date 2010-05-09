@@ -1472,7 +1472,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function assertImpact(IDS_Report $result, $impact, $suhosinImpact)
     {
         if (extension_loaded('suhosin')) {
-            $this->assertEquals($impact, $result->getImpact());
             $this->assertEquals($suhosinImpact, $result->getImpact());
         } else {
             $this->assertEquals($impact, $result->getImpact());
