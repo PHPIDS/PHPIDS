@@ -715,7 +715,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(475, $result->getImpact());
+        $this->assertEquals(464, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -775,7 +775,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 649, 691);
+        $this->assertImpact($result, 634, 676);
     }
 
     public function testSQLIList3() {
@@ -880,7 +880,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 852, 856);
+        $this->assertImpact($result, 846, 850);
     }
 
     public function testSQLIList5() {
@@ -957,7 +957,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 935, 948);
+        $this->assertImpact($result, 928, 941);
     }
 
     public function testSQLIList6() {
@@ -1012,7 +1012,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(511, $result->getImpact());
+        $this->assertEquals(532, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1472,9 +1472,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function assertImpact(IDS_Report $result, $impact, $suhosinImpact)
     {
         if (extension_loaded('suhosin')) {
-            $this->assertSame($suhosinImpact, $result->getImpact());
+            $this->assertEquals($impact, $result->getImpact());
+            $this->assertEquals($suhosinImpact, $result->getImpact());
         } else {
-            $this->assertSame($impact, $result->getImpact());
+            $this->assertEquals($impact, $result->getImpact());
         }
     }
 }
