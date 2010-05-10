@@ -329,6 +329,7 @@ class IDS_Converter
         $value   = preg_replace($pattern, '"=0', $value);
         $value   = preg_replace('/\W+\s*like\s*\W+/ims', '1" OR "1"', $value);
         $value   = preg_replace('/null[,"\s]/ims', ',0', $value);
+        $value   = preg_replace('/\d+\./ims', ' 1', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
         $value   = preg_replace('/(?:between|mod)/ims', 'or', $value);
         $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
