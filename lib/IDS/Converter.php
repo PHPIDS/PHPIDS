@@ -262,7 +262,12 @@ class IDS_Converter
             $converted = html_entity_decode($converted, ENT_QUOTES, 'UTF-8');
             $value    .= "\n" . str_replace(';;', ';', $converted);
         }
-
+        // normalize obfuscated protocol handlers
+        $value = preg_replace(
+            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*)|(d\s*a\s*t\s*a\s*)/ms', 
+            'javascript', $value
+        );
+        
         return $value;
     }
 
@@ -492,7 +497,6 @@ class IDS_Converter
 
         return $value;
     }
-
 
     /**
      * Converts relevant UTF-7 tags to UTF-8
