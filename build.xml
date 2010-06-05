@@ -1,5 +1,5 @@
 <project name="PHPIDS" default="tests">
-	<target name="tests">
+	<target name="tests" unless="tests.disabled">
         <exec executable="phpunit" failonerror="true">
             <arg line="--verbose"/>
             <arg line="tests/allTests.php"/>
