@@ -240,7 +240,7 @@
     </filter>
     <filter>
         <id>22</id>
-        <rule><![CDATA[(?:[^\s]\s*=\s*script)|(?:\.\s*constructor)|(?:default\s+xml\s+namespace\s*=)|(?:\/\s*\+[^+]+\s*\+\s*\/)]]></rule>
+        <rule><![CDATA[(?:=\s*(?:top|this|window|content|self|frames|_content))|(?:\/\s*\w*\s*[)}])|(?:[^\s]\s*=\s*script)|(?:\.\s*constructor)|(?:default\s+xml\s+namespace\s*=)|(?:\/\s*\+[^+]+\s*\+\s*\/)]]></rule>
         <description>Detects advanced XSS probings via Script(), RexExp, constructors and XML namespaces</description>
         <tags>
             <tag>xss</tag>

@@ -507,7 +507,7 @@ class IDS_Monitor
          * and the purified string.
          */
         $array_1 = str_split(html_entity_decode(urldecode($original)));
-        $array_2 = str_split(stripslashes($purified));
+        $array_2 = str_split($purified);
 
         // create an array containing the single character differences
         $differences = array();
