@@ -687,7 +687,7 @@ class IDS_Converter
             $tmp_value = preg_replace('/([*.!?+-])\1{1,}/m', '$1', $tmp_value);
             $tmp_value = preg_replace('/"[\p{L}\d\s]+"/m', null, $tmp_value);
 
-            $stripped_length = strlen(preg_replace('/[\d\s\p{L}\.:,%&\/><\-)!]+/m',
+            $stripped_length = strlen(preg_replace('/[\d\s\p{L}\.:,%&\/><\-)!|]+/m',
                 null, $tmp_value));
             $overall_length  = strlen(
                 preg_replace('/([\d\s\p{L}:,\.]{3,})+/m', 'aaa',
