@@ -1170,7 +1170,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 71, 76);
+        $this->assertEquals(76, $result->getImpact());
     }
 
     public function testBase64CCConverter() {
@@ -1319,7 +1319,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 707, 720);
+        $this->assertImpact($result, 709, 720);
     }
 
     public function testAllowedHTMLScanningNegative() {
