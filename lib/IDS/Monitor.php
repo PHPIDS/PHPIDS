@@ -411,6 +411,9 @@ class IDS_Monitor
             );
         }
 
+		$value = preg_replace('/[\x0b-\x0c]/', ' ', $value);
+        $key = preg_replace('/[\x0b-\x0c]/', ' ', $key);   
+
         $purified_value = $this->htmlpurifier->purify($value);
         $purified_key   = $this->htmlpurifier->purify($key);
 
