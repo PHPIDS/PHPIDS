@@ -1006,6 +1006,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
 		$exploits[] = urldecode('%27sounds%20like%281%29%20union%19%28select%191,group_concat%28table_name%29,3%19from%19information_schema.%60tables%60%29%23%28');
 		$exploits[] = "0' '1' like (0) and 1 sounds like a or true#1";
+		$exploits[] = " 0'rlike(0)and 1 rlike (@a)or true - ' 0 ";
+		$exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1014,7 +1016,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(532, $result->getImpact());
+        $this->assertEquals(549, $result->getImpact());
     }
 
     public function testDTList(){
