@@ -302,8 +302,8 @@ class IDS_Converter
     public static function convertFromSQLHex($value)
     {
         $matches = array();
-        if(preg_match_all('/(?:0x[a-f\d]{2,}[a-f\d]*)+/im', $value, $matches)) {
-            foreach($matches[0] as $match) {
+        if(preg_match_all('/(?:(?:\A|[^\d])0x[a-f\d]{2,}[a-f\d]*)+/im', $value, $matches)) {
+        	foreach($matches[0] as $match) {
                 $converted = '';
                 foreach(str_split($match, 2) as $hex_index) {
                     if(preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
