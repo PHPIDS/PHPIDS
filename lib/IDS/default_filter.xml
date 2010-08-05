@@ -727,5 +727,14 @@
             <tag>csrf</tag>
         </tags>
         <impact>4</impact>
-    </filter>  	
+    </filter>
+    <filter>
+        <id>70</id>
+        <rule><![CDATA[(?:\[(?:ne|eq|lte?|gte?|n?in|mod|all|size|exists|type|slice)\])]]></rule>
+        <description>finds basic MongoDB SQL injection attempts</description>
+        <tags>
+            <tag>sqli</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>      
 </filters>
