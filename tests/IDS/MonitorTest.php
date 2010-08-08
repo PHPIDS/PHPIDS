@@ -1018,7 +1018,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "0' '1' like (0) and 1 sounds like a or true#1";
 		$exploits[] = " 0'rlike(0)and 1 rlike (@a)or true - ' 0 ";
 		$exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
-		$exploits[] = "password[ne]=12";
+		$exploits[] = 'password[$ne]=12';
 
         $this->_testForPlainEvent($exploits);
 
