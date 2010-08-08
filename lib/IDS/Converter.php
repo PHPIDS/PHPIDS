@@ -658,6 +658,9 @@ class IDS_Converter
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
         
+        //normalize escaped RegExp modifiers
+        $value = preg_replace('/\/\\\(\w)/', '/$1', $value);        
+        
         return $value;
     }
 
