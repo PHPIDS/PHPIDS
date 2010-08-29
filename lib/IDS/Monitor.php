@@ -305,12 +305,16 @@ class IDS_Monitor
         // check if this field is part of the exceptions
         if (is_array($this->exceptions)) {
             foreach($this->exceptions as $exception) {
-                if(!preg_match('/^\//', $exception)) {
-                    $exception = '/' . preg_quote($exception, '/') . '/';
+                $matches = array();
+                if(preg_match('/(\/.*\/[^eE]*)$/', $exception, $matches)) {
+                    if(isset($matches[1]) && preg_match($matches[1], $key)) {
+                        return false;
+                    } 
+                } else {
+                    if($exception === $key) {
+                        return false;
+                    }
                 }
-                if(preg_match($exception, $key)) {
-                    return false;					
-                }        		
             }
         }
 
@@ -411,7 +415,7 @@ class IDS_Monitor
             );
         }
 
-		$value = preg_replace('/[\x0b-\x0c]/', ' ', $value);
+        $value = preg_replace('/[\x0b-\x0c]/', ' ', $value);
         $key = preg_replace('/[\x0b-\x0c]/', ' ', $key);   
 
         $purified_value = $this->htmlpurifier->purify($value);
