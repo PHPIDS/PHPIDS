@@ -488,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 1043, 1030);
+        $this->assertEquals(1030, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -633,7 +633,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(890, $result->getImpact());
+        $this->assertEquals(935, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -676,7 +676,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 545, 555);
+        $this->assertEquals(555, $result->getImpact());
     }
 
     public function testSQLIList() {
@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(459, $result->getImpact());
+        $this->assertEquals(464, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -786,7 +786,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 634, 676);
+        $this->assertEquals(676, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -830,7 +830,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(591, $result->getImpact());
+        $this->assertEquals(606, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -892,7 +892,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 846, 850);
+        $this->assertEquals(850, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -969,7 +969,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(934, $result->getImpact());
+        $this->assertEquals(947, $result->getImpact());
     }
 
     public function testSQLIList6() {
@@ -1027,7 +1027,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(516, $result->getImpact());
+        $this->assertEquals(556, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1096,6 +1096,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'navigatorurl:test" -chrome "javascript:C=Components.classes;I=Components.interfaces;file=C[\'@mozilla.org/file/local;1\'].createInstance(I.nsILocalFile);file.initWithPath(\'C:\'+String.fromCharCode(92)+String.fromCharCode(92)+\'Windows\'+String.fromCharCode(92)+String.fromCharCode(92)+\'System32\'+String.fromCharCode(92)+String.fromCharCode(92)+\'cmd.exe\');process=C[\'@mozilla.org/process/util;1\'].createInstance(I.nsIProcess);process.init(file);process.run(true%252c{}%252c0);alert(process)';
         $exploits[] = 'res://c:\\program%20files\\adobe\\acrobat%207.0\\acrobat\\acrobat.dll/#2/#210';
         $exploits[] = 'mailto:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat';
+		$exploits[] = 'javasc&#x01;ript:alert(1)'; 
 
         $this->_testForPlainEvent($exploits);
 
@@ -1104,7 +1105,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 136, 141);
+        $this->assertEquals(154, $result->getImpact());
     }
 
     public function testRFEList() {
@@ -1166,7 +1167,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertImpact($result, 528, 523);
+        $this->assertEquals(523, $result->getImpact());
     }
 
     public function testUTF7List() {
@@ -1333,7 +1334,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertImpact($result, 713, 724);
+        $this->assertEquals(724, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {

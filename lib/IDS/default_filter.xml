@@ -582,7 +582,7 @@
     </filter>
     <filter>
         <id>55</id>
-        <rule><![CDATA[(?:"\s*!\s*["\w])|(?:from\s+information_schema\W)|(?:(?:(?:current_)?user|database|schema|connection_id)\s*\([^\)]*)|(?:";?\s*(?:select|union|having)\s*[^\s)|(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union[\w(\s]*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
+        <rule><![CDATA[(?:"\s*!\s*["\w])|(?:from\s+information_schema\W)|(?:(?:(?:current_)?user|database|schema|connection_id)\s*\([^\)]*)|(?:";?\s*(?:select|union|having)\s*[^\s])|(?:\wiif\s*\()|(?:exec\s+master\.)|(?:union select @)|(?:union[\w(\s]*select)|(?:select.*\w?user\()|(?:into[\s+]+(?:dump|out)file\s*")]]></rule>
         <description>Detects MSSQL code execution and information gathering attempts</description>
         <tags>
             <tag>sqli</tag>
