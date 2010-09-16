@@ -494,8 +494,8 @@ class IDS_Monitor
         $original = preg_replace('/style\s*=\s*([^"])/m', 'style = "$1', $original);
         
         # strip whitespace between tags
-        $original = preg_replace('/>\s*</m', '><', $original);
-        $purified = preg_replace('/>\s*</m', '><', $purified);
+        $original = trim(preg_replace('/>\s*</m', '><', $original));
+        $purified = trim(preg_replace('/>\s*</m', '><', $purified));
         
         $original = preg_replace(
             '/(=\s*(["\'`])[^>"\'`]*>[^>"\'`]*["\'`])/m', 'alt$1', $original
@@ -523,7 +523,7 @@ class IDS_Monitor
                 $differences[] = $value;
             }
         }
-        
+
         // return the diff - ready to hit the converter and the rules
         if(intval($length) <= 10) {
             $diff = trim(join('', $differences));
@@ -538,7 +538,7 @@ class IDS_Monitor
         $diff = preg_replace('/[^<](iframe|script|embed|object' .
             '|applet|base|img|style)/m', '<$1', $diff);
 
-        if (!$diff) {
+        if (strlen($diff) < 4) {
             return null;
         }
 
