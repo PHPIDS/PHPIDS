@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(464, $result->getImpact());
+        $this->assertEquals(466, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -786,7 +786,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(676, $result->getImpact());
+        $this->assertEquals(682, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -1019,6 +1019,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = " 0'rlike(0)and 1 rlike (@a)or true - ' 0 ";
 		$exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
 		$exploits[] = 'password[$ne]=12';
+		$exploits[] = " A' sounds like(select case(1=1)when'1'then'A'end) and '1";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1027,7 +1028,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(568, $result->getImpact());
+        $this->assertEquals(584, $result->getImpact());
     }
 
     public function testDTList(){
