@@ -295,7 +295,7 @@ class IDS_Log_Email implements IDS_Log_Interface
                        $data->getImpact(),
                        join(' ', $data->getTags()),
                        trim($attackedParameters),
-                       urlencode($_SERVER['REQUEST_URI']),
+                       htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8'),
                        $_SERVER['SERVER_ADDR']);
     }
 
