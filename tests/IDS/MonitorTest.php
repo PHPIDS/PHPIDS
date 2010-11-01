@@ -1020,6 +1020,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
 		$exploits[] = 'password[$ne]=12';
 		$exploits[] = " A' sounds like(select case(1=1)when'1'then'A'end) and '1";
+		$exploits[] = "1' and 0x31='1 ";
+		$exploits[] = "1' and 0x05=(select 0- -mid(version()/- -1, 1,1) as 'a' from dual) and '1 ";
+		$exploits[] = "'AND 1.-1LIKE.1 EXEC xp_cmdshell 'dir ";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1028,7 +1031,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(584, $result->getImpact());
+        $this->assertEquals(606, $result->getImpact());
     }
 
     public function testDTList(){
