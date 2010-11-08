@@ -24,6 +24,7 @@
     <target name="revert">
         <exec executable="svn">
             <arg value="revert"/>
+            <arg value="-R"/>
             <arg value="${basedir}"/>
         </exec>
     </target>
