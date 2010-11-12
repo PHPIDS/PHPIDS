@@ -594,7 +594,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "-setTimeout(
                         1E1+
                         ',aler\
-                        t ( /Mario dont go, its fun phpids rocks/ ) + 1E100000 ' )";
+                        t ( /phpids rocks/ ) + 1E100000 ' )";
         $exploits[] = '<b/alt="1"onmouseover=InputBox+1 language=vbs>test</b>';
         $exploits[] = '$$=\'e\'
                         _=$$+\'val\'
@@ -633,7 +633,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(943, $result->getImpact());
+        $this->assertEquals(948, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -1023,6 +1023,8 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "1' and 0x31='1 ";
 		$exploits[] = "1' and 0x05=(select 0- -mid(version()/- -1, 1,1) as 'a' from dual) and '1 ";
 		$exploits[] = "'AND 1.-1LIKE.1 EXEC xp_cmdshell 'dir ";
+		$exploits[] = "SELECT 1,2,0xEF`";
+		$exploits[] = "SELECT 1,2,3`abc``";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1031,7 +1033,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(606, $result->getImpact());
+        $this->assertEquals(616, $result->getImpact());
     }
 
     public function testDTList(){
