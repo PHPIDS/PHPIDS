@@ -20,16 +20,6 @@
         <impact>4</impact>
     </filter>
     <filter>
-        <id>69</id>
-        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style|poster|background)=[$"\w])]]></rule>
-        <description>finds malicious attribute injection attempts</description>
-        <tags>
-            <tag>xss</tag>
-            <tag>csrf</tag>
-        </tags>
-        <impact>6</impact>
-    </filter>	
-    <filter>
         <id>3</id>
         <rule><![CDATA[(?:^>[\w\s]*<\/?\w{2,}>)]]></rule>
         <description>finds unquoted attribute breaking injections</description>
@@ -736,5 +726,15 @@
             <tag>sqli</tag>
         </tags>
         <impact>4</impact>
-    </filter>      
+    </filter>
+    <filter>
+        <id>71</id>
+        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style|poster|background)=[$"\w])]]></rule>
+        <description>finds malicious attribute injection attempts</description>
+        <tags>
+            <tag>xss</tag>
+            <tag>csrf</tag>
+        </tags>
+        <impact>6</impact>
+    </filter>   
 </filters>
