@@ -633,7 +633,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(963, $result->getImpact());
+        $this->assertEquals(971, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(472, $result->getImpact());
+        $this->assertEquals(453, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -822,6 +822,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'+COALESCE('admin') and @@version = !1 div 1+'";
         $exploits[] = "'+COALESCE('admin') and @@version = !@@version div @@version+'";
         $exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
+        $exploits[] = "foo'div count(select`pass`from(users)where mid(pass,1,1)rlike lower(conv(10,pi()*pi(),pi()*pi())) )-'0";
 
         $this->_testForPlainEvent($exploits);
 
@@ -830,7 +831,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(616, $result->getImpact());
+        $this->assertEquals(636, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -892,7 +893,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(856, $result->getImpact());
+        $this->assertEquals(857, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -969,7 +970,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(964, $result->getImpact());
+        $this->assertEquals(952, $result->getImpact());
     }
 
     public function testSQLIList6() {
