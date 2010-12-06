@@ -122,6 +122,7 @@ class IDS_Converter
         //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
+        $value = preg_replace('/([^\-&])#.*[\r\n\v\f]/m', '$1', $value);
 
         return $value;
     }

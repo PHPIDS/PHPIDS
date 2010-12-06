@@ -1025,6 +1025,11 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "'AND 1.-1LIKE.1 EXEC xp_cmdshell 'dir ";
 		$exploits[] = "SELECT 1,2,0xEF`";
 		$exploits[] = "SELECT 1,2,3`abc``";
+		$exploits[] = "1'AND#
+						0#
+						UNION#
+						SELECT@a:=table_name FROM#
+						information_schema.tables LIMIT 1#";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1033,7 +1038,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(636, $result->getImpact());
+        $this->assertEquals(656, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1452,6 +1457,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'd3d3LmRlbW90eXdhdG9yeS5wbA==';
         $exploits[] = '"Einkäuferin Zutaten + Stoffe"';
         $exploits[] = '"mooie verhalen in de talen: engels"';
+        $exploits[] = '[CS]v1|267135E1851D3753-6000013720017F11[CE] /catalog/rss-new.php';
 
         $test = new IDS_Monitor(
             $exploits,
