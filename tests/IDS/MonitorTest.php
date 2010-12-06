@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(466, $result->getImpact());
+        $this->assertEquals(472, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -1030,6 +1030,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 						UNION#
 						SELECT@a:=table_name FROM#
 						information_schema.tables LIMIT 1#";
+		$exploits[] = "1' and 0x43 = (select all mid(table_name, 1,1)as'a'from `information_schema`.tables limit 1) and '1
+						'AND 1.-1LIKE.1 INSERT INTO TMP_DB EXEC \"xp_cmdshell\"'dir";
+		$exploits[] = '1\' AND 0x35 = (SELECT @phpids:=MID(@@version FROM 1 FOR 1) FROM dual) and \'1 ';	
 
         $this->_testForPlainEvent($exploits);
 
@@ -1038,7 +1041,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(656, $result->getImpact());
+        $this->assertEquals(710, $result->getImpact());
     }
 
     public function testDTList(){
