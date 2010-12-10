@@ -86,12 +86,10 @@ class IDS_Log_File implements IDS_Log_Interface
     protected function __construct($logfile) 
     {
 
-        // determine correct IP address
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        }
+        // determine correct IP address and concat them if necessary
+        $this->ip = $_SERVER['REMOTE_ADDR'] .
+            (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
+                ' (' . $_SERVER['HTTP_X_FORWARDED_FOR'] . ')' : '');
 
         $this->logfile = $logfile;
     }

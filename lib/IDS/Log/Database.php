@@ -46,6 +46,7 @@ require_once 'IDS/Log/Interface.php';
       `page` varchar(255) NOT null,
       `tags` varchar(128) NOT null,
       `ip` varchar(15) NOT null,
+      `ip2` varchar(15) NOT null,
       `impact` int(11) unsigned NOT null,
       `origin` varchar(15) NOT null,
       `created` datetime NOT null,
@@ -161,12 +162,11 @@ class IDS_Log_Database implements IDS_Log_Interface
             $this->table    = $config['table'];
         }
 
-        // determine correct IP address
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $this->ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $this->ip = $_SERVER['REMOTE_ADDR'];
-        }
+        // determine correct IP address and concat them if necessary
+        $this->ip  = $_SERVER['REMOTE_ADDR'];
+        $this->ip2 = isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
+            ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
+            : '';
 
         try {
             $this->handle = new PDO(
@@ -180,8 +180,9 @@ class IDS_Log_Database implements IDS_Log_Interface
                     name,
                     value,
                     page,
-					tags,
+                    tags,
                     ip,
+                    ip2,
                     impact,
                     origin,
                     created
@@ -190,8 +191,9 @@ class IDS_Log_Database implements IDS_Log_Interface
                     :name,
                     :value,
                     :page,
-					:tags,
+                    :tags,
                     :ip,
+                    :ip2,
                     :impact,
                     :origin,
                     now()
@@ -260,6 +262,7 @@ class IDS_Log_Database implements IDS_Log_Interface
         foreach ($data as $event) {
             $page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             $ip   = $this->ip;
+            $ip2  = $this->ip2;
             
             $name   = $event->getName();
             $value  = $event->getValue();
@@ -271,6 +274,7 @@ class IDS_Log_Database implements IDS_Log_Interface
             $this->statement->bindParam('page', $page);
             $this->statement->bindParam('tags', $tags);
             $this->statement->bindParam('ip', $ip);
+            $this->statement->bindParam('ip2', $ip2);
             $this->statement->bindParam('impact', $impact);
             $this->statement->bindParam('origin', $_SERVER['SERVER_ADDR']);
 
