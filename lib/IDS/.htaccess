@@ -1,0 +1,2 @@
+# in case PHPIDS is placed in the web-root
+deny from all
