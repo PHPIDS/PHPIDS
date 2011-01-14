@@ -676,7 +676,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(570, $result->getImpact());
+        $this->assertEquals(564, $result->getImpact());
     }
 
     public function testSQLIList() {
