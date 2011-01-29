@@ -701,7 +701,7 @@
     <filter>
         <id>68</id>
         <rule><![CDATA[(?:[\s\/"]+[-\w\/\\\*]+\s*=.+(?:\/\s*>))]]></rule>
-        <description>finds attribute breaking injections including obfuscated attributes</description>
+        <description>Finds attribute breaking injections including obfuscated attributes</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -711,7 +711,7 @@
     <filter>
         <id>69</id>
         <rule><![CDATA[(?:(?:msgbox|eval)\s*\+|(?:language\s*=\*vbscript))]]></rule>
-        <description>finds basic VBScript injection attempts</description>
+        <description>Finds basic VBScript injection attempts</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -721,7 +721,7 @@
     <filter>
         <id>70</id>
         <rule><![CDATA[(?:\[\$(?:ne|eq|lte?|gte?|n?in|mod|all|size|exists|type|slice|or)\])]]></rule>
-        <description>finds basic MongoDB SQL injection attempts</description>
+        <description>Finds basic MongoDB SQL injection attempts</description>
         <tags>
             <tag>sqli</tag>
         </tags>
@@ -729,8 +729,8 @@
     </filter>
     <filter>
         <id>71</id>
-        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style|poster|background)=[$"\w])]]></rule>
-        <description>finds malicious attribute injection attempts</description>
+        <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style|poster|background)=[$"\w])|(?:-type\s*:\s*multipart)]]></rule>
+        <description>finds malicious attribute injection attempts and MHTML attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
