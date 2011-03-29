@@ -24,11 +24,11 @@
     
     ; define which fields contain html and need preparation before 
     ; hitting the PHPIDS rules (new in PHPIDS 0.5)
-    html[]          = POST.__wysiwyg
+    ;html[]          = POST.__wysiwyg
     
     ; define which fields contain JSON data and should be treated as such 
     ; for fewer false positives (new in PHPIDS 0.5.3)
-    json[]          = POST.__jsondata
+    ;json[]          = POST.__jsondata
 
     ; define which fields shouldn't be monitored (a[b]=c should be referenced via a.b)
     exceptions[]    = GET.__utmz
@@ -53,7 +53,7 @@
     ; see documentation
     recipients[]    = test@test.com.invalid
     subject         = "PHPIDS detected an intrusion attempt!"
-    header			= "From: <PHPIDS> info@php-ids.org"
+    header			= "From: <PHPIDS> info@phpids.org"
     envelope        = ""
     safemode        = true
     urlencode       = true
