@@ -513,8 +513,8 @@ class IDS_Monitor
          * Calculate the difference between the original html input
          * and the purified string.
          */
-        $array_1 = str_split(html_entity_decode(urldecode($original)));
-        $array_2 = str_split($purified);
+        $array_1 = preg_split('/(?<!^)(?!$)/u', html_entity_decode(urldecode($original)));
+        $array_2 = preg_split('/(?<!^)(?!$)/u', $purified);
 
         // create an array containing the single character differences
         $differences = array();
@@ -528,7 +528,7 @@ class IDS_Monitor
         if(intval($length) <= 10) {
             $diff = trim(join('', $differences));
         } else {
-            $diff = substr(trim(join('', $differences)), 0, strlen($original));
+            $diff = mb_substr(trim(join('', $differences)), 0, strlen($original));
         }
 
         // clean up spaces between tag delimiters
@@ -538,7 +538,7 @@ class IDS_Monitor
         $diff = preg_replace('/[^<](iframe|script|embed|object' .
             '|applet|base|img|style)/m', '<$1', $diff);
 
-        if (strlen($diff) < 4) {
+        if (mb_strlen($diff) < 4) {
             return null;
         }
 

