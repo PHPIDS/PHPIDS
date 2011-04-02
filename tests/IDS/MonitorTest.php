@@ -778,6 +778,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1' -1 - column or '1 ";
         $exploits[] = "1' -1 or '1";
         $exploits[] = ' (1)or(1)=(1) ';
+        $exploits[] = "fo\"o'or'1";
 
         $this->_testForPlainEvent($exploits);
 
@@ -786,7 +787,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(657, $result->getImpact());
+        $this->assertEquals(669, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -1042,7 +1043,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(656, $result->getImpact());
+        $this->assertEquals(662, $result->getImpact());
     }
 
     public function testDTList(){
