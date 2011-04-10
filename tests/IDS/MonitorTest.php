@@ -488,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1050, $result->getImpact());
+        $this->assertEquals(1040, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(457, $result->getImpact());
+        $this->assertEquals(461, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -787,7 +787,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(669, $result->getImpact());
+        $this->assertEquals(716, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -832,7 +832,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(642, $result->getImpact());
+        $this->assertEquals(643, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -894,7 +894,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(815, $result->getImpact());
+        $this->assertEquals(835, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -944,7 +944,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "1'/column is not null - ' ";
         $exploits[] = "1'*column is not \N - ' ";
         $exploits[] = "1'^column is not null - ' ";
-        $exploits[] = "'is\N - '1";
         $exploits[] = "aa' is 0 or '1";
         $exploits[] = "' or MATCH username AGAINST ('+admin -a' IN BOOLEAN MODE); -- -a";
         $exploits[] = "' or MATCH username AGAINST ('a* -) -+ ' IN BOOLEAN MODE); -- -a";
@@ -971,7 +970,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(946, $result->getImpact());
+        $this->assertEquals(876, $result->getImpact());
     }
 
     public function testSQLIList6() {
@@ -1035,6 +1034,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "1' and 0x43 = (select all mid(table_name, 1,1)as'a'from `information_schema`.tables limit 1) and '1
 						'AND 1.-1LIKE.1 INSERT INTO TMP_DB EXEC \"xp_cmdshell\"'dir";
 		$exploits[] = '1\' AND 0x35 = (SELECT @phpids:=MID(@@version FROM 1 FOR 1) FROM dual) and \'1 ';	
+		$exploits[] = "null' or @:=(select all user'' from mysql . user limit 1) union#
+						#
+						select @'";
 
         $this->_testForPlainEvent($exploits);
 
@@ -1043,7 +1045,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(662, $result->getImpact());
+        $this->assertEquals(722, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1201,7 +1203,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(76, $result->getImpact());
+        $this->assertEquals(71, $result->getImpact());
     }
 
     public function testBase64CCConverter() {
@@ -1350,7 +1352,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(724, $result->getImpact());
+        $this->assertEquals(726, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {

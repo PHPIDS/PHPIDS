@@ -342,12 +342,6 @@ class IDS_Converter
         $value   = preg_replace('/(?:and\s+\d+\.?\d*)/ims', '', $value);
         $value   = preg_replace('/(?:\s+and\s+)/ims', ' or ', $value);
 
-        $pattern = array('/[^\w,(]null|\\\n|true|false|utc_time|' .
-                         'localtime(?:stamp)?|current_\w+|binary|' .
-                         '(?:(?:ascii|soundex|find_in_set|' .
-                         'md5|r?like)[+\s]*\([^()]+\))|(?:-+\d)/ims');
-        $value   = preg_replace($pattern, 0, $value);
-
         $pattern = array('/(?:not\s+between)|(?:is\s+not)|(?:not\s+in)|' .
                          '(?:xor|<>|rlike(?:\s+binary)?)|' .
                          '(?:regexp\s+binary)|' .
