@@ -123,7 +123,8 @@ class IDS_Converter
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
         $value = preg_replace('/([^\-&])#.*[\r\n\v\f]/m', '$1', $value);
-        $value = preg_replace('/[^&\-]#.*\n/m', ' ', $value);
+        $value = preg_replace('/([^&\-])#.*\n/m', '$1 ', $value);
+        $value = preg_replace('/^#.*\n/m', ' ', $value);
 
         return $value;
     }

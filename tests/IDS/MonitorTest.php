@@ -1037,6 +1037,18 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 		$exploits[] = "null' or @:=(select all user'' from mysql . user limit 1) union#
 						#
 						select @'";
+		$exploits[] = '1\'and #
+						#aa
+						0 union#
+						#bb
+						select version()`';
+		$exploits[] = '1\'and #
+						#aa
+						0 union#
+						#bb
+						select (select `user` from#
+						#cc
+						mysql.user limit 1)\''; 
 
         $this->_testForPlainEvent($exploits);
 
@@ -1045,7 +1057,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(720, $result->getImpact());
+        $this->assertEquals(754, $result->getImpact());
     }
 
     public function testDTList(){
