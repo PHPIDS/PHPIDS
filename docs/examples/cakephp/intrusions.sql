@@ -3,7 +3,7 @@
  * 
  * Requirements: PHP5, SimpleXML
  *
- * Copyright (c) 2010 PHPIDS (http://php-ids.org)
+ * Copyright (c) 2010 PHPIDS (https://phpids.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
