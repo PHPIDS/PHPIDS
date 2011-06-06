@@ -215,17 +215,15 @@ class IDS_Log_Email implements IDS_Log_Interface
         * loop through all files in the tmp directory and
         * delete garbage files
         */
-        $dir            = $this->tmp_path;
+        $dir = $this->tmp_path;
         $numPrefixChars = strlen($this->file_prefix);
-        $files          = scandir($dir);
+        $files = scandir($dir);
         foreach ($files as $file) {
-            if (is_file($dir . $file)) {
+            if (is_file($dir . DIRECTORY_SEPARATOR . $file)) {
                 if (substr($file, 0, $numPrefixChars) == $this->file_prefix) {
-                    $lastModified = filemtime($dir . $file);
-
-                    if ((
-                    time() - $lastModified) > 3600) {
-                        unlink($dir . $file);
+                    $lastModified = filemtime($dir . DIRECTORY_SEPARATOR . $file);
+                    if ((time() - $lastModified) > 3600) {
+                        unlink($dir . DIRECTORY_SEPARATOR . $file);
                     }
                 }
             }
