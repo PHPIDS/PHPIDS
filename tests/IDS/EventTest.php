@@ -71,8 +71,8 @@ class IDS_EventTest extends PHPUnit_Framework_TestCase
 
 	public function testIteratorAggregate()
 	{
-		$this->assertType('IteratorAggregate', $this->event);
-		$this->assertType('IteratorAggregate', $this->event->getIterator());
+		$this->assertInstanceOf('IteratorAggregate', $this->event);
+		$this->assertInstanceOf('IteratorAggregate', $this->event->getIterator());
 	}
 }
 
