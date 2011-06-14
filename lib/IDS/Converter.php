@@ -267,8 +267,8 @@ class IDS_Converter
         }
         // normalize obfuscated protocol handlers
         $value = preg_replace(
-            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*)|(d\s*a\s*t\s*a\s*)/ms', 
-            'javascript', $value
+            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*:)|(d\s*a\s*t\s*a\s*:)/ms', 
+            'javascript:', $value
         );
         
         return $value;
@@ -336,7 +336,7 @@ class IDS_Converter
             '(?:(?:^|\W)in[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
         
-        $value   = preg_replace('/\W+\s*like\s*[^\w\s]+/ims', '1" OR "1"', $value);
+        $value   = preg_replace('/[^\w\)]+\s*like\s*[^\w\s]+/ims', '1" OR "1"', $value);
         $value   = preg_replace('/null([,"\s])/ims', '0$1', $value);
         $value   = preg_replace('/\d+\./ims', ' 1', $value);
         $value   = preg_replace('/,null/ims', ',0', $value);
