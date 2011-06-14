@@ -371,7 +371,7 @@ class IDS_Converter
             chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
             chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
             chr(15), chr(16), chr(17), chr(18), chr(19), chr(24), 
-            chr(25), chr(192), chr(193), chr(238), chr(255)
+            chr(25), chr(192), chr(193), chr(238), chr(255), '\\0'
         );
         
         $value = str_replace($search, '%00', $value);
