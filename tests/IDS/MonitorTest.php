@@ -1197,7 +1197,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(533, $result->getImpact());
+        $this->assertEquals(538, $result->getImpact());
     }
 
     public function testUTF7List() {
@@ -1215,7 +1215,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(71, $result->getImpact());
+        $this->assertEquals(78, $result->getImpact());
     }
 
     public function testBase64CCConverter() {
@@ -1364,7 +1364,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(709, $result->getImpact());
+        $this->assertEquals(702, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
