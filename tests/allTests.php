@@ -23,9 +23,8 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'PHPUnit/Util/Filter.php';
 
-PHPUnit_Util_Filter::addDirectoryToFilter(dirname(__FILE__));
-PHPUnit_Util_Filter::addDirectoryToFilter(dirname(__FILE__) . '/../lib/IDS/vendors');
-
+PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(dirname(__FILE__));
+PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(dirname(__FILE__) . '/../lib/IDS/vendors');
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
 	define('PHPUnit_MAIN_METHOD', 'allTests');
