@@ -306,7 +306,7 @@ class IDS_Converter
     {
         $matches = array();
         if(preg_match_all('/(?:(?:\A|[^\d])0x[a-f\d]{3,}[a-f\d]*)+/im', $value, $matches)) {
-        	foreach($matches[0] as $match) {
+            foreach($matches[0] as $match) {
                 $converted = '';
                 foreach(str_split($match, 2) as $hex_index) {
                     if(preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
@@ -509,7 +509,7 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value)
     {
-        if(preg_match('/\+A\w+-/m', $value)) {
+        if(preg_match('/\+A\w+-?/m', $value)) {
             if (function_exists('mb_convert_encoding')) {
                 if(version_compare(PHP_VERSION, '5.2.8', '<')) {
                     $tmp_chars = str_split($value);

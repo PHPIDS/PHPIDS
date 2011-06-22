@@ -288,7 +288,7 @@ class IDS_Monitor
     {
         
         // define the pre-filter
-        $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)/';
+        $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)|(?:\+ADw)/';
         
         // to increase performance, only start detection if value
         // isn't alphanumeric
@@ -322,6 +322,11 @@ class IDS_Monitor
         if (function_exists('get_magic_quotes_gpc')
             && get_magic_quotes_gpc()) {
             $value = stripslashes($value);
+        }
+        if(function_exists('get_magic_quotes_gpc')
+            && !get_magic_quotes_gpc() 
+            && version_compare(PHP_VERSION, '5.3.0', '>=')) {
+            $value = preg_replace('/\\\(["\'\/])/im', '$1', $value);
         }
 
         // if html monitoring is enabled for this field - then do it!
