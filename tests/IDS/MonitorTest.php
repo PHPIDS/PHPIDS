@@ -787,7 +787,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(705, $result->getImpact());
+        $this->assertEquals(691, $result->getImpact());
     }
 
     public function testSQLIList3() {
@@ -894,7 +894,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(883, $result->getImpact());
+        $this->assertEquals(879, $result->getImpact());
     }
 
     public function testSQLIList5() {
@@ -1207,6 +1207,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'ACM=1,1+eval(1+name+(+ACM-1),ACM)';
         $exploits[] = '1+eval(1+name+(+1-1),-1)';
         $exploits[] = 'XSS without being noticed<a/href=da&#x74&#97:text/html&#59&#x63harset=UTF-7&#44+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4->test';
+		$exploits[] = '+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4';
 
         $this->_testForPlainEvent($exploits);
 
@@ -1215,7 +1216,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(78, $result->getImpact());
+        $this->assertEquals(89, $result->getImpact());
     }
 
     public function testBase64CCConverter() {
@@ -1364,7 +1365,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(702, $result->getImpact());
+        $this->assertEquals(694, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {
