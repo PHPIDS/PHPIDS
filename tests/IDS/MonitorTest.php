@@ -1398,6 +1398,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                                 <h1><a href="http://php-ids.org/">PHPIDS » Web Application Security 2.0</a></h1>
                                 <div class="description"></div>
                                 </div></div><hr />';
+         $explouts['html_7']= '<h1><span style="color: #000000;">Header 1</span></h1><h2><span style="color: #000000;">Header 2</span></h2><ul><li><span style="color: #000000;">Some list item</span></li></ul>';
 
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';

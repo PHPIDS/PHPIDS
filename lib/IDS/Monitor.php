@@ -493,10 +493,12 @@ class IDS_Monitor
          */
         $purified = preg_replace('/\s+alt="[^"]*"/m', null, $purified);
         $purified = preg_replace('/=?\s*"\s*"/m', null, $purified);
-        
         $original = preg_replace('/\s+alt="[^"]*"/m', null, $original);
         $original = preg_replace('/=?\s*"\s*"/m', null, $original);
         $original = preg_replace('/style\s*=\s*([^"])/m', 'style = "$1', $original);
+        
+        # deal with oversensitive CSS normalization
+        $original = preg_replace('/(?:([\w\-]+:)+\s*([^;]+;\s*))/m', '$1$2', $original);
         
         # strip whitespace between tags
         $original = trim(preg_replace('/>\s*</m', '><', $original));
