@@ -617,14 +617,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '<img src=xonerror=alert(1)>';
         $exploits[] = "for(lo in{j:this}.j)!/ale.t/(lo)||this[{},lo](+!'')";
         $exploits[] = 't="t (1),0 ",
-						x2 = (1, {x2:02.constructor,a:0}.x2),
-						xyz = (1, {xyz:x2.constructor,a:0}.xyz),
-						xyz("aler" + t)()';
-		$exploits[] = 'xzy={x :this}.x.alert
-						xzy(1)';
-		$exploits[] = 'xyz=Iterator([this]).next()
-						zyx=xyz[1].alert
-						zyx(1)';
+                        x2 = (1, {x2:02.constructor,a:0}.x2),
+                        xyz = (1, {xyz:x2.constructor,a:0}.xyz),
+                        xyz("aler" + t)()';
+        $exploits[] = 'xzy={x :this}.x.alert
+                        xzy(1)';
+        $exploits[] = 'xyz=Iterator([this]).next()
+                        zyx=xyz[1].alert
+                        zyx(1)';
 
         $this->_testForPlainEvent($exploits);
 
@@ -726,7 +726,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(461, $result->getImpact());
+        $this->assertEquals(471, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -824,6 +824,10 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'+COALESCE('admin') and @@version = !@@version div @@version+'";
         $exploits[] = "'+COALESCE('admin') and 1 =+1 = !true div @@version+'";
         $exploits[] = "foo'div count(select`pass`from(users)where mid(pass,1,1)rlike lower(conv(10,pi()*pi(),pi()*pi())) )-'0";
+        $exploits[] = '1-#canvas
+                        (SELECT 1*1 from(information_schema.tables) group by table_name having - left(hex(table_name),true) = -7)';
+        $exploits[] = 'str#\' UNION SELECT group_concat(table_name)
+                        FROM`information_schema`.tables';
 
         $this->_testForPlainEvent($exploits);
 
@@ -832,7 +836,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(643, $result->getImpact());
+        $this->assertEquals(668, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -1015,40 +1019,40 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "'-1-0 union select (select `table_name` from `information_schema`.tables limit 1) and '1";
         $exploits[] = "null''null' find_in_set(uname, 'lightos' ) and '1";
         $exploits[] = '(case-1 when mid(load_file(0x61616161),12, 1/ 1)like 0x61 then 1 else 0 end) ';
-		$exploits[] = urldecode('%27sounds%20like%281%29%20union%19%28select%191,group_concat%28table_name%29,3%19from%19information_schema.%60tables%60%29%23%28');
-		$exploits[] = "0' '1' like (0) and 1 sounds like a or true#1";
-		$exploits[] = " 0'rlike(0)and 1 rlike (@a)or true - ' 0 ";
-		$exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
-		$exploits[] = 'password[$ne]=12';
-		$exploits[] = " A' sounds like(select case(1=1)when'1'then'A'end) and '1";
-		$exploits[] = "1' and 0x31='1 ";
-		$exploits[] = "1' and 0x05=(select 0- -mid(version()/- -1, 1,1) as 'a' from dual) and '1 ";
-		$exploits[] = "'AND 1.-1LIKE.1 EXEC xp_cmdshell 'dir ";
-		$exploits[] = "SELECT 1,2,0xEF`";
-		$exploits[] = "SELECT 1,2,3`abc``";
-		$exploits[] = "1'AND#
-						0#
-						UNION#
-						SELECT@a:=table_name FROM#
-						information_schema.tables LIMIT 1#";
-		$exploits[] = "1' and 0x43 = (select all mid(table_name, 1,1)as'a'from `information_schema`.tables limit 1) and '1
-						'AND 1.-1LIKE.1 INSERT INTO TMP_DB EXEC \"xp_cmdshell\"'dir";
-		$exploits[] = '1\' AND 0x35 = (SELECT @phpids:=MID(@@version FROM 1 FOR 1) FROM dual) and \'1 ';	
-		$exploits[] = "null' or @:=(select all user'' from mysql . user limit 1) union#
-						#
-						select @'";
-		$exploits[] = '1\'and #
-						#aa
-						0 union#
-						#bb
-						select version()`';
-		$exploits[] = '1\'and #
-						#aa
-						0 union#
-						#bb
-						select (select `user` from#
-						#cc
-						mysql.user limit 1)\''; 
+        $exploits[] = urldecode('%27sounds%20like%281%29%20union%19%28select%191,group_concat%28table_name%29,3%19from%19information_schema.%60tables%60%29%23%28');
+        $exploits[] = "0' '1' like (0) and 1 sounds like a or true#1";
+        $exploits[] = " 0'rlike(0)and 1 rlike (@a)or true - ' 0 ";
+        $exploits[] = "2a'-1^ ' 0' and (select mid(user,1 /1,1/ 1)from`mysql`.user limit 1) rlike 'r";
+        $exploits[] = 'password[$ne]=12';
+        $exploits[] = " A' sounds like(select case(1=1)when'1'then'A'end) and '1";
+        $exploits[] = "1' and 0x31='1 ";
+        $exploits[] = "1' and 0x05=(select 0- -mid(version()/- -1, 1,1) as 'a' from dual) and '1 ";
+        $exploits[] = "'AND 1.-1LIKE.1 EXEC xp_cmdshell 'dir ";
+        $exploits[] = "SELECT 1,2,0xEF`";
+        $exploits[] = "SELECT 1,2,3`abc``";
+        $exploits[] = "1'AND#
+                        0#
+                        UNION#
+                        SELECT@a:=table_name FROM#
+                        information_schema.tables LIMIT 1#";
+        $exploits[] = "1' and 0x43 = (select all mid(table_name, 1,1)as'a'from `information_schema`.tables limit 1) and '1
+                        'AND 1.-1LIKE.1 INSERT INTO TMP_DB EXEC \"xp_cmdshell\"'dir";
+        $exploits[] = '1\' AND 0x35 = (SELECT @phpids:=MID(@@version FROM 1 FOR 1) FROM dual) and \'1 ';	
+        $exploits[] = "null' or @:=(select all user'' from mysql . user limit 1) union#
+                        #
+                        select @'";
+        $exploits[] = '1\'and #
+                        #aa
+                        0 union#
+                        #bb
+                        select version()`';
+        $exploits[] = '1\'and #
+                        #aa
+                        0 union#
+                        #bb
+                        select (select `user` from#
+                        #cc
+                        mysql.user limit 1)\''; 
 
         $this->_testForPlainEvent($exploits);
 
@@ -1057,7 +1061,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(754, $result->getImpact());
+        $this->assertEquals(834, $result->getImpact());
     }
 
     public function testDTList(){
@@ -1126,7 +1130,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'navigatorurl:test" -chrome "javascript:C=Components.classes;I=Components.interfaces;file=C[\'@mozilla.org/file/local;1\'].createInstance(I.nsILocalFile);file.initWithPath(\'C:\'+String.fromCharCode(92)+String.fromCharCode(92)+\'Windows\'+String.fromCharCode(92)+String.fromCharCode(92)+\'System32\'+String.fromCharCode(92)+String.fromCharCode(92)+\'cmd.exe\');process=C[\'@mozilla.org/process/util;1\'].createInstance(I.nsIProcess);process.init(file);process.run(true%252c{}%252c0);alert(process)';
         $exploits[] = 'res://c:\\program%20files\\adobe\\acrobat%207.0\\acrobat\\acrobat.dll/#2/#210';
         $exploits[] = 'mailto:%00%00../../../../../../windows/system32/cmd".exe ../../../../../../../../windows/system32/calc.exe " - " blah.bat';
-		$exploits[] = 'javasc&#x01;ript:alert(1)'; 
+        $exploits[] = 'javasc&#x01;ript:alert(1)'; 
 
         $this->_testForPlainEvent($exploits);
 
@@ -1207,7 +1211,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = 'ACM=1,1+eval(1+name+(+ACM-1),ACM)';
         $exploits[] = '1+eval(1+name+(+1-1),-1)';
         $exploits[] = 'XSS without being noticed<a/href=da&#x74&#97:text/html&#59&#x63harset=UTF-7&#44+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4->test';
-		$exploits[] = '+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4';
+        $exploits[] = '+ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAxACkAPAAvAHMAYwByAGkAcAB0AD4';
 
         $this->_testForPlainEvent($exploits);
 
