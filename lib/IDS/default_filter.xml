@@ -736,5 +736,64 @@
             <tag>csrf</tag>
         </tags>
         <impact>6</impact>
+    </filter>
+  <filter>
+        <id>72</id>
+        <rule><![CDATA[(?:(sleep\((\s*)(\d*)(\s*)\)|benchmark\((.*)\,(.*)\)))]]></rule>
+        <description>Detects blind sqli tests using sleep() or benchmark().</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>4</impact>
+    </filter>
+    <filter>
+        <id>73</id>
+        <rule><![CDATA[(?i:(\%SYSTEMROOT\%))]]></rule>
+        <description>An attacker is trying to locate a file to read or write.</description>
+        <tags>
+            <tag>files</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>4</impact>
     </filter>   
+    <filter>
+        <id>74</id>
+        <rule><![CDATA[(?i:(ping(.*)[\-(.*)\w|\w(.*)\-]))]]></rule>
+        <description>Detects remote code exectuion tests. Will match "ping -n 3 localhost" and "ping localhost -n 3" </description>
+        <tags>
+            <tag>Command Execution</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>5</impact>
+    </filter>       
+    <filter>
+        <id>75</id>
+        <rule><![CDATA[(?:(((.*)\%[c|d|i|e|f|g|o|s|u|x|p|n]){8}))]]></rule>
+        <description>Looking for a format string attack</description>
+        <tags>
+            <tag>format string</tag>
+        </tags>
+        <impact>4</impact>
+    </filter> 
+    <filter>
+        <id>76</id>
+        <rule><![CDATA[(?:(union(.*)select(.*)from))]]></rule>
+        <description>Looking for basic sql injection. Common attack string for mysql, oracle and others.</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>3</impact>
+    </filter>
+    <filter>
+        <id>77</id>
+        <rule><![CDATA[(?:^(-0000023456|4294967295|4294967296|2147483648|2147483647|0000012345|-2147483648|-2147483649|0000023456|2.2250738585072007e-308|1e309)$)]]></rule>
+        <description>Looking for intiger overflow attacks, these are taken from skipfish, except 2.2250738585072007e-308 is the "magic number" crash</description>
+        <tags>
+            <tag>sqli</tag>
+            <tag>id</tag>
+        </tags>
+        <impact>3</impact>
+    </filter>        
 </filters>

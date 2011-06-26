@@ -76,26 +76,6 @@ class IDS_Converter
     }
 
     /**
-     * Make sure the value to normalize and monitor doesn't contain 
-     * possibilities for a regex DoS.
-     * 
-     * @param string $value the value to pre-sanitize
-     *
-     * @static
-     * @return string
-     */
-    public static function convertFromRepetition($value) 
-    {
-        // remove obvios repetition patterns
-        $value = preg_replace(
-            '/(?:(.{2,})\1{32,})|(?:[+=|\-@\s]{128,})/', 
-            'x', 
-            $value
-        );
-        return $value;
-    }
-
-    /**
      * Check for comments and erases them if available
      *
      * @param string $value the value to convert

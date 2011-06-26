@@ -154,13 +154,14 @@ class IDS_Log_File implements IDS_Log_Interface
         }
 
         $dataString = sprintf($format,
-                              $this->ip,
-                              date('c'),
-                              $data->getImpact(),
-                              join(' ', $data->getTags()),
-                              trim($attackedParameters),
-                              urlencode($_SERVER['REQUEST_URI']),
-                              $_SERVER['SERVER_ADDR']);
+            urlencode($this->ip),
+            date('c'),
+            $data->getImpact(),
+            join(' ', $data->getTags()),
+            urlencode(trim($attackedParameters)),
+            urlencode($_SERVER['REQUEST_URI']),
+            $_SERVER['SERVER_ADDR']
+        );
 
         return $dataString;
     }

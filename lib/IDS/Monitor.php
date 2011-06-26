@@ -234,12 +234,13 @@ class IDS_Monitor
      */
     public function run()
     {
+        
         if (!empty($this->request)) {
             foreach ($this->request as $key => $value) {
                 $this->_iterate($key, $value);
             }
         }
-
+         
         return $this->getReport();
     }
 
@@ -286,7 +287,7 @@ class IDS_Monitor
      */
     private function _detect($key, $value)
     {
-        
+
         // define the pre-filter
         $prefilter = '/[^\w\s\/@!?\.]+|(?:\.\/)|(?:@@\w+)|(?:\+ADw)/';
         
@@ -301,7 +302,7 @@ class IDS_Monitor
                 return false;
             }
         }
-
+        
         // check if this field is part of the exceptions
         if (is_array($this->exceptions)) {
             foreach($this->exceptions as $exception) {
