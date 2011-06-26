@@ -721,6 +721,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa' DIV@1 = 0 or '1";
         $exploits[] = "aa' XOR- column != -'0";
         $exploits[] = '============================="';
+        $exploits[] = 'union select password from users where 1';
 
         $this->_testForPlainEvent($exploits);
 
@@ -729,7 +730,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(474, $result->getImpact());
+        $this->assertEquals(494, $result->getImpact());
     }
 
     public function testSQLIList2() {
