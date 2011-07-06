@@ -480,6 +480,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
                         alal=con(alal),
                         alal=con1[alal],
                         alal(1)';
+		$exploits[] = 'showmodaldialog((/javascript/({a:/javascript/,b:1}.a))+(/:aler/({a:/:aler/,b:1}.a))+(/t.1.+1/({a:/t(1)+1/,b:1}.a)));';
 
         $this->_testForPlainEvent($exploits);
 
@@ -488,7 +489,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(987, $result->getImpact());
+        $this->assertEquals(995, $result->getImpact());
     }
 
     public function testXMLPredicateXSSList() {
@@ -722,6 +723,14 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = "aa' XOR- column != -'0";
         $exploits[] = '============================="';
         $exploits[] = 'union select password from users where 1';
+        $exploits[] = "str'=version()
+						UNION#
+						#
+						#
+						#
+						SELECT group_concat(table_name)#
+						##
+						/*!FROM*/ information_schema.tables WHERE '1";
 
         $this->_testForPlainEvent($exploits);
 
@@ -730,7 +739,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(494, $result->getImpact());
+        $this->assertEquals(535, $result->getImpact());
     }
 
     public function testSQLIList2() {
@@ -840,7 +849,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(677, $result->getImpact());
+        $this->assertEquals(689, $result->getImpact());
     }
 
     public function testSQLIList4() {
@@ -1065,7 +1074,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(858, $result->getImpact());
+        $this->assertEquals(876, $result->getImpact());
     }
 
     public function testDTList(){
