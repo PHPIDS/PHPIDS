@@ -672,6 +672,9 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '+a
 						>>setTimeout(a(1).a+a(1).b+a(1).c,1000);
 						\'1\';"1"="1";a="1\"\n<a name=a a=con b=fi c=rm(120) >1<<1\\\'1\'1\"1";';
+		$exploits[] = '+a
+						>>showHelp(a(0).a+a(0).nodeName+a(0).b+a(0).c+a(0).nodeName.toLowerCase()+a(0).d+a(0).e);
+						\'1\';"1"="1";a="1\"\n<t id=a a=javascrip b=:confi c=rm(documen d=.coo e=kie) >1<<1\\\'1\'1\"1";';
 
         $this->_testForPlainEvent($exploits);
 
@@ -680,7 +683,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(570, $result->getImpact());
+        $this->assertEquals(578, $result->getImpact());
     }
 
     public function testSQLIList() {
