@@ -226,7 +226,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
+        $this->assertEquals(33, $result->getImpact());
     }
 
     public function testCommentList() {
@@ -634,7 +634,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(957, $result->getImpact());
+        $this->assertEquals(965, $result->getImpact());
     }
 
     public function testSelfContainedXSSList() {
@@ -1251,7 +1251,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(130, $result->getImpact());
+        $this->assertEquals(134, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {
@@ -1382,7 +1382,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $result = $test->run();
         
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(699, $result->getImpact());
+        $this->assertEquals(711, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative() {

@@ -11,7 +11,7 @@
     </filter>
     <filter>
         <id>2</id>
-        <rule><![CDATA[(?:"+.*[<=]\s*"[^"]+")|(?:"\w+\s*=)|(?:>\w=\/)|(?:#.+\)["\s]*>)|(?:"\s*(?:src|style|on\w+)\s*=\s*")|(?:[^"]?"[,;\s]+\w*[\[\(])]]></rule>
+        <rule><![CDATA[(?:"+.*[<=]\s*"[^"]+")|(?:"\s*\w+\s*=)|(?:>\w=\/)|(?:#.+\)["\s]*>)|(?:"\s*(?:src|style|on\w+)\s*=\s*")|(?:[^"]?"[,;\s]+\w*[\[\(])]]></rule>
         <description>finds attribute breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
