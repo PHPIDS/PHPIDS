@@ -758,16 +758,6 @@
         <impact>4</impact>
     </filter>   
     <filter>
-        <id>74</id>
-        <rule><![CDATA[(?i:(ping(.*)[\-(.*)\w|\w(.*)\-]))]]></rule>
-        <description>Detects remote code exectuion tests. Will match "ping -n 3 localhost" and "ping localhost -n 3" </description>
-        <tags>
-            <tag>Command Execution</tag>
-            <tag>id</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>       
-    <filter>
         <id>75</id>
         <rule><![CDATA[(?:(((.*)\%[c|d|i|e|f|g|o|s|u|x|p|n]){8}))]]></rule>
         <description>Looking for a format string attack</description>
