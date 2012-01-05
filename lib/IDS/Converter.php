@@ -401,7 +401,7 @@ class IDS_Converter
     public static function convertFromNestedBase64($value)
     {
         $matches = array();
-        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{30,}=*)(?:\W|$)/im',
+        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{50,}=*)(?:\W|$)/im',
             $value,
             $matches);
 

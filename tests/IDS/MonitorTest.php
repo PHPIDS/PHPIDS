@@ -1242,7 +1242,6 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     public function testBase64CCConverter() {
 
         $exploits = array();
-        $exploits[] = 'PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4==';
         $exploits[] = '<a href=dat&#x61&#x3atext&#x2fhtml&#x3b&#59base64a&#x2cPHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>Test</a>';
         $exploits[] = '<iframe src=data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4>';
         $exploits[] = '<applet src="data:text/html;base64,PHNjcmlwdD5hbGVydCgvWFNTLyk8L3NjcmlwdD4" type=text/html>';
@@ -1254,7 +1253,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(134, $result->getImpact());
+        $this->assertEquals(68, $result->getImpact());
     }
 
     public function testDecimalCCConverter() {
