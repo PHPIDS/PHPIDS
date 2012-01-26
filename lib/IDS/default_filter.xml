@@ -170,7 +170,7 @@
     </filter>
     <filter>
         <id>17</id>
-        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:hash|name|href|navigateandfind|source|pathname|close|constructor|port|protocol|assign|replace|back|forward|document|ownerdocument|window|top|this|self|parent|frames|_?content|cookie|innerhtml|innertext|csstext+?|outerhtml|print|moveby|resizeto|createstylesheet|stylesheets)(?(1)[^\w%"]|(?:\s*[^@\/\s\w%.+\-]))]]></rule>
+        <rule><![CDATA[([^*:\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z\/_@])(\s*return\s*)?(?:hash|name|href|navigateandfind|close|constructor|port|protocol|assign|replace|back|forward|document|ownerdocument|window|top|this|self|parent|frames|_?content|cookie|innerhtml|innertext|csstext+?|outerhtml|print|moveby|resizeto|createstylesheet|stylesheets)(?(1)[^\w%"]|(?:\s*[^@\/\s\w%.+\-]))]]></rule>
         <description>Detects JavaScript object properties and methods</description>
         <tags>
             <tag>xss</tag>
@@ -206,7 +206,7 @@
     </filter>
     <filter>
         <id>20</id>
-        <rule><![CDATA[(?:\)\s*\[)|([^*":\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z_@\|])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|url|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|(?:ms)?setimmediate|settimeout|setinterval|void|setexpression|namespace|while)(?(1)[^\w%"]|(?:\s*[^@\s\w%".+\-\/]))]]></rule>
+        <rule><![CDATA[(?:\)\s*\[)|([^*":\s\w,.\/?+-]\s*)?(?<![a-z]\s)(?<![a-z_@\|])(\s*return\s*)?(?:globalstorage|sessionstorage|postmessage|callee|constructor|content|domain|prototype|try|catch|top|call|apply|function|object|array|string|math|if|elseif|case|switch|regex|boolean|location|(?:ms)?setimmediate|settimeout|setinterval|void|setexpression|namespace|while)(?(1)[^\w%"]|(?:\s*[^@\s\w%".+\-\/]))]]></rule>
         <description>Detects JavaScript language constructs</description>
         <tags>
             <tag>xss</tag>
@@ -633,17 +633,6 @@
         </tags>
         <impact>7</impact>
     </filter>
-    <filter>
-        <id>61</id>
-        <rule><![CDATA[(?:\w+]?(?<!href)(?<!src)(?<!longdesc)(?<!returnurl)=(?:https?|ftp):)|(?:\{\s*\$\s*\{)]]></rule>
-        <description>Detects url injections and RFE attempts</description>
-        <tags>
-            <tag>id</tag>
-            <tag>rfe</tag>
-            <tag>lfi</tag>
-        </tags>
-        <impact>5</impact>
-    </filter>   
     <filter>
         <id>62</id>
         <rule><![CDATA[(?:function[^(]*\([^)]*\))|(?:(?:delete|void|throw|instanceof|new|typeof)[^\w.]+\w+\s*[([])|([)\]]\s*\.\s*\w+\s*=)|(?:\(\s*new\s+\w+\s*\)\.)]]></rule>
