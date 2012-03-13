@@ -134,7 +134,7 @@
     </filter>
     <filter>
         <id>14</id>
-        <rule><![CDATA[(?:#@~\^\w+)|(?:\w+script:|@import[^\w]|;base64|base64,)|(?:\w+\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
+        <rule><![CDATA[(?:#@~\^\w+)|(?:\wscript:|@import[^\w]|;base64|base64,)|(?:\w\s*\([\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+,[\w\s]+\))]]></rule>
         <description>Detects possible includes, VBSCript/JScript encodeed and packed functions</description>
         <tags>
             <tag>xss</tag>
@@ -242,7 +242,7 @@
     </filter>	
     <filter>
         <id>23</id>
-        <rule><![CDATA[(?:\.\s*\w+\W*=)|(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))|(?:\w{2,}\s*=\s*\d+[^&\w]\w+)|(?:\]\s*\(\s*\w+)]]></rule>
+        <rule><![CDATA[(?:\.\s*\w+\W*=)|(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))|(?:\w{2}\s*=\s*\d+[^&\w]\w+)|(?:\]\s*\(\s*\w+)]]></rule>
         <description>Detects JavaScript location/document property access and window access obfuscation</description>
         <tags>
             <tag>xss</tag>
@@ -646,7 +646,7 @@
     </filter>  
     <filter>
         <id>63</id>
-        <rule><![CDATA[(?:[\w.-]+@[\w.-]+%(?:[01][\db-ce-f])+\w+:)]]></rule>
+        <rule><![CDATA[(?:[\w.-]@[\w.-]+%(?:[01][\db-ce-f])+\w+:)]]></rule>
         <description>Detects common mail header injections</description>
         <tags>
             <tag>id</tag>
