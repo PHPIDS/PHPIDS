@@ -33,7 +33,7 @@
         description="Create release tarball and checksums. Use -Drelease.version=&lt;version&gt;"/>
 
     <target name="release.version" if="release.version">
-        <replace dir="lib/IDS" value="${release.version}">
+        <replace dir="lib/IDS" value="&quot;${release.version}&quot;">
             <include name="Version.php"/>
             <replacetoken>'master'</replacetoken>
         </replace>
