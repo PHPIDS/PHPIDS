@@ -24,6 +24,6 @@ class IDS_VersionTest extends PHPUnit_Framework_TestCase
 {
     public function testVersionConstantIsDefined()
     {
-        $this->assertSame('@@phpIdsVersion@@', IDS_Version::VERSION);
+        $this->assertSame('master', IDS_Version::VERSION);
     }
 }
