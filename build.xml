@@ -1,9 +1,6 @@
 <project name="PHPIDS" default="tests">
 	<target name="tests" unless="tests.disabled">
-        <exec executable="phpunit" failonerror="true">
-            <arg line="--verbose"/>
-            <arg line="tests/allTests.php"/>
-        </exec>
+        <exec executable="phpunit" failonerror="true"/>
     </target>
 
 	<target name="docs">
@@ -22,10 +19,10 @@
 	</target>
 
     <target name="revert">
-        <exec executable="svn">
-            <arg value="revert"/>
-            <arg value="-R"/>
-            <arg value="${basedir}"/>
+        <exec executable="git">
+            <arg value="reset"/>
+            <arg value="--hard"/>
+            <arg value="HEAD"/>
         </exec>
     </target>
 
