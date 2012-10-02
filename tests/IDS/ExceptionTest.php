@@ -78,28 +78,24 @@ class IDS_ExceptionTest extends PHPUnit_Framework_TestCase
 
     public function testGetEventException() {
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertEquals($this->report->getEvent(array(1,2,3)), $this->getExpectedException());
+        $this->report->getEvent(array(1,2,3));
     }
 
     public function testHasEventException() {
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertEquals($this->report->hasEvent(array(1,2,3)), $this->getExpectedException());
+        $this->report->hasEvent(array(1,2,3));
     }
 
     public function testInitConfigWrongPathException() {
-        $this->setExpectedException('Exception');
-        $this->assertEquals(IDS_Init::init('IDS/Config/Config.ini.wrong'), $this->getExpectedException());
+        $this->setExpectedException('InvalidArgumentException');
+        IDS_Init::init('IDS/Config/Config.ini.wrong');
     }
 
     public function testWrongXmlFilterPathException() {
-        $this->setExpectedException('Exception');
+        $this->setExpectedException('RuntimeException');
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = 'IDS/wrong_path';
-        $this->assertEquals(new IDS_Monitor(array('test', 'bla'), $this->init), $this->getExpectedException());
-    }
-
-    public function tearDown() {
-    	$this->init->config['General']['filter_type'] = 'xml';
+        new IDS_Monitor(array('test', 'bla'), $this->init);
     }
 }
 

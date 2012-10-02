@@ -137,14 +137,14 @@ class IDS_Caching_File implements IDS_Caching_Interface
             ' seems not writable');
         }    	
         
-        if ((!file_exists($this->path) || (time()-filectime($this->path)) > 
-            $this->config['expiration_time'])) {
+        if (!$this->isValidFile($this->path)) {
             $handle = @fopen($this->path, 'w+');
-            $serialized = @serialize($data);
             
             if (!$handle) {
                 throw new Exception("Cache file couldn't be created");
             }
+
+            $serialized = @serialize($data);
 			if (!$serialized) {
                 throw new Exception("Cache data couldn't be serialized");
             }            
@@ -166,15 +166,24 @@ class IDS_Caching_File implements IDS_Caching_Interface
      */
     public function getCache() 
     {
-
         // make sure filters are parsed again if cache expired
-        if (file_exists($this->path) && (time()-filectime($this->path)) < 
-            $this->config['expiration_time']) {
-            $data = unserialize(file_get_contents($this->path));
-              return $data;
+        if (!$this->isValidFile($this->path)) {
+            return false;
         }
 
-        return false;
+        $data = unserialize(file_get_contents($this->path));
+        return $data;
+    }
+
+    /**
+     * Returns true if the cache file is still valid
+     *
+     * @param string $file
+     * @return bool
+     */
+    private function isValidFile($file)
+    {
+        return file_exists($file) && time() - filectime($file) <= $this->config['expiration_time'];
     }
 }
 

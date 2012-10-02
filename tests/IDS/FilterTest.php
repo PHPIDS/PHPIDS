@@ -22,6 +22,7 @@
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Init.php';
+require_once 'IDS/Filter.php';
 
 class IDS_FilterTest extends PHPUnit_Framework_TestCase
 	{
@@ -75,6 +76,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 			$this->fail("Excpected Exception");
 		} catch (Exception $e) {}
 
+        $this->assertTrue(true, 'Fake assertion so that PHPUnit does not bail');
 	}
 
 	public function testFilterSetFilterSet() {

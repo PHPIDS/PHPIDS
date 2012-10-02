@@ -24,6 +24,9 @@ require_once 'IDS/Monitor.php';
 require_once 'IDS/Init.php';
 require_once 'IDS/Filter/Storage.php';
 
+/**
+ * @large
+ */
 class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {

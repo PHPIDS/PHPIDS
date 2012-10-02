@@ -7,7 +7,8 @@
          strict="true"
          verbose="true"
          colors="true"
-         timeoutForLargeTests="100">
+         timeoutForLargeTests="100"
+         bootstrap="tests/IDS/bootstrap.php">
 
     <testsuites>
         <testsuite name="PHPIDS">
