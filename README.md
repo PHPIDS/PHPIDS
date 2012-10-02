@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/PHPIDS/PHPIDS.png)](https://travis-ci.org/PHPIDS/PHPIDS)
+
 # PHPIDS
 
 PHPIDS (PHP-Intrusion Detection System) is a simple to use, well structured, fast and state-of-the-art
