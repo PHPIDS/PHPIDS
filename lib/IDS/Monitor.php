@@ -45,7 +45,6 @@
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Group
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
- * @version   Release: $Id:Monitor.php 949 2008-06-28 01:26:03Z christ1an $
  * @link      http://php-ids.org/
  */
 class IDS_Monitor

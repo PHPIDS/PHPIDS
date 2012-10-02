@@ -47,7 +47,6 @@
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Group
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
- * @version   Release: $Id:Report.php 517 2007-09-15 15:04:13Z mario $
  * @link      http://php-ids.org/
  */
 class IDS_Report implements Countable, IteratorAggregate

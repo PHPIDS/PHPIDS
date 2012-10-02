@@ -16,7 +16,6 @@
  * GNU General Public License for more details.
  *
  * @package	PHPIDS tests
- * @version	SVN: $Id:ReportTest.php 515 2007-09-15 13:43:40Z christ1an $
  */
 
 require_once 'PHPUnit/Framework/TestCase.php';

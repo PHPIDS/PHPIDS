@@ -34,8 +34,8 @@
 
     <target name="release.version" if="release.version">
         <replace dir="lib/IDS" value="${release.version}">
-            <include name="**/*.php"/>
-            <replacetoken>@@phpIdsVersion@@</replacetoken>
+            <include name="Version.php"/>
+            <replacetoken>'master'</replacetoken>
         </replace>
     </target>
 

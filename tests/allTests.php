@@ -16,7 +16,6 @@
  * GNU General Public License for more details.
  *
  * @package	PHPIDS tests
- * @version	SVN: $Id:allTests.php 515 2007-09-15 13:43:40Z christ1an $
  */
 error_reporting(E_ALL | E_STRICT | @E_DEPRECATED);
 require_once 'PHPUnit/Framework/TestSuite.php';

@@ -15,7 +15,6 @@
  * GNU General Public License for more details.
  *
  * @package	PHPIDS tests
- * @version	SVN: $Id:EventTest.php 515 2007-09-15 13:43:40Z christ1an $
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');

@@ -45,7 +45,6 @@ require_once 'IDS/Caching/Interface.php';
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Groupoup
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
- * @version   Release: $Id:Memcached.php 517 2007-09-15 15:04:13Z mario $
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */

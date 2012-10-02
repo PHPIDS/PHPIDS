@@ -42,7 +42,6 @@ require_once 'IDS/Caching/Interface.php';
  * @author    Yves Berkholz <godzilla80@gmx.net>
  * @copyright 2007-2009 The PHPIDS Groupoup
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
- * @version   Release: $Id$
  * @link      http://php-ids.org/
  * @since     Version 0.6.5
  */
