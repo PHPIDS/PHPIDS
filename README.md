@@ -32,7 +32,7 @@ merges pull requests.
  - [SirDarckCat](http://sirdarckcat.blogspot.com) for providing XSS so advanced it made us shiver
  - [Gareth Heyes](http://thespanner.co.uk/) for his help enhancing the rules and very creative XSS vectors
  - **Kevin Schroeder** for the audit and great help on testing and enhancing the PHPIDS
- - xorrer for his help optimizing the rules against his cryptic and sophisticated XSS vectors
+ - **xorrer** for his help optimizing the rules against his cryptic and sophisticated XSS vectors
  - [Johannes Dahse](http://websec.wordpress.com/) for his help optimizing the SQLI rules
  - [Roberto Salgado](http://websec.ca/) for helping hardening the SQLI rules with his SQL-Fu
  - [tx](http://lowtechlive.com/) for even more outstanding SQLI stuff and almost magic PHP code injection vectors
