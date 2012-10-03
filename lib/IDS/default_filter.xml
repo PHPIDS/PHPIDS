@@ -239,7 +239,7 @@
             <tag>rfe</tag>
         </tags>
         <impact>5</impact>
-    </filter>	
+    </filter>
     <filter>
         <id>23</id>
         <rule><![CDATA[(?:\.\s*\w+\W*=)|(?:\W\s*(?:location|document)\s*\W[^({[;]+[({[;])|(?:\(\w+\?[:\w]+\))|(?:\w{2}\s*=\s*\d+[^&\w]\w+)|(?:\]\s*\(\s*\w+)]]></rule>
@@ -249,7 +249,7 @@
             <tag>csrf</tag>
         </tags>
         <impact>5</impact>
-    </filter>    
+    </filter>
     <filter>
         <id>24</id>
         <rule><![CDATA[(?:[".]script\s*\()|(?:\$\$?\s*\(\s*[\w"])|(?:\/[\w\s]+\/\.)|(?:=\s*\/\w+\/\s*\.)|(?:(?:this|window|top|parent|frames|self|content)\[\s*[(,"]*\s*[\w\$])|(?:,\s*new\s+\w+\s*[,;)])]]></rule>
@@ -303,7 +303,7 @@
         <impact>5</impact>
     </filter>
     <filter>
-        <id>29</id>    
+        <id>29</id>
         <rule><![CDATA[(?:binding\s?=|moz-binding|behavior\s?=)|(?:[\s\/]style\s*=\s*[-\\])]]></rule>
         <description>Detects bindings and behavior injections</description>
         <tags>
@@ -400,7 +400,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>4</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>39</id>
         <rule><![CDATA[(?:\\x[01fe][\db-ce-f])|(?:%[01fe][\db-ce-f])|(?:&#[01fe][\db-ce-f])|(?:\\[01fe][\db-ce-f])|(?:&#x[01fe][\db-ce-f])]]></rule>
@@ -411,7 +411,7 @@
             <tag>xss</tag>
         </tags>
         <impact>5</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>40</id>
         <rule><![CDATA[(?:\)\s*when\s*\d+\s*then)|(?:"\s*(?:#|--|{))|(?:\/\*!\s?\d+)|(?:ch(?:a)?r\s*\(\s*\d)|(?:(?:(n?and|x?or|not)\s+|\|\||\&\&)\s*\w+\()]]></rule>
@@ -422,7 +422,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>41</id>
         <rule><![CDATA[(?:[\s()]case\s*\()|(?:\)\s*like\s*\()|(?:having\s*[^\s]+\s*[^\w\s])|(?:if\s?\([\d\w]\s*[=<>~])]]></rule>
@@ -433,7 +433,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>42</id>
         <rule><![CDATA[(?:"\s*or\s*"?\d)|(?:\\x(?:23|27|3d))|(?:^.?"$)|(?:(?:^["\\]*(?:[\d"]+|[^"]+"))+\s*(?:n?and|x?or|not|\|\||\&\&)\s*[\w"[+&!@(),.-])|(?:[^\w\s]\w+\s*[|-]\s*"\s*\w)|(?:@\w+\s+(and|or)\s*["\d]+)|(?:@[\w-]+\s(and|or)\s*[^\w\s])|(?:[^\w\s:]\s*\d\W+[^\w\s]\s*".)|(?:\Winformation_schema|table_name\W)]]></rule>
@@ -444,7 +444,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter>  
+    </filter>
     <filter>
         <id>43</id>
         <rule><![CDATA[(?:"\s*\*.+(?:or|id)\W*"\d)|(?:\^")|(?:^[\w\s"-]+(?<=and\s)(?<=or\s)(?<=xor\s)(?<=nand\s)(?<=not\s)(?<=\|\|)(?<=\&\&)\w+\()|(?:"[\s\d]*[^\w\s]+\W*\d\W*.*["\d])|(?:"\s*[^\w\s?]+\s*[^\w\s]+\s*")|(?:"\s*[^\w\s]+\s*[\W\d].*(?:#|--))|(?:".*\*\s*\d)|(?:"\s*or\s[^\d]+[\w-]+.*\d)|(?:[()*<>%+-][\w-]+[^\w\s]+"[^,])]]></rule>
@@ -455,7 +455,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>6</impact>
-    </filter> 
+    </filter>
     <filter>
         <id>44</id>
         <rule><![CDATA[(?:\d"\s+"\s+\d)|(?:^admin\s*"|(\/\*)+"+\s?(?:--|#|\/\*|{)?)|(?:"\s*or[\w\s-]+\s*[+<>=(),-]\s*[\d"])|(?:"\s*[^\w\s]?=\s*")|(?:"\W*[+=]+\W*")|(?:"\s*[!=|][\d\s!=+-]+.*["(].*$)|(?:"\s*[!=|][\d\s!=]+.*\d+$)|(?:"\s*like\W+[\w"(])|(?:\sis\s*0\W)|(?:where\s[\s\w\.,-]+\s=)|(?:"[<>~]+")]]></rule>
@@ -466,7 +466,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>7</impact>
-    </filter> 
+    </filter>
     <filter>
         <id>45</id>
         <rule><![CDATA[(?:union\s*(?:all|distinct|[(!@]*)?\s*[([]*\s*select)|(?:\w\s+like\s+\")|(?:like\s*"\%)|(?:"\s*like\W*["\d])|(?:"\s*(?:n?and|x?or|not |\|\||\&\&)\s+[\s\w]+=\s*\w+\s*having)|(?:"\s*\*\s*\w+\W+")|(?:"\s*[^?\w\s=.,;)(]+\s*[(@"]*\s*\w+\W+\w)|(?:select\s*[\[\]()\s\w\.,"-]+from)|(?:find_in_set\s*\()]]></rule>
@@ -488,7 +488,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>7</impact>
-    </filter> 
+    </filter>
     <filter>
         <id>47</id>
         <rule><![CDATA[(?:[\d\W]\s+as\s*["\w]+\s*from)|(?:^[\W\d]+\s*(?:union|select|create|rename|truncate|load|alter|delete|update|insert|desc))|(?:(?:select|create|rename|truncate|load|alter|delete|update|insert|desc)\s+(?:(?:group_)concat|char|load_file)\s?\(?)|(?:end\s*\);)|("\s+regexp\W)|(?:[\s(]load_file\s*\()]]></rule>
@@ -599,7 +599,7 @@
             <tag>id</tag>
         </tags>
         <impact>5</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>58</id>
         <rule><![CDATA[(?:@[\w-]+\s*\()|(?:]\s*\(\s*["!]\s*\w)|(?:<[?%](?:php)?.*(?:[?%]>)?)|(?:;[\s\w|]*\$\w+\s*=)|(?:\$\w+\s*=(?:(?:\s*\$?\w+\s*[(;])|\s*".*"))|(?:;\s*\{\W*\w+\s*\()]]></rule>
@@ -610,7 +610,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>7</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>59</id>
         <rule><![CDATA[(?:(?:[;]+|(<[?%](?:php)?)).*(?:define|eval|file_get_contents|include|require|require_once|set|shell_exec|phpinfo|system|passthru|preg_\w+|execute)\s*["(@])]]></rule>
@@ -643,7 +643,7 @@
             <tag>lfi</tag>
         </tags>
         <impact>5</impact>
-    </filter>  
+    </filter>
     <filter>
         <id>63</id>
         <rule><![CDATA[(?:[\w.-]@[\w.-]+%(?:[01][\db-ce-f])+\w+:)]]></rule>
@@ -696,7 +696,7 @@
             <tag>csrf</tag>
         </tags>
         <impact>4</impact>
-    </filter> 
+    </filter>
     <filter>
         <id>69</id>
         <rule><![CDATA[(?:(?:msgbox|eval)\s*\+|(?:language\s*=\*vbscript))]]></rule>
@@ -745,7 +745,7 @@
             <tag>id</tag>
         </tags>
         <impact>4</impact>
-    </filter>   
+    </filter>
     <filter>
         <id>75</id>
         <rule><![CDATA[(?:(((.*)\%[c|d|i|e|f|g|o|s|u|x|p|n]){8}))]]></rule>
@@ -754,7 +754,7 @@
             <tag>format string</tag>
         </tags>
         <impact>4</impact>
-    </filter> 
+    </filter>
     <filter>
         <id>76</id>
         <rule><![CDATA[(?:(union(.*)select(.*)from))]]></rule>
@@ -774,5 +774,5 @@
             <tag>id</tag>
         </tags>
         <impact>3</impact>
-    </filter>        
+    </filter>
 </filters>
