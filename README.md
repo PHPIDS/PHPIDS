@@ -26,7 +26,7 @@ The project was started by Christian Matthies <ch0012@gmail.com> and Mario Heide
 Mario spend a lot of time maintaining PHPIDS mostly on his own. Huge props for that. Currently Lars Strojny <lars@strojny.net>
 merges pull requests.
 
-### An incomprehensive list of contributors:
+### An incomplete list of contributors:
 
  - **LeverOne** for his outstanding work, testing and XSS vectors from the depths of markup hell
  - [Kishor](http://wasjournal.blogspot.com/) for providing cutting edge XSS and great help in the group
