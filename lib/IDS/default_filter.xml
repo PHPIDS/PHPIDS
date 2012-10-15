@@ -738,7 +738,7 @@
     </filter>
     <filter>
         <id>73</id>
-        <rule><![CDATA[(?i:(\%SYSTEMROOT\%))]]></rule>
+        <rule><![CDATA[(?:(\%SYSTEMROOT\%))]]></rule>
         <description>An attacker is trying to locate a file to read or write.</description>
         <tags>
             <tag>files</tag>
