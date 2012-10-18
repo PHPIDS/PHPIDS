@@ -887,7 +887,7 @@
       },
       {
         "id":"73",
-        "rule":"(?i:(\\%SYSTEMROOT\\%))",
+        "rule":"(?:(\\%SYSTEMROOT\\%))",
         "description":"An attacker is trying to locate a file to read or write.",
         "tags":{
           "tag":[
