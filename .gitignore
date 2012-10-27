@@ -1,3 +1,4 @@
 /.cache/*
 /.idea/*
 /tmp/*
+/nbproject/
