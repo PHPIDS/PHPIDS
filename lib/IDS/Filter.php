@@ -48,7 +48,9 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-class IDS_Filter
+namespace IDS;
+
+class Filter
 {
 
     /**
@@ -90,7 +92,7 @@ class IDS_Filter
      * 
      * @return void
      */
-    public function __construct($id, $rule, $description, array $tags, $impact) 
+    public function __construct($id, $rule, $description, array $tags, $impact)
     {
         $this->id          = $id;
         $this->rule        = $rule;
@@ -106,20 +108,21 @@ class IDS_Filter
      * class represents
      *
      * @param string $string the string to match
-     * 
+     *
      * @throws InvalidArgumentException if argument is no string
      * @return boolean
      */
     public function match($string)
     {
         if (!is_string($string)) {
-            throw new InvalidArgumentException('
-                Invalid argument. Expected a string, received ' . gettype($string)
+            throw new \InvalidArgumentException(
+                'Invalid argument. Expected a string, received ' . gettype($string)
             );
         }
 
         return (bool) preg_match(
-            '/' . $this->getRule() . '/ms', strtolower($string)
+            '/' . $this->getRule() . '/ms',
+            strtolower($string)
         );
     }
 
@@ -128,7 +131,7 @@ class IDS_Filter
      *
      * @return string
      */
-    public function getDescription() 
+    public function getDescription()
     {
         return $this->description;
     }
@@ -136,12 +139,12 @@ class IDS_Filter
     /**
      * Return list of affected tags
      *
-     * Each filter rule is concerned with a certain kind of attack vectors. 
+     * Each filter rule is concerned with a certain kind of attack vectors.
      * This method returns those affected kinds.
      *
      * @return array
      */
-    public function getTags() 
+    public function getTags()
     {
         return $this->tags;
     }
@@ -151,7 +154,7 @@ class IDS_Filter
      *
      * @return string
      */
-    public function getRule() 
+    public function getRule()
     {
         return $this->rule;
     }
@@ -161,17 +164,17 @@ class IDS_Filter
      *
      * @return integer
      */
-    public function getImpact() 
+    public function getImpact()
     {
         return $this->impact;
     }
-    
+
     /**
      * Get filter ID
      *
      * @return integer
      */
-    public function getId() 
+    public function getId()
     {
         return $this->id;
     }

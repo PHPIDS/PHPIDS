@@ -47,7 +47,9 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Converter
+namespace IDS;
+
+class Converter
 {
     /**
      * Runs all converter functions
@@ -85,8 +87,7 @@ class IDS_Converter
     public static function convertFromCommented($value)
     {
         // check for existing comments
-        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|' .
-            '(?:--[^-]*-)/ms', $value)) {
+        if (preg_match('/(?:\<!-|-->|\/\*|\*\/|\/\/\W*\w+\s*$)|(?:--[^-]*-)/ms', $value)) {
 
             $pattern = array(
                 '/(?:(?:<!)(?:(?:--(?:[^-]*(?:-[^-]+)*)--\s*)*)(?:>))/ms',
@@ -97,7 +98,7 @@ class IDS_Converter
             $converted = preg_replace($pattern, ';', $value);
             $value    .= "\n" . $converted;
         }
-        
+
         //make sure inline comments are detected and converted correctly
         $value = preg_replace('/(<\w+)\/+(\w+=?)/m', '$1/$2', $value);
         $value = preg_replace('/[^\\\:]\/\/(.*)$/m', '/**/$1', $value);
@@ -142,8 +143,7 @@ class IDS_Converter
         $matches = array();
 
         // check if value matches typical charCode pattern
-        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)){4,}/ms',
-            $value, $matches)) {
+        if (preg_match_all('/(?:[\d+-=\/\* ]+(?:\s?,\s?[\d+-=\/\* ]+)){4,}/ms', $value, $matches)) {
 
             $converted = '';
             $string    = implode(',', $matches[0]);
@@ -155,10 +155,15 @@ class IDS_Converter
                 $char = preg_replace('/\W0/s', '', $char);
 
                 if (preg_match_all('/\d*[+-\/\* ]\d+/', $char, $matches)) {
-                    $match = preg_split('/(\W?\d+)/',
-                                        (implode('', $matches[0])),
-                                        null,
-                                        PREG_SPLIT_DELIM_CAPTURE);
+                    $match = preg_split(
+                        '/(\W?\d+)/',
+                        implode(
+                            '',
+                            $matches[0]
+                        ),
+                        null,
+                        PREG_SPLIT_DELIM_CAPTURE
+                    );
 
                     if (array_sum($match) >= 20 && array_sum($match) <= 127) {
                         $converted .= chr(array_sum($match));
@@ -176,8 +181,17 @@ class IDS_Converter
         if (preg_match_all('/(?:(?:[\\\]+\d+[ \t]*){8,})/ims', $value, $matches)) {
 
             $converted = '';
-            $charcode  = explode('\\', preg_replace('/\s/', '', implode(',',
-                $matches[0])));
+            $charcode  = explode(
+                '\\',
+                preg_replace(
+                    '/\s/',
+                    '',
+                    implode(
+                        ',',
+                        $matches[0]
+                    )
+                )
+            );
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
@@ -193,8 +207,17 @@ class IDS_Converter
         if (preg_match_all('/(?:(?:[\\\]+\w+\s*){8,})/ims', $value, $matches)) {
 
             $converted = '';
-            $charcode  = explode('\\', preg_replace('/[ux]/', '', implode(',',
-                $matches[0])));
+            $charcode  = explode(
+                '\\',
+                preg_replace(
+                    '/[ux]/',
+                    '',
+                    implode(
+                        ',',
+                        $matches[0]
+                    )
+                )
+            );
 
             foreach ($charcode as $char) {
                 if (!empty($char)) {
@@ -235,10 +258,10 @@ class IDS_Converter
     public static function convertEntities($value)
     {
         $converted = null;
-        
-        //deal with double encoded payload 
-        $value = preg_replace('/&amp;/', '&', $value);     
-        
+
+        //deal with double encoded payload
+        $value = preg_replace('/&amp;/', '&', $value);
+
         if (preg_match('/&#x?[\w]+/ms', $value)) {
             $converted = preg_replace('/(&#x?[\w]{2}\d?);?/ms', '$1;', $value);
             $converted = html_entity_decode($converted, ENT_QUOTES, 'UTF-8');
@@ -246,10 +269,11 @@ class IDS_Converter
         }
         // normalize obfuscated protocol handlers
         $value = preg_replace(
-            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*:)|(d\s*a\s*t\s*a\s*:)/ms', 
-            'javascript:', $value
+            '/(?:j\s*a\s*v\s*a\s*s\s*c\s*r\s*i\s*p\s*t\s*:)|(d\s*a\s*t\s*a\s*:)/ms',
+            'javascript:',
+            $value
         );
-        
+
         return $value;
     }
 
@@ -284,12 +308,12 @@ class IDS_Converter
     public static function convertFromSQLHex($value)
     {
         $matches = array();
-        if(preg_match_all('/(?:(?:\A|[^\d])0x[a-f\d]{3,}[a-f\d]*)+/im', $value, $matches)) {
-            foreach($matches[0] as $match) {
+        if (preg_match_all('/(?:(?:\A|[^\d])0x[a-f\d]{3,}[a-f\d]*)+/im', $value, $matches)) {
+            foreach ($matches[0] as $match) {
                 $converted = '';
-                foreach(str_split($match, 2) as $hex_index) {
-                    if(preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
-                      $converted .= chr(hexdec($hex_index));
+                foreach (str_split($match, 2) as $hex_index) {
+                    if (preg_match('/[a-f\d]{2,3}/i', $hex_index)) {
+                        $converted .= chr(hexdec($hex_index));
                     }
                 }
                 $value = str_replace($match, $converted, $value);
@@ -297,7 +321,7 @@ class IDS_Converter
         }
         // take care of hex encoded ctrl chars
         $value = preg_replace('/0x\d+/m', ' 1 ', $value);
-        
+
         return $value;
     }
 
@@ -314,7 +338,7 @@ class IDS_Converter
         $pattern = array('/(?:is\s+null)|(like\s+null)|' .
             '(?:(?:^|\W)in[+\s]*\([\s\d"]+[^()]*\))/ims');
         $value   = preg_replace($pattern, '"=0', $value);
-        
+
         $value   = preg_replace('/[^\w\)]+\s*like\s*[^\w\s]+/ims', '1" OR "1"', $value);
         $value   = preg_replace('/null([,"\s])/ims', '0$1', $value);
         $value   = preg_replace('/\d+\./ims', ' 1', $value);
@@ -349,40 +373,72 @@ class IDS_Converter
         $search = array(
             chr(0), chr(1), chr(2), chr(3), chr(4), chr(5),
             chr(6), chr(7), chr(8), chr(11), chr(12), chr(14),
-            chr(15), chr(16), chr(17), chr(18), chr(19), chr(24), 
+            chr(15), chr(16), chr(17), chr(18), chr(19), chr(24),
             chr(25), chr(192), chr(193), chr(238), chr(255), '\\0'
         );
-        
+
         $value = str_replace($search, '%00', $value);
 
         //take care for malicious unicode characters
-        $value = urldecode(preg_replace('/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' .
-            '\w|%EF%BB%BF|%EF%BF%BD)|(?:&#(?:65|8)\d{3};?)/i', null,
-                urlencode($value)));
         $value = urldecode(
-            preg_replace('/(?:%F0%80%BE)/i', '>', urlencode($value)));
+            preg_replace(
+                '/(?:%E(?:2|3)%8(?:0|1)%(?:A|8|9)' .
+                '\w|%EF%BB%BF|%EF%BF%BD)|(?:&#(?:65|8)\d{3};?)/i',
+                null,
+                urlencode($value)
+            )
+        );
         $value = urldecode(
-            preg_replace('/(?:%F0%80%BC)/i', '<', urlencode($value)));
+            preg_replace('/(?:%F0%80%BE)/i', '>', urlencode($value))
+        );
         $value = urldecode(
-            preg_replace('/(?:%F0%80%A2)/i', '"', urlencode($value)));
+            preg_replace('/(?:%F0%80%BC)/i', '<', urlencode($value))
+        );
         $value = urldecode(
-            preg_replace('/(?:%F0%80%A7)/i', '\'', urlencode($value)));		
+            preg_replace('/(?:%F0%80%A2)/i', '"', urlencode($value))
+        );
+        $value = urldecode(
+            preg_replace('/(?:%F0%80%A7)/i', '\'', urlencode($value))
+        );
 
         $value = preg_replace('/(?:%ff1c)/', '<', $value);
         $value = preg_replace(
-            '/(?:&[#x]*(200|820|200|820|zwn?j|lrm|rlm)\w?;?)/i', null,$value
+            '/(?:&[#x]*(200|820|200|820|zwn?j|lrm|rlm)\w?;?)/i',
+            null,
+            $value
         );
-        $value = preg_replace('/(?:&#(?:65|8)\d{3};?)|' .
-                '(?:&#(?:56|7)3\d{2};?)|' .
-                '(?:&#x(?:fe|20)\w{2};?)|' .
-                '(?:&#x(?:d[c-f])\w{2};?)/i', null,
-                $value);
-                
+        $value = preg_replace(
+            '/(?:&#(?:65|8)\d{3};?)|' .
+            '(?:&#(?:56|7)3\d{2};?)|' .
+            '(?:&#x(?:fe|20)\w{2};?)|' .
+            '(?:&#x(?:d[c-f])\w{2};?)/i',
+            null,
+            $value
+        );
+
         $value = str_replace(
-            array('«', '〈', '＜', '‹', '〈', '⟨'), '<', $value
+            array(
+                '«',
+                '〈',
+                '＜',
+                '‹',
+                '〈',
+                '⟨'
+            ),
+            '<',
+            $value
         );
         $value = str_replace(
-            array('»', '〉', '＞', '›', '〉', '⟩'), '>', $value
+            array(
+                '»',
+                '〉',
+                '＞',
+                '›',
+                '〉',
+                '⟩'
+            ),
+            '>',
+            $value
         );
 
         return $value;
@@ -400,9 +456,11 @@ class IDS_Converter
     public static function convertFromNestedBase64($value)
     {
         $matches = array();
-        preg_match_all('/(?:^|[,&?])\s*([a-z0-9]{50,}=*)(?:\W|$)/im',
+        preg_match_all(
+            '/(?:^|[,&?])\s*([a-z0-9]{50,}=*)(?:\W|$)/im',
             $value,
-            $matches);
+            $matches
+        );
 
         foreach ($matches[1] as $item) {
             if (isset($item) && !preg_match('/[a-f0-9]{32}/i', $item)) {
@@ -469,7 +527,7 @@ class IDS_Converter
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $match) {
-                $chr = chr(hexdec(substr($match, 2, 4))); 
+                $chr = chr(hexdec(substr($match, 2, 4)));
                 $value = str_replace($match, $chr, $value);
             }
             $value .= "\n\u0001";
@@ -488,16 +546,16 @@ class IDS_Converter
      */
     public static function convertFromUTF7($value)
     {
-        if(preg_match('/\+A\w+-?/m', $value)) {
+        if (preg_match('/\+A\w+-?/m', $value)) {
             if (function_exists('mb_convert_encoding')) {
-                if(version_compare(PHP_VERSION, '5.2.8', '<')) {
+                if (version_compare(PHP_VERSION, '5.2.8', '<')) {
                     $tmp_chars = str_split($value);
                     $value = '';
-                    foreach($tmp_chars as $char) {
-                        if(ord($char) <= 127) {
-                            $value .= $char;	
+                    foreach ($tmp_chars as $char) {
+                        if (ord($char) <= 127) {
+                            $value .= $char;
                         }
-                    }     
+                    }
                 }
                 $value .= "\n" . mb_convert_encoding($value, 'UTF-8', 'UTF-7');
             } else {
@@ -527,9 +585,12 @@ class IDS_Converter
                     '+ACIAPg-'   => '">',
                     '+ACIAPgA8-' => '">'
                 );
-    
-                $value = str_ireplace(array_keys($schemes),
-                    array_values($schemes), $value);
+
+                $value = str_ireplace(
+                    array_keys($schemes),
+                    array_values($schemes),
+                    $value
+                );
             }
         }
         return $value;
@@ -551,7 +612,7 @@ class IDS_Converter
         }
 
         $compare = stripslashes($value);
-        
+
         $pattern = array('/(?:<\/\w+>\+<\w+>)/s',
             '/(?:":\d+[^"[]+")/s',
             '/(?:"?"\+\w+\+")/s',
@@ -581,8 +642,11 @@ class IDS_Converter
         $converted = preg_replace('/\)\s*\+/', ")", $converted);
 
         //convert JS special numbers
-        $converted = preg_replace('/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)' .
-            '|(?:NaN|Infinity)\W/ims', 1, $converted);
+        $converted = preg_replace(
+            '/(?:\(*[.\d]e[+-]*[^a-z\W]+\)*)|(?:NaN|Infinity)\W/ims',
+            1,
+            $converted
+        );
 
         if ($converted && ($compare != $converted)) {
             $value .= "\n" . $converted;
@@ -599,8 +663,8 @@ class IDS_Converter
      * @static
      * @return string
      */
-    public static function convertFromProprietaryEncodings($value) {
-
+    public static function convertFromProprietaryEncodings($value)
+    {
         //Xajax error reportings
         $value = preg_replace('/<!\[CDATA\[(\W+)\]\]>/im', '$1', $value);
 
@@ -622,13 +686,13 @@ class IDS_Converter
             null,
             $value
         );
-        
+
         //normalize separation char repetion
         $value = preg_replace('/([.+~=*_\-;])\1{2,}/m', '$1', $value);
 
         //normalize multiple single quotes
         $value = preg_replace('/"{2,}/m', '"', $value);
-        
+
         //normalize quoted numerical values and asterisks
         $value = preg_replace('/"(\d+)"/m', '$1', $value);
 
@@ -637,10 +701,10 @@ class IDS_Converter
 
         //normalize ampersand listings
         $value = preg_replace('/(\w\s)&\s(\w)/', '$1$2', $value);
-        
+
         //normalize escaped RegExp modifiers
-        $value = preg_replace('/\/\\\(\w)/', '/$1', $value);        
-        
+        $value = preg_replace('/\/\\\(\w)/', '/$1', $value);
+
         return $value;
     }
 
@@ -648,33 +712,40 @@ class IDS_Converter
      * This method is the centrifuge prototype
      *
      * @param string      $value   the value to convert
-     * @param IDS_Monitor $monitor the monitor object
+     * @param Monitor $monitor the monitor object
      *
      * @static
      * @return string
      */
-    public static function runCentrifuge($value, IDS_Monitor $monitor = null)
+    public static function runCentrifuge($value, Monitor $monitor = null)
     {
         $threshold = 3.49;
         if (strlen($value) > 25) {
-            
             //strip padding
             $tmp_value = preg_replace('/\s{4}|==$/m', null, $value);
             $tmp_value = preg_replace(
-                '/\s{4}|[\p{L}\d\+\-=,.%()]{8,}/m', 
-                'aaa', 
+                '/\s{4}|[\p{L}\d\+\-=,.%()]{8,}/m',
+                'aaa',
                 $tmp_value
             );
-            
+
             // Check for the attack char ratio
             $tmp_value = preg_replace('/([*.!?+-])\1{1,}/m', '$1', $tmp_value);
             $tmp_value = preg_replace('/"[\p{L}\d\s]+"/m', null, $tmp_value);
 
-            $stripped_length = strlen(preg_replace('/[\d\s\p{L}\.:,%&\/><\-)!|]+/m',
-                null, $tmp_value));
+            $stripped_length = strlen(
+                preg_replace(
+                    '/[\d\s\p{L}\.:,%&\/><\-)!|]+/m',
+                    null,
+                    $tmp_value
+                )
+            );
             $overall_length  = strlen(
-                preg_replace('/([\d\s\p{L}:,\.]{3,})+/m', 'aaa',
-                preg_replace('/\s{2,}/m', null, $tmp_value))
+                preg_replace(
+                    '/([\d\s\p{L}:,\.]{3,})+/m',
+                    'aaa',
+                    preg_replace('/\s{2,}/m', null, $tmp_value)
+                )
             );
 
             if ($stripped_length != 0
@@ -710,12 +781,12 @@ class IDS_Converter
             );
 
             $converted = implode($array);
-            
+
             $_keys = array_keys($schemes);
             $_values = array_values($schemes);
-            
+
             $converted = str_replace($_keys, $_values, $converted);
-            
+
             $converted = preg_replace('/[+-]\s*\d+/', '+', $converted);
             $converted = preg_replace('/[()[\]{}]/', '(', $converted);
             $converted = preg_replace('/[!?:=]/', ':', $converted);
@@ -727,8 +798,11 @@ class IDS_Converter
 
             $converted = implode($array);
 
-            if (preg_match('/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' .
-                '(?:\({3,}\++:{2,})/', $converted)) {
+            if (preg_match(
+                '/(?:\({2,}\+{2,}:{2,})|(?:\({2,}\+{2,}:+)|' .
+                '(?:\({3,}\++:{2,})/',
+                $converted
+            )) {
 
                 $monitor->centrifuge['converted'] = $converted;
 

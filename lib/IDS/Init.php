@@ -47,7 +47,9 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-class IDS_Init
+namespace IDS;
+
+class Init
 {
 
     /**
@@ -81,7 +83,7 @@ class IDS_Init
      * 
      * @return object $this
      */
-    private function __construct($configPath = null) 
+    private function __construct($configPath = null)
     {
         include_once 'IDS/Monitor.php';
         include_once 'IDS/Filter/Storage.php';
@@ -99,7 +101,7 @@ class IDS_Init
      * 
      * @return void
      */
-    public final function __clone() 
+    final public function __clone()
     {
     }
 
@@ -114,7 +116,7 @@ class IDS_Init
     public static function init($configPath = null)
     {
         if (!isset(self::$instances[$configPath])) {
-            self::$instances[$configPath] = new IDS_Init($configPath);
+            self::$instances[$configPath] = new Init($configPath);
         }
 
         return self::$instances[$configPath];
@@ -128,12 +130,12 @@ class IDS_Init
      * @throws Exception if file not found
      * @return void
      */
-    public function setConfigPath($path) 
+    public function setConfigPath($path)
     {
         if (file_exists($path)) {
             $this->configPath = $path;
         } else {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Configuration file could not be found at ' .
                 htmlspecialchars($path, ENT_QUOTES, 'UTF-8')
             );
@@ -145,7 +147,7 @@ class IDS_Init
      *
      * @return string the config path
      */
-    public function getConfigPath() 
+    public function getConfigPath()
     {
         return $this->configPath;
     }
@@ -157,29 +159,29 @@ class IDS_Init
      *
      * @return string the base path or null
      */
-    public function getBasePath() {
-    	
-    	return ((isset($this->config['General']['base_path']) 
-            && $this->config['General']['base_path'] 
-            && isset($this->config['General']['use_base_path']) 
-            && $this->config['General']['use_base_path']) 
+    public function getBasePath()
+    {
+        return ((isset($this->config['General']['base_path'])
+            && $this->config['General']['base_path']
+            && isset($this->config['General']['use_base_path'])
+            && $this->config['General']['use_base_path'])
                 ? $this->config['General']['base_path'] : null);
     }
-    
+
     /**
      * Merges new settings into the exsiting ones or overwrites them
      *
      * @param array   $config    the config array
      * @param boolean $overwrite config overwrite flag
-     * 
+     *
      * @return void
      */
-    public function setConfig(array $config, $overwrite = false) 
+    public function setConfig(array $config, $overwrite = false)
     {
         if ($overwrite) {
-            $this->config = $this->_mergeConfig($this->config, $config);
+            $this->config = $this->mergeConfig($this->config, $config);
         } else {
-            $this->config = $this->_mergeConfig($config, $this->config);
+            $this->config = $this->mergeConfig($config, $this->config);
         }
     }
 
@@ -194,7 +196,7 @@ class IDS_Init
      * @param  array $successor The hash which values count more when in doubt
      * @return array Merged hash
      */
-    protected function _mergeConfig($current, $successor)
+    protected function mergeConfig($current, $successor)
     {
         if (is_array($current) and is_array($successor)) {
             foreach ($successor as $key => $value) {
@@ -202,7 +204,7 @@ class IDS_Init
                     and is_array($value)
                     and is_array($current[$key])) {
 
-                    $current[$key] = $this->_mergeConfig($current[$key], $value);
+                    $current[$key] = $this->mergeConfig($current[$key], $value);
                 } else {
                     $current[$key] = $successor[$key];
                 }
@@ -216,7 +218,7 @@ class IDS_Init
      *
      * @return array the config array
      */
-    public function getConfig() 
+    public function getConfig()
     {
         return $this->config;
     }

@@ -30,6 +30,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Logging;
 
 require_once 'IDS/Log/Interface.php';
 
@@ -48,7 +49,7 @@ require_once 'IDS/Log/Interface.php';
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Log_File implements IDS_Log_Interface
+class FileLogger implements LoggerInterface
 {
 
     /**
@@ -82,9 +83,8 @@ class IDS_Log_File implements IDS_Log_Interface
      * 
      * @return void
      */
-    protected function __construct($logfile) 
+    protected function __construct($logfile)
     {
-
         // determine correct IP address and concat them if necessary
         $this->ip = $_SERVER['REMOTE_ADDR'] .
             (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
@@ -105,14 +105,14 @@ class IDS_Log_File implements IDS_Log_Interface
      * 
      * @return object $this
      */
-    public static function getInstance($config, $classname = 'IDS_Log_File') 
+    public static function getInstance($config, $classname = 'IDS_Log_File')
     {
         if ($config instanceof IDS_Init) {
             $logfile = $config->getBasePath() . $config->config['Logging']['path'];
         } elseif (is_string($config)) {
             $logfile = $config;
         }
-        
+
         if (!isset(self::$instances[$logfile])) {
             self::$instances[$logfile] = new $classname($logfile);
         }
@@ -127,8 +127,8 @@ class IDS_Log_File implements IDS_Log_Interface
      * 
      * @return void
      */
-    private function __clone() 
-    { 
+    private function __clone()
+    {
     }
 
     /**
@@ -141,9 +141,8 @@ class IDS_Log_File implements IDS_Log_Interface
      * 
      * @return string
      */
-    protected function prepareData($data) 
+    protected function prepareData($data)
     {
-
         $format = '"%s",%s,%d,"%s","%s","%s","%s"';
 
         $attackedParameters = '';
@@ -152,7 +151,8 @@ class IDS_Log_File implements IDS_Log_Interface
                 rawurlencode($event->getValue()) . ' ';
         }
 
-        $dataString = sprintf($format,
+        $dataString = sprintf(
+            $format,
             urlencode($this->ip),
             date('c'),
             $data->getImpact(),
@@ -173,12 +173,11 @@ class IDS_Log_File implements IDS_Log_Interface
      * @throws Exception if the logfile isn't writeable
      * @return boolean
      */
-    public function execute(IDS_Report $data) 
+    public function execute(Report $data)
     {
-
         /*
-         * In case the data has been modified before it might  be necessary 
-         * to convert it to string since we can't store array or object 
+         * In case the data has been modified before it might  be necessary
+         * to convert it to string since we can't store array or object
          * into a file
          */
         $data = $this->prepareData($data);
@@ -197,8 +196,8 @@ class IDS_Log_File implements IDS_Log_Interface
 
                     } else {
                         throw new Exception(
-                            'Please make sure that ' . $this->logfile . 
-                                ' is writeable.'
+                            'Please make sure that ' . $this->logfile .
+                            ' is writeable.'
                         );
                     }
                 }

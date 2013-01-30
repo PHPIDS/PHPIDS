@@ -42,7 +42,9 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-abstract class IDS_Version
+namespace IDS;
+
+abstract class Version
 {
     const VERSION = 'master';
 }

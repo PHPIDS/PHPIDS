@@ -49,7 +49,9 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Report implements Countable, IteratorAggregate
+namespace IDS;
+
+class Report implements \Countable, \IteratorAggregate
 {
 
     /**
@@ -112,7 +114,7 @@ class IDS_Report implements Countable, IteratorAggregate
      *
      * @return object $this
      */
-    public function addEvent(IDS_Event $event)
+    public function addEvent(Event $event)
     {
         $this->clear();
         $this->events[$event->getName()] = $event;
@@ -134,7 +136,7 @@ class IDS_Report implements Countable, IteratorAggregate
     public function getEvent($name)
     {
         if (!is_scalar($name)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Invalid argument type given'
             );
         }
@@ -157,8 +159,10 @@ class IDS_Report implements Countable, IteratorAggregate
             $this->tags = array();
 
             foreach ($this->events as $event) {
-                $this->tags = array_merge($this->tags,
-                                          $event->getTags());
+                $this->tags = array_merge(
+                    $this->tags,
+                    $event->getTags()
+                );
             }
 
             $this->tags = array_values(array_unique($this->tags));
@@ -199,7 +203,7 @@ class IDS_Report implements Countable, IteratorAggregate
     public function hasEvent($name)
     {
         if (!is_scalar($name)) {
-            throw new InvalidArgumentException('Invalid argument given');
+            throw new \InvalidArgumentException('Invalid argument given');
         }
 
         return isset($this->events[$name]);
@@ -226,7 +230,7 @@ class IDS_Report implements Countable, IteratorAggregate
      */
     public function getIterator()
     {
-        return new ArrayObject($this->events);
+        return new \ArrayObject($this->events);
     }
 
     /**
@@ -277,7 +281,7 @@ class IDS_Report implements Countable, IteratorAggregate
             $this->centrifuge = $centrifuge;
             return true;
         }
-        throw new InvalidArgumentException('Invalid argument given');
+        throw new \InvalidArgumentException('Invalid argument given');
     }
 
     /**
@@ -314,13 +318,13 @@ class IDS_Report implements Countable, IteratorAggregate
 
             if ($centrifuge = $this->getCentrifuge()) {
                 $output .= 'Centrifuge detection data';
-                $output .= '<br/>  Threshold: ' . 
+                $output .= '<br/>  Threshold: ' .
                     ((isset($centrifuge['threshold'])&&$centrifuge['threshold']) ?
                     $centrifuge['threshold'] : '---');
-                $output .= '<br/>  Ratio: ' . 
+                $output .= '<br/>  Ratio: ' .
                     ((isset($centrifuge['ratio'])&&$centrifuge['ratio']) ?
                     $centrifuge['ratio'] : '---');
-                if(isset($centrifuge['converted'])) {
+                if (isset($centrifuge['converted'])) {
                     $output .= '<br/>  Converted: ' . $centrifuge['converted'];
                 }
                 $output .= "<br/><br/>\n";

@@ -18,19 +18,21 @@
  * @package    PHPIDS tests
  */
 
+namespace IDS;
+
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Init.php';
 
-class IDS_InitTest extends PHPUnit_Framework_TestCase {
+class InitTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp() {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = IDS_Init::init($this->path);
+        $this->init = Init::init($this->path);
     }
 
     function testInit() {
-        $this->assertTrue($this->init instanceof IDS_Init);
+        $this->assertTrue($this->init instanceof Init);
     }
 
     function testInitConfig() {
@@ -74,9 +76,9 @@ class IDS_InitTest extends PHPUnit_Framework_TestCase {
 
     function testInstanciatingInitObjectWithoutPassingConfigFile()
     {
-        $init = IDS_Init::init();
-        $this->assertInstanceOf('IDS_Init', $init);
-        $this->assertSame($init, IDS_Init::init());
+        $init = Init::init();
+        $this->assertInstanceOf('\\IDS\\Init', $init);
+        $this->assertSame($init, Init::init());
     }
 }
 

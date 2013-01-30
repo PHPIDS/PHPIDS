@@ -1,3 +1,5 @@
 /.cache/*
 /.idea/*
 /tmp/*
+/lib/IDS/tmp/
+/docs/coverage/

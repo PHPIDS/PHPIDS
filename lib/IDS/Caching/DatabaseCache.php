@@ -31,7 +31,7 @@
  * @link     http://php-ids.org/
  */
 
-require_once 'IDS/Caching/Interface.php';
+require_once 'IDS/Caching/CacheInterface.php';
 
 /**
  * Needed SQL:
@@ -68,7 +68,9 @@ require_once 'IDS/Caching/Interface.php';
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-class IDS_Caching_Database implements IDS_Caching_Interface
+namespace IDS\Caching;
+
+class DatabaseCache implements \IDS\CachingInterface
 {
 
     /**
@@ -109,12 +111,11 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      * 
      * @return void
      */
-    public function __construct($type, $init) 
+    public function __construct($type, $init)
     {
-    
         $this->type   = $type;
         $this->config = $init->config['Caching'];
-        $this->handle = $this->_connect();
+        $this->handle = $this->connect();
     }
 
     /**
@@ -130,7 +131,7 @@ class IDS_Caching_Database implements IDS_Caching_Interface
     {
 
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Database($type, $init);
+            self::$cachingInstance = new DatabaseCache($type, $init);
         }
         return self::$cachingInstance;
     }
@@ -143,27 +144,25 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      * @throws PDOException if a db error occurred
      * @return object $this
      */
-    public function setCache(array $data) 
+    public function setCache(array $data)
     {
-
         $handle = $this->handle;
-        
-        $rows = $handle->query('SELECT created FROM `' . 
-            $this->config['table'].'`');
-            
+
+        $rows = $handle->query('SELECT created FROM `' . $this->config['table'].'`');
+
         if (!$rows || $rows->rowCount() === 0) {
-        
-            $this->_write($handle, $data);             
+
+            $this->write($handle, $data);
         } else {
 
             foreach ($rows as $row) {
-                
-                if ((time()-strtotime($row['created'])) > 
-                  $this->config['expiration_time']) {
-                  
-                    $this->_write($handle, $data);  
+
+                if ((time()-strtotime($row['created'])) >
+                    $this->config['expiration_time']) {
+
+                    $this->write($handle, $data);
                 }
-            }        
+            }
         }
 
         return $this;
@@ -178,14 +177,15 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      * @throws PDOException if a db error occurred
      * @return mixed cache data or false
      */
-    public function getCache() 
+    public function getCache()
     {
-
-        try{
+        try {
             $handle = $this->handle;
-            $result = $handle->prepare('SELECT * FROM `' . 
-                $this->config['table'] . 
-                '` where type=?');
+            $result = $handle->prepare(
+                'SELECT * FROM `' .
+                $this->config['table'] .
+                '` where type=?'
+            );
             $result->execute(array($this->type));
 
             foreach ($result as $row) {
@@ -205,18 +205,15 @@ class IDS_Caching_Database implements IDS_Caching_Interface
      * @throws Exception if connection parameters are faulty
      * @throws PDOException if a db error occurred
      */
-    private function _connect() 
+    private function connect()
     {
-
         // validate connection parameters
         if (!$this->config['wrapper']
             || !$this->config['user']
                 || !$this->config['password']
                     || !$this->config['table']) {
 
-            throw new Exception('
-                Insufficient connection parameters'
-            );
+            throw new Exception('Insufficient connection parameters');
         }
 
         // try to connect
@@ -226,33 +223,29 @@ class IDS_Caching_Database implements IDS_Caching_Interface
                 $this->config['user'],
                 $this->config['password']
             );
-            $handle->setAttribute(
-                PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true
-            );
+            $handle->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 
         } catch (PDOException $e) {
             throw new PDOException('PDOException: ' . $e->getMessage());
         }
         return $handle;
     }
-    
+
     /**
      * Write the cache data to the table
-     * 
+     *
      * @param object $handle the database handle
      * @param array  $data   the caching data
-     * 
+     *
      * @return object PDO
      * @throws PDOException if a db error occurred
-     */    
-    private function _write($handle, $data) 
+     */
+    private function write($handle, $data)
     {
-        
         try {
-            $handle->query('TRUNCATE ' . 
-                $this->config['table'].'');
-            $statement = $handle->prepare('
-                INSERT INTO `' . 
+            $handle->query('TRUNCATE ' . $this->config['table'].'');
+            $statement = $handle->prepare(
+                'INSERT INTO `' .
                 $this->config['table'].'` (
                     type,
                     data,
@@ -264,20 +257,21 @@ class IDS_Caching_Database implements IDS_Caching_Interface
                     :data,
                     now(),
                     now()
-                )
-            ');
-    
-            $statement->bindParam('type', 
-                $handle->quote($this->type));
+                )'
+            );
+
+            $statement->bindParam(
+                'type',
+                $handle->quote($this->type)
+            );
             $statement->bindParam('data', serialize($data));
-    
+
             if (!$statement->execute()) {
                 throw new PDOException($statement->errorCode());
             }
-    
         } catch (PDOException $e) {
             throw new PDOException('PDOException: ' . $e->getMessage());
-        }    
+        }
     }
 }
 

@@ -17,27 +17,29 @@
  *
  * @package	PHPIDS tests
  */
+namespace IDS;
 
 require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib/');
 require_once 'IDS/Report.php';
 require_once 'IDS/Event.php';
+require_once 'IDS/Filter.php';
 
-class IDS_ReportTest extends PHPUnit_Framework_TestCase
+class ReportTest extends \PHPUnit_Framework_TestCase
 {
 	public function setUp()
 	{
-		$this->report = new IDS_Report(array(
-			new IDS_Event("key_a", 'val_b',
+		$this->report = new Report(array(
+			new Event("key_a", 'val_b',
 				array(
-					new IDS_Filter(1, '^test_a1$', 'desc_a1', array('tag_a1', 'tag_a2'), 1),
-					new IDS_Filter(1, '^test_a2$', 'desc_a2', array('tag_a2', 'tag_a3'), 2)
+					new Filter(1, '^test_a1$', 'desc_a1', array('tag_a1', 'tag_a2'), 1),
+					new Filter(1, '^test_a2$', 'desc_a2', array('tag_a2', 'tag_a3'), 2)
 				)
 			),
-			new IDS_Event('key_b', 'val_b',
+			new Event('key_b', 'val_b',
 				array(
-					new IDS_Filter(1, '^test_b1$', 'desc_b1', array('tag_b1', 'tag_b2'), 3),
-					new IDS_FIlter(1, '^test_b2$', 'desc_b2', array('tag_b2', 'tag_b3'), 4),
+					new Filter(1, '^test_b1$', 'desc_b1', array('tag_b1', 'tag_b2'), 3),
+					new Filter(1, '^test_b2$', 'desc_b2', array('tag_b2', 'tag_b3'), 4),
 				)
 			)
 		));
@@ -46,7 +48,7 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 	public function testEmpty()
 	{
 		$this->assertFalse($this->report->isEmpty());
-		$report = new IDS_Report;
+		$report = new Report;
 		$this->assertTrue($report->isEmpty());
 	}
 
@@ -80,7 +82,7 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 	{
 		$this->testImpactSum();
 		$this->testGetTags();
-		$this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter(1, 'test_c1', 'desc_c1', array('tag_c1'), 10))));
+		$this->report->addEvent(new Event('key_c', 'val_c', array(new Filter(1, 'test_c1', 'desc_c1', array('tag_c1'), 10))));
 		$this->assertEquals(20, $this->report->getImpact());
 		$this->assertEquals(array('tag_a1', 'tag_a2', 'tag_a3', 'tag_b1', 'tag_b2', 'tag_b3', 'tag_c1'), $this->report->getTags());
 	}
@@ -98,13 +100,13 @@ class IDS_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testToStringEmpty()
     {
-        $this->report = new IDS_Report();
+        $this->report = new Report();
         $this->assertEquals('', $this->report->__toString());
     }
 
     public function testGetEvent() {
-        $this->report->addEvent(new IDS_Event('key_c', 'val_c', array(new IDS_Filter(1, 'test_c1', 'desc_c1', array('tag_c1'), 10))));
-        $this->assertTrue($this->report->getEvent('key_c') instanceof IDS_Event);
+        $this->report->addEvent(new Event('key_c', 'val_c', array(new Filter(1, 'test_c1', 'desc_c1', array('tag_c1'), 10))));
+        $this->assertTrue($this->report->getEvent('key_c') instanceof Event);
     }
 
     public function testGetEventWrong() {

@@ -43,16 +43,18 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-interface IDS_Log_Interface
+namespace IDS\Logging;
+
+interface LoggerInterface
 {
     /**
      * Interface method
      *
-     * @param IDS_Report $data the report data
+     * @param Report $data the report data
      * 
      * @return void 
      */
-    public function execute(IDS_Report $data);
+    public function execute(Report $data);
 }
 
 /**

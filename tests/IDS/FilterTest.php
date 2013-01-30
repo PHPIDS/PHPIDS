@@ -17,22 +17,23 @@
  *
  * @package	PHPIDS tests
  */
+namespace IDS;
 
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Init.php';
 require_once 'IDS/Filter.php';
 
-class IDS_FilterTest extends PHPUnit_Framework_TestCase
+class FilterTest extends \PHPUnit_Framework_TestCase
 	{
 	public function setUp() {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = IDS_Init::init($this->path);
+        $this->init = Init::init($this->path);
 	}
 
 	public function testObjectConstruction()
 	{
-		$filter = new IDS_Filter(1, '^test$', 'My description', array('foo', 'bar'), 12);
+		$filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 12);
 
 		$this->assertTrue($filter->match('test'));
 		$this->assertEquals("My description", $filter->getDescription(), "Should return description");
@@ -43,7 +44,7 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testModificator()
 	{
-		$filter = new IDS_Filter(1, '^te.st$', 'My description', array('tag1', 'tag2'), 1);
+		$filter = new Filter(1, '^te.st$', 'My description', array('tag1', 'tag2'), 1);
 
 		// Default must be
 		// ... case-insensitive
@@ -57,23 +58,23 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
 	public function testExceptions()
 	{
-		$filter = new IDS_Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
+		$filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
 
 		try {
 			$filter->match(1);
 			$this->fail("Expected Exception");
-		} catch (Exception $e) {}
+		} catch (\Exception $e) {}
 
 
 		try {
-			$filter = new IDS_Filter(1, '^test$', 'my desc', array('foo'), 'test');
+			$filter = new Filter(1, '^test$', 'my desc', array('foo'), 'test');
 			$this->fail("Expected Exception");
-		} catch (Exception $e) {}
+		} catch (\Exception $e) {}
 
 		try {
-			$filter = new IDS_Filter(1, 1, 'my desc', array("foo"), 'bla');
+			$filter = new Filter(1, 1, 'my desc', array("foo"), 'bla');
 			$this->fail("Excpected Exception");
-		} catch (Exception $e) {}
+		} catch (\Exception $e) {}
 
         $this->assertTrue(true, 'Fake assertion so that PHPUnit does not bail');
 	}
@@ -82,10 +83,10 @@ class IDS_FilterTest extends PHPUnit_Framework_TestCase
 
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
-		$this->storage = new IDS_Filter_Storage($this->init);
+		$this->storage = new Filter\Storage($this->init);
         $filter = array();
-		$filter[] = new IDS_Filter(1, 'test', 'test2', array(), 1);
-	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof IDS_Filter_Storage);
+		$filter[] = new Filter(1, 'test', 'test2', array(), 1);
+	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof Filter\Storage);
 	}
 }
 

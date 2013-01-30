@@ -30,6 +30,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Logging;
 
 require_once 'IDS/Log/Interface.php';
 
@@ -48,7 +49,7 @@ require_once 'IDS/Log/Interface.php';
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Log_Email implements IDS_Log_Interface
+class Email implements LoggerInterface
 {
 
     /**
@@ -144,7 +145,6 @@ class IDS_Log_Email implements IDS_Log_Interface
      */
     protected function __construct($config)
     {
-
         if ($config instanceof IDS_Init) {
             $this->recipients   = $config->config['Logging']['recipients'];
             $this->subject      = $config->config['Logging']['subject'];
@@ -153,7 +153,7 @@ class IDS_Log_Email implements IDS_Log_Interface
             $this->safemode     = $config->config['Logging']['safemode'];
             $this->urlencode    = $config->config['Logging']['urlencode'];
             $this->allowed_rate = $config->config['Logging']['allowed_rate'];
-            $this->tmp_path     = $config->getBasePath() 
+            $this->tmp_path     = $config->getBasePath()
                 . $config->config['General']['tmp_path'];
 
         } elseif (is_array($config)) {
@@ -209,7 +209,6 @@ class IDS_Log_Email implements IDS_Log_Interface
      */
     protected function isSpamAttempt()
     {
-
         /*
         * loop through all files in the tmp directory and
         * delete garbage files
@@ -267,7 +266,6 @@ class IDS_Log_Email implements IDS_Log_Interface
      */
     protected function prepareData($data)
     {
-
         $format  = "The following attack has been detected by PHPIDS\n\n";
         $format .= "IP: %s \n";
         $format .= "Date: %s \n";
@@ -277,8 +275,8 @@ class IDS_Log_Email implements IDS_Log_Interface
         $attackedParameters = '';
         foreach ($data as $event) {
             $attackedParameters .= $event->getName() . '=' .
-                ((!isset($this->urlencode) ||$this->urlencode) 
-                    ? urlencode($event->getValue()) 
+                ((!isset($this->urlencode) ||$this->urlencode)
+                    ? urlencode($event->getValue())
                     : $event->getValue()) . ", ";
         }
 
@@ -286,14 +284,16 @@ class IDS_Log_Email implements IDS_Log_Interface
         $format .= "Request URI: %s \n";
         $format .= "Origin: %s \n";
 
-        return sprintf($format,
-                       $this->ip,
-                       date('c'),
-                       $data->getImpact(),
-                       join(' ', $data->getTags()),
-                       trim($attackedParameters),
-                       htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8'),
-                       $_SERVER['SERVER_ADDR']);
+        return sprintf(
+            $format,
+            $this->ip,
+            date('c'),
+            $data->getImpact(),
+            join(' ', $data->getTags()),
+            trim($attackedParameters),
+            htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES, 'UTF-8'),
+            $_SERVER['SERVER_ADDR']
+        );
     }
 
     /**
@@ -304,9 +304,8 @@ class IDS_Log_Email implements IDS_Log_Interface
      * @throws Exception if data is no string
      * @return boolean
      */
-    public function execute(IDS_Report $data)
+    public function execute(Report $data)
     {
-
         if ($this->safemode) {
             if ($this->isSpamAttempt()) {
                 return false;
@@ -375,17 +374,21 @@ class IDS_Log_Email implements IDS_Log_Interface
      */
     protected function send($address, $data, $headers, $envelope = null)
     {
-        if (!$envelope || strpos(ini_get('sendmail_path'),' -f') !== false) {
-            return mail($address,
+        if (!$envelope || strpos(ini_get('sendmail_path'), ' -f') !== false) {
+            return mail(
+                $address,
                 $this->subject,
                 $data,
-                $headers);
+                $headers
+            );
         } else {
-            return mail($address,
+            return mail(
+                $address,
                 $this->subject,
                 $data,
                 $headers,
-                '-f' . $envelope);
+                '-f' . $envelope
+            );
         }
     }
 }

@@ -18,7 +18,7 @@
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.  
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
  *
  * PHP version 5.1.6+
  * 
@@ -30,13 +30,14 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Caching;
 
-require_once 'IDS/Caching/Interface.php';
+require_once 'IDS/Caching/CacheInterface.php';
 
 /**
  * File caching wrapper
  *
- * This class inhabits functionality to get and set cache via session.
+ * This class inhabits functionality to get and set cache via a static flatfile.
  *
  * @category  Security
  * @package   PHPIDS
@@ -48,7 +49,7 @@ require_once 'IDS/Caching/Interface.php';
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-class IDS_Caching_Session implements IDS_Caching_Interface
+class FileCache implements CacheInterface
 {
 
     /**
@@ -66,6 +67,13 @@ class IDS_Caching_Session implements IDS_Caching_Interface
     private $config = null;
 
     /**
+     * Path to cache file
+     *
+     * @var string
+     */
+    private $path = null;
+
+    /**
      * Holds an instance of this class
      *
      * @var object
@@ -80,59 +88,103 @@ class IDS_Caching_Session implements IDS_Caching_Interface
      * 
      * @return void
      */
-    public function __construct($type, $init) 
+    public function __construct($type, $init)
     {
         $this->type   = $type;
         $this->config = $init->config['Caching'];
+        $this->path   = $init->getBasePath() . $this->config['path'];
+
+        if (file_exists($this->path) && !is_writable($this->path)) {
+            throw new Exception(
+                'Make sure all files in ' .
+                htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
+                'are writeable!'
+            );
+        }
     }
 
     /**
      * Returns an instance of this class
      *
-     * @param  string $type   caching type
+     * @param  string $type caching type
      * @param  object $init the IDS_Init object
      * 
      * @return object $this
      */
-    public static function getInstance($type, $init) 
+    public static function getInstance($type, $init)
     {
-
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Session($type, $init);
+            self::$cachingInstance = new FileCache($type, $init);
         }
 
         return self::$cachingInstance;
     }
 
     /**
-     * Writes cache data into the session
+     * Writes cache data into the file
      *
-     * @param array $data the caching data
+     * @param array $data the cache data
      * 
+     * @throws Exception if cache file couldn't be created
      * @return object $this
      */
-    public function setCache(array $data) 
+    public function setCache(array $data)
     {
+        if (!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, $this->path))) {
+            throw new Exception(
+                'Temp directory ' .
+                htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
+                ' seems not writable'
+            );
+        }
 
-        $_SESSION['PHPIDS'][$this->type] = $data;
+        if (!$this->isValidFile($this->path)) {
+            $handle = @fopen($this->path, 'w+');
+
+            if (!$handle) {
+                throw new Exception("Cache file couldn't be created");
+            }
+
+            $serialized = @serialize($data);
+            if (!$serialized) {
+                throw new Exception("Cache data couldn't be serialized");
+            }
+
+            fwrite($handle, $serialized);
+            fclose($handle);
+        }
+
         return $this;
     }
 
     /**
      * Returns the cached data
      *
-     * Note that this method returns false if either type or file cache is not set
-     *
+     * Note that this method returns false if either type or file cache is 
+     * not set
+     * 
      * @return mixed cache data or false
      */
-    public function getCache() 
+    public function getCache()
     {
-
-        if ($this->type && $_SESSION['PHPIDS'][$this->type]) {
-            return $_SESSION['PHPIDS'][$this->type];
+        // make sure filters are parsed again if cache expired
+        if (!$this->isValidFile($this->path)) {
+            return false;
         }
 
-        return false;
+        $data = unserialize(file_get_contents($this->path));
+        return $data;
+    }
+
+    /**
+     * Returns true if the cache file is still valid
+     *
+     * @param string $file
+     * @return bool
+     */
+    private function isValidFile($file)
+    {
+        return file_exists($file) && time() - filectime($file) <= $this->config['expiration_time'];
     }
 }
 

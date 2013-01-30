@@ -30,13 +30,14 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Logging;
 
 require_once 'IDS/Log/Interface.php';
 
 /*
  * Needed SQL:
  *
-    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER 
+    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER
         SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `intrusions`;
     CREATE TABLE IF NOT EXISTS `intrusions` (
@@ -73,7 +74,7 @@ require_once 'IDS/Log/Interface.php';
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Log_Database implements IDS_Log_Interface
+class DatabaseLogger implements LoggerInterface
 {
 
     /**
@@ -145,9 +146,8 @@ class IDS_Log_Database implements IDS_Log_Interface
      * @return void
      * @throws PDOException if a db error occurred
      */
-    protected function __construct($config) 
+    protected function __construct($config)
     {
-
         if ($config instanceof IDS_Init) {
             $this->wrapper  = $config->config['Logging']['wrapper'];
             $this->user     = $config->config['Logging']['user'];
@@ -163,8 +163,8 @@ class IDS_Log_Database implements IDS_Log_Interface
 
         // determine correct IP address and concat them if necessary
         $this->ip  = $_SERVER['REMOTE_ADDR'];
-        $this->ip2 = isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
-            ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
+        $this->ip2 = isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+            ? $_SERVER['HTTP_X_FORWARDED_FOR']
             : '';
 
         try {
@@ -174,8 +174,8 @@ class IDS_Log_Database implements IDS_Log_Interface
                 $this->password
             );
 
-            $this->statement = $this->handle->prepare('
-                INSERT INTO ' . $this->table . ' (
+            $this->statement = $this->handle->prepare(
+                'INSERT INTO ' . $this->table . ' (
                     name,
                     value,
                     page,
@@ -196,8 +196,8 @@ class IDS_Log_Database implements IDS_Log_Interface
                     :impact,
                     :origin,
                     now()
-                )
-            ');
+                )'
+            );
 
         } catch (PDOException $e) {
             throw new PDOException('PDOException: ' . $e->getMessage());
@@ -237,8 +237,8 @@ class IDS_Log_Database implements IDS_Log_Interface
      * 
      * @return void
      */
-    private function __clone() 
-    { 
+    private function __clone()
+    {
     }
 
     /**
@@ -249,20 +249,20 @@ class IDS_Log_Database implements IDS_Log_Interface
      * @throws Exception if db error occurred
      * @return boolean
      */
-    public function execute(IDS_Report $data) 
+    public function execute(Report $data)
     {
         if (!isset($_SERVER['REQUEST_URI'])) {
             $_SERVER['REQUEST_URI'] = substr($_SERVER['PHP_SELF'], 1);
-            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) { 
-                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING']; 
-            } 
-        }     	
+            if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) {
+                $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+            }
+        }
 
         foreach ($data as $event) {
             $page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             $ip   = $this->ip;
             $ip2  = $this->ip2;
-            
+
             $name   = $event->getName();
             $value  = $event->getValue();
             $impact = $event->getImpact();

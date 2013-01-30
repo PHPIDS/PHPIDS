@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPIDS
  * 
@@ -29,25 +30,27 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
- 
-require_once 'IDS/Caching/Interface.php';
+namespace IDS\Caching;
+
+require_once 'IDS/Caching/CacheInterface.php';
 
 /**
- * APC caching wrapper
+ * File caching wrapper
  *
  * This class inhabits functionality to get and set cache via memcached.
  *
  * @category  Security
  * @package   PHPIDS
- * @author    Yves Berkholz <godzilla80@gmx.net>
+ * @author    Christian Matthies <ch0012@gmail.com>
+ * @author    Mario Heiderich <mario.heiderich@gmail.com>
+ * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Groupoup
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
- * @since     Version 0.6.5
+ * @since     Version 0.4
  */
-class IDS_Caching_Apc implements IDS_Caching_Interface
+class MemcachedCache implements CacheInterface
 {
-
     /**
      * Caching type
      *
@@ -63,12 +66,19 @@ class IDS_Caching_Apc implements IDS_Caching_Interface
     private $config = null;
 
     /**
-     * Flag if the filter storage has been found in memcached 
-     * 
-     * @var boolean 
-     */ 
-    private $isCached = false; 
-    
+     * Flag if the filter storage has been found in memcached
+     *
+     * @var boolean
+     */
+    private $isCached = false;
+
+    /**
+     * Memcache object
+     *
+     * @var object
+     */
+    private $memcache = null;
+
     /**
      * Holds an instance of this class
      *
@@ -76,20 +86,21 @@ class IDS_Caching_Apc implements IDS_Caching_Interface
      */
     private static $cachingInstance = null;
 
-
     /**
      * Constructor
      *
      * @param  string $type caching type
      * @param  array  $init the IDS_Init object
-     * 
+     *
      * @return void
      */
-    public function __construct($type, $init) 
+    public function __construct($type, $init)
     {
 
         $this->type   = $type;
         $this->config = $init->config['Caching'];
+
+        $this->connect();
     }
 
     /**
@@ -100,11 +111,10 @@ class IDS_Caching_Apc implements IDS_Caching_Interface
      * 
      * @return object $this
      */
-    public static function getInstance($type, $init) 
+    public static function getInstance($type, $init)
     {
-
         if (!self::$cachingInstance) {
-            self::$cachingInstance = new IDS_Caching_Apc($type, $init);
+            self::$cachingInstance = new MemcachedCache($type, $init);
         }
 
         return self::$cachingInstance;
@@ -114,30 +124,62 @@ class IDS_Caching_Apc implements IDS_Caching_Interface
      * Writes cache data
      *
      * @param  array $data the caching data
-     * 
+     *
      * @return object $this
      */
-    public function setCache(array $data) 
+    public function setCache(array $data)
     {
-        if(!$this->isCached)
-            apc_store($this->config['key_prefix'] . '.storage', 
-            	$data, $this->config['expiration_time']);
+        if (!$this->isCached) {
+            $this->memcache->set(
+                $this->config['key_prefix'] . '.storage',
+                $data,
+                false,
+                $this->config['expiration_time']
+            );
+        }
+
         return $this;
     }
 
     /**
      * Returns the cached data
      *
-     * Note that this method returns false if either type or file cache is 
+     * Note that this method returns false if either type or file cache is
      * not set
      *
      * @return mixed cache data or false
      */
-    public function getCache() 
+    public function getCache()
     {
-       $data = apc_fetch($this->config['key_prefix'] . '.storage');
-       $this->isCached = !empty($data); 
-       return $data;
+        $data = $this->memcache->get(
+            $this->config['key_prefix'] .
+            '.storage'
+        );
+        $this->isCached = !empty($data);
+
+        return $data;
+    }
+
+    /**
+     * Connect to the memcached server
+     *
+     * @throws Exception if connection parameters are insufficient
+     * @return void
+     */
+    private function connect()
+    {
+
+        if ($this->config['host'] && $this->config['port']) {
+            // establish the memcache connection
+            $this->memcache = new Memcache;
+            $this->memcache->pconnect(
+                $this->config['host'],
+                $this->config['port']
+            );
+
+        } else {
+            throw new Exception('Insufficient connection parameters');
+        }
     }
 }
 

@@ -17,6 +17,8 @@
  *
  * @package	PHPIDS tests
  */
+namespace IDS;
+
 require_once 'PHPUnit/Framework/TestCase.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
 require_once 'IDS/Monitor.php';
@@ -26,18 +28,18 @@ require_once 'IDS/Filter/Storage.php';
 /**
  * @large
  */
-class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
+class MonitorTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp() {
         $path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = IDS_Init::init($path);
+        $this->init = Init::init($path);
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
         $this->init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
         $this->init->config['Caching']['path'] = dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
     }
 
     public function testGetHTML() {
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init,
             array('csrf')
@@ -47,29 +49,29 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
     
     public function testGetStorage() {
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init
         );
-        $this->assertTrue($test->getStorage() instanceof IDS_Filter_Storage);
+        $this->assertTrue($test->getStorage() instanceof Filter\Storage);
     }      
 
     public function testRunWithTags() {
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init,
             array('csrf')
         );
 
         $result = $test->run();
-
+        
         foreach ($result->getEvent('user')->getFilters() as $filter) {
             $this->assertTrue(in_array('csrf', $filter->getTags()));
         }
     }
 
     public function testRun() {
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array(
                 'id'    => '9<script/src=http/attacker.com>',
                 'name'  => '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
@@ -82,13 +84,13 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testNoResult() {
-        $test = new IDS_Monitor(array('test', 'bla'), $this->init);
+        $test = new Monitor(array('test', 'bla'), $this->init);
         $this->assertTrue($test->run()->isEmpty());
     }
 
     public function testSetExceptionsString()
     {
-        $test = new IDS_Monitor(array('test', 'bla'), $this->init);
+        $test = new Monitor(array('test', 'bla'), $this->init);
         $exception = 'test1';
         $test->setExceptions($exception);
         $result = $test->getExceptions();
@@ -97,7 +99,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function testSetExceptionsArray()
     {
-        $test = new IDS_Monitor(array('test', 'bla'), $this->init);
+        $test = new Monitor(array('test', 'bla'), $this->init);
         $exceptions = array('test1', 'test2');
         $test->setExceptions($exceptions);
         $this->assertEquals($exceptions, $test->getExceptions());
@@ -105,7 +107,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
     public function testList()
     {
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array(
                 '9<script/src=http/attacker.com>',
                 '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
@@ -122,7 +124,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->init->config['General']['filter_type'] = 'json';
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.json';
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             array(
                 '9<script/src=http/attacker.com>',
                 '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
@@ -142,7 +144,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['7<script/src=http/attacker.com>'] = '9<script/src=http/attacker.com>';
         $exploits['8<script/src=http/attacker.com>'] = 'abc';
         $exploits['9<script/src=http/attacker.com>'] = '';
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -157,7 +159,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['scanme.1'] = '9<script/src=http/attacker.com>';
         $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -175,7 +177,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits['scanme.1'] = '9<script/src=http/attacker.com>';
         $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -191,7 +193,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array('9<script/src=http/attacker.com>');
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -203,7 +205,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits = array('test1' => '9<script/src=http://attacker.com>');
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -223,7 +225,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -239,7 +241,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '<!-- test -->';
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -309,7 +311,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -486,7 +488,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -509,7 +511,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -527,7 +529,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -631,7 +633,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -680,7 +682,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -739,7 +741,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -800,7 +802,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -849,7 +851,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -911,7 +913,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -987,7 +989,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1074,7 +1076,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1131,7 +1133,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1152,7 +1154,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1214,7 +1216,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1233,7 +1235,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1250,7 +1252,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1266,7 +1268,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1290,7 +1292,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1323,7 +1325,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1340,7 +1342,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $this->_testForPlainEvent($exploits);
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1378,7 +1380,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $this->_testForPlainEvent($exploits);
         
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1416,7 +1418,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1430,7 +1432,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         $exploits = array();
         $exploits['json_1'] = '{"a":"b","c":["><script>alert(1);</script>", 111, "eval(name)"]}';
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1501,7 +1503,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         $exploits[] = '"mooie verhalen in de talen: engels"';
         $exploits[] = '[CS]v1|267135E1851D3753-6000013720017F11[CE] /catalog/rss-new.php';
 
-        $test = new IDS_Monitor(
+        $test = new Monitor(
             $exploits,
             $this->init
         );
@@ -1522,7 +1524,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
 
         foreach($exploits as $key => $value) {
 
-            $test = new IDS_Monitor(
+            $test = new Monitor(
                 array('test' => $value),
                 $this->init
             );
@@ -1540,7 +1542,7 @@ class IDS_MonitorTest extends PHPUnit_Framework_TestCase {
         }
     }
 
-    public function assertImpact(IDS_Report $result, $impact, $suhosinImpact)
+    public function assertImpact(Report $result, $impact, $suhosinImpact)
     {
         if (extension_loaded('suhosin')) {
             $this->assertEquals($suhosinImpact, $result->getImpact());

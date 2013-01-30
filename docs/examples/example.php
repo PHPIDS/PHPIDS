@@ -34,8 +34,9 @@ try {
     /*
     * It's pretty easy to get the PHPIDS running
     * 1. Define what to scan
-    * 
-    * Please keep in mind what array_merge does and how this might interfer 
+
+    *
+    * Please keep in mind what array_merge does and how this might interfer
     * with your variables_order settings
     */
     $request = array(
@@ -45,7 +46,8 @@ try {
         'COOKIE' => $_COOKIE
     );
 
-    $init = IDS_Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php');
+    $init = \IDS\Init::init(dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php');
+
 
     /**
      * You can also reset the whole configuration
@@ -59,13 +61,15 @@ try {
      *
      * or you can access the config directly like here:
      */
-    
     $init->config['General']['base_path'] = dirname(__FILE__) . '/../../lib/IDS/';
+
     $init->config['General']['use_base_path'] = true;
+
     $init->config['Caching']['caching'] = 'none';
 
     // 2. Initiate the PHPIDS and fetch the results
-    $ids = new IDS_Monitor($request, $init);
+    $ids = new \IDS\Monitor($request, $init);
+
     $result = $ids->run();
 
     /*
@@ -87,8 +91,10 @@ try {
         require_once 'IDS/Log/File.php';
         require_once 'IDS/Log/Composite.php';
 
-        $compositeLog = new IDS_Log_Composite();
-        $compositeLog->addLogger(IDS_Log_File::getInstance($init));
+        $compositeLog = new \IDS\Logging\CompositeLogger();
+
+        $compositeLog->addLogger(\IDS\Logging\FileLogger::getInstance($init));
+
 
         /*
         * Note that you might also use different logging facilities
@@ -107,8 +113,6 @@ try {
         );
         */
         $compositeLog->execute($result);
-        
-
     } else {
         echo '<a href="?test=%22><script>eval(window.name)</script>">No attack detected - click for an example attack</a>';
     }

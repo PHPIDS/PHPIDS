@@ -49,7 +49,9 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Event implements Countable, IteratorAggregate
+namespace IDS;
+
+class Event implements \Countable, \IteratorAggregate
 {
 
     /**
@@ -102,17 +104,17 @@ class IDS_Event implements Countable, IteratorAggregate
      * 
      * @return void
      */
-    public function __construct($name, $value, Array $filters) 
+    public function __construct($name, $value, Array $filters)
     {
         if (!is_scalar($name)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Expected $name to be a scalar,' . gettype($name) . ' given'
             );
         }
 
         if (!is_scalar($value)) {
-            throw new InvalidArgumentException('
-                Expected $value to be a scalar,' . gettype($value) . ' given'
+            throw new \InvalidArgumentException(
+                'Expected $value to be a scalar,' . gettype($value) . ' given'
             );
         }
 
@@ -120,8 +122,8 @@ class IDS_Event implements Countable, IteratorAggregate
         $this->value = $value;
 
         foreach ($filters as $filter) {
-            if (!$filter instanceof IDS_Filter) {
-                throw new InvalidArgumentException(
+            if (!$filter instanceof Filter) {
+                throw new \InvalidArgumentException(
                     'Filter must be derived from IDS_Filter'
                 );
             }
@@ -133,12 +135,12 @@ class IDS_Event implements Countable, IteratorAggregate
     /**
      * Returns event name
      *
-     * The name of the event usually is the key of the variable that was 
+     * The name of the event usually is the key of the variable that was
      * considered to be malicious
      *
      * @return scalar
      */
-    public function getName() 
+    public function getName()
     {
         return $this->name;
     }
@@ -148,7 +150,7 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return scalar
      */
-    public function getValue() 
+    public function getValue()
     {
         return $this->value;
     }
@@ -158,7 +160,7 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return integer
      */
-    public function getImpact() 
+    public function getImpact()
     {
         if (!$this->impact) {
             $this->impact = 0;
@@ -175,13 +177,15 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return array
      */
-    public function getTags() 
+    public function getTags()
     {
         $filters = $this->getFilters();
 
         foreach ($filters as $filter) {
-            $this->tags = array_merge($this->tags,
-                                      $filter->getTags());
+            $this->tags = array_merge(
+                $this->tags,
+                $filter->getTags()
+            );
         }
 
         $this->tags = array_values(array_unique($this->tags));
@@ -194,7 +198,7 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return array
      */
-    public function getFilters() 
+    public function getFilters()
     {
         return $this->filters;
     }
@@ -207,7 +211,7 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return integer
      */
-    public function count() 
+    public function count()
     {
         return count($this->getFilters());
     }
@@ -219,9 +223,9 @@ class IDS_Event implements Countable, IteratorAggregate
      *
      * @return ArrayObject the filter collection
      */
-    public function getIterator() 
+    public function getIterator()
     {
-        return new ArrayObject($this->getFilters());
+        return new \ArrayObject($this->getFilters());
     }
 }
 

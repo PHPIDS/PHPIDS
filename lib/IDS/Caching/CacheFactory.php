@@ -32,7 +32,10 @@
  */
 
 /**
- * Caching wrapper interface
+ * Caching factory
+ *
+ * This class is used as a factory to load the correct concrete caching
+ * implementation.
  *
  * @category  Security
  * @package   PHPIDS
@@ -41,26 +44,46 @@
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Group
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
- * @since     Version 0.4
  * @link      http://php-ids.org/
+ * @since     Version 0.4
  */
-interface IDS_Caching_Interface
+namespace IDS\Caching;
+
+class CacheFactory
 {
     /**
-     * Interface method
+     * Factory method
      *
-     * @param array $data the cache data
-     * 
-     * @return void
-     */
-    public function setCache(array $data);
-    
-    /**
-     * Interface method
+     * @param  object $init the IDS_Init object
+     * @param  string $type the caching type
      *
-     * @return void
+     * @return object the caching facility
      */
-    public function getCache();
+    public static function factory($init, $type)
+    {
+        $object  = false;
+        $wrapper = preg_replace(
+            '/\W+/m',
+            null,
+            ucfirst($init->config['Caching']['caching'])
+        );
+        $class   = '\\IDS\\Caching\\' . $wrapper . 'Cache';
+        $path    = dirname(__FILE__) . DIRECTORY_SEPARATOR . $wrapper . 'Cache.php';
+
+        if (file_exists($path)) {
+            include_once $path;
+
+            if (class_exists($class)) {
+                $object = call_user_func(
+                    array('' . $class, 'getInstance'),
+                    $type,
+                    $init
+                );
+            }
+        }
+
+        return $object;
+    }
 }
 
 /**
