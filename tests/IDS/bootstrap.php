@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__.'/../../autoload.php';
+
 /** Create temporary directory */
 $cacheDir = dirname(__FILE__) . '/../../tmp';
 if (!file_exists($cacheDir)) {
