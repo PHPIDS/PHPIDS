@@ -17,17 +17,8 @@
  *
  * @package	PHPIDS tests
  */
-namespace IDS;
 
-require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once 'IDS/Init.php';
-require_once 'IDS/Caching/CacheFactory.php';
-require_once 'IDS/Report.php';
-require_once 'IDS/Event.php';
-require_once 'IDS/Filter.php';
-require_once 'IDS/Monitor.php';
-require_once 'IDS/Filter/Storage.php';
+namespace IDS;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {

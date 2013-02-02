@@ -47,7 +47,10 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
+
 namespace IDS;
+
+use IDS\Filter\Storage;
 
 class Monitor
 {
@@ -187,7 +190,7 @@ class Monitor
 
 
         if (!empty($request)) {
-            $this->storage = new Filter\Storage($init);
+            $this->storage = new Storage($init);
             $this->request = $request;
             $this->tags    = $tags;
 
@@ -223,7 +226,6 @@ class Monitor
             );
         }
 
-        include_once 'IDS/Report.php';
         $this->report = new Report;
     }
 
@@ -259,7 +261,6 @@ class Monitor
                 $filter = $this->detect($key, $value);
 
                 if ($filter !== false) {
-                    include_once 'IDS/Event.php';
                     $this->report->addEvent(
                         new Event(
                             $key,
@@ -340,7 +341,6 @@ class Monitor
         }
 
         // use the converter
-        include_once 'IDS/Converter.php';
         $value = Converter::runAll($value);
         $value = Converter::runCentrifuge($value, $this);
 

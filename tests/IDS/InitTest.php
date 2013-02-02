@@ -20,10 +20,6 @@
 
 namespace IDS;
 
-require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once 'IDS/Init.php';
-
 class InitTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp() {

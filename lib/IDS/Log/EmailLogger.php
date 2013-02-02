@@ -30,9 +30,11 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
-namespace IDS\Logging;
 
-require_once 'IDS/Log/Interface.php';
+namespace IDS\Log;
+
+use IDS\Init;
+use IDS\Report;
 
 /**
  * Email logging wrapper
@@ -49,7 +51,7 @@ require_once 'IDS/Log/Interface.php';
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class Email implements LoggerInterface
+class EmailLogger implements LoggerInterface
 {
 
     /**
@@ -145,7 +147,7 @@ class Email implements LoggerInterface
      */
     protected function __construct($config)
     {
-        if ($config instanceof IDS_Init) {
+        if ($config instanceof Init) {
             $this->recipients   = $config->config['Logging']['recipients'];
             $this->subject      = $config->config['Logging']['subject'];
             $this->headers      = $config->config['Logging']['header'];
@@ -179,7 +181,7 @@ class Email implements LoggerInterface
      *
      * @return object $this
      */
-    public static function getInstance($config, $classname = 'IDS_Log_Email')
+    public static function getInstance($config, $classname = 'IDS\Log\EmailLogger')
     {
         if (!self::$instance) {
             self::$instance = new $classname($config);
@@ -353,9 +355,9 @@ class Email implements LoggerInterface
             }
 
         } else {
-            throw new Exception(
+            throw new \Exception(
                 'Please make sure that data returned by
-                 IDS_Log_Email::prepareData() is a string.'
+                 EmailLogger::prepareData() is a string.'
             );
         }
 

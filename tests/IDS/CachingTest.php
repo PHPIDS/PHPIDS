@@ -17,12 +17,12 @@
  *
  * @package	PHPIDS tests
  */
+
 namespace IDS;
 
-require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once 'IDS/Init.php';
-require_once 'IDS/Caching/CacheFactory.php';
+use IDS\Caching\CacheFactory;
+use IDS\Caching\FileCache;
+use IDS\Caching\SessionCache;
 
 class CachingTest extends \PHPUnit_Framework_TestCase {
 
@@ -33,49 +33,49 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
 
 	function testCachingNone() {
     	$this->init->config['Caching']['caching'] = 'none';
-    	$this->assertFalse(Caching\CacheFactory::factory($this->init, 'storage'));
+    	$this->assertFalse(CacheFactory::factory($this->init, 'storage'));
     }
 
     function testCachingFile() {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['expiration_time'] = 0;
-        $this->assertTrue(Caching\CacheFactory::factory($this->init, 'storage') instanceof Caching\FileCache);
+        $this->assertTrue(CacheFactory::factory($this->init, 'storage') instanceof FileCache);
     }
 
     function testCachingFileSetCache() {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['expiration_time'] = 0;
-        $cache = Caching\CacheFactory::factory($this->init, 'storage');
+        $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
-        $this->assertTrue($cache instanceof Caching\FileCache);
+        $this->assertTrue($cache instanceof FileCache);
     }
 
     function testCachingFileGetCache() {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['path'] =  dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
         $this->init->config['Caching']['expiration_time'] = 0;
-        $cache = Caching\CacheFactory::factory($this->init, 'storage');
+        $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
     }
 
     function testCachingSession() {
         $this->init->config['Caching']['caching'] = 'session';
-        $this->assertTrue(Caching\CacheFactory::factory($this->init, 'storage') instanceof Caching\SessionCache);
+        $this->assertTrue(CacheFactory::factory($this->init, 'storage') instanceof SessionCache);
     }
 
     function testCachingSessionSetCache() {
         $this->init->config['Caching']['caching'] = 'session';
 
-        $cache = Caching\CacheFactory::factory($this->init, 'storage');
+        $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
-        $this->assertTrue($cache instanceof Caching\SessionCache);
+        $this->assertTrue($cache instanceof SessionCache);
     }
 
     function testCachingSessionGetCache() {
         $this->init->config['Caching']['caching'] = 'session';
 
-        $cache = Caching\CacheFactory::factory($this->init, 'storage');
+        $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
     }
@@ -83,15 +83,17 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
     function testCachingSessionGetCacheDestroyed() {
         $this->init->config['Caching']['caching'] = 'session';
 
-        $cache = Caching\CacheFactory::factory($this->init, 'storage');
+        $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
         $_SESSION['PHPIDS']['storage'] = null;
         $this->assertFalse($cache->getCache());
     }
 
     function tearDown() {
-    	@unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache');
-    	@unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/memcache.timestamp');
+        @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache');
+        @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/memcache.timestamp');
+        @unlink(dirname(__FILE__) . '/../../tmp/default_filter.cache');
+        @unlink(dirname(__FILE__) . '/../../tmp/memcache.timestamp');
     }
 }
 

@@ -30,9 +30,8 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
-namespace IDS\Caching;
 
-require_once 'IDS/Caching/CacheInterface.php';
+namespace IDS\Caching;
 
 /**
  * File caching wrapper
@@ -131,7 +130,7 @@ class FileCache implements CacheInterface
     public function setCache(array $data)
     {
         if (!is_writable(preg_replace('/[\/][^\/]+\.[^\/]++$/', null, $this->path))) {
-            throw new Exception(
+            throw new \Exception(
                 'Temp directory ' .
                 htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
                 ' seems not writable'
@@ -142,12 +141,12 @@ class FileCache implements CacheInterface
             $handle = @fopen($this->path, 'w+');
 
             if (!$handle) {
-                throw new Exception("Cache file couldn't be created");
+                throw new \Exception("Cache file couldn't be created");
             }
 
             $serialized = @serialize($data);
             if (!$serialized) {
-                throw new Exception("Cache data couldn't be serialized");
+                throw new \Exception("Cache data couldn't be serialized");
             }
 
             fwrite($handle, $serialized);

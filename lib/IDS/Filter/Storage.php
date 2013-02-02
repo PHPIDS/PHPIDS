@@ -47,7 +47,11 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL 
  * @link      http://php-ids.org/
  */
+
 namespace IDS\Filter;
+
+use IDS\Init;
+use IDS\Caching\CacheFactory;
 
 class Storage
 {
@@ -90,7 +94,7 @@ class Storage
      * @throws Exception if unsupported filter type is given
      * @return void
      */
-    final public function __construct(\IDS\Init $init)
+    final public function __construct(Init $init)
     {
         if ($init->config) {
 
@@ -103,8 +107,7 @@ class Storage
 
             if ($caching && $caching != 'none') {
                 $this->cacheSettings = $init->config['Caching'];
-                include_once 'IDS/Caching/CacheFactory.php';
-                $this->cache = \IDS\Caching\CacheFactory::factory($init, 'storage');
+                $this->cache = CacheFactory::factory($init, 'storage');
             }
 
             switch ($type) {
@@ -231,8 +234,6 @@ class Storage
             $nocache = $filters instanceof \SimpleXMLElement;
             $filters = $nocache ? $filters->filter : $filters;
 
-            include_once 'IDS/Filter.php';
-
             foreach ($filters as $filter) {
                 $id          = $nocache ? (string) $filter->id :
                     $filter['id'];
@@ -328,8 +329,6 @@ class Storage
             $data    = array();
             $nocache = !is_array($filters);
             $filters = $nocache ? $filters->filters->filter : $filters;
-
-            include_once 'IDS/Filter.php';
 
             foreach ($filters as $filter) {
 

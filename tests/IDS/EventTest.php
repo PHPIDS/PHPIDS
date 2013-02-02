@@ -17,12 +17,8 @@
  *
  * @package	PHPIDS tests
  */
-namespace IDS;
 
-require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once 'IDS/Event.php';
-require_once 'IDS/Filter.php';
+namespace IDS;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {

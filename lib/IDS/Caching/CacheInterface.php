@@ -44,6 +44,7 @@
  * @since     Version 0.4
  * @link      http://php-ids.org/
  */
+
 namespace IDS\Caching;
 
 interface CacheInterface

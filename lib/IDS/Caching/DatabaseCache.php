@@ -31,8 +31,6 @@
  * @link     http://php-ids.org/
  */
 
-require_once 'IDS/Caching/CacheInterface.php';
-
 /**
  * Needed SQL:
  *
@@ -68,9 +66,10 @@ require_once 'IDS/Caching/CacheInterface.php';
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
+
 namespace IDS\Caching;
 
-class DatabaseCache implements \IDS\CachingInterface
+class DatabaseCache implements CacheInterface
 {
 
     /**
@@ -192,8 +191,8 @@ class DatabaseCache implements \IDS\CachingInterface
                 return unserialize($row['data']);
             }
 
-        } catch (PDOException $e) {
-            throw new PDOException('PDOException: ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \PDOException('PDOException: ' . $e->getMessage());
         }
         return false;
     }
@@ -213,20 +212,20 @@ class DatabaseCache implements \IDS\CachingInterface
                 || !$this->config['password']
                     || !$this->config['table']) {
 
-            throw new Exception('Insufficient connection parameters');
+            throw new \Exception('Insufficient connection parameters');
         }
 
         // try to connect
         try {
-            $handle = new PDO(
+            $handle = new \PDO(
                 $this->config['wrapper'],
                 $this->config['user'],
                 $this->config['password']
             );
-            $handle->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+            $handle->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 
-        } catch (PDOException $e) {
-            throw new PDOException('PDOException: ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \PDOException('PDOException: ' . $e->getMessage());
         }
         return $handle;
     }
@@ -267,10 +266,10 @@ class DatabaseCache implements \IDS\CachingInterface
             $statement->bindParam('data', serialize($data));
 
             if (!$statement->execute()) {
-                throw new PDOException($statement->errorCode());
+                throw new \PDOException($statement->errorCode());
             }
-        } catch (PDOException $e) {
-            throw new PDOException('PDOException: ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \PDOException('PDOException: ' . $e->getMessage());
         }
     }
 }

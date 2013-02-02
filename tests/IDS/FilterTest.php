@@ -17,12 +17,10 @@
  *
  * @package	PHPIDS tests
  */
+
 namespace IDS;
 
-require_once 'PHPUnit/Framework/TestCase.php';
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../lib');
-require_once 'IDS/Init.php';
-require_once 'IDS/Filter.php';
+use IDS\Filter\Storage;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
 	{
@@ -83,10 +81,10 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
-		$this->storage = new Filter\Storage($this->init);
+		$this->storage = new Storage($this->init);
         $filter = array();
 		$filter[] = new Filter(1, 'test', 'test2', array(), 1);
-	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof Filter\Storage);
+	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof Storage);
 	}
 }
 

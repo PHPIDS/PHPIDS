@@ -30,9 +30,11 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
-namespace IDS\Logging;
 
-require_once 'IDS/Log/Interface.php';
+namespace IDS\Log;
+
+use IDS\Init;
+use IDS\Report;
 
 /*
  * Needed SQL:
@@ -53,9 +55,6 @@ require_once 'IDS/Log/Interface.php';
       `created` datetime NOT null,
       PRIMARY KEY  (`id`)
     ) ENGINE=MyISAM ;
- *
- *
- *
  */
 
 /**
@@ -110,7 +109,7 @@ class DatabaseLogger implements LoggerInterface
      *
      * @var object  PDO instance
      */
-    private $handle    = null;
+    private $handle = null;
 
     /**
      * Prepared SQL statement
@@ -148,7 +147,7 @@ class DatabaseLogger implements LoggerInterface
      */
     protected function __construct($config)
     {
-        if ($config instanceof IDS_Init) {
+        if ($config instanceof Init) {
             $this->wrapper  = $config->config['Logging']['wrapper'];
             $this->user     = $config->config['Logging']['user'];
             $this->password = $config->config['Logging']['password'];
@@ -168,7 +167,7 @@ class DatabaseLogger implements LoggerInterface
             : '';
 
         try {
-            $this->handle = new PDO(
+            $this->handle = new \PDO(
                 $this->wrapper,
                 $this->user,
                 $this->password
@@ -199,8 +198,8 @@ class DatabaseLogger implements LoggerInterface
                 )'
             );
 
-        } catch (PDOException $e) {
-            throw new PDOException('PDOException: ' . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \PDOException('PDOException: ' . $e->getMessage());
         }
     }
 
@@ -215,9 +214,9 @@ class DatabaseLogger implements LoggerInterface
      * 
      * @return object $this
      */
-    public static function getInstance($config, $classname = 'IDS_Log_Database')
+    public static function getInstance($config, $classname = 'IDS\Log\DatabaseLogger')
     {
-        if ($config instanceof IDS_Init) {
+        if ($config instanceof Init) {
             $wrapper = $config->config['Logging']['wrapper'];
         } elseif (is_array($config)) {
             $wrapper = $config['wrapper'];
@@ -280,7 +279,7 @@ class DatabaseLogger implements LoggerInterface
             if (!$this->statement->execute()) {
 
                 $info = $this->statement->errorInfo();
-                throw new Exception(
+                throw new \Exception(
                     $this->statement->errorCode() . ', ' . $info[1] . ', ' . $info[2]
                 );
             }

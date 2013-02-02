@@ -47,6 +47,7 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
+
 namespace IDS\Caching;
 
 class CacheFactory

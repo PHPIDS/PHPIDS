@@ -47,6 +47,7 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
+
 namespace IDS;
 
 class Init
@@ -85,9 +86,6 @@ class Init
      */
     private function __construct($configPath = null)
     {
-        include_once 'IDS/Monitor.php';
-        include_once 'IDS/Filter/Storage.php';
-
         if ($configPath) {
             $this->setConfigPath($configPath);
             $this->config = parse_ini_file($this->configPath, true);

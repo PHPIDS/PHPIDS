@@ -30,9 +30,11 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
-namespace IDS\Logging;
 
-require_once 'IDS/Log/Interface.php';
+namespace IDS\Log;
+
+use IDS\Init;
+use IDS\Report;
 
 /**
  * File logging wrapper
@@ -105,9 +107,9 @@ class FileLogger implements LoggerInterface
      * 
      * @return object $this
      */
-    public static function getInstance($config, $classname = 'IDS_Log_File')
+    public static function getInstance($config, $classname = 'IDS\Log\FileLogger')
     {
-        if ($config instanceof IDS_Init) {
+        if ($config instanceof Init) {
             $logfile = $config->getBasePath() . $config->config['Logging']['path'];
         } elseif (is_string($config)) {
             $logfile = $config;
@@ -195,22 +197,22 @@ class FileLogger implements LoggerInterface
                         fclose($handle);
 
                     } else {
-                        throw new Exception(
+                        throw new \Exception(
                             'Please make sure that ' . $this->logfile .
                             ' is writeable.'
                         );
                     }
                 }
             } else {
-                throw new Exception(
+                throw new \Exception(
                     'Given file does not exist. Please make sure the
                     logfile is present in the given directory.'
                 );
             }
         } else {
-            throw new Exception(
+            throw new \Exception(
                 'Please make sure that data returned by
-                IDS_Log_File::prepareData() is a string.'
+                FileLogger::prepareData() is a string.'
             );
         }
 
