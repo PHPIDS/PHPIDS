@@ -2,6 +2,7 @@
     "name": "phpids/phpids",
     "description": "Intrusion detection for PHP",
     "license": "LGPL-3.0+",
+    "homepage": "http://phpids.org",
     "authors": [
         {
             "name": "Lars Strojny",
