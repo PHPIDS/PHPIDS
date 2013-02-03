@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-
+        "ezyang/htmlpurifier": "dev-master"
     },
     "autoload": {
         "psr-0": {

@@ -397,8 +397,6 @@ class Monitor
             return array($key, $value);
         }
 
-        include_once $this->pathToHTMLPurifier;
-
         if (!is_writeable($this->HTMLPurifierCache)) {
             throw new \Exception(
                 $this->HTMLPurifierCache . ' must be writeable'
