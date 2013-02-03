@@ -614,7 +614,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
                         \'foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar.foo@bar\'';
         $exploits[] = '＜script>alert("xss")＜/script>';
         $exploits[] = '‹img/src=x""onerror=alert(1)///›';
-        $exploits[] = 'Image() . 
+        $exploits[] = 'Image() .
                         ownerDocument .x=1';
         $exploits[] = urldecode('%FF%F0%80%BCimg%20src=x%20onerror=alert(1)//');
         $exploits[] = "',jQuery(\"body\").html(//);\'a'";
@@ -667,9 +667,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits[] = 'a=eval,b= [ referrer ] ;a(b)';
         $exploits[] = "URL = ! isNaN(1) ? 'javascriptz:zalertz(1)z' [/replace/ [ 'source' ] ]
                         (/z/g, [] ) : 0";
-        $exploits[] = "if(0){} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
+        $exploits[] = "if (0) {} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
                         'foo bar foo bar foo'";
-        $exploits[] = "switch('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
+        $exploits[] = "switch ('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
         $exploits[] = "xxx='javascr',xxx+=('ipt:eva'),xxx+=('l(n'),xxx+=('ame),y')
                         Cen:tri:fug:eBy:pas:sTe:xt:do location=(xxx)
                         while(0)
@@ -1421,7 +1421,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
                                 <div class="description"></div>
                                 </div></div><hr />';
          $explouts['html_7']= '<h1><span style="color: #000000;">Header 1</span></h1><h2><span style="color: #000000;">Header 2</span></h2><ul><li><span style="color: #000000;">Some list item</span></li></ul>';
-
 
         $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
         $test = new Monitor(

@@ -16,6 +16,7 @@
  * GNU General Public License for more details.
  */
 
-class Intrusion extends AppModel {
+class intrusion extends AppModel
+{
     //nothing to do here - unless you want to
 }

@@ -49,7 +49,7 @@
  *
  *    //BOF
  *    $bare = isset($this->params['bare'])?$this->params['bare']:0;
- *    if(($bare === 0 || $this->RequestHandler->isAjax()) && DEBUG == 0 && ADMIN == 0) {
+ *    if (($bare === 0 || $this->RequestHandler->isAjax()) && DEBUG == 0 && ADMIN == 0) {
  *        $this->Ids->detect($this);
  *    }
  *    //EOF
@@ -70,8 +70,8 @@
  *
  * @package PHPIDS
  */
-class IdsComponent extends Object {
-
+class IdsComponent extends Object
+{
     /**
      * define the threshold for the ids reactions
      */
@@ -102,8 +102,8 @@ class IdsComponent extends Object {
      * @param object cake controller object
      * @return boolean
      */
-    public function detect(&$controller) {
-
+    public function detect(&$controller)
+    {
         $this->controller = &$controller;
         $this->name = Inflector::singularize($this->controller->name);
 
@@ -142,15 +142,14 @@ class IdsComponent extends Object {
      * Depending on the impact value certain actions are
      * performed.
      *
-     * @param Report $result
+     * @param  Report  $result
      * @return boolean
      */
-    private function react(Report $result) {
-
+    private function react(Report $result)
+    {
         $new = $this->controller
                 ->Session
                 ->read('IDS.Impact') + $result->getImpact();
-
 
         $this->controller->Session->write('IDS.Impact', $new);
         $impact = $this->controller->Session->read('IDS.Impact');
@@ -159,18 +158,22 @@ class IdsComponent extends Object {
             $this->idslog($result, 3, $impact);
             $this->idsmail($result);
             $this->idskick($result);
+
             return true;
-        } else if ($impact >= $this->threshold['warn']) {
+        } elseif ($impact >= $this->threshold['warn']) {
             $this->idslog($result, 2, $impact);
             $this->idsmail($result);
             $this->idswarn($result);
+
             return true;
-        } else if ($impact >= $this->threshold['mail']) {
+        } elseif ($impact >= $this->threshold['mail']) {
             $this->idslog($result, 1, $impact);
             $this->idsmail($result);
+
             return true;
-        } else if ($impact >= $this->threshold['log']) {
+        } elseif ($impact >= $this->threshold['log']) {
             $this->idslog($result, 0, $impact);
+
             return true;
         } else {
             return true;
@@ -181,11 +184,11 @@ class IdsComponent extends Object {
      * This function writes an entry about the intrusion
      * to the intrusion database
      *
-     * @param array $results
+     * @param  array   $results
      * @return boolean
      */
-    private function idslog($result, $reaction = 0) {
-
+    private function idslog($result, $reaction = 0)
+    {
         $user = $this->controller
             ->Session->read('User.id') ?
                 $this->controller->Session->read('User.id') :
@@ -215,9 +218,9 @@ class IdsComponent extends Object {
         loadModel('Intrusion');
         $intrusion = new Intrusion;
         $saveable  = array(
-			'name', 'value', 'page', 'userid', 
-			'session', 'ip', 'reaction', 'impact'
-		);
+            'name', 'value', 'page', 'userid',
+            'session', 'ip', 'reaction', 'impact'
+        );
         $intrusion->save($data, false, $saveable);
 
         return true;
@@ -227,11 +230,11 @@ class IdsComponent extends Object {
      * This function sends out a mail
      * about the intrusion including the intrusion details
      *
-     * @param array $results
+     * @param  array   $results
      * @return boolean
      */
-    private function idsmail($result) {
-
+    private function idsmail($result)
+    {
         vendor('phpids/IDS/Log/Email.php');
         vendor('phpids/IDS/Log/Composite.php');
 
@@ -259,7 +262,8 @@ class IdsComponent extends Object {
      *
      *
      */
-    private function idswarn($result) {
+    private function idswarn($result)
+    {
         return $result;
     }
 
@@ -268,7 +272,8 @@ class IdsComponent extends Object {
      *
      *
      */
-    private function idskick($result) {
+    private function idskick($result)
+    {
         return $result;
     }
 }
