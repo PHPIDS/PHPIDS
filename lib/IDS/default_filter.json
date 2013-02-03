@@ -162,7 +162,7 @@
       },
       {
         "id":"14",
-        "rule":"(?:#@~\\^\\w+)|(?:\\w+script:|@import[^\\w]|;base64|base64,)|(?:\\w+\\s*\\([\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+\\))",
+        "rule":"(?:#@~\\^\\w+)|(?:\\w+script:|@import[^\\w]|;base64|base64,)|(?:\\w\\s*\\([\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+,[\\w\\s]+\\))",
         "description":"Detects possible includes, VBSCript\/JScript encodeed and packed functions",
         "tags":{
           "tag":[
@@ -752,19 +752,6 @@
         "impact":"7"
       },
       {
-        "id":"61",
-        "rule":"(?:\\w+]?(?<!href)(?<!src)(?<!longdesc)(?<!returnurl)=(?:https?|ftp):)|(?:\\{\\s*\\$\\s*\\{)",
-        "description":"Detects url injections and RFE attempts",
-        "tags":{
-          "tag":[
-            "id",
-            "rfe",
-            "lfi"
-          ]
-        },
-        "impact":"5"
-      },
-      {
         "id":"62",
         "rule":"(?:function[^(]*\\([^)]*\\))|(?:(?:delete|void|throw|instanceof|new|typeof)[^\\w.]+\\w+\\s*[([])|([)\\]]\\s*\\.\\s*\\w+\\s*=)|(?:\\(\\s*new\\s+\\w+\\s*\\)\\.)",
         "description":"Detects common function declarations and special JS operators",
@@ -896,18 +883,6 @@
           ]
         },
         "impact":"4"
-      },
-      {
-        "id":"74",
-        "rule":"(?i:(ping(.*)[\\-(.*)\\w|\\w(.*)\\-]))",
-        "description":"Detects remote code exectuion tests. Will match \"ping -n 3 localhost\" and \"ping localhost -n 3\"",
-        "tags":{
-          "tag":[
-            "Command Execution",
-            "id"
-          ]
-        },
-        "impact":"5"
       },
       {
         "id":"75",

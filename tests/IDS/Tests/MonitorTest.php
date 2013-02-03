@@ -18,7 +18,10 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
+
+use IDS\Monitor;
+use IDS\Init;
 
 /**
  * @large
@@ -27,11 +30,11 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = Init::init($path);
-        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
-        $this->init->config['General']['tmp_path'] = dirname(__FILE__) . '/../../lib/IDS/tmp';
-        $this->init->config['Caching']['path'] = dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
+        $this->init = Init::init(IDS_CONFIG);
+        $this->init->config['General']['filter_type'] = IDS_FILTER_TYPE;
+        $this->init->config['General']['filter_path'] = IDS_FILTER_SET;
+        $this->init->config['General']['tmp_path'] = IDS_TEMP_DIR;
+        $this->init->config['Caching']['path'] = IDS_FILTER_CACHE_FILE;
     }
 
     public function testGetHTML()
@@ -51,7 +54,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init
         );
-        $this->assertTrue($test->getStorage() instanceof Filter\Storage);
+        $this->assertInstanceOf('IDS\Filter\Storage', $test->getStorage());
     }
 
     public function testRunWithTags()
@@ -115,27 +118,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             ),
             $this->init
         );
-        $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
-    }
-
-    public function testListWithJsonFilters()
-    {
-
-        $this->init->config['General']['filter_type'] = 'json';
-        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.json';
-
-        $test = new Monitor(
-            array(
-                '9<script/src=http/attacker.com>',
-                '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
-            ),
-            $this->init
-        );
-        $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
-        $this->init->config['General']['filter_type'] = 'xml';
-        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
+        $this->assertEquals(33, $test->run()->getImpact());
     }
 
     public function testListWithKeyScanning()
@@ -152,7 +135,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         );
         $test->scanKeys = true;
         $result = $test->run();
-        $this->assertEquals(53, $result->getImpact());
+        $this->assertEquals(57, $result->getImpact());
     }
 
     public function testListWithException()
@@ -170,7 +153,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $test->setExceptions($exceptions);
 
         $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
+        $this->assertEquals(33, $result->getImpact());
     }
 
     public function testListWithWildcardException()
@@ -188,7 +171,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $test->setExceptions($exceptions);
 
         $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
+        $this->assertEquals(33, $result->getImpact());
     }
 
     public function testListWithSubKeys()
@@ -201,7 +184,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(37, $result->getImpact());
+        $this->assertEquals(41, $result->getImpact());
     }
 
     public function testListWithSubKeysAndExceptions()
@@ -215,7 +198,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         );
         $test->setExceptions('test1');
         $result = $test->run();
-        $this->assertEquals(29, $result->getImpact());
+        $this->assertEquals(33, $result->getImpact());
     }
 
     public function testAttributeBreakerList()
@@ -320,7 +303,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(1123, $result->getImpact());
+        $this->assertEquals(1135, $result->getImpact());
     }
 
     public function testConcatenatedXSSList2()
@@ -642,7 +625,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(953, $result->getImpact());
+        $this->assertEquals(965, $result->getImpact());
     }
 
     public function testSelfContainedXSSList()
@@ -667,7 +650,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits[] = 'a=eval,b= [ referrer ] ;a(b)';
         $exploits[] = "URL = ! isNaN(1) ? 'javascriptz:zalertz(1)z' [/replace/ [ 'source' ] ]
                         (/z/g, [] ) : 0";
-        $exploits[] = "if (0) {} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
+        $exploits[] = "if(0) {} else eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array)
                         'foo bar foo bar foo'";
         $exploits[] = "switch ('foo bar foo bar foo bar') {case eval(new Array + ('eva') + new Array + ('l(n') + new Array + ('ame) + new Array') + new Array):}";
         $exploits[] = "xxx='javascr',xxx+=('ipt:eva'),xxx+=('l(n'),xxx+=('ame),y')
@@ -691,7 +674,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(558, $result->getImpact());
+        $this->assertEquals(578, $result->getImpact());
     }
 
     public function testSQLIList()
@@ -1277,7 +1260,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(68, $result->getImpact());
+        $this->assertEquals(72, $result->getImpact());
     }
 
     public function testOctalCCConverter()
@@ -1335,7 +1318,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run();
-        $this->assertEquals(105, $result->getImpact());
+        $this->assertEquals(109, $result->getImpact());
     }
 
     public function testLDAPInjectionList()
@@ -1382,7 +1365,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits['html_22'] = '<div style="color:white;>;lo:expression\\\28\\\77rite\\\28 1\\\29\\\29;';
         $exploits['html_23'] = '<div style="background:url(\'http://lo.lo/lo\',!/lo:expression(write(1))/*\');">lo</div>';
 
-        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+        $this->init->config['General']['HTML_Purifier_Cache'] = IDS_TEMP_DIR;
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
@@ -1393,7 +1376,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $result = $test->run();
 
         $this->assertFalse($result->hasEvent(1));
-        $this->assertEquals(704, $result->getImpact());
+        $this->assertEquals(711, $result->getImpact());
     }
 
     public function testAllowedHTMLScanningNegative()
@@ -1422,7 +1405,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
                                 </div></div><hr />';
          $explouts['html_7']= '<h1><span style="color: #000000;">Header 1</span></h1><h2><span style="color: #000000;">Header 2</span></h2><ul><li><span style="color: #000000;">Some list item</span></li></ul>';
 
-        $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+        $this->init->config['General']['HTML_Purifier_Cache'] = IDS_TEMP_DIR;
         $test = new Monitor(
             $exploits,
             $this->init
@@ -1535,7 +1518,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             );
 
             if (preg_match('/^html_/', $key)) {
-                $this->init->config['General']['HTML_Purifier_Cache'] = dirname(__FILE__) . '/../../lib/IDS/tmp/';
+                $this->init->config['General']['HTML_Purifier_Cache'] = IDS_TEMP_DIR;
                 $test->setHtml(array('test'));
             }
             $result = $test->run();

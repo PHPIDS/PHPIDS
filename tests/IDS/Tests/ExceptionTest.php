@@ -18,7 +18,13 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
+
+use IDS\Report;
+use IDS\Event;
+use IDS\Filter;
+use IDS\Init;
+use IDS\Monitor;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,8 +45,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
             )
         ));
 
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = Init::init($this->path);
+        $this->init = Init::init(IDS_CONFIG);
     }
 
     public function testEventConstructorExceptions1()

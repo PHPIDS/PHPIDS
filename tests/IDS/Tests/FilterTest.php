@@ -18,16 +18,17 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
 
+use IDS\Filter;
 use IDS\Filter\Storage;
+use IDS\Init;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
-    {
+{
     public function setUp()
     {
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = Init::init($this->path);
+        $this->init = Init::init(IDS_CONFIG);
     }
 
     public function testObjectConstruction()
@@ -79,8 +80,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterSetFilterSet()
     {
-        $this->init->config['General']['filter_type'] = 'xml';
-        $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
+        $this->init->config['General']['filter_type'] = IDS_FILTER_TYPE;
+        $this->init->config['General']['filter_path'] = IDS_FILTER_SET;
         $this->storage = new Storage($this->init);
         $filter = array();
         $filter[] = new Filter(1, 'test', 'test2', array(), 1);

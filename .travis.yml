@@ -1,8 +1,13 @@
 language: php
+
 php:
   - 5.3
   - 5.4
   - 5.5
+
+env:
+    - IDS_FILTER_TYPE=json IDS_FILTER_SET=lib/IDS/default_filter.json
+    - IDS_FILTER_TYPE=xml  IDS_FILTER_SET=lib/IDS/default_filter.xml
 
 before_script:
   - wget http://getcomposer.org/composer.phar

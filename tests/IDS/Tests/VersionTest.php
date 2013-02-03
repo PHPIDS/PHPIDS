@@ -17,7 +17,9 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
+
+use IDS\Version;
 
 class VersionTest extends \PHPUnit_Framework_TestCase
 {

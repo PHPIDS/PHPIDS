@@ -18,14 +18,15 @@
  * @package    PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
+
+use IDS\Init;
 
 class InitTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = Init::init($this->path);
+        $this->init = Init::init(IDS_CONFIG);
     }
 
     public function testInit()
@@ -47,7 +48,7 @@ class InitTest extends \PHPUnit_Framework_TestCase
 
     public function testInitGetConfigPath()
     {
-        $this->assertEquals($this->init->getConfigPath(), $this->path);
+        $this->assertEquals(IDS_CONFIG, $this->init->getConfigPath());
     }
 
     public function testInitSetConfigOverwrite()

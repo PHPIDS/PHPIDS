@@ -18,7 +18,11 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
+
+use IDS\Report;
+use IDS\Event;
+use IDS\Filter;
 
 class ReportTest extends \PHPUnit_Framework_TestCase
 {

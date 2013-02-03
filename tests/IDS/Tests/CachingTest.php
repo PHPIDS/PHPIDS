@@ -18,8 +18,9 @@
  * @package	PHPIDS tests
  */
 
-namespace IDS;
+namespace IDS\Tests;
 
+use IDS\Init;
 use IDS\Caching\CacheFactory;
 use IDS\Caching\FileCache;
 use IDS\Caching\SessionCache;
@@ -28,8 +29,7 @@ class CachingTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
-        $this->init = Init::init($this->path);
+        $this->init = Init::init(IDS_CONFIG);
     }
 
     public function testCachingNone()
@@ -57,7 +57,7 @@ class CachingTest extends \PHPUnit_Framework_TestCase
     public function testCachingFileGetCache()
     {
         $this->init->config['Caching']['caching'] = 'file';
-        $this->init->config['Caching']['path'] =  dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
+        $this->init->config['Caching']['path'] =  IDS_FILTER_CACHE_FILE;
         $this->init->config['Caching']['expiration_time'] = 0;
         $cache = CacheFactory::factory($this->init, 'storage');
         $cache = $cache->setCache(array(1,2,3,4));
@@ -100,10 +100,7 @@ class CachingTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache');
-        @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/memcache.timestamp');
-        @unlink(dirname(__FILE__) . '/../../tmp/default_filter.cache');
-        @unlink(dirname(__FILE__) . '/../../tmp/memcache.timestamp');
+        @unlink(IDS_FILTER_CACHE_FILE);
     }
 }
 
