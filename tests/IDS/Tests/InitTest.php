@@ -24,6 +24,10 @@ use IDS\Init;
 
 class InitTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \IDS\Init
+     */
+    private $init = null;
     public function setUp()
     {
         $this->init = Init::init(IDS_CONFIG);
@@ -44,11 +48,6 @@ class InitTest extends \PHPUnit_Framework_TestCase
     {
         $config2 = clone $this->init;
         $this->assertEquals($config2, $this->init);
-    }
-
-    public function testInitGetConfigPath()
-    {
-        $this->assertEquals(IDS_CONFIG, $this->init->getConfigPath());
     }
 
     public function testInitSetConfigOverwrite()
@@ -83,7 +82,6 @@ class InitTest extends \PHPUnit_Framework_TestCase
     {
         $init = Init::init();
         $this->assertInstanceOf('\\IDS\\Init', $init);
-        $this->assertSame($init, Init::init());
     }
 }
 

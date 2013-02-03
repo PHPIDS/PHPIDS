@@ -69,85 +69,41 @@ class Init
     private static $instances = array();
 
     /**
-     * Path to the config file
-     *
-     * @var string
-     */
-    private $configPath = null;
-
-    /**
      * Constructor
      *
      * Includes needed classes and parses the configuration file
      *
-     * @param string $configPath the path to the config file
+     * @param array $config
      *
-     * @return object $this
+     * @return \IDS\Init $this
      */
-    private function __construct($configPath = null)
+    public function __construct(array $config = array())
     {
-        if ($configPath) {
-            $this->setConfigPath($configPath);
-            $this->config = parse_ini_file($this->configPath, true);
-        }
-    }
-
-    /**
-     * Permitting to clone this object
-     *
-     * For the sake of correctness of a singleton pattern, this is necessary
-     *
-     * @return void
-     */
-    final public function __clone()
-    {
+        $this->config = $config;
     }
 
     /**
      * Returns an instance of this class. Also a PHP version check
      * is being performed to avoid compatibility problems with PHP < 5.1.6
      *
-     * @param string $configPath the path to the config file
+     * @param string|null $configPath the path to the config file
      *
-     * @return object
+     * @throws \InvalidArgumentException
+     * @return self
      */
     public static function init($configPath = null)
     {
+        if (!$configPath) {
+            return new self();
+        }
         if (!isset(self::$instances[$configPath])) {
-            self::$instances[$configPath] = new Init($configPath);
+            if (!file_exists($configPath) || !is_readable($configPath)) {
+                throw new \InvalidArgumentException("Invalid config path '$configPath'");
+            }
+            self::$instances[$configPath] = new static(parse_ini_file($configPath, true));
         }
 
         return self::$instances[$configPath];
-    }
-
-    /**
-     * Sets the path to the configuration file
-     *
-     * @param string $path the path to the config
-     *
-     * @throws Exception if file not found
-     * @return void
-     */
-    public function setConfigPath($path)
-    {
-        if (file_exists($path)) {
-            $this->configPath = $path;
-        } else {
-            throw new \InvalidArgumentException(
-                'Configuration file could not be found at ' .
-                htmlspecialchars($path, ENT_QUOTES, 'UTF-8')
-            );
-        }
-    }
-
-    /**
-     * Returns path to configuration file
-     *
-     * @return string the config path
-     */
-    public function getConfigPath()
-    {
-        return $this->configPath;
     }
 
     /**
