@@ -23,69 +23,69 @@ namespace IDS;
 use IDS\Filter\Storage;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
-	{
-	public function setUp() {
+    {
+    public function setUp()
+    {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = Init::init($this->path);
-	}
+    }
 
-	public function testObjectConstruction()
-	{
-		$filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 12);
+    public function testObjectConstruction()
+    {
+        $filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 12);
 
-		$this->assertTrue($filter->match('test'));
-		$this->assertEquals("My description", $filter->getDescription(), "Should return description");
-		$this->assertEquals(array("foo", "bar"), $filter->getTags(), "Should return array/list of tags");
-		$this->assertEquals('^test$', $filter->getRule());
-		$this->assertEquals(12, $filter->getImpact());
-	}
+        $this->assertTrue($filter->match('test'));
+        $this->assertEquals("My description", $filter->getDescription(), "Should return description");
+        $this->assertEquals(array("foo", "bar"), $filter->getTags(), "Should return array/list of tags");
+        $this->assertEquals('^test$', $filter->getRule());
+        $this->assertEquals(12, $filter->getImpact());
+    }
 
-	public function testModificator()
-	{
-		$filter = new Filter(1, '^te.st$', 'My description', array('tag1', 'tag2'), 1);
+    public function testModificator()
+    {
+        $filter = new Filter(1, '^te.st$', 'My description', array('tag1', 'tag2'), 1);
 
-		// Default must be
-		// ... case-insensitive
-		$this->assertTrue($filter->match('TE1ST'));
-		// ... dot all (\n is matched by .)
-		$this->assertTrue($filter->match("TE\nST"));
-		// .. "$" is end only #has changed since modifiers are ims
-		$this->assertTrue($filter->match("TE1ST\n"));
+        // Default must be
+        // ... case-insensitive
+        $this->assertTrue($filter->match('TE1ST'));
+        // ... dot all (\n is matched by .)
+        $this->assertTrue($filter->match("TE\nST"));
+        // .. "$" is end only #has changed since modifiers are ims
+        $this->assertTrue($filter->match("TE1ST\n"));
 
-	}
+    }
 
-	public function testExceptions()
-	{
-		$filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
+    public function testExceptions()
+    {
+        $filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
 
-		try {
-			$filter->match(1);
-			$this->fail("Expected Exception");
-		} catch (\Exception $e) {}
+        try {
+            $filter->match(1);
+            $this->fail("Expected Exception");
+        } catch (\Exception $e) {}
 
+        try {
+            $filter = new Filter(1, '^test$', 'my desc', array('foo'), 'test');
+            $this->fail("Expected Exception");
+        } catch (\Exception $e) {}
 
-		try {
-			$filter = new Filter(1, '^test$', 'my desc', array('foo'), 'test');
-			$this->fail("Expected Exception");
-		} catch (\Exception $e) {}
-
-		try {
-			$filter = new Filter(1, 1, 'my desc', array("foo"), 'bla');
-			$this->fail("Excpected Exception");
-		} catch (\Exception $e) {}
+        try {
+            $filter = new Filter(1, 1, 'my desc', array("foo"), 'bla');
+            $this->fail("Excpected Exception");
+        } catch (\Exception $e) {}
 
         $this->assertTrue(true, 'Fake assertion so that PHPUnit does not bail');
-	}
+    }
 
-	public function testFilterSetFilterSet() {
-
+    public function testFilterSetFilterSet()
+    {
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = dirname(__FILE__) . '/../../lib/IDS/default_filter.xml';
-		$this->storage = new Storage($this->init);
+        $this->storage = new Storage($this->init);
         $filter = array();
-		$filter[] = new Filter(1, 'test', 'test2', array(), 1);
-	    $this->assertTrue($this->storage->setFilterSet($filter) instanceof Storage);
-	}
+        $filter[] = new Filter(1, 'test', 'test2', array(), 1);
+        $this->assertTrue($this->storage->setFilterSet($filter) instanceof Storage);
+    }
 }
 
 /**

@@ -9,16 +9,16 @@
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
  *
@@ -88,8 +88,8 @@ class EmailLogger implements LoggerInterface
     /**
      * Urlencode for result strings
      *
-     * This switch is true by default. Setting it to false removes 
-     * the 'better safe than sorry' urlencoding for the result string in 
+     * This switch is true by default. Setting it to false removes
+     * the 'better safe than sorry' urlencoding for the result string in
      * the report mails. Enhances readability but maybe XSSes email clients.
      *
      * @var boolean
@@ -176,8 +176,8 @@ class EmailLogger implements LoggerInterface
      * This method allows the passed argument to be either an instance of
      * IDS_Init or an array.
      *
-     * @param  mixed  $config    IDS_Init | array
-     * @param  string $classname the class name to use
+     * @param mixed  $config    IDS_Init | array
+     * @param string $classname the class name to use
      *
      * @return object $this
      */

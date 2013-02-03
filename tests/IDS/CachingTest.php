@@ -24,25 +24,29 @@ use IDS\Caching\CacheFactory;
 use IDS\Caching\FileCache;
 use IDS\Caching\SessionCache;
 
-class CachingTest extends \PHPUnit_Framework_TestCase {
-
-    public function setUp() {
+class CachingTest extends \PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = Init::init($this->path);
     }
 
-	function testCachingNone() {
-    	$this->init->config['Caching']['caching'] = 'none';
-    	$this->assertFalse(CacheFactory::factory($this->init, 'storage'));
+    public function testCachingNone()
+    {
+        $this->init->config['Caching']['caching'] = 'none';
+        $this->assertFalse(CacheFactory::factory($this->init, 'storage'));
     }
 
-    function testCachingFile() {
+    public function testCachingFile()
+    {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['expiration_time'] = 0;
         $this->assertTrue(CacheFactory::factory($this->init, 'storage') instanceof FileCache);
     }
 
-    function testCachingFileSetCache() {
+    public function testCachingFileSetCache()
+    {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['expiration_time'] = 0;
         $cache = CacheFactory::factory($this->init, 'storage');
@@ -50,7 +54,8 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($cache instanceof FileCache);
     }
 
-    function testCachingFileGetCache() {
+    public function testCachingFileGetCache()
+    {
         $this->init->config['Caching']['caching'] = 'file';
         $this->init->config['Caching']['path'] =  dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache';
         $this->init->config['Caching']['expiration_time'] = 0;
@@ -59,12 +64,14 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
     }
 
-    function testCachingSession() {
+    public function testCachingSession()
+    {
         $this->init->config['Caching']['caching'] = 'session';
         $this->assertTrue(CacheFactory::factory($this->init, 'storage') instanceof SessionCache);
     }
 
-    function testCachingSessionSetCache() {
+    public function testCachingSessionSetCache()
+    {
         $this->init->config['Caching']['caching'] = 'session';
 
         $cache = CacheFactory::factory($this->init, 'storage');
@@ -72,7 +79,8 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($cache instanceof SessionCache);
     }
 
-    function testCachingSessionGetCache() {
+    public function testCachingSessionGetCache()
+    {
         $this->init->config['Caching']['caching'] = 'session';
 
         $cache = CacheFactory::factory($this->init, 'storage');
@@ -80,7 +88,8 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($cache->getCache(), array(1,2,3,4));
     }
 
-    function testCachingSessionGetCacheDestroyed() {
+    public function testCachingSessionGetCacheDestroyed()
+    {
         $this->init->config['Caching']['caching'] = 'session';
 
         $cache = CacheFactory::factory($this->init, 'storage');
@@ -89,7 +98,8 @@ class CachingTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($cache->getCache());
     }
 
-    function tearDown() {
+    public function tearDown()
+    {
         @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/default_filter.cache');
         @unlink(dirname(__FILE__) . '/../../lib/IDS/tmp/memcache.timestamp');
         @unlink(dirname(__FILE__) . '/../../tmp/default_filter.cache');

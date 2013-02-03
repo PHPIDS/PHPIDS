@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -34,8 +34,8 @@
 /**
  * PHPIDS event object
  *
- * This class represents a certain event that occured while applying the filters 
- * to the supplied data. It aggregates a bunch of IDS_Filter implementations and 
+ * This class represents a certain event that occured while applying the filters
+ * to the supplied data. It aggregates a bunch of IDS_Filter implementations and
  * is a assembled in IDS_Report.
  *
  * Note that this class implements both Countable and IteratorAggregate
@@ -102,7 +102,7 @@ class Event implements \Countable, \IteratorAggregate
      * @param scalar $name    the event name
      * @param scalar $value   the event value
      * @param array  $filters the corresponding filters
-     * 
+     *
      * @return void
      */
     public function __construct($name, $value, Array $filters)

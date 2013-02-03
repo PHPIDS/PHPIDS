@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.  
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -60,8 +60,8 @@ use IDS\Report;
 /**
  * Database logging wrapper
  *
- * The database wrapper is designed to store reports into an sql database. It 
- * implements the singleton pattern and is based in PDO, supporting 
+ * The database wrapper is designed to store reports into an sql database. It
+ * implements the singleton pattern and is based in PDO, supporting
  * different database types.
  *
  * @category  Security
@@ -141,7 +141,7 @@ class DatabaseLogger implements LoggerInterface
      * Prepares the SQL statement
      *
      * @param mixed $config IDS_Init instance | array
-     * 
+     *
      * @return void
      * @throws PDOException if a db error occurred
      */
@@ -209,9 +209,9 @@ class DatabaseLogger implements LoggerInterface
      * This method allows the passed argument to be either an instance of IDS_Init or
      * an array.
      *
-     * @param  mixed  $config    IDS_Init | array
-     * @param  string $classname the class name to use
-     * 
+     * @param mixed  $config    IDS_Init | array
+     * @param string $classname the class name to use
+     *
      * @return object $this
      */
     public static function getInstance($config, $classname = 'IDS\Log\DatabaseLogger')
@@ -233,7 +233,7 @@ class DatabaseLogger implements LoggerInterface
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
-     * 
+     *
      * @return void
      */
     private function __clone()
@@ -244,7 +244,7 @@ class DatabaseLogger implements LoggerInterface
      * Stores given data into the database
      *
      * @param object $data IDS_Report instance
-     * 
+     *
      * @throws Exception if db error occurred
      * @return boolean
      */

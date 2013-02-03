@@ -9,16 +9,16 @@
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
  *
@@ -166,7 +166,6 @@ class Monitor
      */
     private $tmpJsonString = '';
 
-
     /**
      * Constructor
      *
@@ -187,7 +186,6 @@ class Monitor
                 PHP version couldn\'t be determined'
             );
         }
-
 
         if (!empty($request)) {
             $this->storage = new Storage($init);
@@ -296,7 +294,7 @@ class Monitor
         if (!$this->scanKeys
             && (!$value || !preg_match($prefilter, $value))) {
             return false;
-        } elseif($this->scanKeys) {
+        } elseif ($this->scanKeys) {
             if ((!$key || !preg_match($prefilter, $key))
                 && (!$value || !preg_match($prefilter, $value))) {
                 return false;
@@ -383,8 +381,8 @@ class Monitor
      * might be allowed like e.g. WYSIWYG post bodies. It will dectect malicious
      * code fragments and leaves harmless parts untouched.
      *
-     * @param  mixed $key
-     * @param  mixed $value
+     * @param mixed $key
+     * @param mixed $value
      * @since  0.5
      * @throws Exception
      *
@@ -445,14 +443,14 @@ class Monitor
     }
 
     /**
-     * This method makes sure no dangerous markup can be smuggled in 
-     * attributes when HTML mode is switched on. 
-     * 
-     * If the precheck considers the string too dangerous for 
+     * This method makes sure no dangerous markup can be smuggled in
+     * attributes when HTML mode is switched on.
+     *
+     * If the precheck considers the string too dangerous for
      * purification false is being returned.
-     * 
-     * @param  mixed $key
-     * @param  mixed $value
+     *
+     * @param mixed $key
+     * @param mixed $value
      * @since  0.6
      *
      * @return boolean
@@ -468,9 +466,9 @@ class Monitor
         $precheck = '/<(script|iframe|applet|object)\W/i';
         if (preg_match($precheck, $tmp_key)
             || preg_match($precheck, $tmp_value)) {
-
             return false;
         }
+
         return true;
     }
 
@@ -562,8 +560,8 @@ class Monitor
      * process. It utilizes _jsonConcatContents() as callback and returns a
      * string version of the JSON data structures.
      *
-     * @param  mixed $key
-     * @param  mixed $value
+     * @param mixed $key
+     * @param mixed $value
      * @since  0.5.3
      *
      * @return array
@@ -594,8 +592,8 @@ class Monitor
      * This is the callback used in _jsonDecodeValues(). The method
      * concatenates key and value and stores them in $this->tmpJsonString.
      *
-     * @param  mixed $key
-     * @param  mixed $value
+     * @param mixed $key
+     * @param mixed $value
      * @since  0.5.3
      *
      * @return void

@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.  
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -34,8 +34,8 @@
 /**
  * Filter Storage
  *
- * This class provides various default functions for gathering filter patterns 
- * to be used later on by the detection mechanism. You might extend this class 
+ * This class provides various default functions for gathering filter patterns
+ * to be used later on by the detection mechanism. You might extend this class
  * to your requirements.
  *
  * @category  Security
@@ -44,7 +44,7 @@
  * @author    Mario Heiderich <mario.heiderich@gmail.com>
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Group
- * @license   http://www.gnu.org/licenses/lgpl.html LGPL 
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
 
@@ -90,7 +90,7 @@ class Storage
      * Loads filters based on provided IDS_Init settings.
      *
      * @param object $init IDS_Init instance
-     * 
+     *
      * @throws Exception if unsupported filter type is given
      * @return void
      */
@@ -127,7 +127,7 @@ class Storage
      * Sets the filter array
      *
      * @param array $filterSet array containing multiple IDS_Filter instances
-     * 
+     *
      * @return object $this
      */
     final public function setFilterSet($filterSet)
@@ -153,12 +153,13 @@ class Storage
      * Adds a filter
      *
      * @param object $filter IDS_Filter instance
-     * 
+     *
      * @return object $this
      */
     final public function addFilter(\IDS\Filter $filter)
     {
         $this->filterSet[] = $filter;
+
         return $this;
     }
 
@@ -183,12 +184,12 @@ class Storage
     /**
      * Loads filters from XML using SimpleXML
      *
-     * This function parses the provided source file and stores the result. 
-     * If caching mode is enabled the result will be cached to increase 
+     * This function parses the provided source file and stores the result.
+     * If caching mode is enabled the result will be cached to increase
      * the performance.
      *
      * @throws Exception if problems with fetching the XML data occur
-     * @return object $this
+     * @return object    $this
      */
     public function getFilterFromXML()
     {
@@ -205,7 +206,7 @@ class Storage
             if (!$filters) {
                 if (file_exists($this->source)) {
                     if (LIBXML_VERSION >= 20621) {
-                        $filters = \simplexml_load_file(
+                        $filters = simplexml_load_file(
                             $this->source,
                             null,
                             LIBXML_COMPACT
@@ -285,12 +286,12 @@ class Storage
     /**
      * Loads filters from Json file using ext/Json
      *
-     * This function parses the provided source file and stores the result. 
-     * If caching mode is enabled the result will be cached to increase 
+     * This function parses the provided source file and stores the result.
+     * If caching mode is enabled the result will be cached to increase
      * the performance.
      *
      * @throws Exception if problems with fetching the JSON data occur
-     * @return object $this
+     * @return object    $this
      */
     public function getFilterFromJson()
     {

@@ -20,32 +20,38 @@
 
 namespace IDS;
 
-class InitTest extends \PHPUnit_Framework_TestCase {
-
-    public function setUp() {
+class InitTest extends \PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
         $this->path = dirname(__FILE__) . '/../../lib/IDS/Config/Config.ini.php';
         $this->init = Init::init($this->path);
     }
 
-    function testInit() {
+    public function testInit()
+    {
         $this->assertTrue($this->init instanceof Init);
     }
 
-    function testInitConfig() {
+    public function testInitConfig()
+    {
         $keys = array('General', 'Logging', 'Caching');
         $this->assertEquals($keys, array_keys($this->init->config));
     }
 
-    function testInitClone() {
+    public function testInitClone()
+    {
         $config2 = clone $this->init;
         $this->assertEquals($config2, $this->init);
     }
 
-    function testInitGetConfigPath() {
+    public function testInitGetConfigPath()
+    {
         $this->assertEquals($this->init->getConfigPath(), $this->path);
     }
 
-    function testInitSetConfigOverwrite() {
+    public function testInitSetConfigOverwrite()
+    {
         $this->init->setConfig(array('General' => array('filter_type' => 'json')), true);
         $this->assertEquals($this->init->config['General']['filter_type'], 'json');
 
@@ -59,18 +65,20 @@ class InitTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    function testInitSetConfigNoOverwrite() {
+    public function testInitSetConfigNoOverwrite()
+    {
         $this->init->setConfig(array('General' => array('filter_type' => 'xml')), true);
         $this->init->setConfig(array('General' => array('filter_type' => 'json')));
         $this->assertEquals($this->init->config['General']['filter_type'], 'xml');
     }
 
-    function testInitGetConfig() {
+    public function testInitGetConfig()
+    {
         $data = $this->init->getConfig();
         $this->assertEquals($this->init->config, $data);
     }
 
-    function testInstanciatingInitObjectWithoutPassingConfigFile()
+    public function testInstanciatingInitObjectWithoutPassingConfigFile()
     {
         $init = Init::init();
         $this->assertInstanceOf('\\IDS\\Init', $init);

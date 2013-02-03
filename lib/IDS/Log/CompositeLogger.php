@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -47,7 +47,7 @@ use IDS\Report;
  * @author    Mario Heiderich <mario.heiderich@gmail.com>
  * @author    Lars Strojny <lars@strojny.net>
  * @copyright 2007-2009 The PHPIDS Group
- * @license   http://www.gnu.org/licenses/lgpl.html LGPL 
+ * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
  class CompositeLogger implements LoggerInterface
@@ -64,7 +64,7 @@ use IDS\Report;
      * Iterates through registered loggers and executes them
      *
      * @param object $data IDS_Report object
-     * 
+     *
      * @return void
      */
     public function execute(Report $data)
@@ -111,7 +111,7 @@ use IDS\Report;
      * Removes a logger
      *
      * @param object $logger IDS_Log_Interface object
-     * 
+     *
      * @return boolean
      */
     public function removeLogger(LoggerInterface $logger)
@@ -120,6 +120,7 @@ use IDS\Report;
 
         if (isset($this->loggers[$key])) {
             unset($this->loggers[$key]);
+
             return true;
         }
 

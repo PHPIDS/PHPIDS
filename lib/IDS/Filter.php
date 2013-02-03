@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -34,8 +34,8 @@
 /**
  * PHPIDS Filter object
  *
- * Each object of this class serves as a container for a specific filter. The 
- * object provides methods to get information about this particular filter and 
+ * Each object of this class serves as a container for a specific filter. The
+ * object provides methods to get information about this particular filter and
  * also to match an arbitrary string against it.
  *
  * @category  Security
@@ -90,7 +90,7 @@ class Filter
      * @param string  $description filter description
      * @param array   $tags        list of tags
      * @param integer $impact      filter impact level
-     * 
+     *
      * @return void
      */
     public function __construct($id, $rule, $description, array $tags, $impact)

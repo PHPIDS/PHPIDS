@@ -9,16 +9,16 @@
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
  *
@@ -132,7 +132,7 @@ class Report implements \Countable, \IteratorAggregate
      * @param scalar $name the event name
      *
      * @throws InvalidArgumentException if argument is invalid
-     * @return mixed IDS_Event object or false if the event does not exist
+     * @return mixed                    IDS_Event object or false if the event does not exist
      */
     public function getEvent($name)
     {
@@ -280,6 +280,7 @@ class Report implements \Countable, \IteratorAggregate
     {
         if (is_array($centrifuge) && $centrifuge) {
             $this->centrifuge = $centrifuge;
+
             return true;
         }
         throw new \InvalidArgumentException('Invalid argument given');

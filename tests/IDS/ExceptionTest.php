@@ -22,7 +22,8 @@ namespace IDS;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp() {
+    public function setUp()
+    {
         $this->report = new Report(array(
             new Event("key_a", 'val_b',
                 array(
@@ -42,7 +43,8 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         $this->init = Init::init($this->path);
     }
 
-    public function testEventConstructorExceptions1() {
+    public function testEventConstructorExceptions1()
+    {
         $this->setExpectedException('InvalidArgumentException');
         new Event(array(1,2), 'val_b',
                 array(
@@ -52,7 +54,8 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testEventConstructorExceptions2() {
+    public function testEventConstructorExceptions2()
+    {
         $this->setExpectedException('InvalidArgumentException');
         new Event("key_a", array(1,2),
                 array(
@@ -62,27 +65,32 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testEventConstructorExceptions3() {
+    public function testEventConstructorExceptions3()
+    {
         $this->setExpectedException('InvalidArgumentException');
         new Event("key_a", 'val_b', array(1,2));
     }
 
-    public function testGetEventException() {
+    public function testGetEventException()
+    {
         $this->setExpectedException('InvalidArgumentException');
         $this->report->getEvent(array(1,2,3));
     }
 
-    public function testHasEventException() {
+    public function testHasEventException()
+    {
         $this->setExpectedException('InvalidArgumentException');
         $this->report->hasEvent(array(1,2,3));
     }
 
-    public function testInitConfigWrongPathException() {
+    public function testInitConfigWrongPathException()
+    {
         $this->setExpectedException('InvalidArgumentException');
         Init::init('IDS/Config/Config.ini.wrong');
     }
 
-    public function testWrongXmlFilterPathException() {
+    public function testWrongXmlFilterPathException()
+    {
         $this->setExpectedException('RuntimeException');
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = 'IDS/wrong_path';

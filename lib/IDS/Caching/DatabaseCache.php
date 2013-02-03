@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -37,7 +37,7 @@
 
     #create the database
 
-    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER 
+    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER
         SET utf8 COLLATE utf8_general_ci;
     DROP TABLE IF EXISTS `cache`;
 
@@ -107,7 +107,7 @@ class DatabaseCache implements CacheInterface
      *
      * @param string $type caching type
      * @param object $init the IDS_Init object
-     * 
+     *
      * @return void
      */
     public function __construct($type, $init)
@@ -121,9 +121,9 @@ class DatabaseCache implements CacheInterface
      * Returns an instance of this class
      *
      * @static
-     * @param  string $type caching type
-     * @param  object $init the IDS_Init object
-     * 
+     * @param string $type caching type
+     * @param object $init the IDS_Init object
+     *
      * @return object $this
      */
     public static function getInstance($type, $init)
@@ -132,6 +132,7 @@ class DatabaseCache implements CacheInterface
         if (!self::$cachingInstance) {
             self::$cachingInstance = new DatabaseCache($type, $init);
         }
+
         return self::$cachingInstance;
     }
 
@@ -139,9 +140,9 @@ class DatabaseCache implements CacheInterface
      * Writes cache data into the database
      *
      * @param array $data the caching data
-     * 
+     *
      * @throws PDOException if a db error occurred
-     * @return object $this
+     * @return object       $this
      */
     public function setCache(array $data)
     {
@@ -170,11 +171,11 @@ class DatabaseCache implements CacheInterface
     /**
      * Returns the cached data
      *
-     * Note that this method returns false if either type or file cache is 
+     * Note that this method returns false if either type or file cache is
      * not set
      *
      * @throws PDOException if a db error occurred
-     * @return mixed cache data or false
+     * @return mixed        cache data or false
      */
     public function getCache()
     {
@@ -194,14 +195,15 @@ class DatabaseCache implements CacheInterface
         } catch (\PDOException $e) {
             throw new \PDOException('PDOException: ' . $e->getMessage());
         }
+
         return false;
     }
 
     /**
      * Connect to database and return a handle
      *
-     * @return object PDO
-     * @throws Exception if connection parameters are faulty
+     * @return object       PDO
+     * @throws Exception    if connection parameters are faulty
      * @throws PDOException if a db error occurred
      */
     private function connect()
@@ -227,6 +229,7 @@ class DatabaseCache implements CacheInterface
         } catch (\PDOException $e) {
             throw new \PDOException('PDOException: ' . $e->getMessage());
         }
+
         return $handle;
     }
 
@@ -236,7 +239,7 @@ class DatabaseCache implements CacheInterface
      * @param object $handle the database handle
      * @param array  $data   the caching data
      *
-     * @return object PDO
+     * @return object       PDO
      * @throws PDOException if a db error occurred
      */
     private function write($handle, $data)

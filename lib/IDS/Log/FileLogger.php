@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -64,7 +64,7 @@ class FileLogger implements LoggerInterface
     /**
      * Instance container
      *
-     * Due to the singleton pattern this class allows to initiate only one 
+     * Due to the singleton pattern this class allows to initiate only one
      * instance for each file.
      *
      * @var array
@@ -82,7 +82,7 @@ class FileLogger implements LoggerInterface
      * Constructor
      *
      * @param string $logfile path to the log file
-     * 
+     *
      * @return void
      */
     protected function __construct($logfile)
@@ -98,13 +98,13 @@ class FileLogger implements LoggerInterface
     /**
      * Returns an instance of this class
      *
-     * This method allows the passed argument to be either an instance of 
-     * IDS_Init or a path to a log file. Due to the singleton pattern only one 
+     * This method allows the passed argument to be either an instance of
+     * IDS_Init or a path to a log file. Due to the singleton pattern only one
      * instance for each file can be initiated.
      *
-     * @param  mixed  $config    IDS_Init or path to a file
-     * @param  string $classname the class name to use
-     * 
+     * @param mixed  $config    IDS_Init or path to a file
+     * @param string $classname the class name to use
+     *
      * @return object $this
      */
     public static function getInstance($config, $classname = 'IDS\Log\FileLogger')
@@ -126,7 +126,7 @@ class FileLogger implements LoggerInterface
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
-     * 
+     *
      * @return void
      */
     private function __clone()
@@ -136,11 +136,11 @@ class FileLogger implements LoggerInterface
     /**
      * Prepares data
      *
-     * Converts given data into a format that can be stored into a file. 
+     * Converts given data into a format that can be stored into a file.
      * You might edit this method to your requirements.
      *
      * @param mixed $data incoming report data
-     * 
+     *
      * @return string
      */
     protected function prepareData($data)
@@ -170,8 +170,8 @@ class FileLogger implements LoggerInterface
     /**
      * Stores given data into a file
      *
-     * @param  object $data IDS_Report
-     * 
+     * @param object $data IDS_Report
+     *
      * @throws Exception if the logfile isn't writeable
      * @return boolean
      */

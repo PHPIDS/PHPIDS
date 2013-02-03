@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -81,7 +81,7 @@ class Init
      * Includes needed classes and parses the configuration file
      *
      * @param string $configPath the path to the config file
-     * 
+     *
      * @return object $this
      */
     private function __construct($configPath = null)
@@ -96,7 +96,7 @@ class Init
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
-     * 
+     *
      * @return void
      */
     final public function __clone()
@@ -104,11 +104,11 @@ class Init
     }
 
     /**
-     * Returns an instance of this class. Also a PHP version check 
+     * Returns an instance of this class. Also a PHP version check
      * is being performed to avoid compatibility problems with PHP < 5.1.6
      *
      * @param string $configPath the path to the config file
-     * 
+     *
      * @return object
      */
     public static function init($configPath = null)
@@ -124,7 +124,7 @@ class Init
      * Sets the path to the configuration file
      *
      * @param string $path the path to the config
-     * 
+     *
      * @throws Exception if file not found
      * @return void
      */
@@ -151,8 +151,8 @@ class Init
     }
 
     /**
-     * This method checks if a base path is given and usage is set to true. 
-     * If all that tests succeed the base path will be returned as a string - 
+     * This method checks if a base path is given and usage is set to true.
+     * If all that tests succeed the base path will be returned as a string -
      * else null will be returned.
      *
      * @return string the base path or null
@@ -190,7 +190,7 @@ class Init
      * an array in both, the values will be appended. If it is a scalar in both,
      * the value will be replaced.
      *
-     * @param  array $current The legacy hash
+     * @param  array $current   The legacy hash
      * @param  array $successor The hash which values count more when in doubt
      * @return array Merged hash
      */
@@ -208,6 +208,7 @@ class Init
                 }
             }
         }
+
         return $current;
     }
 
