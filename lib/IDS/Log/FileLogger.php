@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -31,7 +31,10 @@
  * @link     http://php-ids.org/
  */
 
-require_once 'IDS/Log/Interface.php';
+namespace IDS\Log;
+
+use IDS\Init;
+use IDS\Report;
 
 /**
  * File logging wrapper
@@ -48,7 +51,7 @@ require_once 'IDS/Log/Interface.php';
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Log_File implements IDS_Log_Interface
+class FileLogger implements LoggerInterface
 {
 
     /**
@@ -61,7 +64,7 @@ class IDS_Log_File implements IDS_Log_Interface
     /**
      * Instance container
      *
-     * Due to the singleton pattern this class allows to initiate only one 
+     * Due to the singleton pattern this class allows to initiate only one
      * instance for each file.
      *
      * @var array
@@ -79,12 +82,11 @@ class IDS_Log_File implements IDS_Log_Interface
      * Constructor
      *
      * @param string $logfile path to the log file
-     * 
+     *
      * @return void
      */
-    protected function __construct($logfile) 
+    protected function __construct($logfile)
     {
-
         // determine correct IP address and concat them if necessary
         $this->ip = $_SERVER['REMOTE_ADDR'] .
             (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ?
@@ -96,23 +98,23 @@ class IDS_Log_File implements IDS_Log_Interface
     /**
      * Returns an instance of this class
      *
-     * This method allows the passed argument to be either an instance of 
-     * IDS_Init or a path to a log file. Due to the singleton pattern only one 
+     * This method allows the passed argument to be either an instance of
+     * IDS_Init or a path to a log file. Due to the singleton pattern only one
      * instance for each file can be initiated.
      *
-     * @param  mixed  $config    IDS_Init or path to a file
-     * @param  string $classname the class name to use
-     * 
+     * @param mixed  $config    IDS_Init or path to a file
+     * @param string $classname the class name to use
+     *
      * @return object $this
      */
-    public static function getInstance($config, $classname = 'IDS_Log_File') 
+    public static function getInstance($config, $classname = 'IDS\Log\FileLogger')
     {
-        if ($config instanceof IDS_Init) {
+        if ($config instanceof Init) {
             $logfile = $config->getBasePath() . $config->config['Logging']['path'];
         } elseif (is_string($config)) {
             $logfile = $config;
         }
-        
+
         if (!isset(self::$instances[$logfile])) {
             self::$instances[$logfile] = new $classname($logfile);
         }
@@ -124,26 +126,25 @@ class IDS_Log_File implements IDS_Log_Interface
      * Permitting to clone this object
      *
      * For the sake of correctness of a singleton pattern, this is necessary
-     * 
+     *
      * @return void
      */
-    private function __clone() 
-    { 
+    private function __clone()
+    {
     }
 
     /**
      * Prepares data
      *
-     * Converts given data into a format that can be stored into a file. 
+     * Converts given data into a format that can be stored into a file.
      * You might edit this method to your requirements.
      *
      * @param mixed $data incoming report data
-     * 
+     *
      * @return string
      */
-    protected function prepareData($data) 
+    protected function prepareData($data)
     {
-
         $format = '"%s",%s,%d,"%s","%s","%s","%s"';
 
         $attackedParameters = '';
@@ -152,7 +153,8 @@ class IDS_Log_File implements IDS_Log_Interface
                 rawurlencode($event->getValue()) . ' ';
         }
 
-        $dataString = sprintf($format,
+        $dataString = sprintf(
+            $format,
             urlencode($this->ip),
             date('c'),
             $data->getImpact(),
@@ -168,17 +170,16 @@ class IDS_Log_File implements IDS_Log_Interface
     /**
      * Stores given data into a file
      *
-     * @param  object $data IDS_Report
-     * 
+     * @param object $data IDS_Report
+     *
      * @throws Exception if the logfile isn't writeable
      * @return boolean
      */
-    public function execute(IDS_Report $data) 
+    public function execute(Report $data)
     {
-
         /*
-         * In case the data has been modified before it might  be necessary 
-         * to convert it to string since we can't store array or object 
+         * In case the data has been modified before it might  be necessary
+         * to convert it to string since we can't store array or object
          * into a file
          */
         $data = $this->prepareData($data);
@@ -196,22 +197,22 @@ class IDS_Log_File implements IDS_Log_Interface
                         fclose($handle);
 
                     } else {
-                        throw new Exception(
-                            'Please make sure that ' . $this->logfile . 
-                                ' is writeable.'
+                        throw new \Exception(
+                            'Please make sure that ' . $this->logfile .
+                            ' is writeable.'
                         );
                     }
                 }
             } else {
-                throw new Exception(
+                throw new \Exception(
                     'Given file does not exist. Please make sure the
                     logfile is present in the given directory.'
                 );
             }
         } else {
-            throw new Exception(
+            throw new \Exception(
                 'Please make sure that data returned by
-                IDS_Log_File::prepareData() is a string.'
+                FileLogger::prepareData() is a string.'
             );
         }
 

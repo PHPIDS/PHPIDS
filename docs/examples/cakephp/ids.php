@@ -121,8 +121,8 @@ class IdsComponent extends Object {
         }
 
         #init the PHPIDS and pass the REQUEST array
-        $this->init = IDS_Init::init();
-        $ids        = new IDS_Monitor($_REQUEST, $this->init);
+        $this->init = Init::init();
+        $ids        = new Monitor($_REQUEST, $this->init);
         $result     = $ids->run();
 
         // Re-set include path
@@ -142,10 +142,10 @@ class IdsComponent extends Object {
      * Depending on the impact value certain actions are
      * performed.
      *
-     * @param IDS_Report $result
+     * @param Report $result
      * @return boolean
      */
-    private function react(IDS_Report $result) {
+    private function react(Report $result) {
 
         $new = $this->controller
                 ->Session
@@ -235,9 +235,9 @@ class IdsComponent extends Object {
         vendor('phpids/IDS/Log/Email.php');
         vendor('phpids/IDS/Log/Composite.php');
 
-        $compositeLog = new IDS_Log_Composite();
+        $compositeLog = new \IDS\Log\Composite();
         $compositeLog->addLogger(
-            IDS_Log_Email::getInstance(
+            \IDS\Log\Email::getInstance(
                 $this->init->config['IDS_Logging']['recipient'],
                 $this->config['IDS_Logging']['subject'],
                 NULL, //optional headers

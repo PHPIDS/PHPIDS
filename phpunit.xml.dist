@@ -23,6 +23,15 @@
         </blacklist>
     </filter>
 
+    <logging>
+        <log type="coverage-html"
+            target="docs/coverage/"
+            charset="UTF-8"
+            yui="true"
+            highlight="true"
+            lowUpperBound="60"
+            highLowerBound="80" />
+    </logging>
     <php>
     </php>
 </phpunit>
