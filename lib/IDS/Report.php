@@ -9,16 +9,16 @@
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
  *
@@ -49,7 +49,10 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-class IDS_Report implements Countable, IteratorAggregate
+
+namespace IDS;
+
+class Report implements \Countable, \IteratorAggregate
 {
 
     /**
@@ -112,7 +115,7 @@ class IDS_Report implements Countable, IteratorAggregate
      *
      * @return object $this
      */
-    public function addEvent(IDS_Event $event)
+    public function addEvent(Event $event)
     {
         $this->clear();
         $this->events[$event->getName()] = $event;
@@ -129,12 +132,12 @@ class IDS_Report implements Countable, IteratorAggregate
      * @param scalar $name the event name
      *
      * @throws InvalidArgumentException if argument is invalid
-     * @return mixed IDS_Event object or false if the event does not exist
+     * @return mixed                    IDS_Event object or false if the event does not exist
      */
     public function getEvent($name)
     {
         if (!is_scalar($name)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Invalid argument type given'
             );
         }
@@ -157,8 +160,10 @@ class IDS_Report implements Countable, IteratorAggregate
             $this->tags = array();
 
             foreach ($this->events as $event) {
-                $this->tags = array_merge($this->tags,
-                                          $event->getTags());
+                $this->tags = array_merge(
+                    $this->tags,
+                    $event->getTags()
+                );
             }
 
             $this->tags = array_values(array_unique($this->tags));
@@ -199,7 +204,7 @@ class IDS_Report implements Countable, IteratorAggregate
     public function hasEvent($name)
     {
         if (!is_scalar($name)) {
-            throw new InvalidArgumentException('Invalid argument given');
+            throw new \InvalidArgumentException('Invalid argument given');
         }
 
         return isset($this->events[$name]);
@@ -226,7 +231,7 @@ class IDS_Report implements Countable, IteratorAggregate
      */
     public function getIterator()
     {
-        return new ArrayObject($this->events);
+        return new \ArrayObject($this->events);
     }
 
     /**
@@ -275,9 +280,10 @@ class IDS_Report implements Countable, IteratorAggregate
     {
         if (is_array($centrifuge) && $centrifuge) {
             $this->centrifuge = $centrifuge;
+
             return true;
         }
-        throw new InvalidArgumentException('Invalid argument given');
+        throw new \InvalidArgumentException('Invalid argument given');
     }
 
     /**
@@ -314,13 +320,13 @@ class IDS_Report implements Countable, IteratorAggregate
 
             if ($centrifuge = $this->getCentrifuge()) {
                 $output .= 'Centrifuge detection data';
-                $output .= '<br/>  Threshold: ' . 
+                $output .= '<br/>  Threshold: ' .
                     ((isset($centrifuge['threshold'])&&$centrifuge['threshold']) ?
                     $centrifuge['threshold'] : '---');
-                $output .= '<br/>  Ratio: ' . 
+                $output .= '<br/>  Ratio: ' .
                     ((isset($centrifuge['ratio'])&&$centrifuge['ratio']) ?
                     $centrifuge['ratio'] : '---');
-                if(isset($centrifuge['converted'])) {
+                if (isset($centrifuge['converted'])) {
                     $output .= '<br/>  Converted: ' . $centrifuge['converted'];
                 }
                 $output .= "<br/><br/>\n";

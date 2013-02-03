@@ -2,3 +2,5 @@
 /.idea/*
 /tmp/*
 /nbproject/
+/lib/IDS/tmp/
+/docs/coverage/

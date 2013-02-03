@@ -2,26 +2,26 @@
 
 /**
  * PHPIDS
- * 
+ *
  * Requirements: PHP5, SimpleXML
  *
  * Copyright (c) 2008 PHPIDS group (https://phpids.org)
  *
  * PHPIDS is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, version 3 of the License, or 
+ * the Free Software Foundation, version 3 of the License, or
  * (at your option) any later version.
  *
  * PHPIDS is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>. 
+ * along with PHPIDS. If not, see <http://www.gnu.org/licenses/>.
  *
  * PHP version 5.1.6+
- * 
+ *
  * @category Security
  * @package  PHPIDS
  * @author   Mario Heiderich <mario.heiderich@gmail.com>
@@ -43,16 +43,21 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-interface IDS_Log_Interface
+
+namespace IDS\Log;
+
+use IDS\Report;
+
+interface LoggerInterface
 {
     /**
      * Interface method
      *
-     * @param IDS_Report $data the report data
-     * 
-     * @return void 
+     * @param Report $data the report data
+     *
+     * @return void
      */
-    public function execute(IDS_Report $data);
+    public function execute(Report $data);
 }
 
 /**
