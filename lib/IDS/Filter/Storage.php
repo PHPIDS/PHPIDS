@@ -201,22 +201,18 @@ class Storage
              * If they aren't, parse the source file
              */
             if (!$filters) {
-                if (file_exists($this->source)) {
-                    if (LIBXML_VERSION >= 20621) {
-                        $filters = simplexml_load_file(
-                                $this->source,
-                                null,
-                                LIBXML_COMPACT
-                                );
-                    } else {
-                        $filters = simplexml_load_file($this->source);
-                    }
+
+                if (!file_exists($this->source)) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Invalid config: %s doesn\'t exist.', $this->source)
+                    );
                 }
 
-                throw new \InvalidArgumentException(
-                    sprintf( 'Invalid config: %s doesn\'t exist. ',
-                             $this->source )
-                        );
+                if (LIBXML_VERSION >= 20621) {
+                    $filters = simplexml_load_file($this->source, null, LIBXML_COMPACT);
+                } else {
+                    $filters = simplexml_load_file($this->source);
+                }
             }
 
             /*
@@ -306,21 +302,16 @@ class Storage
              * If they aren't, parse the source file
              */
             if (!$filters) {
-                if (file_exists($this->source)) {
-                    $filters = json_decode(file_get_contents($this->source));
+                if (!file_exists($this->source)) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Invalid config: %s doesn\'t exist.', $this->source)
+                    );
                 }
-
-                throw new \RuntimeException(
-                        'JSON data could not be loaded.' .
-                        ' Make sure you specified the correct path.'
-                        );
+                $filters = json_decode(file_get_contents($this->source));
             }
 
             if (!$filters) {
-                throw new \RuntimeException(
-                        'JSON data could not be loaded.' .
-                        ' Make sure you specified the correct path. ' . $this->source
-                        );
+                throw new \RuntimeException('JSON data could not be loaded. Make sure you specified the correct path.');
             }
 
             /*

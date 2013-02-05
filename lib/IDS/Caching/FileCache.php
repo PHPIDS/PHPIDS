@@ -33,6 +33,8 @@
 
 namespace IDS\Caching;
 
+use IDS\Init;
+
 /**
  * File caching wrapper
  *
@@ -56,28 +58,28 @@ class FileCache implements CacheInterface
      *
      * @var string
      */
-    private $type = null;
+    private $type;
 
     /**
      * Cache configuration
      *
      * @var array
      */
-    private $config = null;
+    private $config;
 
     /**
      * Path to cache file
      *
      * @var string
      */
-    private $path = null;
+    private $path;
 
     /**
      * Holds an instance of this class
      *
      * @var object
      */
-    private static $cachingInstance = null;
+    private static $cachingInstance;
 
     /**
      * Constructor
@@ -88,7 +90,7 @@ class FileCache implements CacheInterface
      *
      * @return void
      */
-    public function __construct($type, $init)
+    public function __construct($type, Init $init)
     {
         $this->type   = $type;
         $this->config = $init->config['Caching'];
