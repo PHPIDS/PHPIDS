@@ -199,16 +199,16 @@ class FileLogger implements LoggerInterface
 
                     } else {
                         throw new \Exception(
-                            'Please make sure that ' . $this->logfile .
-                            ' is writeable.'
-                        );
+                                'Please make sure that ' . $this->logfile .
+                                ' is writeable.'
+                                );
                     }
                 }
             }
 
             throw new \InvalidArgumentException(
-                    sprintf('Given file %s does not exist. Please make sure the
-                        logfile is present in the given directory.', $this->logfile)
+                sprintf('Given file %s does not exist. Please make sure the logfile is present in the given directory.',
+                        $this->logfile)
                     );
         } else {
             throw new \Exception(
