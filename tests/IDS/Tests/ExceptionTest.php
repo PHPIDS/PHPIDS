@@ -99,7 +99,7 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $this->init->config['General']['filter_type'] = 'xml';
         $this->init->config['General']['filter_path'] = 'IDS/wrong_path';
-        new Monitor(array('test', 'bla'), $this->init);
+        new Monitor($this->init);
     }
 }
 
