@@ -84,6 +84,7 @@ class FileCache implements CacheInterface
      *
      * @param string $type caching type
      * @param object $init the IDS_Init object
+     * @throws \Exception
      *
      * @return void
      */
@@ -94,7 +95,7 @@ class FileCache implements CacheInterface
         $this->path   = $init->getBasePath() . $this->config['path'];
 
         if (file_exists($this->path) && !is_writable($this->path)) {
-            throw new Exception(
+            throw new \Exception(
                 'Make sure all files in ' .
                 htmlspecialchars($this->path, ENT_QUOTES, 'UTF-8') .
                 'are writeable!'

@@ -172,6 +172,7 @@ class Monitor
      * @param array  $request array to scan
      * @param object $init    instance of IDS_Init
      * @param array  $tags    list of tags to which filters should be applied
+     * @throws \Exception     When PHP version is less than what the library supports
      *
      * @return void
      */
@@ -181,7 +182,7 @@ class Monitor
             ? $init->config['General']['min_php_version'] : '5.1.6';
 
         if (version_compare(PHP_VERSION, $version, '<')) {
-            throw new Exception(
+            throw new \Exception(
                 'PHP version has to be equal or higher than ' . $version . ' or
                 PHP version couldn\'t be determined'
             );
@@ -384,7 +385,7 @@ class Monitor
      * @param mixed $key
      * @param mixed $value
      * @since  0.5
-     * @throws Exception
+     * @throws \Exception
      *
      * @return array
      */
