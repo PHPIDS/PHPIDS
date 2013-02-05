@@ -111,15 +111,13 @@ class Init
      * If all that tests succeed the base path will be returned as a string -
      * else null will be returned.
      *
-     * @return string the base path or null
+     * @return string|null  the base path or null
      */
     public function getBasePath()
     {
-        return ((isset($this->config['General']['base_path'])
-            && $this->config['General']['base_path']
-            && isset($this->config['General']['use_base_path'])
-            && $this->config['General']['use_base_path'])
-                ? $this->config['General']['base_path'] : null);
+        return (!empty($this->config['General']['base_path'])
+                && !empty($this->config['General']['use_base_path']))
+            ? $this->config['General']['base_path'] : null;
     }
 
     /**

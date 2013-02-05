@@ -91,7 +91,7 @@ class Storage
      *
      * @param object $init IDS_Init instance
      *
-     * @throws Exception if unsupported filter type is given
+     * @throws \InvalidArgumentException if unsupported filter type is given
      * @return void
      */
     final public function __construct(Init $init)
@@ -105,20 +105,18 @@ class Storage
             $this->source = $init->getBasePath()
                 . $init->config['General']['filter_path'];
 
-            if ($caching && $caching != 'none') {
+            if ($caching && $caching !== 'none') {
                 $this->cacheSettings = $init->config['Caching'];
                 $this->cache = CacheFactory::factory($init, 'storage');
             }
 
             switch ($type) {
                 case 'xml':
-                    $this->getFilterFromXML();
-                    break;
+                    return $this->getFilterFromXML();
                 case 'json':
-                    $this->getFilterFromJson();
-                    break;
+                    return $this->getFilterFromJson();
                 default:
-                    throw new \Exception('Unsupported filter type.');
+                    throw new \InvalidArgumentException('Unsupported filter type.');
             }
         }
     }
@@ -188,7 +186,7 @@ class Storage
      * If caching mode is enabled the result will be cached to increase
      * the performance.
      *
-     * @throws Exception if problems with fetching the XML data occur
+     * @throws \RuntimeException if problems with fetching the XML data occur
      * @return object    $this
      */
     public function getFilterFromXML()
@@ -274,13 +272,10 @@ class Storage
                 $this->cache->setCache($data);
             }
 
-        } else {
-            throw new \Exception(
-                'SimpleXML not loaded.'
-            );
+            return $this;
         }
 
-        return $this;
+        throw new \RuntimeException('SimpleXML is not loaded.');
     }
 
     /**
@@ -290,7 +285,7 @@ class Storage
      * If caching mode is enabled the result will be cached to increase
      * the performance.
      *
-     * @throws Exception if problems with fetching the JSON data occur
+     * @throws \RuntimeException if problems with fetching the JSON data occur
      * @return object    $this
      */
     public function getFilterFromJson()
@@ -311,17 +306,17 @@ class Storage
                     $filters = json_decode(file_get_contents($this->source));
                 } else {
                     throw new \RuntimeException(
-                        'JSON data could not be loaded.' .
-                        ' Make sure you specified the correct path.'
-                    );
+                            'JSON data could not be loaded.' .
+                            ' Make sure you specified the correct path.'
+                            );
                 }
             }
 
             if (!$filters) {
                 throw new \RuntimeException(
-                    'JSON data could not be loaded.' .
-                    ' Make sure you specified the correct path. ' . $this->source
-                );
+                        'JSON data could not be loaded.' .
+                        ' Make sure you specified the correct path. ' . $this->source
+                        );
             }
 
             /*
@@ -345,22 +340,22 @@ class Storage
                     $filter['description'];
 
                 $this->addFilter(
-                    new \IDS\Filter(
-                        $id,
-                        $rule,
-                        $description,
-                        (array) $tags[0],
-                        (int) $impact
-                    )
-                );
+                        new \IDS\Filter(
+                            $id,
+                            $rule,
+                            $description,
+                            (array) $tags[0],
+                            (int) $impact
+                            )
+                        );
 
                 $data[] = array(
-                    'id'          => $id,
-                    'rule'        => $rule,
-                    'impact'      => $impact,
-                    'tags'        => $tags,
-                    'description' => $description
-                );
+                        'id'          => $id,
+                        'rule'        => $rule,
+                        'impact'      => $impact,
+                        'tags'        => $tags,
+                        'description' => $description
+                        );
             }
 
             /*
@@ -370,13 +365,10 @@ class Storage
                 $this->cache->setCache($data);
             }
 
-        } else {
-            throw new \RuntimeException(
-                'ext/json not loaded.'
-            );
+            return $this;
         }
 
-        return $this;
+        throw new \RuntimeException('json extension is not loaded.');
     }
 }
 
