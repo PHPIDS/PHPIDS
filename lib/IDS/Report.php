@@ -76,7 +76,7 @@ class Report implements \Countable, \IteratorAggregate
      * Impact level
      *
      * The impact level is calculated on demand by adding the results of the
-     * event objects on IDS_Report->getImpact()
+     * event objects on IDS\Report->getImpact()
      *
      * @var integer
      */

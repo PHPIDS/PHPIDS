@@ -108,22 +108,22 @@ class Filter
      * Matches given string against the filter rule the specific object of this
      * class represents
      *
-     * @param string $string the string to match
+     * @param string $input the string input to match
      *
      * @throws InvalidArgumentException if argument is no string
      * @return boolean
      */
-    public function match($string)
+    public function match($input)
     {
-        if (!is_string($string)) {
+        if (!is_string($input)) {
             throw new \InvalidArgumentException(
-                'Invalid argument. Expected a string, received ' . gettype($string)
+                'Invalid argument. Expected a string, received ' . gettype($input)
             );
         }
 
         return (bool) preg_match(
             '/' . $this->getRule() . '/ms',
-            strtolower($string)
+            strtolower($input)
         );
     }
 

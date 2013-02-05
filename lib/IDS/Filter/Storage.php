@@ -98,12 +98,10 @@ class Storage
     {
         if ($init->config) {
 
-            $caching = isset($init->config['Caching']['caching']) ?
-                $init->config['Caching']['caching'] : 'none';
+            $caching      = isset($init->config['Caching']['caching']) ? $init->config['Caching']['caching'] : 'none';
 
             $type         = $init->config['General']['filter_type'];
-            $this->source = $init->getBasePath()
-                . $init->config['General']['filter_path'];
+            $this->source = $init->getBasePath(). $init->config['General']['filter_path'];
 
             if ($caching && $caching !== 'none') {
                 $this->cacheSettings = $init->config['Caching'];
@@ -186,6 +184,7 @@ class Storage
      * If caching mode is enabled the result will be cached to increase
      * the performance.
      *
+     * @throws \InvalidArgumentException if source file doesn't exist
      * @throws \RuntimeException if problems with fetching the XML data occur
      * @return object    $this
      */
@@ -205,14 +204,19 @@ class Storage
                 if (file_exists($this->source)) {
                     if (LIBXML_VERSION >= 20621) {
                         $filters = simplexml_load_file(
-                            $this->source,
-                            null,
-                            LIBXML_COMPACT
-                        );
+                                $this->source,
+                                null,
+                                LIBXML_COMPACT
+                                );
                     } else {
                         $filters = simplexml_load_file($this->source);
                     }
                 }
+
+                throw new \InvalidArgumentException(
+                    sprintf( 'Invalid config: %s doesn\'t exist. ',
+                             $this->source )
+                        );
             }
 
             /*
@@ -304,12 +308,12 @@ class Storage
             if (!$filters) {
                 if (file_exists($this->source)) {
                     $filters = json_decode(file_get_contents($this->source));
-                } else {
-                    throw new \RuntimeException(
-                            'JSON data could not be loaded.' .
-                            ' Make sure you specified the correct path.'
-                            );
                 }
+
+                throw new \RuntimeException(
+                        'JSON data could not be loaded.' .
+                        ' Make sure you specified the correct path.'
+                        );
             }
 
             if (!$filters) {
