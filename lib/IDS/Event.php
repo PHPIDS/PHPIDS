@@ -105,7 +105,7 @@ class Event implements \Countable, \IteratorAggregate
      *
      * @return void
      */
-    public function __construct($name, $value, Array $filters)
+    public function __construct($name, $value, array $filters)
     {
         if (!is_scalar($name)) {
             throw new \InvalidArgumentException(

@@ -225,7 +225,7 @@ class Monitor
             );
         }
 
-        $this->report = new Report;
+        $this->report = new Report();
     }
 
     /**
