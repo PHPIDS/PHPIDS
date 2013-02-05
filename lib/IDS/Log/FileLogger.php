@@ -205,8 +205,8 @@ class FileLogger implements LoggerInterface
                 }
             } else {
                 throw new \Exception(
-                    'Given file does not exist. Please make sure the
-                    logfile is present in the given directory.'
+                    sprintf('Given file %s does not exist. Please make sure the
+                        logfile is present in the given directory.', $this->logfile)
                 );
             }
         } else {
