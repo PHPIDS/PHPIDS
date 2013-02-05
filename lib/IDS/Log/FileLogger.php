@@ -172,7 +172,8 @@ class FileLogger implements LoggerInterface
      *
      * @param object $data IDS_Report
      *
-     * @throws Exception if the logfile isn't writeable
+     * @throws Exception                if the logfile isn't writeable
+     * @throws InvalidArgumentException if the logfile doesn't exist
      * @return boolean
      */
     public function execute(Report $data)
@@ -198,17 +199,17 @@ class FileLogger implements LoggerInterface
 
                     } else {
                         throw new \Exception(
-                            'Please make sure that ' . $this->logfile .
-                            ' is writeable.'
-                        );
+                                'Please make sure that ' . $this->logfile .
+                                ' is writeable.'
+                                );
                     }
                 }
-            } else {
-                throw new \Exception(
-                    'Given file does not exist. Please make sure the
-                    logfile is present in the given directory.'
-                );
             }
+
+            throw new \InvalidArgumentException(
+                sprintf('Given file %s does not exist. Please make sure the logfile is present in the given directory.',
+                        $this->logfile)
+                    );
         } else {
             throw new \Exception(
                 'Please make sure that data returned by
