@@ -1,9 +1,10 @@
-/.cache/*
-/tmp/*
+/.cache
+/tmp
 /nbproject/
 /lib/IDS/tmp/
 /docs/coverage/
 /vendor/
+/phpunit.xml
 
 # Don't include lock file
 composer.lock
@@ -47,4 +48,4 @@ Thumbs.db
 *.sw[a-z]
 
 # PhpStorm (IDE) project files
-.idea/*
+/.idea
