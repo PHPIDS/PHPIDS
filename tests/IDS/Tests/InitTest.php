@@ -40,7 +40,7 @@ class InitTest extends \PHPUnit_Framework_TestCase
 
     public function testInitConfig()
     {
-        $keys = array('General', 'Logging', 'Caching');
+        $keys = array('General', 'Caching');
         $this->assertEquals($keys, array_keys($this->init->config));
     }
 

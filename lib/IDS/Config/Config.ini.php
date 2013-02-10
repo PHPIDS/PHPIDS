@@ -39,34 +39,6 @@
     ; this value to force compatibilty with minor versions
     min_php_version = 5.1.6
 
-; If you use the PHPIDS logger you can define specific configuration here
-
-[Logging]
-
-    ; file logging
-    path            = tmp/phpids_log.txt
-
-    ; email logging
-
-    ; note that enabling safemode you can prevent spam attempts,
-    ; see documentation
-    recipients[]    = test@test.com.invalid
-    subject         = "PHPIDS detected an intrusion attempt!"
-    header			= "From: <PHPIDS> info@phpids.org"
-    envelope        = ""
-    safemode        = true
-    urlencode       = true
-    allowed_rate    = 15
-
-    ; database logging
-
-    wrapper         = "mysql:host=localhost;port=3306;dbname=phpids"
-    user            = phpids_user
-    password        = 123456
-    table           = intrusions
-
-; If you would like to use other methods than file caching you can configure them here
-
 [Caching]
 
     ; caching:      session|file|database|memcached|none
