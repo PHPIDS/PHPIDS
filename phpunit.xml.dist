@@ -17,10 +17,9 @@
     </testsuites>
 
     <filter>
-        <blacklist>
-            <directory suffix=".php">lib/IDS/vendors</directory>
-            <directory suffix=".php">tests/</directory>
-        </blacklist>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./lib</directory>
+        </whitelist>
     </filter>
 
     <logging>
@@ -35,13 +34,10 @@
     <php>
         <var name="IDS_TEMP_DIR" value="/tmp"/>
         <var name="IDS_CONFIG" value="lib/IDS/Config/Config.ini.php"/>
-        <var name="IDS_CONFIG_XML" value="lib/IDS/Config/Config.ini.php"/>
-        <var name="IDS_CONFIG_JSON" value="lib/IDS/Config/Config-Json.ini.php"/>
         <var name="IDS_FILTER_CACHE_FILE" value="/tmp/default_filter.cache"/>
         <var name="IDS_FILTER_TYPE" value="xml"/>
         <var name="IDS_FILTER_SET" value="lib/IDS/default_filter.xml"/>
         <var name="IDS_FILTER_SET_XML" value="lib/IDS/default_filter.xml"/>
         <var name="IDS_FILTER_SET_JSON" value="lib/IDS/default_filter.json"/>
-        <var name="IDS_FILTER_SET" value="lib/IDS/default_filter.xml"/>
     </php>
 </phpunit>
