@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS;
 
 /**
  * PHPIDS report object
@@ -49,16 +49,12 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-
-namespace IDS;
-
 class Report implements \Countable, \IteratorAggregate
 {
-
     /**
      * Event container
      *
-     * @var array
+     * @var Event[]|array
      */
     protected $events = array();
 
@@ -68,7 +64,7 @@ class Report implements \Countable, \IteratorAggregate
      * This list of tags is collected from the collected event objects on
      * demand when IDS_Report->getTags() is called
      *
-     * @var    array
+     * @var string[]|array
      */
     protected $tags = array();
 
@@ -97,23 +93,21 @@ class Report implements \Countable, \IteratorAggregate
      *
      * @param array $events the events the report should include
      *
-     * @return void
+     * @return Report
      */
     public function __construct(array $events = null)
     {
-        if ($events) {
-            foreach ($events as $event) {
-                $this->addEvent($event);
-            }
+        foreach ((array) $events as $event) {
+            $this->addEvent($event);
         }
     }
 
     /**
      * Adds an IDS_Event object to the report
      *
-     * @param object $event IDS_Event
+     * @param Event $event IDS_Event
      *
-     * @return object $this
+     * @return self $this
      */
     public function addEvent(Event $event)
     {
@@ -129,30 +123,24 @@ class Report implements \Countable, \IteratorAggregate
      * In most cases an event is identified by the key of the variable that
      * contained maliciously appearing content
      *
-     * @param scalar $name the event name
+     * @param string|integer $name the event name
      *
-     * @throws InvalidArgumentException if argument is invalid
-     * @return mixed                    IDS_Event object or false if the event does not exist
+     * @throws \InvalidArgumentException if argument is invalid
+     * @return Event|null                    IDS_Event object or false if the event does not exist
      */
     public function getEvent($name)
     {
         if (!is_scalar($name)) {
-            throw new \InvalidArgumentException(
-                'Invalid argument type given'
-            );
+            throw new \InvalidArgumentException('Invalid argument type given');
         }
 
-        if ($this->hasEvent($name)) {
-            return $this->events[$name];
-        }
-
-        return false;
+        return $this->hasEvent($name) ? $this->events[$name] : null;
     }
 
     /**
      * Returns list of affected tags
      *
-     * @return array
+     * @return string[]|array
      */
     public function getTags()
     {
@@ -160,10 +148,7 @@ class Report implements \Countable, \IteratorAggregate
             $this->tags = array();
 
             foreach ($this->events as $event) {
-                $this->tags = array_merge(
-                    $this->tags,
-                    $event->getTags()
-                );
+                $this->tags = array_merge($this->tags, $event->getTags());
             }
 
             $this->tags = array_values(array_unique($this->tags));
@@ -195,10 +180,9 @@ class Report implements \Countable, \IteratorAggregate
     /**
      * Checks if a specific event with given name exists
      *
-     * @param scalar $name the event name
+     * @param string|integer $name the event name
      *
-     * @throws InvalidArgumentException if argument is illegal
-     *
+     * @throws \InvalidArgumentException if argument is illegal
      * @return boolean
      */
     public function hasEvent($name)
@@ -227,11 +211,11 @@ class Report implements \Countable, \IteratorAggregate
      * IDS_Event object the IteratorAggregate is implemented. One can easily
      * use foreach() to iterate through all stored IDS_Event objects.
      *
-     * @return ArrayObject the event collection
+     * @return \Iterator the event collection
      */
     public function getIterator()
     {
-        return new \ArrayObject($this->events);
+        return new \ArrayIterator($this->events);
     }
 
     /**
@@ -259,12 +243,11 @@ class Report implements \Countable, \IteratorAggregate
      * This method returns the centrifuge property or null if not
      * filled with data
      *
-     * @return array/null
+     * @return array
      */
     public function getCentrifuge()
     {
-        return ($this->centrifuge && count($this->centrifuge) > 0)
-            ? $this->centrifuge : null;
+        return $this->centrifuge;
     }
 
     /**
@@ -272,18 +255,15 @@ class Report implements \Countable, \IteratorAggregate
      *
      * @param array $centrifuge the centrifuge data
      *
-     * @throws InvalidArgumentException if argument is illegal
-     *
-     * @return boolean true is arguments were valid
+     * @throws \InvalidArgumentException if argument is illegal
+     * @return void
      */
-    public function setCentrifuge($centrifuge = array())
+    public function setCentrifuge(array $centrifuge = array())
     {
-        if (is_array($centrifuge) && $centrifuge) {
-            $this->centrifuge = $centrifuge;
-
-            return true;
+        if (!$centrifuge) {
+            throw new \InvalidArgumentException('Empty centrifuge given');
         }
-        throw new \InvalidArgumentException('Invalid argument given');
+        $this->centrifuge = $centrifuge;
     }
 
     /**
@@ -293,39 +273,49 @@ class Report implements \Countable, \IteratorAggregate
      */
     public function __toString()
     {
+        $output = '';
         if (!$this->isEmpty()) {
-            $output  = '';
-            $output .= 'Total impact: ' . $this->getImpact() . "<br/>\n";
-            $output .= 'Affected tags: ' . join(', ', $this->getTags()) .
-                "<br/>\n";
+            $output .= vsprintf(
+                "Total impact: %d<br/>\nAffected tags: %s<br/>\n",
+                array(
+                    $this->getImpact(),
+                    implode(', ', $this->getTags())
+                )
+            );
 
             foreach ($this->events as $event) {
-                $output .= "<br/>\nVariable: " .
-                    htmlspecialchars($event->getName()) . ' | Value: ' .
-                    htmlspecialchars($event->getValue()) . "<br/>\n";
-                $output .= 'Impact: ' . $event->getImpact() . ' | Tags: ' .
-                    join(', ', $event->getTags()) . "<br/>\n";
+                $output .= vsprintf(
+                    "<br/>\nVariable: %s | Value: %s<br/>\nImpact: %d | Tags: %s<br/>\n",
+                    array(
+                        htmlspecialchars($event->getName()),
+                        htmlspecialchars($event->getValue()),
+                        $event->getImpact(),
+                        implode(', ', $event->getTags())
+                    )
+                );
 
                 foreach ($event as $filter) {
-                    $output .= 'Description: ' . $filter->getDescription() .
-                        ' | ';
-                    $output .= 'Tags: ' . join(', ', $filter->getTags()) .
-                        ' | ';
-                    $output .= 'ID: ' . $filter->getId() .
-                        "<br/>\n";
+                    $output .= vsprintf(
+                        "Description: %s | Tags: %s | ID %s<br/>\n",
+                        array(
+                            $filter->getDescription(),
+                            implode(', ', $filter->getTags()),
+                            $filter->getId()
+                        )
+                    );
                 }
             }
 
             $output .= '<br/>';
 
             if ($centrifuge = $this->getCentrifuge()) {
-                $output .= 'Centrifuge detection data';
-                $output .= '<br/>  Threshold: ' .
-                    ((isset($centrifuge['threshold'])&&$centrifuge['threshold']) ?
-                    $centrifuge['threshold'] : '---');
-                $output .= '<br/>  Ratio: ' .
-                    ((isset($centrifuge['ratio'])&&$centrifuge['ratio']) ?
-                    $centrifuge['ratio'] : '---');
+                $output .= vsprintf(
+                    "Centrifuge detection data<br/> Threshold: %s<br/> Ratio: %s",
+                    array(
+                        isset($centrifuge['threshold']) && $centrifuge['threshold'] ? $centrifuge['threshold'] : '---',
+                        isset($centrifuge['ratio']) && $centrifuge['ratio'] ? $centrifuge['ratio'] : '---'
+                    )
+                );
                 if (isset($centrifuge['converted'])) {
                     $output .= '<br/>  Converted: ' . $centrifuge['converted'];
                 }
@@ -333,14 +323,6 @@ class Report implements \Countable, \IteratorAggregate
             }
         }
 
-        return isset($output) ? $output : '';
+        return $output;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

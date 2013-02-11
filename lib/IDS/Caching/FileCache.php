@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,7 +29,6 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
-
 namespace IDS\Caching;
 
 use IDS\Init;
@@ -52,7 +50,6 @@ use IDS\Init;
  */
 class FileCache implements CacheInterface
 {
-
     /**
      * Caching type
      *
@@ -190,11 +187,3 @@ class FileCache implements CacheInterface
         return file_exists($file) && time() - filectime($file) <= $this->config['expiration_time'];
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

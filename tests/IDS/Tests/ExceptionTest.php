@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Report;
@@ -28,6 +26,16 @@ use IDS\Monitor;
 
 class ExceptionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Report
+     */
+    protected $report;
+
+    /**
+     * @var Init
+     */
+    protected $init;
+
     public function setUp()
     {
         $this->report = new Report(array(
@@ -102,11 +110,3 @@ class ExceptionTest extends \PHPUnit_Framework_TestCase
         new Monitor($this->init);
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

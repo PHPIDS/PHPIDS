@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,10 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Filter;
+
+use IDS\Init;
+use IDS\Caching\CacheFactory;
 
 /**
  * Filter Storage
@@ -47,15 +50,8 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-
-namespace IDS\Filter;
-
-use IDS\Init;
-use IDS\Caching\CacheFactory;
-
 class Storage
 {
-
     /**
      * Filter source file
      *
@@ -366,11 +362,3 @@ class Storage
         throw new \RuntimeException('json extension is not loaded.');
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

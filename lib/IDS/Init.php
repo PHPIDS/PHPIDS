@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS;
 
 /**
  * Framework initiation
@@ -47,12 +47,8 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-
-namespace IDS;
-
 class Init
 {
-
     /**
      * Holds config settings
      *
@@ -63,7 +59,7 @@ class Init
     /**
      * Instance of this class depending on the supplied config file
      *
-     * @var array
+     * @var Init[]|array
      * @static
      */
     private static $instances = array();
@@ -176,11 +172,3 @@ class Init
         return $this->config;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

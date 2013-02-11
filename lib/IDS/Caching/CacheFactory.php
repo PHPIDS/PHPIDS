@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Caching;
 
 /**
  * Caching factory
@@ -47,9 +47,6 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-
-namespace IDS\Caching;
-
 class CacheFactory
 {
     /**
@@ -86,11 +83,3 @@ class CacheFactory
         return $object;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

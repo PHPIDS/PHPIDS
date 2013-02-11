@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package    PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Init;
@@ -28,6 +26,7 @@ class InitTest extends \PHPUnit_Framework_TestCase
      * @var \IDS\Init
      */
     private $init = null;
+
     public function setUp()
     {
         $this->init = Init::init(IDS_CONFIG);
@@ -81,14 +80,6 @@ class InitTest extends \PHPUnit_Framework_TestCase
     public function testInstanciatingInitObjectWithoutPassingConfigFile()
     {
         $init = Init::init();
-        $this->assertInstanceOf('\\IDS\\Init', $init);
+        $this->assertInstanceOf('IDS\\Init', $init);
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

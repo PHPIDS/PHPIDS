@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,31 +29,34 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS\Caching;
 
 /**
- * Needed SQL:
  *
-
-    #create the database
-
-    CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER
-        SET utf8 COLLATE utf8_general_ci;
-    DROP TABLE IF EXISTS `cache`;
-
-    #now select the created datbase and create the table
-
-    CREATE TABLE `cache` (
-        `type` VARCHAR( 32 ) NOT null ,
-        `data` TEXT NOT null ,
-        `created` DATETIME NOT null ,
-        `modified` DATETIME NOT null
-    ) ENGINE = MYISAM ;
  */
 
 /**
  * Database caching wrapper
  *
  * This class inhabits functionality to get and set cache via a database.
+ *
+ * Needed SQL:
+ *
+
+#create the database
+
+CREATE DATABASE IF NOT EXISTS `phpids` DEFAULT CHARACTER
+SET utf8 COLLATE utf8_general_ci;
+DROP TABLE IF EXISTS `cache`;
+
+#now select the created datbase and create the table
+
+CREATE TABLE `cache` (
+`type` VARCHAR( 32 ) NOT null ,
+`data` TEXT NOT null ,
+`created` DATETIME NOT null ,
+`modified` DATETIME NOT null
+) ENGINE = MYISAM ;
  *
  * @category  Security
  * @package   PHPIDS
@@ -66,9 +68,6 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-
-namespace IDS\Caching;
-
 class DatabaseCache implements CacheInterface
 {
 
@@ -276,11 +275,3 @@ class DatabaseCache implements CacheInterface
         }
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */
