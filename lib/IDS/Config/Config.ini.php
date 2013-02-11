@@ -18,7 +18,6 @@
 
     ; in case you want to use a different HTMLPurifier source, specify it here
     ; By default, those files are used that are being shipped with PHPIDS
-    HTML_Purifier_Path	= vendors/htmlpurifier/HTMLPurifier.auto.php
     HTML_Purifier_Cache = vendors/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer
 
     ; define which fields contain html and need preparation before
@@ -34,10 +33,6 @@
     exceptions[]    = GET.__utmc
 
     ; you can use regular expressions for wildcard exceptions - example: /.*foo/i
-
-    ; PHPIDS should run with PHP 5.1.2 but this is untested - set
-    ; this value to force compatibilty with minor versions
-    min_php_version = 5.1.6
 
 [Caching]
 

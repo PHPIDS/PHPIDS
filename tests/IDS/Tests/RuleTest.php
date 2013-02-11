@@ -37,8 +37,8 @@ class RuleTest extends \PHPUnit_Framework_TestCase
     /** @dataProvider getPayloads */
     public function testSingleRules($ruleId, $payload)
     {
-        $monitor = new Monitor(array('payload' => $payload), $this->init);
-        $result = $monitor->run();
+        $monitor = new Monitor($this->init);
+        $result = $monitor->run(array('payload' => $payload));
 
         $event = $result->getEvent('payload');
         $this->assertInstanceOf('IDS\Event', $event);
