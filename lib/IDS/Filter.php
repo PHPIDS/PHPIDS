@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS;
 
 /**
  * PHPIDS Filter object
@@ -48,50 +48,46 @@
  * @link      http://php-ids.org/
  * @since     Version 0.4
  */
-
-namespace IDS;
-
 class Filter
 {
-
     /**
      * Filter rule
      *
-     * @var    string
+     * @var string
      */
     protected $rule;
 
     /**
      * List of tags of the filter
      *
-     * @var    array
+     * @var string[]|array
      */
     protected $tags = array();
 
     /**
      * Filter impact level
      *
-     * @var    integer
+     * @var integer
      */
     protected $impact = 0;
 
     /**
      * Filter description
      *
-     * @var    string
+     * @var string
      */
-    protected $description = null;
+    protected $description = '';
 
     /**
      * Constructor
      *
-     * @param integer $id          filter id
-     * @param mixed   $rule        filter rule
-     * @param string  $description filter description
-     * @param array   $tags        list of tags
-     * @param integer $impact      filter impact level
+     * @param integer           $id          filter id
+     * @param string            $rule        filter rule
+     * @param string            $description filter description
+     * @param string[]|array    $tags        list of tags
+     * @param integer           $impact      filter impact level
      *
-     * @return void
+     * @return \IDS\Filter
      */
     public function __construct($id, $rule, $description, array $tags, $impact)
     {
@@ -110,7 +106,7 @@ class Filter
      *
      * @param string $input the string input to match
      *
-     * @throws InvalidArgumentException if argument is no string
+     * @throws \InvalidArgumentException if argument is no string
      * @return boolean
      */
     public function match($input)
@@ -121,10 +117,7 @@ class Filter
             );
         }
 
-        return (bool) preg_match(
-            '/' . $this->getRule() . '/ms',
-            strtolower($input)
-        );
+        return (bool) preg_match('/' . $this->getRule() . '/ms', strtolower($input));
     }
 
     /**
@@ -143,7 +136,7 @@ class Filter
      * Each filter rule is concerned with a certain kind of attack vectors.
      * This method returns those affected kinds.
      *
-     * @return array
+     * @return string[]|array
      */
     public function getTags()
     {
@@ -180,11 +173,3 @@ class Filter
         return $this->id;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

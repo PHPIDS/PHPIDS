@@ -1,4 +1,21 @@
 <?php
+/**
+ * PHPIDS
+ * Requirements: PHP5, SimpleXML
+ *
+ * Copyright (c) 2010 PHPIDS group (https://phpids.org)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the license.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * @package    PHPIDS tests
+ */
 namespace IDS\Tests;
 
 use IDS\Init;
@@ -7,6 +24,16 @@ use IDS\Filter\Storage;
 
 class FilterSetTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var array
+     */
+    protected $jsonFilter;
+
+    /**
+     * @var array
+     */
+    protected $xmlFilter;
+
     public function setUp()
     {
         $this->jsonFilter = $this->getFilterset('json');

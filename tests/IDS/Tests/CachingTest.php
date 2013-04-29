@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Init;
@@ -27,6 +25,11 @@ use IDS\Caching\SessionCache;
 
 class CachingTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Init
+     */
+    protected $init;
+
     public function setUp()
     {
         $this->init = Init::init(IDS_CONFIG);
@@ -104,11 +107,3 @@ class CachingTest extends \PHPUnit_Framework_TestCase
         @unlink(IDS_FILTER_CACHE_FILE);
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

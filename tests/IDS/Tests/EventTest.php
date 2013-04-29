@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Event;
@@ -25,6 +23,11 @@ use IDS\Filter;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Event
+     */
+    protected $event;
+
     public function setUp()
     {
         $this->event = new Event("handled_key", "my val",
@@ -71,14 +74,6 @@ class EventTest extends \PHPUnit_Framework_TestCase
     public function testIteratorAggregate()
     {
         $this->assertInstanceOf('IteratorAggregate', $this->event);
-        $this->assertInstanceOf('IteratorAggregate', $this->event->getIterator());
+        $this->assertInstanceOf('Iterator', $this->event->getIterator());
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

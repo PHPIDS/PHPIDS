@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Filter;
@@ -26,6 +24,11 @@ use IDS\Init;
 
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Init
+     */
+    protected $init;
+
     public function setUp()
     {
         $this->init = Init::init(IDS_CONFIG);
@@ -53,46 +56,32 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($filter->match("TE\nST"));
         // .. "$" is end only #has changed since modifiers are ims
         $this->assertTrue($filter->match("TE1ST\n"));
-
     }
 
-    public function testExceptions()
-    {
+    public function testInvalidArgumentOnMatch () {
+        $this->setExpectedException('InvalidArgumentException');
         $filter = new Filter(1, '^test$', 'My description', array('foo', 'bar'), 10);
+        $filter->match(1);
+    }
 
-        try {
-            $filter->match(1);
-            $this->fail("Expected Exception");
-        } catch (\Exception $e) {}
+    public function testInvalidArgumentInFilterInstanciation1 () {
+        $this->markTestSkipped('The values are not validated properly on instanciation');
+        $this->setExpectedException('InvalidArgumentException');
+        new Filter(1, '^test$', 'my desc', array('foo'), 'test');
+    }
 
-        try {
-            $filter = new Filter(1, '^test$', 'my desc', array('foo'), 'test');
-            $this->fail("Expected Exception");
-        } catch (\Exception $e) {}
-
-        try {
-            $filter = new Filter(1, 1, 'my desc', array("foo"), 'bla');
-            $this->fail("Excpected Exception");
-        } catch (\Exception $e) {}
-
-        $this->assertTrue(true, 'Fake assertion so that PHPUnit does not bail');
+    public function testInvalidArgumentInFilterInstanciation2 () {
+        $this->markTestSkipped('The values are not validated properly on instanciation');
+        $this->setExpectedException('InvalidArgumentException');
+        new Filter(1, 1, 'my desc', array("foo"), 'bla');
     }
 
     public function testFilterSetFilterSet()
     {
         $this->init->config['General']['filter_type'] = IDS_FILTER_TYPE;
         $this->init->config['General']['filter_path'] = IDS_FILTER_SET;
-        $this->storage = new Storage($this->init);
-        $filter = array();
-        $filter[] = new Filter(1, 'test', 'test2', array(), 1);
-        $this->assertTrue($this->storage->setFilterSet($filter) instanceof Storage);
+        $storage = new Storage($this->init);
+        $filter = array(new Filter(1, 'test', 'test2', array(), 1));
+        $this->assertTrue($storage->setFilterSet($filter) instanceof Storage);
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

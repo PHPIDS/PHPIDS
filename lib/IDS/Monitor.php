@@ -33,7 +33,6 @@ namespace IDS;
 
 use IDS\Filter\Storage;
 
-
 /**
  * Monitoring engine
  *
@@ -565,11 +564,3 @@ class Monitor
         return $this->storage;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

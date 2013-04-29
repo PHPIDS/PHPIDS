@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -50,7 +49,6 @@ namespace IDS\Caching;
  */
 class SessionCache implements CacheInterface
 {
-
     /**
      * Caching type
      *
@@ -136,11 +134,3 @@ class SessionCache implements CacheInterface
         return false;
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

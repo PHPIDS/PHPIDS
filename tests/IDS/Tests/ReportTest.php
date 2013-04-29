@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  * Requirements: PHP5, SimpleXML
@@ -17,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Report;
@@ -26,6 +24,11 @@ use IDS\Filter;
 
 class ReportTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var Report
+     */
+    protected $report;
+
     public function setUp()
     {
         $this->report = new Report(array(
@@ -89,7 +92,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     public function testIteratorAggregate()
     {
         $this->assertInstanceOf('IteratorAggregate', $this->report);
-        $this->assertInstanceOf('IteratorAggregate', $this->report->getIterator());
+        $this->assertInstanceOf('Iterator', $this->report->getIterator());
     }
 
     public function testToString()
@@ -111,15 +114,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
 
     public function testGetEventWrong()
     {
-        $this->assertFalse($this->report->getEvent('not_available'));
+        $this->assertNull($this->report->getEvent('not_available'));
     }
 
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */

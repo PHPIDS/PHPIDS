@@ -16,7 +16,6 @@
  *
  * @package	PHPIDS tests
  */
-
 namespace IDS\Tests;
 
 use IDS\Version;

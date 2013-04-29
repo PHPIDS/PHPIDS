@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHPIDS
  *
@@ -30,6 +29,7 @@
  * @license  http://www.gnu.org/licenses/lgpl.html LGPL
  * @link     http://php-ids.org/
  */
+namespace IDS;
 
 /**
  * PHPIDS event object
@@ -49,23 +49,19 @@
  * @license   http://www.gnu.org/licenses/lgpl.html LGPL
  * @link      http://php-ids.org/
  */
-
-namespace IDS;
-
 class Event implements \Countable, \IteratorAggregate
 {
-
     /**
      * Event name
      *
-     * @var scalar
+     * @var string
      */
     protected $name = null;
 
     /**
      * Value of the event
      *
-     * @var scalar
+     * @var mixed
      */
     protected $value = null;
 
@@ -74,7 +70,7 @@ class Event implements \Countable, \IteratorAggregate
      *
      * Filter objects in this array are those that matched the events value
      *
-     * @var array
+     * @var Filter[]|array
      */
     protected $filters = array();
 
@@ -90,7 +86,7 @@ class Event implements \Countable, \IteratorAggregate
     /**
      * Affecte tags
      *
-     * @var array
+     * @var string[]|array
      */
     protected $tags = array();
 
@@ -99,11 +95,12 @@ class Event implements \Countable, \IteratorAggregate
      *
      * Fills event properties
      *
-     * @param scalar $name    the event name
-     * @param scalar $value   the event value
-     * @param array  $filters the corresponding filters
+     * @param string            $name    the event name
+     * @param mixed             $value   the event value
+     * @param Filter[]|array    $filters the corresponding filters
      *
-     * @return void
+     * @throws \InvalidArgumentException
+     * @return \IDS\Event
      */
     public function __construct($name, $value, array $filters)
     {
@@ -139,7 +136,7 @@ class Event implements \Countable, \IteratorAggregate
      * The name of the event usually is the key of the variable that was
      * considered to be malicious
      *
-     * @return scalar
+     * @return string
      */
     public function getName()
     {
@@ -149,7 +146,7 @@ class Event implements \Countable, \IteratorAggregate
     /**
      * Returns event value
      *
-     * @return scalar
+     * @return mixed
      */
     public function getValue()
     {
@@ -176,28 +173,21 @@ class Event implements \Countable, \IteratorAggregate
     /**
      * Returns affected tags
      *
-     * @return array
+     * @return string[]|array
      */
     public function getTags()
     {
-        $filters = $this->getFilters();
-
-        foreach ($filters as $filter) {
-            $this->tags = array_merge(
-                $this->tags,
-                $filter->getTags()
-            );
+        foreach ($this->getFilters() as $filter) {
+            $this->tags = array_merge($this->tags, $filter->getTags());
         }
 
-        $this->tags = array_values(array_unique($this->tags));
-
-        return $this->tags;
+        return $this->tags = array_values(array_unique($this->tags));
     }
 
     /**
      * Returns list of filter objects
      *
-     * @return array
+     * @return Filter[]|array
      */
     public function getFilters()
     {
@@ -222,18 +212,10 @@ class Event implements \Countable, \IteratorAggregate
      *
      * Returns an iterator to iterate over the appended filters.
      *
-     * @return ArrayObject the filter collection
+     * @return \Iterator the filter collection
      */
     public function getIterator()
     {
-        return new \ArrayObject($this->getFilters());
+        return new \ArrayIterator($this->getFilters());
     }
 }
-
-/**
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * End:
- * vim600: sw=4 ts=4 expandtab
- */
