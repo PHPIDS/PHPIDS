@@ -66,9 +66,9 @@ try {
     $init->config['Caching']['caching'] = 'none';
 
     // 2. Initiate the PHPIDS and fetch the results
-    $ids = new Monitor($request, $init);
+    $ids = new Monitor($init);
 
-    $result = $ids->run();
+    $result = $ids->run($request);
 
     /*
     * That's it - now you can analyze the results:
