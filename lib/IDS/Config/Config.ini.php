@@ -36,7 +36,7 @@
 
 [Caching]
 
-    ; caching:      session|file|database|memcached|none
+    ; caching:      session|file|database|memcached|apc|none
     caching         = file
     expiration_time = 600
 
@@ -52,4 +52,7 @@
     ; memcached
     ;host           = localhost
     ;port           = 11211
+    ;key_prefix     = PHPIDS
+
+    ; apc
     ;key_prefix     = PHPIDS
