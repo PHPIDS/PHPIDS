@@ -261,11 +261,11 @@ class DatabaseCache implements CacheInterface
                 )'
             );
 
-            $statement->bindParam(
+            $statement->bindValue(
                 'type',
                 $handle->quote($this->type)
             );
-            $statement->bindParam('data', serialize($data));
+            $statement->bindValue('data', serialize($data));
 
             if (!$statement->execute()) {
                 throw new \PDOException($statement->errorCode());
