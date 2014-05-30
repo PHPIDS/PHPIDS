@@ -1041,6 +1041,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
                         select (select `user` from#
                         #cc
                         mysql.user limit 1)\'';
+        $exploits[] = 'id=(1 )and(0)union%23xDxD%0%23xDxD%0%23xDxD%0%23xDxD%0Aselect 1,database%23xDxD%0%23xDxD%0%23xDxD%0%23xDxD%0A(),3';
 
         $this->_testForPlainEvent($exploits);
 
@@ -1048,7 +1049,7 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run($exploits);
-        $this->assertEquals(876, $result->getImpact());
+        $this->assertEquals(899, $result->getImpact());
     }
 
     public function testDTList()
@@ -1257,7 +1258,12 @@ class MonitorTest extends \PHPUnit_Framework_TestCase
             $this->init
         );
         $result = $test->run($exploits);
-        $this->assertEquals(48, $result->getImpact());
+        if (function_exists('get_magic_quotes_gpc') and @get_magic_quotes_gpc()) {
+            $this->assertEquals(62, $result->getImpact());
+        }
+        else {
+            $this->assertEquals(48, $result->getImpact());
+        }
     }
 
     public function testHexCCConverter()

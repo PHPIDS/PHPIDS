@@ -2,7 +2,7 @@
     <filter>
         <id>1</id>
         <rule><![CDATA[(?:"[^"]*[^-]?>)|(?:[^\w\s]\s*\/>)|(?:>")]]></rule>
-        <description>finds html breaking injections including whitespace attacks</description>
+        <description>Finds html breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -12,7 +12,7 @@
     <filter>
         <id>2</id>
         <rule><![CDATA[(?:"+.*[<=]\s*"[^"]+")|(?:"\s*\w+\s*=)|(?:>\w=\/)|(?:#.+\)["\s]*>)|(?:"\s*(?:src|style|on\w+)\s*=\s*")|(?:[^"]?"[,;\s]+\w*[\[\(])]]></rule>
-        <description>finds attribute breaking injections including whitespace attacks</description>
+        <description>Finds attribute breaking injections including whitespace attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -22,7 +22,7 @@
     <filter>
         <id>3</id>
         <rule><![CDATA[(?:^>[\w\s]*<\/?\w{2,}>)]]></rule>
-        <description>finds unquoted attribute breaking injections</description>
+        <description>Finds unquoted attribute breaking injections</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -719,7 +719,7 @@
     <filter>
         <id>71</id>
         <rule><![CDATA[(?:[\s\d\/"]+(?:on\w+|style|poster|background)=[$"\w])|(?:-type\s*:\s*multipart)]]></rule>
-        <description>finds malicious attribute injection attempts and MHTML attacks</description>
+        <description>Finds malicious attribute injection attempts and MHTML attacks</description>
         <tags>
             <tag>xss</tag>
             <tag>csrf</tag>
@@ -768,11 +768,20 @@
     <filter>
         <id>77</id>
         <rule><![CDATA[(?:^(-0000023456|4294967295|4294967296|2147483648|2147483647|0000012345|-2147483648|-2147483649|0000023456|2.2250738585072007e-308|1e309)$)]]></rule>
-        <description>Looking for intiger overflow attacks, these are taken from skipfish, except 2.2250738585072007e-308 is the "magic number" crash</description>
+        <description>Looking for integer overflow attacks, these are taken from skipfish, except 2.2250738585072007e-308 is the "magic number" crash</description>
         <tags>
             <tag>sqli</tag>
             <tag>id</tag>
         </tags>
         <impact>3</impact>
+    </filter>
+    <filter>
+        <id>78</id>
+        <rule><![CDATA[(?:%23.*?%0a)]]></rule>
+        <description>Detects SQL comment filter evasion</description>
+        <tags>
+            <tag>format string</tag>
+        </tags>
+        <impact>4</impact>
     </filter>
 </filters>
