@@ -662,6 +662,26 @@ class Converter
         return $value;
     }
 
+  /**
+   * This method removes encoded sql # comments
+   *
+   * @param string $value the value to convert
+   *
+   * @static
+   * @return string
+   */
+    public static function convertFromUrlencodeSqlComment($value)
+    {
+        if (preg_match_all('/(?:\%23.*?\%0a)/im',$value,$matches)){
+            $converted = $value;
+            foreach($matches[0] as $match){
+                $converted = str_replace($match,' ',$converted);
+            }
+            $value .= "\n" . $converted;
+        }
+        return $value;
+    }
+
     /**
      * This method is the centrifuge prototype
      *
